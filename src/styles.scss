@@ -1,0 +1,35 @@
+// Шрифты
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700|Noto+Serif:400,400i,700&subset=cyrillic');
+
+$font-primary:   'Noto Sans', sans-serif;
+$font-secondary: 'Noto Serif', serif;
+
+// Фирменные цвета
+// Дополнительные
+$black:   #000;
+$white:   #fff;
+
+// Основное оформление
+$color-primary:   $black; // Основной текст
+$color-secondary: $black; // Вспомогательный текст (например, заголовки)
+$color-bg:        $white; // Цвет фона
+
+
+body {
+  font-family: $font-primary;
+  background: $color-bg;
+  color: $color-primary;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-secondary;
+  color: $color-secondary;
+}
+
+
+// Запросы для адаптивной вёрстки
+@media (max-width: 575px) {} // xxs
+@media (min-width: 576px) and (max-width: 767px) {} // xs
+@media (min-width: 768px) and (max-width: 991px) {} // sm
+@media (min-width: 992px) and (max-width: 1199px) {} // md
+@media (min-width: 1200px) {} // lg
