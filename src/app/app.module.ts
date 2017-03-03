@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { SiteComponent } from './site/site.component';
 
 @NgModule({
@@ -14,8 +12,7 @@ import { SiteComponent } from './site/site.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
-    NgbModule.forRoot()
+    HttpModule
   ],
   providers: [],
   bootstrap: [ SiteComponent ]

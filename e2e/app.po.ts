@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class OywoPage {
+export class TemplPage {
   navigateTo() {
     return browser.get('/');
   }

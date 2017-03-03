@@ -1,10 +1,10 @@
-import { OywoPage } from './app.po';
+import { TemplPage } from './app.po';
 
-describe('oywo App', function() {
-  let page: OywoPage;
+describe('templ App', () => {
+  let page: TemplPage;
 
   beforeEach(() => {
-    page = new OywoPage();
+    page = new TemplPage();
   });
 
   it('should display message saying app works', () => {
