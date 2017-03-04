@@ -1,0 +1,42 @@
+// Шрифты
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700|Noto+Serif:400,400i,700&subset=cyrillic');
+
+// Палитра
+$black:   #000;
+$white:   #fff;
+
+// Основные переменные
+$font-primary:   'Noto Sans', sans-serif;
+$font-secondary: 'Noto Serif', serif;
+$color-primary:   $black; // Основной текст
+$color-secondary: $black; // Вспомогательный текст (например, заголовки)
+$color-bg:        $white; // Цвет фона
+$color-link:      blue;   // Цвет ссылок
+
+
+// Переменные Bootstrap
+// Палитра
+$red:           #d9534f;
+$orange:        #f0ad4e;
+$yellow:        #ffd500;
+$green:         #5cb85c;
+$blue:          #0275d8;
+$teal:          #5bc0de;
+$pink:          #ff5b77;
+$purple:        #613d7c;
+$black:         #000;
+$gray-dark:     #292b2c;
+$gray:          #464a4c;
+$gray-light:    #636c72;
+$gray-lighter:  #eceeef;
+$gray-lightest: #f7f7f9;
+$white:         #fff;
+
+// Опции
+$enable-rounded:            true;
+$enable-shadows:            false;
+$enable-gradients:          false;
+$enable-transitions:        true;
+$enable-hover-media-query:  false;
+$enable-grid-classes:       true;
+$enable-print-styles:       true;
