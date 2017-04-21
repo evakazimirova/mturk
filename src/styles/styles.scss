@@ -20,3 +20,8 @@ h1, h2, h3, h4, h5, h6 {
 @media (min-width: 768px) and (max-width: 991px) {} // sm
 @media (min-width: 992px) and (max-width: 1199px) {} // md
 @media (min-width: 1200px) {} // lg
+
+
+a:hover, a:active, a:visited {
+  text-decoration: none;
+}
