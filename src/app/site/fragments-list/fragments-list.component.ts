@@ -36,7 +36,9 @@ export class FragmentsListComponent implements OnInit {
     this.push.markForThisChunk.subscribe(
       (mark) => {
         this.csv[this.push.cf][3] = mark;
-        this.push.cf++;
+        if(this.push.cf < this.push.csv.length - 1) {
+          this.push.setFragment(this.push.cf + 1);
+        }
       }
     );
 

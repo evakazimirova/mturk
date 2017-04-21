@@ -17,6 +17,8 @@ export class VideoListComponent implements OnInit {
     // читаем файл конфигурации
     this.http.get('./assets/conf.json').subscribe(
       (conf) => {
+        this.push.conf = conf;
+
         // 2. Web-интерфейс отображает список видеозаписей доступных для разметки.
         this.videos = conf.videos;
         this.pathToData = conf.pathToData;

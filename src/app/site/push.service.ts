@@ -3,8 +3,11 @@ import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable()
 export class PushService {
+  conf: any = {};
   csv = [[1, 0, 0, -1]];
   cf;
+  emotion = 0;
+
   currentFragment = new EventEmitter();
   currentVideoPosition = new EventEmitter();
   setFragment(value) {

@@ -1,6 +1,6 @@
 <!-- Список доступных шкал оценок -->
-<select class="form-control">
-  <option *ngFor="let emotion of emotions">{{ emotion }}</option>
+<select class="form-control" [value]="push.emotion">
+  <option *ngFor="let emotion of emotions; let i = index" value="{{ i }}" [selected]="push.emotion === i">{{ emotion }}</option>
 </select>
 
 <!-- Список фрагментов -->
