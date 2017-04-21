@@ -4,44 +4,44 @@
 
 <div class="row">
   <div class="col col-xs-2 text-right">
-    00:00:07.00
+    {{ push.csv[push.cf][1] | time }}
   </div>
   <div class="col col-xs-8">
     <div class="progress">
-      <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="2" aria-valuemax="100" style="width: 60%;">
-        <span class="sr-only">60% Complete</span>
+      <div class="progress-bar" role="progressbar" aria-valuemin="2" aria-valuemax="100" [ngStyle]="{width: percentage + '%'}">
+        <span class="sr-only">{{ percentage }}% Complete</span>
       </div>
     </div>
   </div>
   <div class="col col-xs-2">
-    00:00:10.00
+    {{ push.csv[push.cf][2] | time }}
   </div>
 </div>
 
 <div class="text-center">
   <!-- Панель навигации -->
   <div class="video-navigation">
-    <a href="#" (click)="videoContainer.play()">
+    <a href="#" (click)="playVideo()">
       <img src="http://imgdisk.ru/images/2017/04/18/play-button.png" alt="play">
     </a>
 
-    <a href="#">
+    <a href="#" (click)="stopVideo()">
       <img src="http://imgdisk.ru/images/2017/04/18/stop.png" alt="stop">
     </a>
 
-    <a href="#" (click)="videoContainer.pause()">
+    <a href="#" (click)="pauseVideo()">
       <img src="http://imgdisk.ru/images/2017/04/18/pause.png" alt="pause">
     </a>
 
-    <a href="#">
+    <a href="#" (click)="replayVideo()">
       <img src="http://imgdisk.ru/images/2017/04/18/replay.png" alt="repeat">
     </a>
 
-    <a href="#">
+    <a href="#" (click)="push.setFragment(push.cf - 1)">
       <img src="http://imgdisk.ru/images/2017/04/18/back.png" alt="step-backward">
     </a>
 
-    <a href="#">
+    <a href="#" (click)="push.setFragment(push.cf + 1)">
       <img src="http://imgdisk.ru/images/2017/04/18/next.png" alt="step-forward">
     </a>
   </div>

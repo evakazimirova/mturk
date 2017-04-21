@@ -10,42 +10,38 @@ import { Component, OnInit } from '@angular/core';
 export class FragmentsListComponent implements OnInit {
   pathToData: string;
   csv: any;
+  emotions: string[];
 
-  currentFragment = 0;
-
-  constructor(private push: PushService, private http: HttpService) { }
+  constructor(private push: PushService, private http: HttpService) {
+    this.push.cf = 0
+  }
 
   ngOnInit() {
-    // читаем файл конфигурации
-    // this.http.get('./assets/conf.json').subscribe(
-    //   (conf) => {
-    //     this.pathToData = conf.pathToData;
-    //   },
-    //   (error) => console.log(error)
-    // );
+    // 4. Выбор шкалы осуществляется пользователем из некоторого заранее заданного файла.
+    this.http.get('./assets/conf.json').subscribe(
+      (conf) => {
+        this.emotions = conf.emotions;
+      },
+      (error) => console.log(error)
+    );
 
-    this.push.markForThisChunk.subscribe(
-      (mark) => {
-        console.log("Фрагмент оценнён в " + mark);
-
-        this.csv[this.currentFragment][3] = mark;
-        this.currentFragment++;
-        // this.markForThisChunk = msg
-        // currentChunkRating.text(rating)
-
-        // nextChunk = currentChunk.next();
-
-        // currentChunk.removeClass('warning');
-        // currentChunk.addClass('success');
-        // nextChunk.addClass('warning');
-
-        // currentChunk = nextChunk;
-        // currentChunkRating = currentChunk.find('td:last-child');
+    this.push.currentFragment.subscribe(
+      (i) => {
+        if(i >= 0 && i < this.push.csv.length) {
+          this.push.cf = i
+        }
       }
     );
 
-    // 3. При выборе видеозаписи, открывается файл на сервере с именем, совпадающим с именем csv. В этом файле содержится информация о фрагментах, которые необходимо оценить. Структура файла:
-    // Номер фрагмента/Начало фрагмента/Конец фрагмента
+    this.push.markForThisChunk.subscribe(
+      (mark) => {
+        this.csv[this.push.cf][3] = mark;
+        this.push.cf++;
+      }
+    );
+
+    // 3. При выборе видеозаписи, открывается файл на сервере с именем, совпадающим с именем csv. В этом файле содержится информация о фрагментах, которые необходимо оценить. Структура файла: Номер фрагмента;Начало фрагмента;Конец фрагмента
+    // 4. Web-интерфейс отображает список фрагментов, и выставленную им оценку в выбранной шкале.
     this.push.currentVideo.subscribe(
       (video) => {
         this.http.getRough(video + ".csv").subscribe(
@@ -60,6 +56,8 @@ export class FragmentsListComponent implements OnInit {
             // выкидываем первую и последнюю строки (названия столбцов и пустая строка)
             this.csv.pop();
             this.csv.shift();
+
+            this.push.updateCSV(this.csv); // запоминаем данные для доступа во всех компонентах
             // console.log(this.csv);
           },
           error => console.log(error)

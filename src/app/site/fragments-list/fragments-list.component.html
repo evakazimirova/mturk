@@ -1,9 +1,6 @@
 <!-- Список доступных шкал оценок -->
 <select class="form-control">
-  <option>Emotion1</option>
-  <option>Emotion2</option>
-  <option>Emotion3</option>
-  <option>Emotion4</option>
+  <option *ngFor="let emotion of emotions">{{ emotion }}</option>
 </select>
 
 <!-- Список фрагментов -->
@@ -20,10 +17,11 @@
 <div class="right-col">
   <table class="table table-hover table-bordered">
     <tbody>
-      <tr *ngFor="let row of csv; let i = index" [ngClass]="{
-        warning: currentFragment === i,
-        success: row[3] !== -1
-      }">
+      <tr *ngFor="let row of push.csv; let i = index" [ngClass]="{
+        success: row[3] !== -1,
+        warning: push.cf === i,
+        danger: push.cf > i && row[3] === -1
+      }" (click)="push.setFragment(i)">
         <td *ngFor="let cell of row">{{ cell }}</td>
       </tr>
     </tbody>
