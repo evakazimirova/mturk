@@ -5,7 +5,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 export class PushService {
   conf: any = {};
   csv = [[1, 0, 0, -1]];
-  cf;
+  cf = 0;
   emotion = 0;
 
   currentFragment = new EventEmitter();
@@ -28,5 +28,6 @@ export class PushService {
   currentVideo = new EventEmitter();
   setVideo(value) {
     this.currentVideo.emit(value);
+    this.cf = 0;
   }
 }
