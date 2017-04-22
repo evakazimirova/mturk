@@ -1,31 +1,4 @@
-<!-- Список доступных шкал оценок -->
-<select class="form-control" [value]="common.emotion">
-  <option *ngFor="let emotion of emotions; let i = index" value="{{ i }}" [selected]="common.emotion === i">{{ emotion }}</option>
-</select>
-
-<!-- Список фрагментов -->
-<table class="table table-hover table-bordered">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Начало</th>
-      <th>Конец</th>
-      <th>Оценка</th>
-    </tr>
-  </thead>
-</table>
-<div class="right-col">
-  <table class="table table-hover table-bordered">
-    <tbody>
-      <tr *ngFor="let row of common.csv; let i = index" [ngClass]="{
-        success: row[3] !== -1,
-        warning: common.cf === i,
-        danger: common.cf > i && row[3] === -1
-      }" (click)="common.setFragment(i)">
-        <td *ngFor="let cell of row">{{ cell }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<na-ranges></na-ranges>
+<na-fragments></na-fragments>
 
 <button id="save" class="btn btn-primary btn-block">Сохранить</button>

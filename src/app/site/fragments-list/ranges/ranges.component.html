@@ -1,0 +1,4 @@
+<!-- Список доступных шкал оценок -->
+<select class="form-control" [value]="common.emotion">
+  <option *ngFor="let emotion of common.conf.emotions; let i = index" value="{{ i }}" [selected]="common.emotion === i">{{ emotion }}</option>
+</select>

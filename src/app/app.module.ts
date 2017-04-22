@@ -10,6 +10,8 @@ import { VideoListComponent } from './site/video-list/video-list.component';
 import { VideoPlayerComponent } from './site/video-player/video-player.component';
 import { FragmentsListComponent } from './site/fragments-list/fragments-list.component';
 import { TimePipe } from './time.pipe';
+import { RangesComponent } from './site/fragments-list/ranges/ranges.component';
+import { FragmentsComponent } from './site/fragments-list/fragments/fragments.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { TimePipe } from './time.pipe';
     VideoListComponent,
     VideoPlayerComponent,
     FragmentsListComponent,
-    TimePipe
+    TimePipe,
+    RangesComponent,
+    FragmentsComponent
   ],
   imports: [
     BrowserModule,

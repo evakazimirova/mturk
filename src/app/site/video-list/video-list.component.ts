@@ -17,6 +17,7 @@ export class VideoListComponent implements OnInit {
     // читаем файл конфигурации
     this.http.get('./assets/conf.json').subscribe(
       (conf) => {
+        // 4. Выбор шкалы осуществляется пользователем из некоторого заранее заданного файла.
         this.common.conf = conf;
 
         // 2. Web-интерфейс отображает список видеозаписей доступных для разметки.
