@@ -1,5 +1,5 @@
-import { HttpService } from '../../http.service';
-import { CommonService } from '../../common.service';
+import { HttpService } from '../../../http.service';
+import { CommonService } from '../../../common.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
