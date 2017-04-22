@@ -1,0 +1,8 @@
+<!-- Кнопки выставления оценки -->
+<div class="text-center">
+  <div class="btn-group">
+    <button class="btn btn-lg btn-default"
+      *ngFor="let n of [1, 2, 3, 4, 5]"
+      (click)="common.saveThisMark(n)">{{ n }}</button>
+  </div>
+</div>

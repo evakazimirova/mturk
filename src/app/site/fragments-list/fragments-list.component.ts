@@ -1,4 +1,3 @@
-import { HttpService } from '../http.service';
 import { CommonService } from '../common.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FragmentsListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private common: CommonService) {}
 
   ngOnInit() {
   }

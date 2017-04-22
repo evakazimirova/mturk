@@ -8,21 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./fragments.component.scss']
 })
 export class FragmentsComponent implements OnInit {
-  pathToData: string;
 
   constructor(private common: CommonService, private http: HttpService) {
     this.common.cf = 0
   }
 
   ngOnInit() {
-    this.common.currentFragment.subscribe(
-      (i) => {
-        if(i >= 0 && i < this.common.csv.length) {
-          this.common.cf = i
-        }
-      }
-    );
-
     this.common.markForThisChunk.subscribe(
       (mark) => {
         this.common.csv[this.common.cf][3] = mark;
@@ -34,7 +25,7 @@ export class FragmentsComponent implements OnInit {
 
     // 3. При выборе видеозаписи, открывается файл на сервере с именем, совпадающим с именем csv. В этом файле содержится информация о фрагментах, которые необходимо оценить. Структура файла: Номер фрагмента;Начало фрагмента;Конец фрагмента
     // 4. Web-интерфейс отображает список фрагментов, и выставленную им оценку в выбранной шкале.
-    this.common.currentVideo.subscribe(
+    this.common.videoChanged.subscribe(
       (video) => {
         this.http.getRough(video + ".csv").subscribe(
           data => {

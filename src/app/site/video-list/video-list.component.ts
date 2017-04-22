@@ -8,8 +8,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./video-list.component.scss']
 })
 export class VideoListComponent implements OnInit {
-  videos: string[];
-  pathToData: string;
 
   constructor(private http: HttpService, private common: CommonService) { }
 
@@ -17,15 +15,12 @@ export class VideoListComponent implements OnInit {
     // читаем файл конфигурации
     this.http.get('./assets/conf.json').subscribe(
       (conf) => {
+        // 2. Web-интерфейс отображает список видеозаписей доступных для разметки.
         // 4. Выбор шкалы осуществляется пользователем из некоторого заранее заданного файла.
         this.common.conf = conf;
 
-        // 2. Web-интерфейс отображает список видеозаписей доступных для разметки.
-        this.videos = conf.videos;
-        this.pathToData = conf.pathToData;
-
         // загружаем первое видео
-        this.common.setVideo(this.pathToData + this.videos[0]);
+        this.common.setVideo(conf.pathToData + conf.videos[0]);
       },
       (error) => console.log(error)
     );

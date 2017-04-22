@@ -7,24 +7,26 @@ export class CommonService {
   csv = [[1, 0, 0, -1]];
   cf = 0;
   emotion = 0;
+  videoContainer;
 
   // события
-  currentFragment = new EventEmitter();
-  currentVideoPosition = new EventEmitter();
+  fragmentChanged = new EventEmitter();
   markForThisChunk = new EventEmitter();
-  currentVideo = new EventEmitter();
+  videoTurnedOff = new EventEmitter();
+  videoTurnedOn = new EventEmitter();
+  videoChanged = new EventEmitter();
 
   setFragment(number) {
     // не выходим за пределы таблицы
     if(number >= 0 && number < this.csv.length) {
-      this.currentFragment.emit(number);
-      this.currentVideoPosition.emit(this.csv[number][1]);
+      this.cf = number;
+      this.fragmentChanged.emit(this.csv[number][1]);
     }
   }
 
   updateCSV(newCSV) {
     this.csv = newCSV;
-    this.currentVideoPosition.emit(this.csv[0][1]);
+    this.fragmentChanged.emit(this.csv[0][1]);
   }
 
   saveThisMark(value) {
@@ -32,7 +34,21 @@ export class CommonService {
   }
 
   setVideo(value) {
-    this.currentVideo.emit(value);
     this.cf = 0;
+    this.videoChanged.emit(value);
+  }
+
+  watchVideo() {
+    if(this.videoContainer.paused) {
+      this.videoContainer.play();
+      this.videoTurnedOn.emit();
+    }
+  }
+
+  unwatchVideo(event) {
+    if(!this.videoContainer.paused) {
+      this.videoContainer.pause();
+      this.videoTurnedOff.emit(event); // передаём "пауза" или "стоп"
+    }
   }
 }

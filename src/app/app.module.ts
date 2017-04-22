@@ -12,6 +12,11 @@ import { FragmentsListComponent } from './site/fragments-list/fragments-list.com
 import { TimePipe } from './time.pipe';
 import { RangesComponent } from './site/fragments-list/ranges/ranges.component';
 import { FragmentsComponent } from './site/fragments-list/fragments/fragments.component';
+import { VideoComponent } from './site/video-player/video/video.component';
+import { ProgressComponent } from './site/video-player/progress/progress.component';
+import { ControlsComponent } from './site/video-player/controls/controls.component';
+import { RateBarComponent } from './site/video-player/rate-bar/rate-bar.component';
+import { TipsComponent } from './site/video-player/tips/tips.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +26,12 @@ import { FragmentsComponent } from './site/fragments-list/fragments/fragments.co
     FragmentsListComponent,
     TimePipe,
     RangesComponent,
-    FragmentsComponent
+    FragmentsComponent,
+    VideoComponent,
+    ProgressComponent,
+    ControlsComponent,
+    RateBarComponent,
+    TipsComponent
   ],
   imports: [
     BrowserModule,
