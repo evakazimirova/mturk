@@ -1,3 +1,5 @@
+import { CommonService } from './common.service';
+import { HttpService } from './http.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,19 +8,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./site.component.scss']
 })
 export class SiteComponent implements OnInit {
-  user = {
-    name: '',
-    id: 0
-  };
 
-  constructor() {}
+  constructor(private http: HttpService, private common: CommonService) {}
 
   ngOnInit() {
     // 1. интерфейс авторизации (имя + id)
-    // this.user.name = prompt("Как вас зовут?");
-    // if(this.user.name.length > 0) {
-    //   this.user.id = 1; // нужна БД или csv
-    // }
+    this.http.get("../data/users.json").subscribe(
+      (users) => {
+        let answer: any;
+        while (true) {
+          answer = prompt("Как вас зовут?");
+
+          if (answer !== null) {
+            if (answer.length > 0) {
+              this.common.user.name = answer;
+              this.common.user.id = users.length; // нужна БД
+              console.log(this.common.user);
+              break; // перестаём спрашивать
+            }
+          }
+        }
+      },
+      (error) => console.log(error)
+    );
   }
 }
 

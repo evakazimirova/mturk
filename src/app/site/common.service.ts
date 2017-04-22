@@ -3,6 +3,10 @@ import { EventEmitter, Injectable } from '@angular/core';
 @Injectable()
 export class CommonService {
   // общие свойства для всех компонент
+  user = {
+    name: '',
+    id: 0
+  };
   conf: any = {};
   csv = [[1, 0, 0, -1]];
   rating = [[]];

@@ -1,15 +1,8 @@
-# Шаблон Angular 2
-
-Шаблон проекта на Angular 2 с подключенным
-- jQuery
-- Bootstrap 4 + ng-bootstrap
-- SCSS.
+# Сайт для разметки видеофайлов на MTurk
 
 ## Быстрый старт
 
 ```sh
-git clone git@github.com:noggatur/template_ng.git new_site
-cd new_site
 npm install
 ng serve
 ```

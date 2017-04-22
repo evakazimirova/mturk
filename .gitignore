@@ -7,7 +7,9 @@ dist
 *.log
 .idea
 *.iml
-data
+
+data/*
+!data/users.json
 
 npm-debug.log
 
