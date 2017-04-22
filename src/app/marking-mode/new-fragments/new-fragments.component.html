@@ -3,27 +3,20 @@
 <table class="table table-hover table-bordered">
   <thead>
     <tr>
-      <td>ID</td>
-      <td>Начало</td>
-      <td>Конец</td>
+      <th>ID</th>
+      <th>Начало</th>
+      <th>Конец</th>
     </tr>
   </thead>
 </table>
 <div class="right-col">
   <table class="table table-hover table-bordered">
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>0</td>
-        <td>5</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>5</td>
-        <td>15</td>
+      <tr *ngFor="let fragment of vp.fragments">
+        <td *ngFor="let data of fragment">{{ data }}</td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<button class="btn btn-block btn-primary">Сохранить разметку</button>
+<button class="btn btn-block btn-primary" (click)="saveMarkup()">Сохранить разметку</button>

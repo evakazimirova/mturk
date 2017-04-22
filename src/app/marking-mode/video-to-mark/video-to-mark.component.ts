@@ -1,23 +1,26 @@
+import { VideoPlayerService } from '../video-player.service';
 import { CommonService } from '../../common.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'na-video-to-mark',
   templateUrl: './video-to-mark.component.html',
-  styleUrls: ['./video-to-mark.component.scss']
+  styleUrls: ['./video-to-mark.component.scss'],
+  providers: [ VideoPlayerService ]
 })
 export class VideoToMarkComponent implements OnInit {
   currentVideo: string;
   video: string = "sharapova";
-  videoContainer;
 
-  constructor(private common: CommonService) { }
+  constructor(private common: CommonService, private vp: VideoPlayerService) { }
 
   ngOnInit() {
-    this.videoContainer = document.getElementById('videoToMark');
-
     this.currentVideo = this.common.conf.pathToData + this.video + ".mp4";
-    this.videoContainer.load();
-  }
+    this.vp.videoContainer = document.getElementById('videoToMark');
+    this.vp.videoContainer.load();
 
+    this.vp.videoContainer.addEventListener('loadedmetadata', () => {
+      this.vp.videoLength = +(this.vp.videoContainer.duration).toFixed(1);
+    });
+  }
 }

@@ -1,5 +1,35 @@
 <div class="timeline">
-  <div class="fragment"></div>
-  <div class="start"></div>
-  <div class="end"></div>
+  <div class="fragment" [ngStyle]="{
+      left: startTickPosition + 'px',
+      width: (endTickPosition - startTickPosition) + 'px'
+    }"></div>
+
+  <div class="positioner" (click)="setTickPosition($event)"></div>
+  
+  <div class="tick" [ngStyle]="{left: vp.tickPosition + 'px'}">
+    <div class="time">{{ vp.videoPosition }}&nbsp;сек</div>
+  </div>
+  <div class="start" [ngStyle]="{left: startTickPosition + 'px'}"
+    (mousedown)="startDragTick()" (mouseup)="endDragTick()">
+    <div class="time">{{ startFragment }}&nbsp;сек</div>
+  </div>
+  <div class="end" [ngStyle]="{left: endTickPosition + 'px'}">
+    <div class="time">{{ endFragment }}&nbsp;сек</div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col col-xs-6">
+    <button class="btn btn-default" (click)="setStartFragment()">Начало фрагмента</button>
+    <button class="btn btn-default" (click)="setEndFragment()">Конец фрагмента</button>
+    <button class="btn btn-default" (click)="saveFragment()">Записать фрагмент</button>
+  </div>
+  <span class="col col-xs-6 text-right">
+    Скорость скролла:
+    <div class="btn-group">
+      <button class="btn btn-default" *ngFor="let speed of [1, 0.5, 0.1]"
+        [ngClass]="{active: speed === scrollIncrement}"
+        (click)="setScrollSpeed(speed)">{{ speed }} сек</button>
+    </div>
+  </span>
 </div>

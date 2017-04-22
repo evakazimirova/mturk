@@ -1,43 +1,93 @@
 $h: 10px;
-$tick-size: 5px;
-$start: 15%;
-$end: 25%;
+$tick-size: 2px;
+$start: 0%;
+$end: 100%;
 $length: $end - $start;
+$tick-color: lighten(blue, 25);
 
 .timeline {
-  margin-top: 20px;
+  margin: 20px 0;
   width: 100%;
   height: $h;
   background-color: lighten(gray, 43);
   position: relative;
+  cursor: pointer;
 
-  .start, .end {
+  .positioner {
     position: absolute;
-    top: -10px;
+    height: 100%;
+    width: 100%;
+    // background-color: red;
+  }
+
+  .tick, .start, .end {
+    position: absolute;
+    top: -20px;
     height: 30px;
     width: $tick-size;
-    background-color: lighten(blue, 20);
+    background-color: $tick-color;
     cursor: ew-resize;
+
+    .time {
+      background-color: $tick-color;
+      position: absolute;
+      padding: 1px 5px;
+      height: 20px;
+      text-align: center;
+      border-radius: 5px;
+    }
+  }
+
+  .tick {
+    left: 0;
+    top: -10px;
+    height: 30px;
+    width: 4px;
+    margin-left: -2px;
+
+    .time {
+      left: 0;
+      bottom: -20px;
+      border-top-left-radius: 0;
+    }
   }
 
   .start {
+    // display: none;
     left: $start;
-    margin-left: -$tick-size;
-    border-top-left-radius: $tick-size;
-    border-bottom-left-radius: $tick-size;
+    margin-left: -$tick-size/2;
+
+    .time {
+      top: 0;
+      right: $tick-size;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
   }
 
   .end {
+    // display: none;
     left: $end;
-    border-top-right-radius: $tick-size;
-    border-bottom-right-radius: $tick-size;
+    margin-left: -$tick-size/2;
+
+    .time {
+      top: 0;
+      left: $tick-size;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
   }
 
   .fragment {
-    background-color: lighten(blue, 30);
+    // display: none;
+    background-color: lighten($tick-color, 10);
     position: absolute;
     left: $start;
     width: $length;
     height: $h;
   }
+}
+
+.row {
+  margin-top: 40px;
 }
