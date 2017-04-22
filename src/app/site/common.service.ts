@@ -14,6 +14,7 @@ export class CommonService {
   emotion = 0;
   videoContainer;
   allFragmentsRated = true;
+  mode: string = "fragmentsMarking"; // fragmentsRating | fragmentsMarking
 
   // события
   videoTurnedOff = new EventEmitter();

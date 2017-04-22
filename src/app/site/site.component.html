@@ -1,6 +1,6 @@
 <!-- video.js -->
 
-<section class="container">
+<div class="container" *ngIf="common.mode === 'fragmentsRating'">
   <div class="row">
     <div class="col col-xs-2">
       <na-video-list></na-video-list>
@@ -14,6 +14,10 @@
       <na-fragments-list></na-fragments-list>
     </div>
   </div>
-</section>
+</div>
+
+<div class="container" *ngIf="common.mode === 'fragmentsMarking'">
+  <h1>Режим разметки видео ""</h1>
+</div>
 
 <input type="hidden" name="smth">

@@ -13,24 +13,26 @@ export class SiteComponent implements OnInit {
 
   ngOnInit() {
     // 1. интерфейс авторизации (имя + id)
-    this.http.get("../data/users.json").subscribe(
-      (users) => {
-        let answer: any;
-        while (true) {
-          answer = prompt("Как вас зовут?");
+    if(this.common.mode === "fragmentsRating") {
+      this.http.get("../data/users.json").subscribe(
+        (users) => {
+          let answer: any;
+          while (true) {
+            answer = prompt("Как вас зовут?");
 
-          if (answer !== null) {
-            if (answer.length > 0) {
-              this.common.user.name = answer;
-              this.common.user.id = users.length; // нужна БД
-              console.log(this.common.user);
-              break; // перестаём спрашивать
+            if (answer !== null) {
+              if (answer.length > 0) {
+                this.common.user.name = answer;
+                this.common.user.id = users.length; // нужна БД
+                console.log(this.common.user);
+                break; // перестаём спрашивать
+              }
             }
           }
-        }
-      },
-      (error) => console.log(error)
-    );
+        },
+        (error) => console.log(error)
+      );
+    }
   }
 }
 
@@ -51,7 +53,7 @@ export class SiteComponent implements OnInit {
 Требования ТЗ:
 
 
-14. Если для видеофайла нет соответствующего csv или есть но пустой, не содержащий список фрагментов, то включается режим разметки видео на фрагменты. Пользователь может создавать фрагменты отмечая начало и конец на таймлайне. Границы фрагмента можно перемещать по таймлайну после их создания.
+
 
 15. Созданные фрагменты отображаются в таблице «список фрагментов»
 
