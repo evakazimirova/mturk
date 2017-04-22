@@ -16,7 +16,7 @@ export class FragmentsComponent implements OnInit {
   ngOnInit() {
     this.common.fragmentRated.subscribe(
       (rating) => {
-        this.common.csv[this.common.cf][3] = rating;
+        this.common.rating[this.common.emotion][this.common.cf] = rating;
         if(this.common.cf < this.common.csv.length - 1) {
           this.common.setFragment(this.common.cf + 1);
         }
@@ -31,17 +31,11 @@ export class FragmentsComponent implements OnInit {
           data => {
             let csv = this.CSVToArray(data.text(), ";");
 
-            // Дополняем таблицу оценками
-            for (let row of csv) {
-              row.push(-1);
-            }
-
             // выкидываем первую и последнюю строки (названия столбцов и пустая строка)
             csv.pop();
             csv.shift();
 
             this.common.updateCSV(csv); // запоминаем данные для доступа во всех компонентах
-            // console.log(this.csv);
           },
           error => console.log(error)
         );

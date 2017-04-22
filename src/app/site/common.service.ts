@@ -5,6 +5,7 @@ export class CommonService {
   // общие свойства для всех компонент
   conf: any = {};
   csv = [[1, 0, 0, -1]];
+  rating = [[]];
   cf = 0;
   emotion = 0;
   videoContainer;
@@ -26,7 +27,22 @@ export class CommonService {
 
   updateCSV(newCSV) {
     this.csv = newCSV;
-    this.fragmentChanged.emit(this.csv[0][1]);
+    this.rating = [];
+
+    let totalEmotions = this.conf.emotions.length;
+    let totalFragments = newCSV.length;
+
+    // перебираем все эмоции
+    for (let i = 0; i < totalEmotions; i++) {
+      this.rating.push([]);
+
+      // заполняем неоценненые фрагменты
+      for (let j = 0; j < totalFragments; j++) {
+        this.rating[i].push(-1);
+      }
+    }
+
+    this.setFragment(0);
   }
 
   rateFragment(value) {

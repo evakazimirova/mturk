@@ -43,6 +43,7 @@ export class ControlsComponent implements OnInit {
         } else {
           this.common.emotion++;
         }
+        this.common.cf = 0;
       }
 
       // console.log(e.keyCode);

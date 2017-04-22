@@ -13,11 +13,12 @@
   <table class="table table-hover table-bordered">
     <tbody>
       <tr *ngFor="let row of common.csv; let i = index" [ngClass]="{
-        success: row[3] !== -1,
+        success: common.rating[common.emotion][i] !== -1,
         warning: common.cf === i,
-        danger: common.cf > i && row[3] === -1
+        danger: common.cf > i && common.rating[common.emotion][i] === -1
       }" (click)="common.setFragment(i)">
         <td *ngFor="let cell of row">{{ cell }}</td>
+        <td>{{ common.rating[common.emotion][i] }}</td>
       </tr>
     </tbody>
   </table>
