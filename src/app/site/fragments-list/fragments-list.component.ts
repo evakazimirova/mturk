@@ -1,5 +1,5 @@
 import { HttpService } from '../http.service';
-import { PushService } from '../push.service';
+import { CommonService } from '../common.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -12,8 +12,8 @@ export class FragmentsListComponent implements OnInit {
   csv: any;
   emotions: string[];
 
-  constructor(private push: PushService, private http: HttpService) {
-    this.push.cf = 0
+  constructor(private common: CommonService, private http: HttpService) {
+    this.common.cf = 0
   }
 
   ngOnInit() {
@@ -25,26 +25,26 @@ export class FragmentsListComponent implements OnInit {
       (error) => console.log(error)
     );
 
-    this.push.currentFragment.subscribe(
+    this.common.currentFragment.subscribe(
       (i) => {
-        if(i >= 0 && i < this.push.csv.length) {
-          this.push.cf = i
+        if(i >= 0 && i < this.common.csv.length) {
+          this.common.cf = i
         }
       }
     );
 
-    this.push.markForThisChunk.subscribe(
+    this.common.markForThisChunk.subscribe(
       (mark) => {
-        this.csv[this.push.cf][3] = mark;
-        if(this.push.cf < this.push.csv.length - 1) {
-          this.push.setFragment(this.push.cf + 1);
+        this.csv[this.common.cf][3] = mark;
+        if(this.common.cf < this.common.csv.length - 1) {
+          this.common.setFragment(this.common.cf + 1);
         }
       }
     );
 
     // 3. При выборе видеозаписи, открывается файл на сервере с именем, совпадающим с именем csv. В этом файле содержится информация о фрагментах, которые необходимо оценить. Структура файла: Номер фрагмента;Начало фрагмента;Конец фрагмента
     // 4. Web-интерфейс отображает список фрагментов, и выставленную им оценку в выбранной шкале.
-    this.push.currentVideo.subscribe(
+    this.common.currentVideo.subscribe(
       (video) => {
         this.http.getRough(video + ".csv").subscribe(
           data => {
@@ -59,7 +59,7 @@ export class FragmentsListComponent implements OnInit {
             this.csv.pop();
             this.csv.shift();
 
-            this.push.updateCSV(this.csv); // запоминаем данные для доступа во всех компонентах
+            this.common.updateCSV(this.csv); // запоминаем данные для доступа во всех компонентах
             // console.log(this.csv);
           },
           error => console.log(error)

@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="col col-xs-2 text-right">
-    {{ push.csv[push.cf][1] | time }}
+    {{ common.csv[common.cf][1] | time }}
   </div>
   <div class="col col-xs-8">
     <div class="progress">
@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="col col-xs-2">
-    {{ push.csv[push.cf][2] | time }}
+    {{ common.csv[common.cf][2] | time }}
   </div>
 </div>
 
@@ -37,11 +37,11 @@
       <img src="http://imgdisk.ru/images/2017/04/18/replay.png" alt="repeat">
     </a>
 
-    <a href="#" (click)="push.setFragment(push.cf - 1)">
+    <a href="#" (click)="common.setFragment(common.cf - 1)">
       <img src="http://imgdisk.ru/images/2017/04/18/back.png" alt="step-backward">
     </a>
 
-    <a href="#" (click)="push.setFragment(push.cf + 1)">
+    <a href="#" (click)="common.setFragment(common.cf + 1)">
       <img src="http://imgdisk.ru/images/2017/04/18/next.png" alt="step-forward">
     </a>
   </div>
@@ -50,7 +50,7 @@
   <div class="btn-group">
     <button class="btn btn-lg btn-default"
       *ngFor="let n of [1, 2, 3, 4, 5]"
-      (click)="push.saveThisMark(n)">{{ n }}</button>
+      (click)="common.saveThisMark(n)">{{ n }}</button>
   </div>
 </div>
 

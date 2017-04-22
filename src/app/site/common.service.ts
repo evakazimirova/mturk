@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable()
-export class PushService {
+export class CommonService {
   // общие свойства для всех компонент
   conf: any = {};
   csv = [[1, 0, 0, -1]];

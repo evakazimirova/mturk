@@ -1,4 +1,4 @@
-import { PushService } from '../push.service';
+import { CommonService } from '../common.service';
 import { HttpService } from '../http.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -11,20 +11,20 @@ export class VideoListComponent implements OnInit {
   videos: string[];
   pathToData: string;
 
-  constructor(private http: HttpService, private push: PushService) { }
+  constructor(private http: HttpService, private common: CommonService) { }
 
   ngOnInit() {
     // читаем файл конфигурации
     this.http.get('./assets/conf.json').subscribe(
       (conf) => {
-        this.push.conf = conf;
+        this.common.conf = conf;
 
         // 2. Web-интерфейс отображает список видеозаписей доступных для разметки.
         this.videos = conf.videos;
         this.pathToData = conf.pathToData;
 
         // загружаем первое видео
-        this.push.setVideo(this.pathToData + this.videos[0]);
+        this.common.setVideo(this.pathToData + this.videos[0]);
       },
       (error) => console.log(error)
     );

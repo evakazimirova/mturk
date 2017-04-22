@@ -1,6 +1,6 @@
 <!-- Список доступных шкал оценок -->
-<select class="form-control" [value]="push.emotion">
-  <option *ngFor="let emotion of emotions; let i = index" value="{{ i }}" [selected]="push.emotion === i">{{ emotion }}</option>
+<select class="form-control" [value]="common.emotion">
+  <option *ngFor="let emotion of emotions; let i = index" value="{{ i }}" [selected]="common.emotion === i">{{ emotion }}</option>
 </select>
 
 <!-- Список фрагментов -->
@@ -17,11 +17,11 @@
 <div class="right-col">
   <table class="table table-hover table-bordered">
     <tbody>
-      <tr *ngFor="let row of push.csv; let i = index" [ngClass]="{
+      <tr *ngFor="let row of common.csv; let i = index" [ngClass]="{
         success: row[3] !== -1,
-        warning: push.cf === i,
-        danger: push.cf > i && row[3] === -1
-      }" (click)="push.setFragment(i)">
+        warning: common.cf === i,
+        danger: common.cf > i && row[3] === -1
+      }" (click)="common.setFragment(i)">
         <td *ngFor="let cell of row">{{ cell }}</td>
       </tr>
     </tbody>

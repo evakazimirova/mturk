@@ -1,4 +1,4 @@
-import { PushService } from './site/push.service';
+import { CommonService } from './site/common.service';
 import { HttpService } from './site/http.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -24,7 +24,7 @@ import { TimePipe } from './time.pipe';
     FormsModule,
     HttpModule
   ],
-  providers: [ HttpService, PushService ],
+  providers: [ HttpService, CommonService ],
   bootstrap: [ SiteComponent ]
 })
 export class AppModule { }
