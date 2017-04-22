@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Строим приложение
+# ng build -prod
+
+# Формируем один большой скрипт
+FILETODEPLOY="dist/script.js"
+touch $FILETODEPLOY
+cat dist/inline*.js >> $FILETODEPLOY
+cat dist/polyfills*.js >> $FILETODEPLOY
+cat dist/scripts*.js >> $FILETODEPLOY
+cat dist/vendor*.js >> $FILETODEPLOY
+cat dist/main*.js >> $FILETODEPLOY
+
+# Файл со стилями
+touch dist/style.css
+cat dist/styles*.css >> dist/style.css
