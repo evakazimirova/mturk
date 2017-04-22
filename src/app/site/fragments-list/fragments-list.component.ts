@@ -30,7 +30,7 @@ export class FragmentsListComponent implements OnInit {
 
       for (let j = 0; j < totalFragments; j++) {
         if(this.common.rating[i][j] === -1) {
-          alert(`Фрагмент ${j + 1} в шкале "${this.common.conf.emotions[i]}" не оценнён. Пожалуйста, оцените все фрагменты перед сохранением.`);
+          alert(`Фрагмент ${j + 1} в шкале "${this.common.conf.emotions[i]}" не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
 
           // переходим к неоцененному фрагменту
           this.common.emotion = i;
