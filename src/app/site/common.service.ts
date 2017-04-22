@@ -10,11 +10,11 @@ export class CommonService {
   videoContainer;
 
   // события
-  fragmentChanged = new EventEmitter();
-  markForThisChunk = new EventEmitter();
   videoTurnedOff = new EventEmitter();
   videoTurnedOn = new EventEmitter();
   videoChanged = new EventEmitter();
+  fragmentChanged = new EventEmitter();
+  fragmentRated = new EventEmitter();
 
   setFragment(number) {
     // не выходим за пределы таблицы
@@ -29,8 +29,8 @@ export class CommonService {
     this.fragmentChanged.emit(this.csv[0][1]);
   }
 
-  saveThisMark(value) {
-    this.markForThisChunk.emit(value);
+  rateFragment(value) {
+    this.fragmentRated.emit(value);
   }
 
   setVideo(value) {

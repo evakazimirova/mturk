@@ -17,7 +17,7 @@ export class ControlsComponent implements OnInit {
     $(document).keyup((e) => {
       // 7. Оценка фрагменту выставляется с помощью кнопок в web-интерфейсе или по нажатию клавиш 1 2 3 4 5.
       if (e.keyCode >= 49 && e.keyCode <= 53) {
-        this.common.saveThisMark(e.key);
+        this.common.rateFragment(e.key);
       }
 
       // 9. Переход между фрагментами осуществляется с помощью соответствующих кнопок на интерфейсе или стрелками на клавиатуре.

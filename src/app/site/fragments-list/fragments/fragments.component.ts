@@ -14,9 +14,9 @@ export class FragmentsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.common.markForThisChunk.subscribe(
-      (mark) => {
-        this.common.csv[this.common.cf][3] = mark;
+    this.common.fragmentRated.subscribe(
+      (rating) => {
+        this.common.csv[this.common.cf][3] = rating;
         if(this.common.cf < this.common.csv.length - 1) {
           this.common.setFragment(this.common.cf + 1);
         }
