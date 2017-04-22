@@ -13,6 +13,7 @@ export class CommonService {
   cf = 0;
   emotion = 0;
   videoContainer;
+  allFragmentsRated = true;
 
   // события
   videoTurnedOff = new EventEmitter();
@@ -54,8 +55,18 @@ export class CommonService {
   }
 
   setVideo(value) {
-    this.cf = 0;
-    this.videoChanged.emit(value);
+    let itsOk = false;
+
+    // 13. При попытке сменить воспроизводимый видеофайл, пользователь должен получать предупреждение о необходимости сохранения размеченных данных, если он этого не сделал ранее. Аналогичное поведение должно наблюдаться при закрытии страницы.
+    if (!this.allFragmentsRated) {
+      itsOk = confirm("Разметка этого видео не сохранена. Вы уверены, что хотите перейти к разметке другого видео без сохранения?");
+    }
+
+    if (itsOk || this.allFragmentsRated) {
+      this.cf = 0;
+      this.allFragmentsRated = false;
+      this.videoChanged.emit(value);
+    }
   }
 
   watchVideo() {

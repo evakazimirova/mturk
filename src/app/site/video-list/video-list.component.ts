@@ -24,5 +24,17 @@ export class VideoListComponent implements OnInit {
       },
       (error) => console.log(error)
     );
+
+
+    // console.log(window.onbeforeunload);
+    // Предотвратить закрытие страницы
+    window.onbeforeunload = confirmExit;
+    function confirmExit() {
+      if(this.common.allFragmentsRated) {
+        return null;
+      } else {
+        return "Работа не окончена. Вы уверены, что хотите закрыть страницу?";
+      }
+    }
   }
 }

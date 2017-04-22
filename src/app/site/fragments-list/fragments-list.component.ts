@@ -68,6 +68,9 @@ export class FragmentsListComponent implements OnInit {
         return d.join();
       }).join('\n');
 
+      // разрешаем переходить к другому видео или закрывать сайт
+      this.common.allFragmentsRated = true;
+
       console.log(outputCSV);
     }
   }
