@@ -1,18 +1,25 @@
-import { _switch } from 'rxjs/operator/switch';
 import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable()
 export class PushService {
+  // общие свойства для всех компонент
   conf: any = {};
   csv = [[1, 0, 0, -1]];
   cf = 0;
   emotion = 0;
 
+  // события
   currentFragment = new EventEmitter();
   currentVideoPosition = new EventEmitter();
-  setFragment(value) {
-    this.currentFragment.emit(value);
-    this.currentVideoPosition.emit(this.csv[value][1]);
+  markForThisChunk = new EventEmitter();
+  currentVideo = new EventEmitter();
+
+  setFragment(number) {
+    // не выходим за пределы таблицы
+    if(number >= 0 && number < this.csv.length) {
+      this.currentFragment.emit(number);
+      this.currentVideoPosition.emit(this.csv[number][1]);
+    }
   }
 
   updateCSV(newCSV) {
@@ -20,12 +27,10 @@ export class PushService {
     this.currentVideoPosition.emit(this.csv[0][1]);
   }
 
-  markForThisChunk = new EventEmitter();
   saveThisMark(value) {
     this.markForThisChunk.emit(value);
   }
 
-  currentVideo = new EventEmitter();
   setVideo(value) {
     this.currentVideo.emit(value);
     this.cf = 0;
