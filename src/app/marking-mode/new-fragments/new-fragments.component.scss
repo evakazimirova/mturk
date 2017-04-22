@@ -1,3 +1,7 @@
+h3 {
+  margin-top: 0;
+}
+
 .table {
   margin-bottom: 0;
 }
@@ -10,12 +14,13 @@
   width: 16%;
 }
 
-.table-hover tr {
-  cursor: pointer;
+thead {
+  font-weight: 900;
 }
 
 .right-col {
-  max-height: 500px;
+  min-height: 350px;
+  max-height: 350px;
   overflow-y: scroll;
-  margin: 0 0 20px 0;
+  margin-bottom: 20px;
 }

@@ -12,21 +12,11 @@ export class VideoListComponent implements OnInit {
   constructor(private http: HttpService, private common: CommonService) { }
 
   ngOnInit() {
-    // читаем файл конфигурации
-    this.http.get('./assets/conf.json').subscribe(
-      (conf) => {
-        // 2. Web-интерфейс отображает список видеозаписей доступных для разметки.
-        // 4. Выбор шкалы осуществляется пользователем из некоторого заранее заданного файла.
-        this.common.conf = conf;
+    // 2. Web-интерфейс отображает список видеозаписей доступных для разметки.
+    // 4. Выбор шкалы осуществляется пользователем из некоторого заранее заданного файла.
+    // загружаем первое видео
+    this.common.setVideo(this.common.conf.pathToData + this.common.conf.videos[0]);
 
-        // загружаем первое видео
-        this.common.setVideo(conf.pathToData + conf.videos[0]);
-      },
-      (error) => console.log(error)
-    );
-
-
-    // console.log(window.onbeforeunload);
     // Предотвратить закрытие страницы
     window.onbeforeunload = confirmExit;
     function confirmExit() {

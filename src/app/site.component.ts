@@ -1,4 +1,5 @@
 import { CommonService } from './common.service';
+import { HttpService } from './http.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SiteComponent implements OnInit {
 
-  constructor(private common: CommonService) {}
+  constructor(private common: CommonService, private http: HttpService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // читаем файл конфигурации
+    this.http.get('./assets/conf.json').subscribe(
+      conf => {
+        this.common.conf = conf
+        this.common.mode = "fragmentsMarking"; // fragmentsRating | fragmentsMarking
+      },
+      error => console.log(error)
+    );
+  }
 }
 
 
@@ -30,9 +40,6 @@ export class SiteComponent implements OnInit {
 Требования ТЗ:
 
 
-
-
-15. Созданные фрагменты отображаются в таблице «список фрагментов»
 
 16. В режиме разметки на фрагменты появляется выбор скорости скролла по таймлайну, нажатием на клавиши «влево» и «вправо» - 1 сек, 0,5 сек, 0,1 сек. Выбор вместо кнопок выставления оценки.
 

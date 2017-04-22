@@ -19,6 +19,9 @@ import { RateBarComponent } from './rating-mode/video-player/rate-bar/rate-bar.c
 import { TipsComponent } from './rating-mode/video-player/tips/tips.component';
 import { RatingModeComponent } from './rating-mode/rating-mode.component';
 import { MarkingModeComponent } from './marking-mode/marking-mode.component';
+import { TimelineComponent } from './marking-mode/timeline/timeline.component';
+import { VideoToMarkComponent } from './marking-mode/video-to-mark/video-to-mark.component';
+import { NewFragmentsComponent } from './marking-mode/new-fragments/new-fragments.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import { MarkingModeComponent } from './marking-mode/marking-mode.component';
     RateBarComponent,
     TipsComponent,
     RatingModeComponent,
-    MarkingModeComponent
+    MarkingModeComponent,
+    TimelineComponent,
+    VideoToMarkComponent,
+    NewFragmentsComponent
   ],
   imports: [
     BrowserModule,

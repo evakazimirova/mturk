@@ -1,0 +1,43 @@
+$h: 10px;
+$tick-size: 5px;
+$start: 15%;
+$end: 25%;
+$length: $end - $start;
+
+.timeline {
+  margin-top: 20px;
+  width: 100%;
+  height: $h;
+  background-color: lighten(gray, 43);
+  position: relative;
+
+  .start, .end {
+    position: absolute;
+    top: -10px;
+    height: 30px;
+    width: $tick-size;
+    background-color: lighten(blue, 20);
+    cursor: ew-resize;
+  }
+
+  .start {
+    left: $start;
+    margin-left: -$tick-size;
+    border-top-left-radius: $tick-size;
+    border-bottom-left-radius: $tick-size;
+  }
+
+  .end {
+    left: $end;
+    border-top-right-radius: $tick-size;
+    border-bottom-right-radius: $tick-size;
+  }
+
+  .fragment {
+    background-color: lighten(blue, 30);
+    position: absolute;
+    left: $start;
+    width: $length;
+    height: $h;
+  }
+}
