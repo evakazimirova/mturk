@@ -31,6 +31,12 @@ export class ProgressComponent implements OnInit {
   }
 
   startWatching() {
+    if(this.watchingVideo !== undefined) {
+      if(this.watchingVideo._zoneDelegates !== null) {
+        clearInterval(this.watchingVideo);
+      }
+    }
+
     let fragmentStart = this.common.csv[this.common.cf][1];
     let fragmentEnd = this.common.csv[this.common.cf][2];
     let fragmentDuration = fragmentEnd - fragmentStart;
