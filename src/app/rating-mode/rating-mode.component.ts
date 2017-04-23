@@ -24,7 +24,13 @@ export class RatingModeComponent implements OnInit {
               if (answer.length > 0) {
                 this.common.user.name = answer;
                 this.common.user.id = users.length; // нужна БД
-                console.log(this.common.user);
+                // console.log(this.common.user);
+
+                // 2. Web-интерфейс отображает список видеозаписей доступных для разметки.
+                // 4. Выбор шкалы осуществляется пользователем из некоторого заранее заданного файла.
+                // загружаем первое видео
+                this.common.setVideo(this.common.conf.pathToData + this.common.conf.videos[0]);
+
                 break; // перестаём спрашивать
               }
             }

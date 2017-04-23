@@ -12,10 +12,7 @@ export class VideoListComponent implements OnInit {
   constructor(private http: HttpService, private common: CommonService) { }
 
   ngOnInit() {
-    // 2. Web-интерфейс отображает список видеозаписей доступных для разметки.
-    // 4. Выбор шкалы осуществляется пользователем из некоторого заранее заданного файла.
-    // загружаем первое видео
-    this.common.setVideo(this.common.conf.pathToData + this.common.conf.videos[0]);
+
 
     // Предотвратить закрытие страницы
     window.onbeforeunload = confirmExit;

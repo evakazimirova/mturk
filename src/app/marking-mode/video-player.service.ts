@@ -5,22 +5,13 @@ export class VideoPlayerService {
   videoContainer;
 
   // 15. Созданные фрагменты отображаются в таблице «список фрагментов»
-  fragments = [
-    [1, 0, 5],
-    [2, 5, 10],
-    [3, 10, 15],
-    [4, 15, 20],
-    [5, 20, 25]
-  ]
+  fragments = [];
 
   videoLength = 0;
   timelineWidth = 0;
 
   tickPosition = 0;
   videoPosition = 0;
-
-  tickPositionChanged = new EventEmitter();
-  videoPositionChanged = new EventEmitter();
 
   setTickPosition(pos) {
     this.tickPosition = pos;

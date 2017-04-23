@@ -5,11 +5,11 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
   selector: 'na-new-fragments',
   templateUrl: './new-fragments.component.html',
-  styleUrls: ['./new-fragments.component.scss'],
-  providers: [ VideoPlayerService ]
+  styleUrls: ['./new-fragments.component.scss']
 })
 export class NewFragmentsComponent implements OnInit {
   @Input() video;
+  fragments = this.vp.fragments;
 
   constructor(private common: CommonService, private vp: VideoPlayerService) { }
 
@@ -17,8 +17,6 @@ export class NewFragmentsComponent implements OnInit {
 
   // 19. Сохранение в режиме разметки на фрагменты, приводит к созданию файла с именем включающем название видео файла и ID аннотатора.
   saveMarkup() {
-    console.log("Сохранение разметки");
-
     // заголовок для выходного CSV
     let outputCSV = 'ID,start,end\n';
 

@@ -1,35 +1,39 @@
-<div class="timeline">
+<div class="timeline" (dragover)="moveTick($event)">
   <div class="fragment" [ngStyle]="{
       left: startTickPosition + 'px',
       width: (endTickPosition - startTickPosition) + 'px'
     }"></div>
 
+  <div class="bg"></div>
   <div class="positioner" (click)="setTickPosition($event)"></div>
-  
-  <div class="tick" [ngStyle]="{left: vp.tickPosition + 'px'}">
-    <div class="time">{{ vp.videoPosition }}&nbsp;сек</div>
+
+  <div class="tick" (dragstart)="startDragTick($event, 'main')"
+    [attr.data-content]="vp.videoPosition" [ngStyle]="{left: vp.tickPosition + 'px'}">
   </div>
-  <div class="start" [ngStyle]="{left: startTickPosition + 'px'}"
-    (mousedown)="startDragTick()" (mouseup)="endDragTick()">
-    <div class="time">{{ startFragment }}&nbsp;сек</div>
+  <div class="start" *ngIf="drag.startIsSet" (dragstart)="startDragTick($event, 'start')"
+    [attr.data-content]="startFragment" [ngStyle]="{left: startTickPosition + 'px'}">
   </div>
-  <div class="end" [ngStyle]="{left: endTickPosition + 'px'}">
-    <div class="time">{{ endFragment }}&nbsp;сек</div>
+  <div class="end" *ngIf="drag.endIsSet" (dragstart)="startDragTick($event, 'end')"
+    [attr.data-content]="endFragment" [ngStyle]="{left: endTickPosition + 'px'}">
   </div>
 </div>
 
 <div class="row">
   <div class="col col-xs-6">
-    <button class="btn btn-default" (click)="setStartFragment()">Начало фрагмента</button>
-    <button class="btn btn-default" (click)="setEndFragment()">Конец фрагмента</button>
-    <button class="btn btn-default" (click)="saveFragment()">Записать фрагмент</button>
+    <img src="http://imgdisk.ru/images/2017/04/18/play-button.png" alt="play"
+      *ngIf="vp.videoContainer.paused" (click)="playVideo()">
+    <img src="http://imgdisk.ru/images/2017/04/18/pause.png" alt="pause"
+      *ngIf="!vp.videoContainer.paused" (click)="pauseVideo()">
+    <button class="btn btn-default" (click)="setStartFragment($event)">Начало фрагмента</button>
+    <button class="btn btn-default" (click)="setEndFragment($event)">Конец фрагмента</button>
+    <button class="btn btn-default" (click)="saveFragment($event)">Записать фрагмент</button>
   </div>
   <span class="col col-xs-6 text-right">
     Скорость скролла:
     <div class="btn-group">
       <button class="btn btn-default" *ngFor="let speed of [1, 0.5, 0.1]"
         [ngClass]="{active: speed === scrollIncrement}"
-        (click)="setScrollSpeed(speed)">{{ speed }} сек</button>
+        (click)="setScrollSpeed($event, speed)">{{ speed }} сек</button>
     </div>
   </span>
 </div>

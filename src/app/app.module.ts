@@ -1,3 +1,4 @@
+import { VideoPlayerService } from './marking-mode/video-player.service';
 import { CommonService } from './common.service';
 import { HttpService } from './http.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -48,7 +49,7 @@ import { NewFragmentsComponent } from './marking-mode/new-fragments/new-fragment
     FormsModule,
     HttpModule
   ],
-  providers: [ HttpService, CommonService ],
+  providers: [ HttpService, CommonService, VideoPlayerService ],
   bootstrap: [ SiteComponent ]
 })
 export class AppModule { }
