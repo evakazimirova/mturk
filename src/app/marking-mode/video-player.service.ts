@@ -18,10 +18,13 @@ export class VideoPlayerService {
 
     if (this.videoContainer === undefined) {
       this.videoContainer = document.getElementById('videoToMark');
-      this.videoLength = +(this.videoContainer.duration).toFixed(1);
+      this.videoLength = +(this.videoContainer.duration).toFixed(2);
     }
 
-    this.videoPosition = +((pos / this.timelineWidth) * this.videoLength).toFixed(1);
+    let accurateVP = (pos / this.timelineWidth) * this.videoLength;
+    accurateVP = +(+(accurateVP / 0.04).toFixed(0) * 0.04).toFixed(2);
+
+    this.videoPosition = accurateVP;
     this.videoContainer.currentTime = this.videoPosition;
   }
 
@@ -30,10 +33,10 @@ export class VideoPlayerService {
 
     if (this.videoContainer === undefined) {
       this.videoContainer = document.getElementById('videoToMark');
-      this.videoLength = +(this.videoContainer.duration).toFixed(1);
+      this.videoLength = +(this.videoContainer.duration).toFixed(2);
     }
 
-    this.tickPosition = +((pos / this.videoLength) * this.timelineWidth).toFixed(1);
+    this.tickPosition = +((pos / this.videoLength) * this.timelineWidth).toFixed(2);
     this.videoContainer.currentTime = pos;
   }
 }

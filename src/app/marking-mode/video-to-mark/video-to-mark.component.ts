@@ -19,7 +19,7 @@ export class VideoToMarkComponent implements OnInit {
     this.vp.videoContainer.load();
 
     this.vp.videoContainer.addEventListener('loadedmetadata', () => {
-      this.vp.videoLength = +(this.vp.videoContainer.duration).toFixed(1);
+      this.vp.videoLength = +(this.vp.videoContainer.duration).toFixed(2);
     });
   }
 }

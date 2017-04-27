@@ -16,6 +16,8 @@ export class TimelineComponent implements OnInit {
   endFragment = 0;
   watchingVideo;
 
+  speeds = [1, 0.5, 0.1, 0.04];
+
   drag = {
     tick: "main",
     startPageX: 0,
@@ -31,7 +33,7 @@ export class TimelineComponent implements OnInit {
     $(document).keyup((e) => {
       if (e.keyCode === 37) { // влево
         if (this.vp.videoPosition > this.scrollIncrement) {
-          this.vp.setVideoPosition(+(this.vp.videoPosition - this.scrollIncrement).toFixed(1));
+          this.vp.setVideoPosition(+(this.vp.videoPosition - this.scrollIncrement).toFixed(2));
         } else {
           this.vp.setVideoPosition(0);
         }
@@ -39,7 +41,7 @@ export class TimelineComponent implements OnInit {
 
       if (e.keyCode === 39) { // вправо
         if (this.vp.videoPosition + this.scrollIncrement < this.vp.videoLength) {
-          this.vp.setVideoPosition(+(this.vp.videoPosition + this.scrollIncrement).toFixed(1));
+          this.vp.setVideoPosition(+(this.vp.videoPosition + this.scrollIncrement).toFixed(2));
         } else {
           this.vp.setVideoPosition(this.vp.videoLength);
         }
@@ -131,12 +133,12 @@ export class TimelineComponent implements OnInit {
 
         case "start":
           this.startTickPosition = newPos;
-          this.startFragment = +((newPos / this.vp.timelineWidth) * this.vp.videoLength).toFixed(1);
+          this.startFragment = +((newPos / this.vp.timelineWidth) * this.vp.videoLength).toFixed(2);
           break;
 
         case "end":
           this.endTickPosition = newPos;
-          this.endFragment = +((newPos / this.vp.timelineWidth) * this.vp.videoLength).toFixed(1);
+          this.endFragment = +((newPos / this.vp.timelineWidth) * this.vp.videoLength).toFixed(2);
           break;
       }
     }
@@ -183,9 +185,9 @@ export class TimelineComponent implements OnInit {
         this.vp.videoContainer = document.getElementById('videoToMark');
       }
 
-      let pos = +(this.vp.videoContainer.currentTime).toFixed(1);
+      let pos = +(this.vp.videoContainer.currentTime).toFixed(2);
       this.vp.videoPosition = pos;
-      this.vp.tickPosition = +((pos / this.vp.videoLength) * this.vp.timelineWidth).toFixed(1);
+      this.vp.tickPosition = +((pos / this.vp.videoLength) * this.vp.timelineWidth).toFixed(2);
     }
 
     this.vp.videoContainer.play();

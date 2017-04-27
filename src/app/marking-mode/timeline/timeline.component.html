@@ -8,13 +8,13 @@
   <div class="positioner" (click)="setTickPosition($event)"></div>
 
   <div class="tick" (dragstart)="startDragTick($event, 'main')"
-    [attr.data-content]="vp.videoPosition" [ngStyle]="{left: vp.tickPosition + 'px'}">
+    [attr.data-content]="vp.videoPosition.toFixed(2)" [ngStyle]="{left: vp.tickPosition + 'px'}">
   </div>
   <div class="start" *ngIf="drag.startIsSet" (dragstart)="startDragTick($event, 'start')"
-    [attr.data-content]="startFragment" [ngStyle]="{left: startTickPosition + 'px'}">
+    [attr.data-content]="startFragment.toFixed(2)" [ngStyle]="{left: startTickPosition + 'px'}">
   </div>
   <div class="end" *ngIf="drag.endIsSet" (dragstart)="startDragTick($event, 'end')"
-    [attr.data-content]="endFragment" [ngStyle]="{left: endTickPosition + 'px'}">
+    [attr.data-content]="endFragment.toFixed(2)" [ngStyle]="{left: endTickPosition + 'px'}">
   </div>
 </div>
 
@@ -31,7 +31,7 @@
   <span class="col col-xs-6 text-right">
     Скорость скролла:
     <div class="btn-group">
-      <button class="btn btn-default" *ngFor="let speed of [1, 0.5, 0.1]"
+      <button class="btn btn-default" *ngFor="let speed of speeds"
         [ngClass]="{active: speed === scrollIncrement}"
         (click)="setScrollSpeed($event, speed)">{{ speed }} сек</button>
     </div>
