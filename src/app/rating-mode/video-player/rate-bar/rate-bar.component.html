@@ -3,6 +3,6 @@
   <div class="btn-group">
     <button class="btn btn-lg btn-default"
       *ngFor="let n of [1, 2, 3, 4, 5]"
-      (click)="common.rateFragment(n)">{{ n }}</button>
+      (click)="common.rateFragment(n)">{{ common.conf.emotions[common.emotion].scale === 2 ? n - 3 : n }}</button>
   </div>
 </div>

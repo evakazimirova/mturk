@@ -13,6 +13,7 @@ export class SiteComponent implements OnInit {
 
   ngOnInit() {
     // читаем файл конфигурации
+    // ДОП 2. в конфигурационном файле указывается список шкал для разметки и диапазон разметки. Диапазон может быть либо от 1 до 5 либо от -2 до +2.
     this.http.get('./assets/conf.json').subscribe(
       conf => {
         this.common.conf = conf
