@@ -1,6 +1,6 @@
 <!-- Панель навигации -->
 <div class="row">
-  <div class="col col-xs-9 text-center">
+  <div class="col col-xs-8 text-center">
     <div class="video-navigation">
       <img src="http://imgdisk.ru/images/2017/04/18/play-button.png" alt="play" (click)="playVideo()">
 
@@ -15,7 +15,7 @@
       <img src="http://imgdisk.ru/images/2017/04/18/next.png" alt="step-forward" (click)="common.setFragment(common.cf + 1)">
     </div>
   </div>
-  <div class="col col-xs-3">
+  <div class="col col-xs-4">
     <button class="btn btn-block btn-default" (click)="wholeVideo()"
       [ngClass]="{active: common.cf === -1}">Видео целиком</button>
   </div>
