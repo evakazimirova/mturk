@@ -72,6 +72,8 @@ export class TimelineComponent implements OnInit {
           let confirmed = confirm(`Точно удалить фрагмет №${this.vp.cf + 1}?`);
           if (confirmed) {
             this.vp.fragments.splice(this.vp.cf, 1);
+            this.clearTimeline();
+            this.vp.cf = -1;
           }
         }
         // console.log(e.keyCode);
@@ -83,7 +85,6 @@ export class TimelineComponent implements OnInit {
 
     this.vp.fragmentSelected.subscribe(
       () => {
-        console.log(`Фрагмент #${this.vp.cf} выбран`);
         this.vp.setVideoPosition(this.vp.endFragment);
         this.setEndFragment();
         this.vp.setVideoPosition(this.vp.startFragment);
@@ -197,19 +198,22 @@ export class TimelineComponent implements OnInit {
       }
 
       // обнуляем значения
-      this.startTickPosition = 0;
-      this.endTickPosition = 0;
-      this.startFragment = 0;
-      this.endFragment = 0;
-      this.drag = {
-        tick: "main",
-        startPageX: 0,
-        startX: 0,
-        startIsSet: false,
-        endIsSet: false
-      }
+      this.clearTimeline();
     }
+  }
 
+  clearTimeline() {
+    this.startTickPosition = 0;
+    this.endTickPosition = 0;
+    this.startFragment = 0;
+    this.endFragment = 0;
+    this.drag = {
+      tick: "main",
+      startPageX: 0,
+      startX: 0,
+      startIsSet: false,
+      endIsSet: false
+    }
   }
 
   playVideo() {
