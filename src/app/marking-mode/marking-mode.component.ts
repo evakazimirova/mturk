@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./marking-mode.component.scss']
 })
 export class MarkingModeComponent implements OnInit {
-  video = "sharapova";
+  video: string = this.common.cv;
 
   constructor(private common: CommonService) { }
 

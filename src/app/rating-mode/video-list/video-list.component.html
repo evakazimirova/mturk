@@ -1,5 +1,5 @@
 <ul class="list-unstyled" id="videoList">
-  <li *ngFor="let video of common.conf.videos" (click)="common.setVideo(common.conf.pathToData + video)">{{ video }}</li>
+  <li *ngFor="let video of common.conf.videos" (click)="setVideo(video)">{{ video }}</li>
 </ul>
 
 <button class="btn btn-sm btn-primary btn-block">Объединить результаты</button>

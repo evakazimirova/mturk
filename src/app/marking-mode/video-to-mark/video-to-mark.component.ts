@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VideoToMarkComponent implements OnInit {
   currentVideo: string;
-  video: string = "sharapova";
+  video: string = this.common.cv;
 
   constructor(private common: CommonService, private vp: VideoPlayerService) { }
 

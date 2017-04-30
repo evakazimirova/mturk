@@ -22,4 +22,9 @@ export class VideoListComponent implements OnInit {
       }
     }
   }
+
+  setVideo(video) {
+    this.common.cv = video;
+    this.common.setVideo(this.common.conf.pathToData + video);
+  }
 }

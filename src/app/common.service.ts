@@ -10,6 +10,7 @@ export class CommonService {
   conf: any = {};
   csv = [[1, 0, 0, -1]];
   rating = [[]];
+  cv: string;
   cf = -1;
   emotion = 0;
   videoContainer;
