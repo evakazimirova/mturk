@@ -28,4 +28,12 @@ export class NewFragmentsComponent implements OnInit {
     let filename = `${this.video}_${this.common.user.id}.mp4`;
     console.log(filename, outputCSV);
   }
+
+  selectFragment(fragment) {
+    // console.log("Выбран фрагмент: ", this.vp.fragments[fragment]);
+    this.vp.cf = fragment;
+    this.vp.startFragment = this.vp.fragments[fragment][1];
+    this.vp.endFragment = this.vp.fragments[fragment][2];
+    this.vp.selectFragment();
+  }
 }

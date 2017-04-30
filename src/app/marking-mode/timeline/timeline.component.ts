@@ -13,8 +13,8 @@ export class TimelineComponent implements OnInit {
   scrollIncrement: number = 1;
   startTickPosition = 0;
   endTickPosition = 0;
-  startFragment = 0;
-  endFragment = 0;
+  startFragment = this.vp.startFragment;
+  endFragment = this.vp.endFragment;
   watchingVideo;
 
   speeds = [1, 0.5, 0.1, 0.04];
@@ -51,11 +51,11 @@ export class TimelineComponent implements OnInit {
 
         // 18. Нажатие стрелки «вверх» на клавиатуре создает начало фрагмента, «вниз» конец фрагмента.
         if (e.keyCode === 38) { // вверх
-          this.setStartFragment(e)
+          this.setStartFragment();
         }
 
         if (e.keyCode === 40) { // вниз
-          this.setEndFragment(e)
+          this.setEndFragment();
         }
 
         // воспроизведение / пауза
@@ -73,6 +73,17 @@ export class TimelineComponent implements OnInit {
 
     this.vp.timelineWidth = $(".timeline").outerWidth();
     this.endFragment = this.vp.videoLength;
+
+    this.vp.fragmentSelected.subscribe(
+      () => {
+        console.log(`Фрагмент #${this.vp.cf} выбран`);
+        this.vp.setVideoPosition(this.vp.endFragment);
+        this.setEndFragment();
+        this.vp.setVideoPosition(this.vp.startFragment);
+        this.setStartFragment();
+      },
+      err => console.log(err)
+    );
   }
 
   // 14. Пользователь может создавать фрагменты отмечая начало и конец на таймлайне.
@@ -81,16 +92,20 @@ export class TimelineComponent implements OnInit {
   }
 
   // 17. Также в интерфейсе продублированы кнопки «начало фрагмента» «конец фрагмента»
-  setStartFragment(event) {
-    event.preventDefault();
+  setStartFragment(event?) {
+    if(event) {
+      event.preventDefault();
+    }
 
     this.startTickPosition = this.vp.tickPosition;
     this.startFragment = this.vp.videoPosition;
     this.drag.startIsSet = true;
   }
 
-  setEndFragment(event) {
-    event.preventDefault();
+  setEndFragment(event?) {
+    if(event) {
+      event.preventDefault();
+    }
 
     this.endTickPosition = this.vp.tickPosition;
     this.endFragment = this.vp.videoPosition;
@@ -159,12 +174,20 @@ export class TimelineComponent implements OnInit {
     event.preventDefault();
 
     if(this.drag.startIsSet && this.drag.endIsSet && this.endFragment > this.startFragment) {
-      let newID = this.vp.fragments.length + 1;
-      this.vp.fragments.push([
-        newID,
-        this.startFragment,
-        this.endFragment
-      ]);
+      if (this.vp.cf === -1) {
+        // добавляем новый фрагмент
+        let newID = this.vp.fragments.length + 1;
+        this.vp.fragments.push([
+          newID,
+          this.startFragment,
+          this.endFragment
+        ]);
+      } else {
+        // перезаписываем старый фрагмент
+        this.vp.fragments[this.vp.cf][1] = this.startFragment;
+        this.vp.fragments[this.vp.cf][2] = this.endFragment;
+        this.vp.cf = -1; // возвращаемся в режим добавления нового фрагмента
+      }
 
       // обнуляем значения
       this.startTickPosition = 0;

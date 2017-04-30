@@ -7,11 +7,18 @@ export class VideoPlayerService {
   // 15. Созданные фрагменты отображаются в таблице «список фрагментов»
   fragments = [];
 
+  cf = -1;
+
   videoLength = 0;
   timelineWidth = 0;
 
   tickPosition = 0;
   videoPosition = 0;
+
+  startFragment = 0;
+  endFragment = 0;
+
+  fragmentSelected = new EventEmitter;
 
   setTickPosition(pos) {
     this.tickPosition = pos;
@@ -39,5 +46,9 @@ export class VideoPlayerService {
 
     this.tickPosition = +((pos / this.videoLength) * this.timelineWidth).toFixed(2);
     this.videoContainer.currentTime = pos;
+  }
+
+  selectFragment() {
+    this.fragmentSelected.emit();
   }
 }

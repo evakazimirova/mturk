@@ -12,7 +12,8 @@
 <div class="right-col">
   <table class="table table-hover table-bordered">
     <tbody>
-      <tr *ngFor="let fragment of fragments">
+      <tr *ngFor="let fragment of fragments; let i = index" (click)="selectFragment(i)"
+        [ngClass]="{success: vp.cf === i}">
         <td *ngFor="let data of fragment">{{ data }}</td>
       </tr>
     </tbody>

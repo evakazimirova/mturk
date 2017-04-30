@@ -4,6 +4,10 @@ h3 {
 
 .table {
   margin-bottom: 0;
+
+  tbody tr {
+    cursor: pointer;
+  }
 }
 
 .table tbody tr td, .table thead tr th {
