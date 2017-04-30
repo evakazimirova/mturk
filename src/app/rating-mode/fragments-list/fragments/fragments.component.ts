@@ -9,9 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FragmentsComponent implements OnInit {
 
-  constructor(private common: CommonService, private http: HttpService) {
-    this.common.cf = 0
-  }
+  constructor(private common: CommonService, private http: HttpService) {}
 
   ngOnInit() {
     this.common.fragmentRated.subscribe(

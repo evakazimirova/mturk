@@ -10,9 +10,10 @@ export class CommonService {
   conf: any = {};
   csv = [[1, 0, 0, -1]];
   rating = [[]];
-  cf = 0;
+  cf = -1;
   emotion = 0;
   videoContainer;
+  videoLength = 0;
   allFragmentsRated = true;
   mode: string;
 
@@ -25,9 +26,13 @@ export class CommonService {
 
   setFragment(number) {
     // не выходим за пределы таблицы
-    if(number >= 0 && number < this.csv.length) {
+    if(number >= -1 && number < this.csv.length) {
       this.cf = number;
-      this.fragmentChanged.emit(this.csv[number][1]);
+      if(number === -1) {
+        this.fragmentChanged.emit(0);
+      } else {
+        this.fragmentChanged.emit(this.csv[number][1]);
+      }
     }
   }
 
@@ -48,14 +53,14 @@ export class CommonService {
       }
     }
 
-    this.setFragment(0);
+    // this.watchVideo();
   }
 
   rateFragment(value) {
     this.fragmentRated.emit(value);
   }
 
-  setVideo(value) {
+  setVideo(video) {
     let itsOk = false;
 
     // 13. При попытке сменить воспроизводимый видеофайл, пользователь должен получать предупреждение о необходимости сохранения размеченных данных, если он этого не сделал ранее. Аналогичное поведение должно наблюдаться при закрытии страницы.
@@ -64,9 +69,9 @@ export class CommonService {
     }
 
     if (itsOk || this.allFragmentsRated) {
-      this.cf = 0;
+      this.cf = -1;
       this.allFragmentsRated = false;
-      this.videoChanged.emit(value);
+      this.videoChanged.emit(video);
     }
   }
 

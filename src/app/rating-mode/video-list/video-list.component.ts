@@ -12,8 +12,6 @@ export class VideoListComponent implements OnInit {
   constructor(private http: HttpService, private common: CommonService) { }
 
   ngOnInit() {
-
-
     // Предотвратить закрытие страницы
     window.onbeforeunload = confirmExit;
     function confirmExit() {

@@ -9,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class ProgressComponent implements OnInit {
   percentage: string | number = 0;
   watchingVideo;
+  fragmentStart = 0;
+  fragmentEnd = 0;
 
   constructor(private common: CommonService) { }
 
@@ -22,7 +24,13 @@ export class ProgressComponent implements OnInit {
       (event) => {
         this.stopWatching();
         if (event === "stop") {
-          this.common.videoContainer.currentTime = this.common.csv[this.common.cf][1]; // возвращаемся в начало фрагмента
+          // возвращаемся в начало фрагмента
+          if (this.common.cf === -1) {
+            this.common.videoContainer.currentTime = 0;
+          } else {
+            this.common.videoContainer.currentTime = this.common.csv[this.common.cf][1];
+          }
+
           this.percentage = 0;
         }
       },
@@ -37,19 +45,24 @@ export class ProgressComponent implements OnInit {
       }
     }
 
-    let fragmentStart = this.common.csv[this.common.cf][1];
-    let fragmentEnd = this.common.csv[this.common.cf][2];
-    let fragmentDuration = fragmentEnd - fragmentStart;
+    if(this.common.cf === -1) {
+      this.fragmentStart = 0;
+      this.fragmentEnd = this.common.videoLength;
+    } else {
+      this.fragmentStart = this.common.csv[this.common.cf][1];
+      this.fragmentEnd = this.common.csv[this.common.cf][2];
+    }
+    let fragmentDuration = this.fragmentEnd - this.fragmentStart;
 
     let updateProgressBar = () => {
       let currentTime = this.common.videoContainer.currentTime;
 
       // проиграв фрагмент, останавливаем видео
-      if(this.common.videoContainer.currentTime >= fragmentEnd) {
+      if(this.common.videoContainer.currentTime >= this.fragmentEnd) {
         this.common.unwatchVideo("stop");
       }
 
-      let timeSpent = currentTime - fragmentStart;
+      let timeSpent = currentTime - this.fragmentStart;
       this.percentage = (timeSpent / fragmentDuration * 100).toFixed(0);
     }
 

@@ -53,9 +53,8 @@ export class ControlsComponent implements OnInit {
     // 6. При выборе фрагмента из списка происходит его воспроизведение. В списке воспроизводимый в текущий момент фрагмент помечается.
     this.common.fragmentChanged.subscribe(
       (fragmentPosition) => {
-        this.common.unwatchVideo("stop");
+        this.stopVideo();
         this.common.videoContainer.currentTime = fragmentPosition;
-
         this.playVideo();
       },
       (error) => console.log(error)
@@ -76,7 +75,20 @@ export class ControlsComponent implements OnInit {
   }
 
   replayVideo() {
-    this.common.videoContainer.currentTime = this.common.csv[this.common.cf][1]; // возвращаемся в начало фрагмента
+    if (this.common.cf === -1) {
+      this.common.videoContainer.currentTime = 0;
+    } else {
+      this.common.videoContainer.currentTime = this.common.csv[this.common.cf][1];
+    }
     this.playVideo();
+  }
+
+  // 1. сделать возможность просматривать весь видеофайл (это необходимо сделать аннотаторам перед разметкой каждого видео, по умолчанию выбор нового видео должен приводить к тому что включается воспроизведение видео без фрагментов). То есть должна быть кнопка в управлении, которая запускает видео таймлайн при этом это длина всего файла. Когда такой тип воспроизведения активен, соответствующая кнопка подсвечивается, чтобы перейти к разметке надо ее отжать, либо выбрать фрагмент.
+  wholeVideo() {
+    if(this.common.cf === -1) {
+      this.common.setFragment(0);
+    } else {
+      this.common.setFragment(-1);
+    }
   }
 }
