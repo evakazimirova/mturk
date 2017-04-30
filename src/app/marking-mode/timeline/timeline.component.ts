@@ -67,6 +67,13 @@ export class TimelineComponent implements OnInit {
           }
         }
 
+        // ДОП 7. В режиме разметки. Редактирование фрагментов надо, согласен. Думаю выбор фрагмента в таблице приводит к его отображению на таймлайне. Если в таблице нажать del - удаление.
+        if (this.vp.cf !== -1 && e.keyCode === 8) {
+          let confirmed = confirm(`Точно удалить фрагмет №${this.vp.cf + 1}?`);
+          if (confirmed) {
+            this.vp.fragments.splice(this.vp.cf, 1);
+          }
+        }
         // console.log(e.keyCode);
       }
     });
