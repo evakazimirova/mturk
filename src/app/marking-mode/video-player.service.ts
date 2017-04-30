@@ -7,6 +7,8 @@ export class VideoPlayerService {
   // 15. Созданные фрагменты отображаются в таблице «список фрагментов»
   fragments = [];
 
+  task = 0;
+
   cf = -1;
 
   videoLength = 0;

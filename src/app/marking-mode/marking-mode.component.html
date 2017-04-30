@@ -1,5 +1,9 @@
 <div class="container">
   <h2>Разбивка видео «{{ video }}.mp4» на фрагменты</h2>
+  <label for="task">Задача:</label>
+  <select id="task" class="form-control" [(ngModel)]="vp.task">
+    <option *ngFor="let task of common.conf.tasks; let i = index" value="{{ i }}">{{ task }}</option>
+  </select>
   <div class="row">
     <div class="col col-xs-9">
       <na-video-to-mark></na-video-to-mark>

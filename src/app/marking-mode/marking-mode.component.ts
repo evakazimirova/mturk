@@ -1,3 +1,4 @@
+import { VideoPlayerService } from './video-player.service';
 import { CommonService } from '../common.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class MarkingModeComponent implements OnInit {
   video: string = this.common.cv;
 
-  constructor(private common: CommonService) { }
+  constructor(private common: CommonService, private vp: VideoPlayerService) { }
 
   ngOnInit() {
     this.common.unwatchVideo('stop'); // выключаем видео основного плеера
