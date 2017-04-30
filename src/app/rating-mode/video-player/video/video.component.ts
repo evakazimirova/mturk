@@ -23,7 +23,14 @@ export class VideoComponent implements OnInit {
 
         this.common.videoContainer.addEventListener('loadeddata', () => {
           this.common.videoLength = this.common.videoContainer.duration;
-          this.common.setFragment(-1); // запускаем видео целиком
+
+          if (this.common.mode === "fragmentsRating") {
+            this.common.setFragment(-1); // запускаем видео целиком
+          }
+
+          if (this.common.mode === "fragmentsMarking") {
+            this.common.unwatchVideo('stop');
+          }
         }, false);
 
         // // 5. По умолчанию воспроизведение начинается с 0-го фрагмента.

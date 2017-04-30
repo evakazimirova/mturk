@@ -22,14 +22,15 @@ export class VideoPlayerService {
     }
 
     let accurateVP = (pos / this.timelineWidth) * this.videoLength;
-    accurateVP = +(+(accurateVP / 0.04).toFixed(0) * 0.04).toFixed(2);
+    accurateVP = +(+(accurateVP / 0.04).toFixed(0) * 0.04).toFixed(2); // подгоняем под целое число кадров
 
     this.videoPosition = accurateVP;
     this.videoContainer.currentTime = this.videoPosition;
   }
 
   setVideoPosition(pos) {
-    this.videoPosition = pos;
+    pos = +(+(pos / 0.04).toFixed(0) * 0.04).toFixed(2);
+    this.videoPosition = pos; // подгоняем под целое число кадров
 
     if (this.videoContainer === undefined) {
       this.videoContainer = document.getElementById('videoToMark');

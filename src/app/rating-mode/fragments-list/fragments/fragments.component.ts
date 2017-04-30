@@ -40,6 +40,7 @@ export class FragmentsComponent implements OnInit {
             alert("К сожалению, это видео ещё не подготовлено для оценивания, поэтому сейчас Вы перейдёте в режим, в котором сможете разбить видео на фрагменты самостоятельно.");
 
             this.common.mode = "fragmentsMarking";
+            this.common.unwatchVideo('stop'); // выключаем видео основного плеера
           }
         );
       },

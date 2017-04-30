@@ -1,3 +1,4 @@
+import { CommonService } from '../common.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class MarkingModeComponent implements OnInit {
   video = "sharapova";
 
-  constructor() { }
+  constructor(private common: CommonService) { }
 
   ngOnInit() {
+    this.common.unwatchVideo('stop'); // выключаем видео основного плеера
   }
 
 }

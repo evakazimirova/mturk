@@ -1,3 +1,4 @@
+import { CommonService } from '../../common.service';
 import { VideoPlayerService } from '../video-player.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -26,46 +27,48 @@ export class TimelineComponent implements OnInit {
     endIsSet: false
   }
 
-  constructor(private vp: VideoPlayerService) { }
+  constructor(private vp: VideoPlayerService, private common: CommonService) { }
 
   ngOnInit() {
     // скролл по нажатию стрелок на клавиатуре
     $(document).keyup((e) => {
-      if (e.keyCode === 37) { // влево
-        if (this.vp.videoPosition > this.scrollIncrement) {
-          this.vp.setVideoPosition(+(this.vp.videoPosition - this.scrollIncrement).toFixed(2));
-        } else {
-          this.vp.setVideoPosition(0);
+      if(this.common.mode === "fragmentsMarking") {
+        if (e.keyCode === 37) { // влево
+          if (this.vp.videoPosition > this.scrollIncrement) {
+            this.vp.setVideoPosition(this.vp.videoPosition - this.scrollIncrement);
+          } else {
+            this.vp.setVideoPosition(0);
+          }
         }
-      }
 
-      if (e.keyCode === 39) { // вправо
-        if (this.vp.videoPosition + this.scrollIncrement < this.vp.videoLength) {
-          this.vp.setVideoPosition(+(this.vp.videoPosition + this.scrollIncrement).toFixed(2));
-        } else {
-          this.vp.setVideoPosition(this.vp.videoLength);
+        if (e.keyCode === 39) { // вправо
+          if (this.vp.videoPosition + this.scrollIncrement < this.vp.videoLength) {
+            this.vp.setVideoPosition(this.vp.videoPosition + this.scrollIncrement);
+          } else {
+            this.vp.setVideoPosition(this.vp.videoLength);
+          }
         }
-      }
 
-      // 18. Нажатие стрелки «вверх» на клавиатуре создает начало фрагмента, «вниз» конец фрагмента.
-      if (e.keyCode === 38) { // вверх
-        this.setStartFragment(e)
-      }
-
-      if (e.keyCode === 40) { // вниз
-        this.setEndFragment(e)
-      }
-
-      // воспроизведение / пауза
-      if (e.keyCode === 32) { // пробел
-        if (this.vp.videoContainer.paused) {
-          this.playVideo();
-        } else {
-          this.pauseVideo();
+        // 18. Нажатие стрелки «вверх» на клавиатуре создает начало фрагмента, «вниз» конец фрагмента.
+        if (e.keyCode === 38) { // вверх
+          this.setStartFragment(e)
         }
-      }
 
-      // console.log(e.keyCode);
+        if (e.keyCode === 40) { // вниз
+          this.setEndFragment(e)
+        }
+
+        // воспроизведение / пауза
+        if (e.keyCode === 32) { // пробел
+          if (this.vp.videoContainer.paused) {
+            this.playVideo();
+          } else {
+            this.pauseVideo();
+          }
+        }
+
+        // console.log(e.keyCode);
+      }
     });
 
     this.vp.timelineWidth = $(".timeline").outerWidth();
@@ -191,7 +194,7 @@ export class TimelineComponent implements OnInit {
     }
 
     this.vp.videoContainer.play();
-    this.watchingVideo = setInterval(updateTickPosition, 100);
+    this.watchingVideo = setInterval(updateTickPosition, 40);
   }
 
   pauseVideo() {
