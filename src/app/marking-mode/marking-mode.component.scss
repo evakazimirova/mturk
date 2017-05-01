@@ -1,5 +1,37 @@
+label {
+  font-size: 2rem;
+  font-weight: 400;
+}
+
 select.form-control {
-  display: inline-block;
-  margin: 10px 0;
+  // display: inline-block;
+  // margin: 10px 0;
   width: initial;
+}
+
+.form-group {
+  position: relative;
+
+  .pics {
+    margin-left: 20px;
+    height: 68px;
+    position: absolute;
+    top: 0;
+    left: 500px;
+    font-size: 2rem;
+
+    span {
+      margin-left: 30px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      img {
+        width: 68px;
+        height: 68px;
+        margin-right: 10px;
+      }
+    }
+  }
 }

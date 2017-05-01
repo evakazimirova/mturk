@@ -184,16 +184,16 @@ export class TimelineComponent implements OnInit {
     if(this.drag.startIsSet && this.drag.endIsSet && this.endFragment > this.startFragment) {
       if (this.vp.cf === -1) {
         // добавляем новый фрагмент
-        let newID = this.vp.fragments.length + 1;
-        this.vp.fragments.push([
+        let newID = this.vp.fragments[this.vp.task].length + 1;
+        this.vp.fragments[this.vp.task].push([
           newID,
           this.startFragment,
           this.endFragment
         ]);
       } else {
         // перезаписываем старый фрагмент
-        this.vp.fragments[this.vp.cf][1] = this.startFragment;
-        this.vp.fragments[this.vp.cf][2] = this.endFragment;
+        this.vp.fragments[this.vp.task][this.vp.cf][1] = this.startFragment;
+        this.vp.fragments[this.vp.task][this.vp.cf][2] = this.endFragment;
         this.vp.cf = -1; // возвращаемся в режим добавления нового фрагмента
       }
 
