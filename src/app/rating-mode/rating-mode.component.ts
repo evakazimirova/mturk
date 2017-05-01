@@ -14,7 +14,7 @@ export class RatingModeComponent implements OnInit {
   ngOnInit() {
     // 1. интерфейс авторизации (имя + id)
     if(this.common.user.name.length === 0) {
-      this.http.get("../data/users.json").subscribe(
+      this.http.get(this.common.conf.pathToData + "/users.json").subscribe(
         (users) => {
           let answer: any;
           while (true) {
