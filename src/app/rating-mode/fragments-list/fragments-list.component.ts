@@ -1,8 +1,6 @@
 import { CommonService } from '../../common.service';
 import { Component, OnInit } from '@angular/core';
 
-declare var $: any;
-
 @Component({
   selector: 'na-fragments-list',
   templateUrl: './fragments-list.component.html',

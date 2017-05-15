@@ -2,8 +2,6 @@ import { CommonService } from '../../common.service';
 import { VideoPlayerService } from '../video-player.service';
 import { Component, OnInit } from '@angular/core';
 
-declare var $: any;
-
 @Component({
   selector: 'na-timeline',
   templateUrl: './timeline.component.html',
