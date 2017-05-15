@@ -8,8 +8,6 @@ dist
 .idea
 *.iml
 
-data/*
-!data/users.json
 toDeploy
 
 npm-debug.log

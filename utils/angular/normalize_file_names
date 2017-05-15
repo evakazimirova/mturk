@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+mv inline.*.bundle.js inline.bundle.js
+mv main.*.bundle.js main.bundle.js
+mv polyfills.*.bundle.js polyfills.bundle.js
+mv scripts.*.bundle.js scripts.bundle.js
+mv styles.*.bundle.css styles.bundle.css
+mv vendor.*.bundle.js vendor.bundle.js
+rm index.html
