@@ -1,6 +1,5 @@
 <na-admin-header [page]="page" (pageChanged)="page = $event"></na-admin-header>
 <div class="container">
-  <h1>Личный кабинет администратора</h1>
   <na-admin-users *ngIf="page === 'users'"></na-admin-users>
   <na-admin-projects *ngIf="page === 'projects'"></na-admin-projects>
   <na-admin-money-requests *ngIf="page === 'moneyRequests'"></na-admin-money-requests>

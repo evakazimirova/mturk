@@ -1,1 +1,35 @@
-Редактирование списка и параметров проектов (название, статус, размер оплаты за задачу)
+<!-- Редактирование списка и параметров проектов (название, статус, размер оплаты за задачу) -->
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Название</th>
+      <th>Статус</th>
+      <th>Размер оплаты за задачу</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let project of projects" data-toggle="modal" data-target="#projectSettings" (click)="projectId = project.id">
+      <td>{{ project.title }}</td>
+      <td>{{ project.status }}</td>
+      <td>{{ project.price }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="modal modal-sm fade" id="projectSettings" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
