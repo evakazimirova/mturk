@@ -1,42 +1,47 @@
 #!/bin/bash
+if [[ $# -eq 0 ]]; then
+  # Строим приложение
+  ng build -prod
 
-# Строим приложение
-ng build -prod
+  DEPLOY_DIR="toDeploy"
+  SERVER_DIR="\/assets\/archive\/mturk"
 
-DEPLOY_DIR="toDeploy"
-SERVER_DIR="\/assets\/archive\/mturk"
+  # Обновляем папку для выкатки на сервер
+  rm -rf $DEPLOY_DIR
+  mkdir $DEPLOY_DIR
 
-# Обновляем папку для выкатки на сервер
-rm -rf $DEPLOY_DIR
-mkdir $DEPLOY_DIR
+  # Формируем один большой скрипт
+  FILETODEPLOY="$DEPLOY_DIR/script.js"
+  touch $FILETODEPLOY
+  cat dist/inline*.js >> $FILETODEPLOY
+  cat dist/polyfills*.js >> $FILETODEPLOY
+  cat dist/scripts*.js >> $FILETODEPLOY
+  cat dist/vendor*.js >> $FILETODEPLOY
+  cat dist/main*.js >> $FILETODEPLOY
 
-# Формируем один большой скрипт
-FILETODEPLOY="$DEPLOY_DIR/script.js"
-touch $FILETODEPLOY
-cat dist/inline*.js >> $FILETODEPLOY
-cat dist/polyfills*.js >> $FILETODEPLOY
-cat dist/scripts*.js >> $FILETODEPLOY
-cat dist/vendor*.js >> $FILETODEPLOY
-cat dist/main*.js >> $FILETODEPLOY
+  # Файл со стилями
+  touch dist/style.css
+  cat dist/styles*.css >> "$DEPLOY_DIR/styles.css"
 
-# Файл со стилями
-touch dist/style.css
-cat dist/styles*.css >> "$DEPLOY_DIR/styles.css"
+  # Перемещаем остальные файлы в отдельную папку
+  mv dist/index.html "$DEPLOY_DIR/index.html"
+  mv dist/assets/conf.json "$DEPLOY_DIR/conf.json"
 
-# Перемещаем остальные файлы в отдельную папку
-mv dist/index.html "$DEPLOY_DIR/index.html"
-mv dist/assets/conf.json "$DEPLOY_DIR/conf.json"
+  # Удаляем папку с билдом
+  rm -rf dist
 
-# Удаляем папку с билдом
-rm -rf dist
+  # Заменяем пути к файлам
+  sed -ie $'s/<link href=.*>/  <link href="'$SERVER_DIR'\/styles.css" rel="stylesheet"><\/head>/' "$DEPLOY_DIR/index.html"
+  sed -ie $'s/<script type=.*>/  <script type="text\/javascript" src="'$SERVER_DIR'\/script.js"><\/script><\/body>/' "$DEPLOY_DIR/index.html"
 
-# Заменяем пути к файлам
-sed -ie $'s/<link href=.*>/  <link href="'$SERVER_DIR'\/styles.css" rel="stylesheet"><\/head>/' "$DEPLOY_DIR/index.html"
-sed -ie $'s/<script type=.*>/  <script type="text\/javascript" src="'$SERVER_DIR'\/script.js"><\/script><\/body>/' "$DEPLOY_DIR/index.html"
+  # Правим пути
+  sed -ie 's/\.\/assets\/conf.json/'$SERVER_DIR'\/conf.json/' "$DEPLOY_DIR/script.js"
+  sed -ie 's/\.\/\.\.\/data\//'$SERVER_DIR'\/data\//' "$DEPLOY_DIR/conf.json"
 
-# Правим пути
-sed -ie 's/\.\/assets\/conf.json/'$SERVER_DIR'\/conf.json/' "$DEPLOY_DIR/script.js"
-sed -ie 's/\.\/\.\.\/data\//'$SERVER_DIR'\/data\//' "$DEPLOY_DIR/conf.json"
-
-# Очищаем мусор
-rm -rf "$DEPLOY_DIR/index.htmle" "$DEPLOY_DIR/script.jse" "$DEPLOY_DIR/conf.jsone"
+  # Очищаем мусор
+  rm -rf "$DEPLOY_DIR/index.htmle" "$DEPLOY_DIR/script.jse" "$DEPLOY_DIR/conf.jsone"
+else
+  case $1 in
+    heroku) git co production && git merge master && git push && git co master;;
+  esac
+fi
