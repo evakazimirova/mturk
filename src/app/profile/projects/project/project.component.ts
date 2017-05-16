@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 @Component({
   selector: 'na-project',
@@ -7,10 +7,14 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ProjectComponent implements OnInit {
   @Input() projectId;
+  @Output() returned = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  return() {
+    this.returned.emit();
+  }
 }

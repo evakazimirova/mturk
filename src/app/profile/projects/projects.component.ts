@@ -1,3 +1,4 @@
+import { CommonService } from '../../common.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent implements OnInit {
+  projectMode = false;
   projectId = 0;
 
   projects = {
@@ -13,7 +15,7 @@ export class ProjectsComponent implements OnInit {
       {
         id: 1,
         title: 'Video "sharapova"',
-        isActive: true,
+        activity: "Active",
         percentage: 90,
         earned: function() {
           return +(this.price * this.percentage / 100).toFixed(0);
@@ -23,9 +25,19 @@ export class ProjectsComponent implements OnInit {
     ],
     annotating: [
       {
+        id: 17,
+        title: 'Video "bilan_0004"',
+        activity: "Inactive",
+        percentage: 55,
+        earned: function() {
+          return +(this.price * this.percentage / 100).toFixed(0);
+        },
+        price: 3000
+      },
+      {
         id: 99,
         title: 'Video "bilan_0005"',
-        isActive: false,
+        activity: "Contest stage",
         percentage: 0,
         earned: function() {
           return +(this.price * this.percentage / 100).toFixed(0);
@@ -35,7 +47,7 @@ export class ProjectsComponent implements OnInit {
     ]
   }
 
-  constructor() { }
+  constructor(public common: CommonService) { }
 
   ngOnInit() {
   }

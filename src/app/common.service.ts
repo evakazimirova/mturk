@@ -16,7 +16,7 @@ export class CommonService {
   videoContainer;
   videoLength = 0;
   allFragmentsRated = true;
-  mode: string;
+  mode: string; // auth | profile | fragmentsRating | fragmentsMarking
 
   // события
   videoTurnedOff = new EventEmitter();
