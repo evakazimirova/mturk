@@ -23,6 +23,11 @@ import { MarkingModeComponent } from './marking-mode/marking-mode.component';
 import { TimelineComponent } from './marking-mode/timeline/timeline.component';
 import { VideoToMarkComponent } from './marking-mode/video-to-mark/video-to-mark.component';
 import { NewFragmentsComponent } from './marking-mode/new-fragments/new-fragments.component';
+import { AuthComponent } from './auth/auth.component';
+import { SignInComponent } from './auth/sign-in/sign-in.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import { ForgotPassComponent } from './auth/forgot-pass/forgot-pass.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +47,12 @@ import { NewFragmentsComponent } from './marking-mode/new-fragments/new-fragment
     MarkingModeComponent,
     TimelineComponent,
     VideoToMarkComponent,
-    NewFragmentsComponent
+    NewFragmentsComponent,
+    AuthComponent,
+    SignInComponent,
+    SignUpComponent,
+    ForgotPassComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

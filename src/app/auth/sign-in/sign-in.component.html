@@ -1,0 +1,13 @@
+<!-- вход для зарегистрированных пользователей -->
+<form>
+  <div class="form-group">
+    <label for="Login">Login or e-mail</label>
+    <input type="text" class="form-control" id="Login" placeholder="johndoe_42">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" placeholder="Password">
+  </div>
+  <button type="submit" class="btn btn-primary btn-block"
+    (click)="common.mode = 'profile'">Sign In</button>
+</form>
