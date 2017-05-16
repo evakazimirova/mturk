@@ -28,7 +28,9 @@
         <td>{{ project.earned() }}/{{ project.price }}</td>
         <td>
           <a href="#" (click)="common.mode = 'fragmentsRating'">
-            {{ project.percentage === 0 ? "Start" : "Continue" }}
+            {{ project.activity !== "Contest stage" ?
+                project.percentage === 0 ? "Start" : "Continue" : ""
+            }}
           </a>
         </td>
       </tr>
@@ -61,7 +63,9 @@
         <td>{{ project.earned() }}/{{ project.price }}</td>
         <td>
           <a href="#" (click)="common.mode = 'fragmentsMarking'">
-            {{ project.percentage === 0 ? "Start" : "Continue" }}
+            {{ project.activity !== "Contest stage" ?
+                project.percentage === 0 ? "Start" : "Continue" : ""
+            }}
           </a>
         </td>
       </tr>

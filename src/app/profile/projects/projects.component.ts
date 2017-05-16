@@ -28,7 +28,7 @@ export class ProjectsComponent implements OnInit {
         id: 17,
         title: 'Video "bilan_0004"',
         activity: "Inactive",
-        percentage: 55,
+        percentage: 0,
         earned: function() {
           return +(this.price * this.percentage / 100).toFixed(0);
         },
