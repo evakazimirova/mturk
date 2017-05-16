@@ -34,6 +34,11 @@ import { ProfileEditComponent } from './profile/profile-edit/profile-edit.compon
 import { ProjectsComponent } from './profile/projects/projects.component';
 import { ProfileRatingComponent } from './profile/profile-rating/profile-rating.component';
 import { WithdrawalComponent } from './profile/withdrawal/withdrawal.component';
+import { AdminComponent } from './admin/admin.component';
+import { AdminHeaderComponent } from './admin/admin-header/admin-header.component';
+import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
+import { AdminProjectsComponent } from './admin/admin-projects/admin-projects.component';
+import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-money-requests.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +69,12 @@ import { WithdrawalComponent } from './profile/withdrawal/withdrawal.component';
     ProfileEditComponent,
     ProjectsComponent,
     ProfileRatingComponent,
-    WithdrawalComponent
+    WithdrawalComponent,
+    AdminComponent,
+    AdminHeaderComponent,
+    AdminUsersComponent,
+    AdminProjectsComponent,
+    AdminMoneyRequestsComponent
   ],
   imports: [
     BrowserModule,
