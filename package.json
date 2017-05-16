@@ -4,12 +4,11 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build -prod && npm run regulate-dist",
+    "start": "ng build && node app/app.js",
+    "build": "ng build -prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "regulate-dist": "cd dist && sh ../utils/angular/normalize_file_names && cd ..",
     "heroku-postbuild": "npm run build"
   },
   "private": true,
@@ -28,11 +27,12 @@
     "@angular/router": "^4.1.2",
     "bootstrap-sass": "3.3.7",
     "core-js": "^2.4.1",
+    "express": "^4.15.2",
     "font-awesome": "^4.7.0",
+    "jquery": "~3.2.1",
     "rxjs": "^5.4.0",
     "typescript": "^2.3.2",
-    "zone.js": "^0.8.10",
-    "jquery": "~3.2.1"
+    "zone.js": "^0.8.10"
   },
   "devDependencies": {
     "@types/jasmine": "2.5.38",
