@@ -10,20 +10,20 @@ export class AdminProjectsComponent implements OnInit {
   projects = [
     {
       id: 0,
-      title: "Видос_1",
-      status: "Активный",
+      title: "video_1",
+      status: "Active",
       price: 3000
     },
     {
       id: 1,
-      title: "Видос_2",
-      status: "Не активный",
+      title: "video_2",
+      status: "Inactive",
       price: 2000
     },
     {
       id: 2,
-      title: "Видос_3",
-      status: "Активный",
+      title: "video_3",
+      status: "Contest stage",
       price: 1000
     }
   ];
