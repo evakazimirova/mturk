@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var port = process.env.PORT || 8080;
 
 // app.get('/', function(request, response){
 //   response.send('Hello world');
@@ -7,7 +8,7 @@ var app = express();
 
 app.use(express.static('dist'));
 
-app.listen(8080, function(){
+app.listen(port, function(){
   console.log();
-  console.log('Сервер доступен по адресу http://localhost:8080');
+  console.log('Сервер доступен по адресу http://localhost:' + port);
 });
