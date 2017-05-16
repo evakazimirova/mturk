@@ -17,7 +17,7 @@ export class SiteComponent implements OnInit {
     this.http.get('./assets/conf.json').subscribe(
       conf => {
         this.common.conf = conf
-        this.common.mode = "admin";
+        this.common.mode = "auth";
       },
       error => console.log(error)
     );

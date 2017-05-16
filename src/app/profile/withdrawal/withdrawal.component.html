@@ -1,11 +1,40 @@
-<p>
-  Поручение на вывод денег подается с указанием суммы и реквизитов банковской карты, либо реквизитов PayPal счета, Яндекс денег, Qiwi кошелька. На странице содержится справочная информация о максимально возможном выводе в данный момент времени. Приводиться информация о стандартных сроках банковских переводов.
-</p>
-<ul>
-  <li>Справочное окно с максимальным выводом</li>
-  <li>Окно куда необходимо ввести сумму вывода</li>
-  <li>Ниже логотипы доступных пользователю платежных систем, при нажатии на любую из которых запрашивается реквизиты счета в данной платежной системе.</li>
-</ul>
-<p>
-  Поручение на вывод отправляется администратору на эмейл. И дублируется в личном кабинете администратора.
-</p>
+<!-- Поручение на вывод денег подается с указанием суммы и реквизитов банковской карты, либо реквизитов PayPal счета, Яндекс денег, Qiwi кошелька. -->
+<div class="row">
+  <div class="col col-xs-7">
+    На странице содержится справочная информация о максимально возможном выводе в данный момент времени.
+    Приводится информация о стандартных сроках банковских переводов.
+  </div>
+  <div class="col col-xs-5">
+    <form>
+      <!-- Окно куда необходимо ввести сумму вывода -->
+      <div class="form-group">
+        <label for="amount">Amount</label>
+        <input type="text" class="form-control" id="amount" placeholder="1000">
+      </div>
+      <div class="form-group">
+        <label for="account">Account</label>
+        <input type="text" class="form-control" id="account" placeholder="1234567890">
+      </div>
+      <!-- Ниже логотипы доступных пользователю платежных систем, при нажатии на любую из которых запрашивается реквизиты счета в данной платежной системе. -->
+      <div class="row logos">
+        <div class="col col-xs-4">
+          <div [ngClass]="{active: paymentSystem === 'paypal'}" (click)="paymentSystem = 'paypal'">
+            <img src="assets/paypal.png" alt="PayPal">
+          </div>
+        </div>
+        <div class="col col-xs-4">
+          <div [ngClass]="{active: paymentSystem === 'qiwi'}" (click)="paymentSystem = 'qiwi'">
+            <img src="assets/qiwi.png" alt="QIWI Wallet">
+          </div>
+        </div>
+        <div class="col col-xs-4">
+          <div [ngClass]="{active: paymentSystem === 'yandex'}" (click)="paymentSystem = 'yandex'">
+            <img src="assets/yandex.png" alt="Яндекс Деньги">
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-block">Send a request</button>
+    </form>
+    <!-- Поручение на вывод отправляется администратору на эмейл. И дублируется в личном кабинете администратора. -->
+  </div>
+</div>

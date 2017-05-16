@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./withdrawal.component.scss']
 })
 export class WithdrawalComponent implements OnInit {
+  paymentSystem = 'paypal';
 
   constructor() { }
 
