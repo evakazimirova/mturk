@@ -2,8 +2,18 @@
 
 ## Быстрый старт
 
+Установка зависимости (выполняется 1 раз).
 ```sh
-npm install
+npm i
+```
+
+Запуск сервера.
+```sh
+npm start
+```
+
+Разработка фронтенда.
+```sh
 ng serve
 ```
 
@@ -11,10 +21,14 @@ ng serve
 
 ## Выкатка на сервер
 
+Разрешить запускать скрипт.
 ```sh
 chmod +x deploy
 ```
 
+Выкатываем на Heroku.
 ```sh
-./deploy
+./deploy heroku
 ```
+
+Сайт станет доступным тут https://mturk-video.herokuapp.com/.
