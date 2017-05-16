@@ -1,12 +1,53 @@
 <!--
+  Статус. Содержит:
+
+  Nickname (не может повторяться)
+
+  Статус баланса.
+  Сумма вознаграждения доступная для вывода.
+  Также сумма вознаграждения доступная для вывода после выполнения задач на которые подписался аннотатор.
+
+  Рейтинг аннотатора.
+-->
+<nav class="navbar navbar-default">
+  <div class="container">
+    <p class="navbar-text">
+      <span class="dropdown">
+        <span class="clickable dropdown-toggle" data-toggle="dropdown">Signed in as <u>{{ user.nickname }}</u></span>
+        <ul class="dropdown-menu">
+          <li (click)="editingProfile = true">
+            <a href="#">
+              <span class="fa fa-wd fa-pencil"></span>
+              Edit profile
+            </a>
+          </li>
+          <li (click)="common.mode = 'auth'">
+            <a href="#">
+              <span class="fa fa-wd fa-sign-out"></span>
+              Sign out
+            </a>
+          </li>
+        </ul>
+      </span>
+      <span>Your raiting: {{ user.rating }}</span>
+      <span>Money available: {{ user.money.available }}</span>
+      <span>Money reserved: {{ user.money.reserved }}</span>
+    </p>
+  </div>
+</nav>
+
+
+<!--
   Заполнение анкеты в Личном кабинете.
   Данные из анкеты вносятся в профиль.
   Профиль можно редактировать.
   Обязательные для заполнения пункты отмечены выделенным текстом.
 -->
 <div class="container">
-  <h1>Your profile</h1>
-  <form>
+  <div class="text-center">
+    <img src="assets/logo.png" alt="logo">
+  </div>
+  <form *ngIf="editingProfile">
     <div class="form-group">
       <label for="firstName">First Name</label>
       <input type="text" class="form-control" id="firstName" placeholder="John">
@@ -23,6 +64,6 @@
       <label for="email">E-mail</label>
       <input type="email" class="form-control" id="email" placeholder="johndoe_42@gmail.com">
     </div>
-    <button type="submit" class="btn btn-primary btn-block">Save</button>
+    <button type="submit" class="btn btn-primary btn-block" (click)="editingProfile = false">Save</button>
   </form>
 </div>

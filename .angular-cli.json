@@ -16,7 +16,10 @@
       "test": "test.ts",
       "tsconfig": "tsconfig.json",
       "prefix": "na",
-      "styles": ["styles/styles.scss"],
+      "styles": [
+        "../node_modules/font-awesome/css/font-awesome.min.css",
+        "styles/styles.scss"
+      ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
         "../node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js"

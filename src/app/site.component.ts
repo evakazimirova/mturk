@@ -17,7 +17,7 @@ export class SiteComponent implements OnInit {
     this.http.get('./assets/conf.json').subscribe(
       conf => {
         this.common.conf = conf
-        this.common.mode = "auth"; // auth | fragmentsRating | fragmentsMarking
+        this.common.mode = "profile"; // auth | profile | fragmentsRating | fragmentsMarking
       },
       error => console.log(error)
     );

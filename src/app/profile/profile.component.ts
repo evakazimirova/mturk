@@ -1,3 +1,4 @@
+import { CommonService } from '../common.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,8 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  editingProfile = false;
 
-  constructor() { }
+  user = {
+    nickname: "iGor",
+    rating: 4,
+    money: {
+      available: 1000,
+      reserved: 2000,
+    }
+  }
+
+  constructor(public common: CommonService) { }
 
   ngOnInit() {
   }
