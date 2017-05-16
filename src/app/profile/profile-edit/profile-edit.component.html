@@ -1,0 +1,49 @@
+<!--
+  Заполнение анкеты в Личном кабинете.
+  Данные из анкеты вносятся в профиль.
+  Профиль можно редактировать.
+  Обязательные для заполнения пункты отмечены выделенным текстом.
+
+  Можно поменять/заполнить/дополнить информацию о себе
+  Есть обязательные для заполнения блоки, есть не обязательные.
+
+  О Себе
+    Фамилия, имя, отчество, пол, дата рождения, возраст, родной/родные языки, владею языками, семейное положение, страна проживания, город проживания.
+  Соцсети, можно прикрепить к аккаунту профиль соцсети.
+
+  Контакты
+    Email,
+    номер телефона
+
+  Образование
+    Среднее/неоконченное высшее/ высшее/
+    Университет, год выпуска, если нет, год поступления
+    Специальность
+
+  Работа
+    Отрасль
+    Форма занятости
+    должность
+
+  Увлечения
+    Теги на выбор по темам спорт, искусство, tech,
+-->
+<form>
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input type="text" class="form-control" id="firstName" placeholder="John">
+  </div>
+  <div class="form-group">
+    <label for="secondName">Second Name</label>
+    <input type="text" class="form-control" id="secondName" placeholder="Doe">
+  </div>
+  <div class="form-group">
+    <label for="Login">Login</label>
+    <input type="text" class="form-control" id="Login" placeholder="johndoe_42">
+  </div>
+  <div class="form-group">
+    <label for="email">E-mail</label>
+    <input type="email" class="form-control" id="email" placeholder="johndoe_42@gmail.com">
+  </div>
+  <button type="submit" class="btn btn-primary btn-block" (click)="selectProfileMode('taskList')">Save</button>
+</form>

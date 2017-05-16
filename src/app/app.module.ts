@@ -28,7 +28,12 @@ import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { ForgotPassComponent } from './auth/forgot-pass/forgot-pass.component';
 import { ProfileComponent } from './profile/profile.component';
-import { ProjectComponent } from './profile/project/project.component';
+import { ProjectComponent } from './profile/projects/project/project.component';
+import { ProfileHeaderComponent } from './profile/profile-header/profile-header.component';
+import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
+import { ProjectsComponent } from './profile/projects/projects.component';
+import { ProfileRatingComponent } from './profile/profile-rating/profile-rating.component';
+import { WithdrawalComponent } from './profile/withdrawal/withdrawal.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +59,12 @@ import { ProjectComponent } from './profile/project/project.component';
     SignUpComponent,
     ForgotPassComponent,
     ProfileComponent,
-    ProjectComponent
+    ProjectComponent,
+    ProfileHeaderComponent,
+    ProfileEditComponent,
+    ProjectsComponent,
+    ProfileRatingComponent,
+    WithdrawalComponent
   ],
   imports: [
     BrowserModule,

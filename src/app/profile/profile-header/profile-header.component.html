@@ -1,0 +1,88 @@
+<!-- Статус -->
+<nav class="navbar navbar-default">
+  <div class="container">
+    <span class="navbar-brand">
+      <img src="assets/logo.png" alt="logo">
+    </span>
+
+    <!-- Меню -->
+    <ul class="nav navbar-nav">
+      <!-- Главная (статус проектов) -->
+      <li (click)="selectProfileMode('taskList')"
+          [ngClass]="{active: profileMode === 'taskList'}">
+        <a href="#">
+          <span class="fa fa-wd fa-tasks"></span>
+          Projects status
+        </a>
+      </li>
+
+      <!-- Рейтинг -->
+      <li (click)="selectProfileMode('rating')"
+          [ngClass]="{active: profileMode === 'rating'}">
+        <a href="#">
+          <span class="fa fa-wd fa-star"></span>
+          Rating
+        </a>
+      </li>
+
+      <!-- Вывод денег -->
+      <li (click)="selectProfileMode('withdrawal')"
+          [ngClass]="{active: profileMode === 'withdrawal'}">
+        <a href="#">
+          <span class="fa fa-wd fa-money"></span>
+          Withdrawal
+        </a>
+      </li>
+    </ul>
+
+    <p class="navbar-text navbar-right">
+      <!-- Nickname (не может повторяться) -->
+      <span class="dropdown">
+        <span class="clickable dropdown-toggle" data-toggle="dropdown">Signed in as <u>{{ user.nickname }}</u></span>
+        <ul class="dropdown-menu">
+
+          <!-- Рейтинг аннотатора -->
+          <li>
+            <a href="#">
+              <span class="fa fa-wd fa-star"></span>
+              Rating: {{ user.rating }}
+            </a>
+          </li>
+
+          <!-- Статус баланса -->
+          <!-- Сумма вознаграждения доступная для вывода -->
+          <li>
+            <a href="#">
+              <span class="fa fa-wd fa-money"></span>
+              Money available: {{ user.money.available }}
+            </a>
+          </li>
+          <!-- Также сумма вознаграждения доступная для вывода после выполнения задач на которые подписался аннотатор -->
+          <li>
+            <a href="#">
+              <span class="fa fa-wd fa-money"></span>
+              Money reserved: {{ user.money.reserved }}
+            </a>
+          </li>
+
+          <li role="separator" class="divider"></li>
+
+          <!-- Профиль (меню) -->
+          <li (click)="selectProfileMode('editing')">
+            <a href="#">
+              <span class="fa fa-wd fa-pencil"></span>
+              Edit profile
+            </a>
+          </li>
+
+          <li (click)="common.mode = 'auth'">
+            <a href="#">
+              <span class="fa fa-wd fa-sign-out"></span>
+              Sign out
+            </a>
+          </li>
+        </ul>
+      </span>
+    </p>
+  </div>
+</nav>
