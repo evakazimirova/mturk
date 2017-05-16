@@ -29,3 +29,13 @@ a:hover, a:active, a:visited {
 .clickable:hover {
   cursor: pointer;
 }
+
+.table-hover {
+  tbody {
+    tr {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
