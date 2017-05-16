@@ -18,6 +18,31 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  projects = {
+    marking: [
+      {
+        title: 'Video "sharapova"',
+        isActive: true,
+        percentage: 90,
+        earned: function() {
+          return +(this.price * this.percentage / 100).toFixed(0);
+        },
+        price: 5000
+      }
+    ],
+    annotating: [
+      {
+        title: 'Video "bilan_0005"',
+        isActive: true,
+        percentage: 66,
+        earned: function() {
+          return +(this.price * this.percentage / 100).toFixed(0);
+        },
+        price: 1000
+      }
+    ]
+  }
+
   constructor(public common: CommonService) { }
 
   ngOnInit() {
