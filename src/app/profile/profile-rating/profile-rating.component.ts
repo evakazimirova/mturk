@@ -8,16 +8,16 @@ import { Component, OnInit } from '@angular/core';
 export class ProfileRatingComponent implements OnInit {
   users = [
     {
-      firstName: 'Игорь',
-      secondName: 'Поляков',
-      projects: 2,
-      rating: 4
-    },
-    {
       firstName: 'Максим',
       secondName: 'Рябов',
       projects: 5,
       rating: 9
+    },
+    {
+      firstName: 'Игорь',
+      secondName: 'Поляков',
+      projects: 2,
+      rating: 4
     }
   ];
 

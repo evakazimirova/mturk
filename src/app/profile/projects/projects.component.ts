@@ -14,7 +14,7 @@ export class ProjectsComponent implements OnInit {
     marking: [
       {
         id: 1,
-        title: 'Video "sharapova"',
+        title: 'sharapova',
         activity: "Active",
         percentage: 90,
         earned: function() {
@@ -26,7 +26,7 @@ export class ProjectsComponent implements OnInit {
     annotating: [
       {
         id: 17,
-        title: 'Video "bilan_0004"',
+        title: 'bilan_0004',
         activity: "Inactive",
         percentage: 0,
         earned: function() {
@@ -36,7 +36,7 @@ export class ProjectsComponent implements OnInit {
       },
       {
         id: 99,
-        title: 'Video "bilan_0005"',
+        title: 'bilan_0005',
         activity: "Contest stage",
         percentage: 0,
         earned: function() {

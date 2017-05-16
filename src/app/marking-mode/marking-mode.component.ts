@@ -11,14 +11,18 @@ export class MarkingModeComponent implements OnInit {
   video: string = this.common.cv;
   task: number = this.vp.task;
 
-  constructor(private common: CommonService, private vp: VideoPlayerService) { }
+  constructor(public common: CommonService, private vp: VideoPlayerService) { }
 
   ngOnInit() {
-    this.common.unwatchVideo('stop'); // выключаем видео основного плеера
+    // this.common.unwatchVideo('stop'); // выключаем видео основного плеера
 
     // Создаём массив для разбивки фрагменов для всех задач
     for (let i in this.common.conf.tasks) {
       this.vp.fragments.push([]);
     }
+  }
+
+  return() {
+    this.common.mode = 'profile';
   }
 }
