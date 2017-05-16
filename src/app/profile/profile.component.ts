@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  editingProfile = false;
+  profileMode = 'taskList';
+  projectId = 0;
 
   user = {
     nickname: "iGor",
@@ -21,6 +22,7 @@ export class ProfileComponent implements OnInit {
   projects = {
     marking: [
       {
+        id: 1,
         title: 'Video "sharapova"',
         isActive: true,
         percentage: 90,
@@ -32,9 +34,10 @@ export class ProfileComponent implements OnInit {
     ],
     annotating: [
       {
+        id: 99,
         title: 'Video "bilan_0005"',
-        isActive: true,
-        percentage: 66,
+        isActive: false,
+        percentage: 0,
         earned: function() {
           return +(this.price * this.percentage / 100).toFixed(0);
         },

@@ -1,35 +1,80 @@
-<!--
-  Статус. Содержит:
-
-  Nickname (не может повторяться)
-
-  Статус баланса.
-  Сумма вознаграждения доступная для вывода.
-  Также сумма вознаграждения доступная для вывода после выполнения задач на которые подписался аннотатор.
-
-  Рейтинг аннотатора.
--->
+<!-- Статус -->
 <nav class="navbar navbar-default">
   <div class="container">
     <span class="navbar-brand">
       <img src="assets/logo.png" alt="logo">
     </span>
-    <p class="navbar-text">
+
+    <!-- Меню -->
+    <ul class="nav navbar-nav">
+      <!-- Главная (статус проектов) -->
+      <li (click)="profileMode = 'taskList'"
+          [ngClass]="{active: profileMode === 'taskList'}">
+        <a href="#">
+          <span class="fa fa-wd fa-tasks"></span>
+          Projects status
+        </a>
+      </li>
+
+      <!-- Рейтинг -->
+      <li (click)="profileMode = 'rating'"
+          [ngClass]="{active: profileMode === 'rating'}">
+        <a href="#">
+          <span class="fa fa-wd fa-star"></span>
+          Rating
+        </a>
+      </li>
+
+      <!-- Вывод денег -->
+      <li (click)="profileMode = 'withdrawal'"
+          [ngClass]="{active: profileMode === 'withdrawal'}">
+        <a href="#">
+          <span class="fa fa-wd fa-money"></span>
+          Withdrawal
+        </a>
+      </li>
+    </ul>
+
+    <p class="navbar-text navbar-right">
+      <!-- Nickname (не может повторяться) -->
       <span class="dropdown">
         <span class="clickable dropdown-toggle" data-toggle="dropdown">Signed in as <u>{{ user.nickname }}</u></span>
         <ul class="dropdown-menu">
-          <li (click)="editingProfile = false">
+
+          <!-- Рейтинг аннотатора -->
+          <li>
             <a href="#">
-              <span class="fa fa-wd fa-tasks"></span>
-              Tasks
+              <span class="fa fa-wd fa-star"></span>
+              Rating: {{ user.rating }}
             </a>
           </li>
-          <li (click)="editingProfile = true">
+
+          <!-- Статус баланса -->
+          <!-- Сумма вознаграждения доступная для вывода -->
+          <li>
+            <a href="#">
+              <span class="fa fa-wd fa-money"></span>
+              Money available: {{ user.money.available }}
+            </a>
+          </li>
+          <!-- Также сумма вознаграждения доступная для вывода после выполнения задач на которые подписался аннотатор -->
+          <li>
+            <a href="#">
+              <span class="fa fa-wd fa-money"></span>
+              Money reserved: {{ user.money.reserved }}
+            </a>
+          </li>
+
+          <li role="separator" class="divider"></li>
+
+          <!-- Профиль (меню) -->
+          <li (click)="profileMode = 'editing'">
             <a href="#">
               <span class="fa fa-wd fa-pencil"></span>
               Edit profile
             </a>
           </li>
+
           <li (click)="common.mode = 'auth'">
             <a href="#">
               <span class="fa fa-wd fa-sign-out"></span>
@@ -38,22 +83,19 @@
           </li>
         </ul>
       </span>
-      <span>Your raiting: {{ user.rating }}</span>
-      <span>Money available: {{ user.money.available }}</span>
-      <span>Money reserved: {{ user.money.reserved }}</span>
     </p>
   </div>
 </nav>
 
 
-<!--
-  Заполнение анкеты в Личном кабинете.
-  Данные из анкеты вносятся в профиль.
-  Профиль можно редактировать.
-  Обязательные для заполнения пункты отмечены выделенным текстом.
--->
 <div class="container">
-  <form *ngIf="editingProfile">
+  <!--
+    Заполнение анкеты в Личном кабинете.
+    Данные из анкеты вносятся в профиль.
+    Профиль можно редактировать.
+    Обязательные для заполнения пункты отмечены выделенным текстом.
+  -->
+  <form *ngIf="profileMode === 'editing'">
     <div class="form-group">
       <label for="firstName">First Name</label>
       <input type="text" class="form-control" id="firstName" placeholder="John">
@@ -73,7 +115,9 @@
     <button type="submit" class="btn btn-primary btn-block" (click)="editingProfile = false">Save</button>
   </form>
 
-  <div *ngIf="!editingProfile">
+
+  <!-- Задания -->
+  <div *ngIf="profileMode === 'taskList'">
     <h2>Tasks</h2>
     <h3>Annotating emotional conditions</h3>
     <table class="table table-hover">
@@ -91,10 +135,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let project of projects.annotating; let i = index">
+        <tr *ngFor="let project of projects.annotating; let i = index"
+          (click)="profileMode = 'project'; projectId = project.id">
           <td>{{ i + 1 }}</td>
           <td>{{ project.title }}</td>
-          <td>{{ project.isActive ? "Active" : "Not active" }}</td>
+          <td>{{ project.isActive ? "Active" : "Contest stage" }}</td>
           <td>{{ project.percentage }}%</td>
           <td>{{ project.earned() }}/{{ project.price }}</td>
         </tr>
@@ -117,14 +162,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let project of projects.marking; let i = index">
+        <tr *ngFor="let project of projects.marking; let i = index"
+          (click)="profileMode = 'project'; projectId = project.id">
           <td>{{ i + 1 }}</td>
           <td>{{ project.title }}</td>
-          <td>{{ project.isActive ? "Active" : "Not active" }}</td>
+          <td>{{ project.isActive ? "Active" : "Contest stage" }}</td>
           <td>{{ project.percentage }}%</td>
           <td>{{ project.earned() }}/{{ project.price }}</td>
         </tr>
       </tbody>
     </table>
   </div>
+
+  <na-project *ngIf="profileMode === 'project'" [projectId]="projectId"></na-project>
 </div>

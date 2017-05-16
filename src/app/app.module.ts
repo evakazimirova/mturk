@@ -28,6 +28,7 @@ import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { ForgotPassComponent } from './auth/forgot-pass/forgot-pass.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProjectComponent } from './profile/project/project.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ProfileComponent } from './profile/profile.component';
     SignInComponent,
     SignUpComponent,
     ForgotPassComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProjectComponent
   ],
   imports: [
     BrowserModule,
