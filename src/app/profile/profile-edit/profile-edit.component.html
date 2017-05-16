@@ -6,55 +6,116 @@
 
   Можно поменять/заполнить/дополнить информацию о себе
   Есть обязательные для заполнения блоки, есть не обязательные.
-
-  О Себе
-    Фамилия,
-    имя,
-    отчество,
-    пол,
-    дата рождения, возраст,
-    родной/родные языки, владею языками,
-    семейное положение,
-    страна проживания,
-    город проживания.
-
-  Контакты
-    Email,
-    Номер телефона
-    Соцсети (можно прикрепить к аккаунту профиль)
-
-  Образование
-    Среднее / неоконченное высшее / высшее
-    Университет,
-    год выпуска (если нет, год поступления)
-    Специальность
-
-  Работа
-    Отрасль
-    Форма занятости
-    должность
-
-  Увлечения (теги на выбор по темам)
-    спорт,
-    искусство,
-    tech,
 -->
 <form>
-  <div class="form-group">
-    <label for="firstName">First Name</label>
-    <input type="text" class="form-control" id="firstName" placeholder="John">
+  <div class="row">
+    <div class="col col-xs-4">
+      <h3>Контакты</h3>
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" class="form-control" id="email" placeholder="johndoe_42@gmail.com">
+      </div>
+      <div class="form-group">
+        <label for="email">Телефон</label>
+        <input type="email" class="form-control" id="email" placeholder="+79261234567">
+      </div>
+      <!-- (можно прикрепить к аккаунту профиль) -->
+      <div class="form-group">
+        <label for="email">Соцсети</label>
+        <input type="email" class="form-control" id="email" placeholder="vk, fb, ok">
+      </div>
+
+      <button class="btn btn-default btn-block">Сменить пароль</button><br>
+
+      <button type="submit" class="btn btn-primary btn-block" (click)="selectProfileMode('taskList')">Save</button>
+    </div>
+    <div class="col col-xs-4">
+      <h3>О себе</h3>
+      <div class="form-group">
+        <label for="Login">Nickname</label>
+        <input type="text" class="form-control" id="Login" placeholder="johndoe_42">
+      </div>
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" class="form-control" id="firstName" placeholder="John">
+      </div>
+      <div class="form-group">
+        <label for="secondName">Second Name</label>
+        <input type="text" class="form-control" id="secondName" placeholder="Doe">
+      </div>
+      <div class="form-group">
+        <label for="secondName">Отчество</label>
+        <input type="text" class="form-control" id="secondName" placeholder="Doeich">
+      </div>
+      <div class="form-group">
+        <label for="secondName">Пол</label>
+        <input type="text" class="form-control" id="secondName" placeholder="Male">
+      </div>
+      <div class="form-group">
+        <label for="secondName">Дата рождения (возраст)</label>
+        <input type="text" class="form-control" id="secondName" placeholder="12.12.2012">
+      </div>
+      <div class="form-group">
+        <label for="secondName">Языки и уровень знания</label>
+        <input type="text" class="form-control" id="secondName" placeholder="Русский, English, Deutsch, Français, Español,
+Հայերեն">
+      </div>
+      <div class="form-group">
+        <label for="secondName">Семейное положение</label>
+        <input type="text" class="form-control" id="secondName" placeholder="Married">
+      </div>
+      <div class="form-group">
+        <label for="secondName">Страна проживания</label>
+        <input type="text" class="form-control" id="secondName" placeholder="Russian Federation">
+      </div>
+      <div class="form-group">
+        <label for="secondName">Город проживания</label>
+        <input type="text" class="form-control" id="secondName" placeholder="Moscow">
+      </div>
+    </div>
+    <div class="col col-xs-4">
+      <h3>Специализация</h3>
+
+      <h4>Образование</h4>
+      <div class="form-group">
+        <select class="form-control">
+          <option>cреднее</option>
+          <option>неоконченное высшее</option>
+          <option>высшее</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="secondName">Университет</label>
+        <input type="text" class="form-control" id="secondName" placeholder="MIT">
+      </div>
+      <div class="form-group">
+        <label for="secondName">Год выпуска (если нет, год поступления)</label>
+        <input type="text" class="form-control" id="secondName" placeholder="2016">
+      </div>
+      <div class="form-group">
+        <label for="secondName">Специальность</label>
+        <input type="text" class="form-control" id="secondName" placeholder="Engineer">
+      </div>
+
+      <h4>Работа</h4>
+      <div class="form-group">
+        <label for="secondName">Отрасль</label>
+        <input type="text" class="form-control" id="secondName" placeholder="Science">
+      </div>
+      <div class="form-group">
+        <label for="secondName">Форма занятости</label>
+        <input type="text" class="form-control" id="secondName" placeholder="Full-time">
+      </div>
+      <div class="form-group">
+        <label for="secondName">Должность</label>
+        <input type="text" class="form-control" id="secondName" placeholder="Professor">
+      </div>
+
+      <!-- теги на выбор по темам -->
+      <h4>Увлечения</h4>
+      <div class="form-group">
+        <textarea class="form-control" rows="3">спорт, искусство, tech</textarea>
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <label for="secondName">Second Name</label>
-    <input type="text" class="form-control" id="secondName" placeholder="Doe">
-  </div>
-  <div class="form-group">
-    <label for="Login">Login</label>
-    <input type="text" class="form-control" id="Login" placeholder="johndoe_42">
-  </div>
-  <div class="form-group">
-    <label for="email">E-mail</label>
-    <input type="email" class="form-control" id="email" placeholder="johndoe_42@gmail.com">
-  </div>
-  <button type="submit" class="btn btn-primary btn-block" (click)="selectProfileMode('taskList')">Save</button>
 </form>
