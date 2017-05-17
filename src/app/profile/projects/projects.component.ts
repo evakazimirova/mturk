@@ -26,7 +26,7 @@ export class ProjectsComponent implements OnInit {
     annotating: [
       {
         id: 17,
-        title: 'bilan_0004',
+        title: 'bilan_0005',
         activity: "Inactive",
         percentage: 0,
         earned: function() {
@@ -36,7 +36,7 @@ export class ProjectsComponent implements OnInit {
       },
       {
         id: 99,
-        title: 'bilan_0005',
+        title: 'bilan_0001',
         activity: "Contest stage",
         percentage: 0,
         earned: function() {

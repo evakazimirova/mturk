@@ -5,8 +5,8 @@
     <tr>
       <th>First&Second Name</th>
       <th>E-mail</th>
-      <th>Current projects amount</th>
       <th>Completed tasks</th>
+      <th>Current projects amount</th>
       <th>Progress</th>
     </tr>
   </thead>
@@ -14,8 +14,8 @@
     <tr *ngFor="let user of users">
       <td>{{ user.firstName + ' ' + user.secondName }}</td>
       <td>{{ user.email }}</td>
-      <td>{{ user.projects }}</td>
       <td>{{ user.completed }}</td>
+      <td>{{ user.projects }}</td>
       <td>{{ ((user.progress[0] + user.progress[1])/2).toFixed(0) }}</td>
     </tr>
   </tbody>

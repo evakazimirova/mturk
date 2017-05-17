@@ -1,7 +1,7 @@
 <!-- Статус -->
 <nav class="navbar navbar-default">
   <div class="container">
-    <span class="navbar-brand clickable" (click)="selectProfileMode('taskList')">
+    <span class="navbar-brand clickable hidden-xs" (click)="selectProfileMode('taskList')">
       <img src="assets/logo_black.png" alt="logo">
     </span>
 
@@ -43,7 +43,7 @@
 
           <!-- Рейтинг аннотатора -->
           <li>
-            <a href="#">
+            <a href="#" (click)="selectProfileMode('rating')">
               <span class="fa fa-wd fa-star"></span>
               Rating: {{ user.rating }}
             </a>
@@ -52,14 +52,14 @@
           <!-- Статус баланса -->
           <!-- Сумма вознаграждения доступная для вывода -->
           <li>
-            <a href="#">
+            <a href="#" (click)="selectProfileMode('withdrawal')">
               <span class="fa fa-wd fa-money"></span>
               Money available: {{ user.money.available }}
             </a>
           </li>
           <!-- Также сумма вознаграждения доступная для вывода после выполнения задач на которые подписался аннотатор -->
           <li>
-            <a href="#">
+            <a href="#" (click)="selectProfileMode('withdrawal')">
               <span class="fa fa-wd fa-money"></span>
               Money reserved: {{ user.money.reserved }}
             </a>
