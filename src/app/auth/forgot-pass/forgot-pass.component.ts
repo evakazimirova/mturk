@@ -1,3 +1,5 @@
+import { HttpService } from '../../http.service';
+import { CommonService } from '../../common.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForgotPassComponent implements OnInit {
 
-  constructor() { }
+  constructor(public common: CommonService, private http: HttpService) { }
 
   ngOnInit() {
   }
 
+  signOut() {
+    const obj = {
+      id: 10,
+      name: 'iGor'
+    };
+
+    this.http.post(obj, '/sign/out').subscribe(
+      res => {
+        console.log(res)
+      },
+      err => console.log(err)
+    );
+  }
 }

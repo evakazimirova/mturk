@@ -1,3 +1,4 @@
+import { CommonService } from '../../common.service';
 import { HttpService } from '../../http.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignUpComponent implements OnInit {
 
-  constructor(private http: HttpService) { }
+  constructor(public common: CommonService, private http: HttpService) { }
 
   ngOnInit() {
   }
@@ -19,7 +20,7 @@ export class SignUpComponent implements OnInit {
       name: 'iGor'
     };
 
-    this.http.post(obj, '/auth').subscribe(
+    this.http.post(obj, '/sign/up').subscribe(
       res => {
         console.log(res)
       },
