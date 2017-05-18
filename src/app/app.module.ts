@@ -3,7 +3,7 @@ import { CommonService } from './common.service';
 import { HttpService } from './http.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { SiteComponent } from './site.component';
@@ -79,6 +79,7 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule
   ],
   providers: [ HttpService, CommonService, VideoPlayerService ],

@@ -1,28 +1,32 @@
 <!-- Заполнение данных для авторизации: фамилия, имя, логин, пароль, почта.
  -->
-<form>
+<form [formGroup]="form" (ngSubmit)="signUp($event)">
   <div class="form-group">
     <label for="firstName">First Name</label>
-    <input type="text" class="form-control" id="firstName" placeholder="John">
+    <input type="text" class="form-control" id="firstName"
+      formControlName="firstName" placeholder="John">
   </div>
   <div class="form-group">
     <label for="secondName">Second Name</label>
-    <input type="text" class="form-control" id="secondName" placeholder="Doe">
+    <input type="text" class="form-control" id="secondName"
+      formControlName="secondName" placeholder="Doe">
   </div>
   <div class="form-group">
-    <label for="Login">Login</label>
-    <input type="text" class="form-control" id="Login" placeholder="johndoe_42">
+    <label for="login">Login</label>
+    <input type="text" class="form-control" id="login"
+      formControlName="login" placeholder="johndoe_42">
   </div>
   <div class="form-group">
     <label for="email">E-mail</label>
-    <input type="email" class="form-control" id="email" placeholder="johndoe_42@gmail.com">
+    <input type="email" class="form-control" id="email"
+      formControlName="email" placeholder="johndoe_42@gmail.com">
   </div>
   <div class="form-group">
     <label for="password">Password</label>
-    <input type="password" class="form-control" id="password" placeholder="Password">
+    <input type="password" class="form-control" id="password"
+      formControlName="password" placeholder="Password">
   </div>
-  <button type="submit" class="btn btn-primary btn-block"
-    (click)="signUp()">Sign Up</button>
+  <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
 </form>
 
 
