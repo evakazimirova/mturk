@@ -4,40 +4,32 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const parseJSON = bodyParser.json();
 
-router.route('/up')
-  .post(parseJSON, function(request, response){
-    const newUser = request.body; // принимаем данные
+typicalPostRequest('/up', function(req) {
+  res = req;
+  return res;
+});
 
-    // users = {
+typicalPostRequest('/in', function(req) {
+  res = req;
+  return res;
+});
 
-    // }
-
-    response.send(JSON.stringify(newUser)); // отправляем данные
-  })
-;
-
-router.route('/in')
-  .post(parseJSON, function(request, response){
-    const newUser = request.body; // принимаем данные
-
-    // users = {
-
-    // }
-
-    response.send(JSON.stringify(newUser)); // отправляем данные
-  })
-;
-
-router.route('/out')
-  .post(parseJSON, function(request, response){
-    const newUser = request.body; // принимаем данные
-
-    // users = {
-
-    // }
-
-    response.send(JSON.stringify(newUser)); // отправляем данные
-  })
-;
+typicalPostRequest('/out', function(req) {
+  res = req;
+  return res;
+});
 
 module.exports = router;
+
+
+
+function typicalPostRequest(route, requestAction) {
+  router.route(route)
+    .post(parseJSON, function(request, response){
+      const inData = request.body; // принимаем данные
+
+      outData = requestAction(inData);
+
+      response.send(JSON.stringify(outData)); // отправляем данные
+    });
+}
