@@ -10,6 +10,5 @@ app.use('/sign', sign);
 app.use('/users', users);
 
 app.listen(port, function(){
-  console.log();
   console.log('Сервер доступен по адресу http://localhost:' + port);
 });

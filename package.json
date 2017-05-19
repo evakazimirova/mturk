@@ -3,9 +3,13 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "ng": "ng",
-    "start": "ng build && node app/app.js",
+    "start": "concurrently --kill-others 'npm run watch:frontend' 'npm run watch:backend'",
+    "watch:frontend": "ng build -w",
+    "watch:backend": "nodemon app/app.js",
+    "frontend": "ng serve",
+    "backend": "ng build && nodemon app/app.js",
     "build": "ng build -prod",
+    "ng": "ng",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -26,6 +30,7 @@
     "@angular/router": "^4.1.2",
     "body-parser": "^1.17.2",
     "bootstrap-sass": "3.3.7",
+    "concurrently": "^3.4.0",
     "core-js": "^2.4.1",
     "express": "^4.15.2",
     "font-awesome": "^4.7.0",
