@@ -1,4 +1,5 @@
 const express = require('express');
+const crypto = require('crypto');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const Connection = require('tedious').Connection;
@@ -11,64 +12,39 @@ const parseJSON = bodyParser.json();
 let transporter = nodemailer.createTransport(configuration.email);
 
 
-typicalPostRequest('/up', function(req) {
-  res = req;
+typicalPostRequest('/up', function(newUser) {
+  res = newUser;
 
-  var connection = new Connection(configuration.db);
+  // var connection = new Connection(configuration.db);
 
   // Attempt to connect and execute queries if connection goes through
-  connection.on('connect', function(err) {
-      if (err) {
-        console.log(err)
-      }
-      else{
-        createTableAnnotators();
-        insertIntoDatabase();
-        sendMail();
-      }
-  });
+  // connection.on('connect', function(err) {
+  //     if (err) {
+  //       console.log(err)
+  //     }
+  //     else{
+  //     }
+  // });
 
-  function createTableAnnotators(){
-    console.log("Creating annotators table...");
-      request = new Request(`
-        CREATE TABLE 'teachers' (
-          'id' INT(11) NOT NULL,
-          'firstName' VARCHAR(25) NOT NULL,
-          'secondName' VARCHAR(25) NOT NULL,
-          'login' VARCHAR(25) NOT NULL,
-          'email' VARCHAR(25) NOT NULL,
-          'password' VARCHAR(25) NOT NULL,
-          PRIMARY KEY ('id')
-        )
-      `,
-      function(err, rowCount, rows) {
-        console.log(err);
-        console.log(rowCount);
-        console.log(rows);
-      }
-    );
-    connection.execSql(request);
-  }
 
-  function insertIntoDatabase(){
-    console.log("Inserting a brand new user into database...");
-    request = new Request(
-      `INSERT INTO Annotators (firstName, secondName, login, email, password) VALUES (${req.firstName}, ${req.secondName}, ${req.login}, ${req.email}, ${req.password})`, // OUTPUT INSERTED.ProductID
-      function(err, rowCount, rows) {
-        console.log(rowCount + ' row(s) inserted');
-      }
-    );
-    connection.execSql(request);
-  }
+  const emailToken = generateTokenFromJSON(newUser);
+
+  // createTableAnnotators();
+  // insertIntoDatabase();
+  sendMail();
+  res.sha = emailToken;
 
   function sendMail() {
-    // setup email data with unicode symbols
     let mailOptions = {
-      from: '"MAX 👻" <info@neurodatalab.com>',
-      to: req.email,
+      from: '"NeuroDataLab" <info@neurodatalab.com>',
+      to: newUser.email,
       subject: 'NeuroDataLab Registration',
-      text: 'Hello world ?', // plain text body
-      html: '<b>Hello world ?</b>' // html body
+      html: `
+        <p>Dear ${newUser.firstName} ${newUser.secondName},</p>
+        <p>Your e-mail just had been registered in NeuroDataLab annotation service.</p>
+        <p>To be sure that this e-mail is really yours please click <a href="http://localhost:8080/confirm/registration/${emailToken}">this link</a> to finish registration.</p>
+        <p>If you do not understand why you have received this letter, please just ignore it.</p>
+      `
     };
 
     // send mail with defined transport object
@@ -96,7 +72,6 @@ typicalPostRequest('/out', function(req) {
 module.exports = router;
 
 
-
 function typicalPostRequest(route, requestAction) {
   router.route(route)
     .post(parseJSON, function(request, response){
@@ -107,3 +82,40 @@ function typicalPostRequest(route, requestAction) {
       response.send(JSON.stringify(outData)); // отправляем данные
     });
 }
+
+function generateTokenFromJSON(input) {
+  return crypto.createHash('sha1').update(JSON.stringify(input) + new Date()).digest('hex');
+}
+
+// function createTableAnnotators(){
+//   console.log("Creating annotators table...");
+//     request = new Request(`
+//       CREATE TABLE 'teachers' (
+//         'id' INT(11) NOT NULL,
+//         'firstName' VARCHAR(25) NOT NULL,
+//         'secondName' VARCHAR(25) NOT NULL,
+//         'login' VARCHAR(25) NOT NULL,
+//         'email' VARCHAR(25) NOT NULL,
+//         'password' VARCHAR(25) NOT NULL,
+//         PRIMARY KEY ('id')
+//       )
+//     `,
+//     function(err, rowCount, rows) {
+//       console.log(err);
+//       console.log(rowCount);
+//       console.log(rows);
+//     }
+//   );
+//   connection.execSql(request);
+// }
+
+// function insertIntoDatabase(){
+//   console.log("Inserting a new user into database...");
+//   request = new Request(
+//     `INSERT INTO Annotators (firstName, secondName, login, email, password) VALUES (${newUser.firstName}, ${newUser.secondName}, ${newUser.login}, ${newUser.email}, ${newUser.password})`, // OUTPUT INSERTED.ProductID
+//     function(err, rowCount, rows) {
+//       console.log(rowCount + ' row(s) inserted');
+//     }
+//   );
+//   connection.execSql(request);
+// }
