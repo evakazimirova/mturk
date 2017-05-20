@@ -1,5 +1,7 @@
 var express = require('express');
+const bodyParser = require('body-parser');
 var router = express.Router();
+const parseJSON = bodyParser.json();
 
 typicalPostRequest('/post', function(user) {
   // добавляем запрос в базу данных

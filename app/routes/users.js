@@ -1,5 +1,7 @@
 var express = require('express');
+const bodyParser = require('body-parser');
 var router = express.Router();
+const parseJSON = bodyParser.json();
 
 typicalPostRequest('/edit/:userID', function(user) {
   // находим пользователя по id

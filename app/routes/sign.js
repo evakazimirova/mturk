@@ -38,23 +38,23 @@ typicalPostRequest('/up', function(newUser) {
 
 
 
-  // var connection = new Connection(configuration.db);
+  var connection = new Connection(configuration.db);
 
   // Attempt to connect and execute queries if connection goes through
-  // connection.on('connect', function(err) {
-  //     if (err) {
-  //       console.log(err)
-  //     }
-  //     else{
-  //     }
-  // });
+  connection.on('connect', function(err) {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log("Yeah!")
+      }
+  });
 
 
   const emailToken = generateTokenFromJSON(newUser);
 
   // createTableAnnotators();
   // insertIntoDatabase();
-  sendMail();
+  // sendMail();
   res.sha = emailToken;
 
   function sendMail() {

@@ -1,5 +1,7 @@
 var express = require('express');
+const bodyParser = require('body-parser');
 var router = express.Router();
+const parseJSON = bodyParser.json();
 
 typicalGetRequest('/allowed/:userID', function(user) {
   // вынимаем все проекты, доступные для аннотатора, кроме тех, которые он уже выполнял и тех, которую сделали 10 раз (для каждой задачи своё значение)
