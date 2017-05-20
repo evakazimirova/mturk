@@ -55,7 +55,8 @@
     "karma-coverage-istanbul-reporter": "^0.2.0",
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
-    "tslint": "~4.5.0"
+    "tslint": "~4.5.0",
+    "nodemon": "^1.11.0"
   },
   "engines": {
     "node": "7.5.0",
