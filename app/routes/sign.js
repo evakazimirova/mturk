@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 
-const h = require('../methods/helpers');
-const db = require('../methods/database');
+const h = require('../services/helpers');
+const db = require('../services/database');
 
 const configuration = require('../config');
 
