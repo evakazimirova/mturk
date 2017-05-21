@@ -49,9 +49,21 @@ export class SignUpComponent implements OnInit {
 
     this.http.post(userData, '/sign/up').subscribe(
       res => {
-        console.log(res)
+        console.log(res);
       },
-      err => console.log(err)
+      error => {
+        const status = error._body;
+        switch (status) {
+          case 'user exists':
+            // если такой пользователь уже есть, то предлагается восстановить пароль
+            console.log('Annotator with this email is already exists in the system.');
+            break;
+
+          default:
+            console.log(status);
+            break;
+        }
+      }
     );
   }
 }

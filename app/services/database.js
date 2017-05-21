@@ -54,7 +54,7 @@ module.exports = {
     });
 
     // возвращаем массив объектов из запроса
-    request.on('doneProc', function (rowCount, more, returnStatus, rows) {
+    request.on('requestCompleted', function (rowCount, more, returnStatus, rows) {
       cb(output);
     });
   }
