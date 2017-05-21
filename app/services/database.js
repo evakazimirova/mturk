@@ -1,23 +1,7 @@
 const Request = require('tedious').Request;
 
 module.exports = {
-  // функция для вставки ряда в таблицу базы данных
-  insertDataIntoTable: (table, data) => {
-    const queryData = generateQueryData(data);
-
-    const sqlQuery = `INSERT INTO Annot_video.dbo.${table} (${queryData.cols}) VALUES (${queryData.vals})`;
-
-    request = new Request(sqlQuery, function(err, rowCount) {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log(rowCount + ' row(s) inserted into ' + table);
-      }
-    });
-
-    global.db.execSql(request);
-  },
-
+  // вынуть данные из таблицы
   selectDataFromTable: (table, query, cb) => {
     let where;
     if (query.where) {
@@ -57,6 +41,41 @@ module.exports = {
     request.on('requestCompleted', function (rowCount, more, returnStatus, rows) {
       cb(output);
     });
+  },
+
+  // вставка ряда в таблицу базы данных
+  insertDataIntoTable: (table, data) => {
+    const queryData = generateQueryData(data);
+
+    const sqlQuery = `INSERT INTO Annot_video.dbo.${table} (${queryData.cols}) VALUES (${queryData.vals})`;
+
+    request = new Request(sqlQuery, function(err, rowCount) {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(rowCount + ' row(s) inserted into ' + table);
+      }
+    });
+
+    global.db.execSql(request);
+  },
+
+  // обновление данных таблицы
+  updateDataOfTable: (table, data, where) => {
+    const queryData = generateQueryDataForSet(data);
+
+    const sqlQuery = `UPDATE ${table} SET ${queryData} WHERE ${where}`;
+    console.log(sqlQuery);
+
+    request = new Request(sqlQuery, function(err, rowCount) {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(rowCount + ' row(s) updated of ' + table);
+      }
+    });
+
+    global.db.execSql(request);
   }
 };
 
@@ -73,6 +92,18 @@ function generateQueryData(data) {
 
   queryData.cols = queryData.cols.slice(0, -2);
   queryData.vals = queryData.vals.slice(0, -2);
+
+  return queryData;
+}
+
+function generateQueryDataForSet(data) {
+  queryData = '';
+
+  for (let field in data) {
+    queryData += `${field} = '${data[field]}', `;
+  }
+
+  queryData = queryData.slice(0, -2);
 
   return queryData;
 }

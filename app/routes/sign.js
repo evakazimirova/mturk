@@ -34,19 +34,13 @@ router.route('/up')
           const emailToken = h.generateTokenFromJSON(newUser);
           newUser.emailToken = emailToken;
 
-          // проверяем токен при подтверждении регистрации
-            // если есть такой, то
-              // изменяем статус пользователя
-              // удаляем токен
-              // авторизируем пользователя
-            // если нет, то
-              // сообщаем о том, что ссылка недействительна и переводим на страницу авторизации
+          // регистрируем аннотатора
+          db.insertDataIntoTable('Annotators', newUser);
 
           // отправляем оповещение на почту новому аннотатору
-          db.insertDataIntoTable('Annotators', newUser);
-          // mailer.onSignUp(newUser);
+          mailer.onSignUp(newUser);
 
-          response.send(JSON.stringify(newUser)); // отправляем данные
+          response.send(JSON.stringify({email: newUser.email})); // отправляем данные
         }
       });
     }
