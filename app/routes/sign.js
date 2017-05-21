@@ -45,17 +45,55 @@ typicalPostRequest('/up', function(newUser) {
       if (err) {
         console.log(err)
       } else {
-        console.log("Yeah!")
+        console.log("New user:", newUser)
+        const emailToken = generateTokenFromJSON(newUser);
+        res.sha = emailToken;
+        insertIntoDatabase();
+
+
+        function insertIntoDatabase(){
+          console.log("Inserting a new user into database...");
+
+          const sqlQuery = `
+            INSERT INTO Annot_video.dbo.Annotators (
+              firstName,
+              secondName,
+              login,
+              email,
+              password
+            ) VALUES (
+              '${newUser.firstName}',
+              '${newUser.secondName}',
+              '${newUser.login}',
+              '${newUser.email}',
+              '${newUser.password}'
+            )`; // OUTPUT INSERTED.ProductID
+
+          // const sqlQuery = "SELECT * FROM Annotators";
+
+          console.log(sqlQuery);
+
+          request = new Request(sqlQuery, function(err, rowCount, rows) {
+            console.log(rowCount + ' row(s) inserted');
+          });
+
+          // request.on('row', function(columns) {
+          //   let obj = {}
+          //   columns.forEach(function(column) {
+          //     obj[column.metadata.colName] = column.value;
+          //   });
+          //   console.log(obj);
+          // });
+
+          connection.execSql(request);
+        }
       }
   });
 
 
-  const emailToken = generateTokenFromJSON(newUser);
 
   // createTableAnnotators();
-  // insertIntoDatabase();
   // sendMail();
-  res.sha = emailToken;
 
   function sendMail() {
     let mailOptions = {
@@ -126,35 +164,24 @@ function generateTokenFromJSON(input) {
   return crypto.createHash('sha1').update(JSON.stringify(input) + new Date()).digest('hex');
 }
 
-// function createTableAnnotators(){
-//   console.log("Creating annotators table...");
-//     request = new Request(`
-//       CREATE TABLE 'teachers' (
-//         'id' INT(11) NOT NULL,
-//         'firstName' VARCHAR(25) NOT NULL,
-//         'secondName' VARCHAR(25) NOT NULL,
-//         'login' VARCHAR(25) NOT NULL,
-//         'email' VARCHAR(25) NOT NULL,
-//         'password' VARCHAR(25) NOT NULL,
-//         PRIMARY KEY ('id')
-//       )
-//     `,
-//     function(err, rowCount, rows) {
-//       console.log(err);
-//       console.log(rowCount);
-//       console.log(rows);
-//     }
-//   );
-//   connection.execSql(request);
-// }
-
-// function insertIntoDatabase(){
-//   console.log("Inserting a new user into database...");
-//   request = new Request(
-//     `INSERT INTO Annotators (firstName, secondName, login, email, password) VALUES (${newUser.firstName}, ${newUser.secondName}, ${newUser.login}, ${newUser.email}, ${newUser.password})`, // OUTPUT INSERTED.ProductID
-//     function(err, rowCount, rows) {
-//       console.log(rowCount + ' row(s) inserted');
-//     }
-//   );
-//   connection.execSql(request);
-// }
+function createTableAnnotators(){
+  console.log("Creating annotators table...");
+    request = new Request(`
+      CREATE TABLE 'teachers' (
+        'id' INT(11) NOT NULL,
+        'firstName' VARCHAR(25) NOT NULL,
+        'secondName' VARCHAR(25) NOT NULL,
+        'login' VARCHAR(25) NOT NULL,
+        'email' VARCHAR(25) NOT NULL,
+        'password' VARCHAR(25) NOT NULL,
+        PRIMARY KEY ('id')
+      )
+    `,
+    function(err, rowCount, rows) {
+      console.log(err);
+      console.log(rowCount);
+      console.log(rows);
+    }
+  );
+  connection.execSql(request);
+}
