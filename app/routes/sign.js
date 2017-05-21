@@ -42,52 +42,53 @@ typicalPostRequest('/up', function(newUser) {
 
   // Attempt to connect and execute queries if connection goes through
   connection.on('connect', function(err) {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log("New user:", newUser)
-        const emailToken = generateTokenFromJSON(newUser);
-        res.sha = emailToken;
-        insertIntoDatabase();
+    if (err) {
+      console.log(err)
+    } else {
+      console.log("New user:", newUser)
+      const emailToken = generateTokenFromJSON(newUser);
+      res.sha = emailToken;
+      insertIntoDatabase();
 
+      function insertIntoDatabase(){
+        const sqlQuery = `
+          INSERT INTO Annot_video.dbo.Annotators (
+            firstName,
+            secondName,
+            login,
+            email,
+            password
+          ) VALUES (
+            '${newUser.firstName}',
+            '${newUser.secondName}',
+            '${newUser.login}',
+            '${newUser.email}',
+            '${newUser.password}'
+          )`; // OUTPUT INSERTED.ProductID
 
-        function insertIntoDatabase(){
-          console.log("Inserting a new user into database...");
+        // const sqlQuery = "SELECT * FROM Annotators";
 
-          const sqlQuery = `
-            INSERT INTO Annot_video.dbo.Annotators (
-              firstName,
-              secondName,
-              login,
-              email,
-              password
-            ) VALUES (
-              '${newUser.firstName}',
-              '${newUser.secondName}',
-              '${newUser.login}',
-              '${newUser.email}',
-              '${newUser.password}'
-            )`; // OUTPUT INSERTED.ProductID
+        console.log(sqlQuery);
 
-          // const sqlQuery = "SELECT * FROM Annotators";
-
-          console.log(sqlQuery);
-
-          request = new Request(sqlQuery, function(err, rowCount, rows) {
+        request = new Request(sqlQuery, function(err, rowCount) {
+          if (err) {
+            console.log(err)
+          } else {
             console.log(rowCount + ' row(s) inserted');
-          });
+          }
+        });
 
-          // request.on('row', function(columns) {
-          //   let obj = {}
-          //   columns.forEach(function(column) {
-          //     obj[column.metadata.colName] = column.value;
-          //   });
-          //   console.log(obj);
-          // });
+        // request.on('row', function(columns) {
+        //   let obj = {}
+        //   columns.forEach(function(column) {
+        //     obj[column.metadata.colName] = column.value;
+        //   });
+        //   console.log(obj);
+        // });
 
-          connection.execSql(request);
-        }
+        connection.execSql(request);
       }
+    }
   });
 
 
