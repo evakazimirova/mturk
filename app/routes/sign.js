@@ -26,8 +26,17 @@ typicalPostRequest('/up', function(newUser) {
   const emailToken = h.generateTokenFromJSON(newUser);
   newUser.emailToken = emailToken;
   newUser.password = h.encryptPassword(newUser.password);
-  db.insertDataIntoTable('Annotators', newUser);
-  mailer.onSignUp(newUser);
+  // db.insertDataIntoTable('Annotators', newUser);
+  // mailer.onSignUp(newUser);
+
+  query = {
+    cols: 'email',
+    where: `id = '3'`
+  }
+
+  db.selectDataFromTable('Annotators', query, (data) => {
+    console.log(data)
+  });
 
   return newUser;
 });
