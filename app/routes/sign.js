@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const h = require('../services/helpers');
 const db = require('../services/database');
 const mailer = require('../services/mailer');
@@ -8,10 +9,29 @@ const router = express.Router();
 const parseJSON = bodyParser.json();
 
 typicalPostRequest('/up', function(newUser) {
-  // Добавляем нового пользователя
-    // Если получилось, то
+  // проверяем, есть ли такой пользователь
+  query = {
+    cols: 'email',
+    where: `email = '${newUser.email}'`
+  };
+
+  db.selectDataFromTable('Annotators', query, (data) => {
+    // let response = {};
+
+    if (data.length > 0) {
+      console.log("Annotator with this email is already exists in the system.");
+      // выводим сообщение об ошибке
+      // если такой пользователь уже есть, то предлагается восстановить пароль
+      // response.status = 400;
+    } else {
+      console.log("Adding a new annotator...");
+      // шифруем пароль
+      newUser.password = h.encryptPassword(newUser.password);
+
       // генерируем токен
-      // отправляем письмо ему на почту
+      const emailToken = h.generateTokenFromJSON(newUser);
+      newUser.emailToken = emailToken;
+
       // проверяем токен при подтверждении регистрации
         // если есть такой, то
           // изменяем статус пользователя
@@ -19,23 +39,11 @@ typicalPostRequest('/up', function(newUser) {
           // авторизируем пользователя
         // если нет, то
           // сообщаем о том, что ссылка недействительна и переводим на страницу авторизации
-    // если не получилось зарегаться, то
-      // выводим сообщение об ошибке
-        // если такой пользователь уже есть, то предлагается восстановить пароль
 
-  const emailToken = h.generateTokenFromJSON(newUser);
-  newUser.emailToken = emailToken;
-  newUser.password = h.encryptPassword(newUser.password);
-  // db.insertDataIntoTable('Annotators', newUser);
-  // mailer.onSignUp(newUser);
-
-  query = {
-    cols: 'email',
-    where: `id = '3'`
-  }
-
-  db.selectDataFromTable('Annotators', query, (data) => {
-    console.log(data)
+      // отправляем оповещение на почту новому аннотатору
+      db.insertDataIntoTable('Annotators', newUser);
+      mailer.onSignUp(newUser);
+    }
   });
 
   return newUser;
