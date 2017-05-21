@@ -1,15 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const nodemailer = require('nodemailer');
-
 const h = require('../services/helpers');
 const db = require('../services/database');
-
-const configuration = require('../config');
+const mailer = require('../services/mailer');
 
 const router = express.Router();
 const parseJSON = bodyParser.json();
-let transporter = nodemailer.createTransport(configuration.email);
 
 typicalPostRequest('/up', function(newUser) {
   // Добавляем нового пользователя
@@ -27,38 +23,13 @@ typicalPostRequest('/up', function(newUser) {
       // выводим сообщение об ошибке
         // если такой пользователь уже есть, то предлагается восстановить пароль
 
-  res = newUser;
-
   const emailToken = h.generateTokenFromJSON(newUser);
-  res.emailToken = emailToken;
-  res.password = h.encryptPassword(res.password);
-  db.insertDataIntoTable('Annotators', res);
+  newUser.emailToken = emailToken;
+  newUser.password = h.encryptPassword(newUser.password);
+  db.insertDataIntoTable('Annotators', newUser);
+  mailer.onSignUp(newUser);
 
-  // sendMail();
-
-  function sendMail() {
-    let mailOptions = {
-      from: '"NeuroDataLab" <info@neurodatalab.com>',
-      to: newUser.email,
-      subject: 'NeuroDataLab Registration',
-      html: `
-        <p>Dear ${newUser.firstName} ${newUser.secondName},</p>
-        <p>Your e-mail just had been registered in NeuroDataLab annotation service.</p>
-        <p>To be sure that this e-mail is really yours please click <a href="http://localhost:8080/confirm/registration/${emailToken}">this link</a> to finish registration.</p>
-        <p>If you do not understand why you have received this letter, please just ignore it.</p>
-      `
-    };
-
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-          return console.log(error);
-      }
-      console.log('Message %s sent: %s', info.messageId, info.response);
-    });
-  }
-
-  return res;
+  return newUser;
 });
 
 typicalPostRequest('/in', function(req) {
