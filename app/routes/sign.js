@@ -37,23 +37,23 @@ connection.on('connect', function(err) {
 
       res = newUser;
 
-      console.log("New user:", newUser)
       const emailToken = h.generateTokenFromJSON(newUser);
       res.emailToken = emailToken;
       res.password = h.encryptPassword(res.password);
-      insertIntoDatabase(res);
+      insertDataIntoTable('Annotators', res);
 
-      function insertIntoDatabase(request){
+      // функция для вставки ряда в таблицу базы данных
+      function insertDataIntoTable(table, queryData){
         cols = '';
         vals = '';
-        for (let field in request) {
+        for (let field in queryData) {
           cols += field + ', ';
-          vals += `'${request[field]}', `;
+          vals += `'${queryData[field]}', `;
         }
         cols = cols.slice(0, -2);
         vals = vals.slice(0, -2);
 
-        const sqlQuery = `INSERT INTO Annot_video.dbo.Annotators (${cols}) VALUES (${vals})`;
+        const sqlQuery = `INSERT INTO Annot_video.dbo.${table} (${cols}) VALUES (${vals})`;
 
         // const sqlQuery = "SELECT * FROM Annotators";
 
@@ -61,7 +61,7 @@ connection.on('connect', function(err) {
           if (err) {
             console.log(err)
           } else {
-            console.log(rowCount + ' row(s) inserted');
+            console.log(rowCount + ' row(s) inserted into ' + table);
           }
         });
 
