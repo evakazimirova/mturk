@@ -31,7 +31,6 @@ router.route('/ed')
 router.route('/up')
   .post(parseJSON, function(request, response){
     const newUser = request.body; // принимаем данные
-    let error;
 
     if (newUser.email === "") {
       response.status(400).send('no email');
@@ -70,7 +69,6 @@ router.route('/up')
 router.route('/in')
   .post(parseJSON, function(request, response){
     const user = request.body; // принимаем данные
-    let error;
 
     // шифруем пароль
     user.password = h.encryptPassword(user.password);
@@ -108,18 +106,34 @@ router.route('/in')
   });
 
 
-typicalPostRequest('/forgot', function(req) {
-  // ищем пользователя по почте
-    // если есть пользователь, то
-      // генерируем токен и записываем в базу
-      // высылаем ему письмо со ссылкой на страницу смены пароля
-        // если такой токен у кого-то есть, то предлагаем ему сменить пароль
-          // при правильно введённом пароле даём доступ к системе
-        // если нет, то выводим ошибку и перенаправляем в форму регистрации
+router.route('/forgot')
+  .post(parseJSON, function(request, response){
+    const user = request.body; // принимаем данные
 
-  res = req;
-  return res;
-});
+    // ищем пользователя по почте
+    query = {
+      cols: 'id, firstName, secondName, email',
+      where: `email = '${user.login}'`
+    };
+    db.select('Annotators', query, (data) => {
+      if (data.length > 0) {
+        // генерируем токен и записываем в базу
+        update = {
+          emailToken: h.generateTokenFromJSON(data)
+        }
+        db.update('Annotators', update, `id = '${data[0].id}'`);
+
+        // высылаем письмо со ссылкой на страницу смены пароля
+        data[0].emailToken = update.emailToken;
+        mailer.onForgotPassword(data[0]);
+
+        response.send();
+      } else {
+        console.log("There is no any account matching this email.");
+        response.status(400).send('no email');
+      }
+    });
+  });
 
 
 // выходим из системы
@@ -129,19 +143,5 @@ router.route('/out')
     request.session.isAuth = false;
     delete request.session.userId;
 
-    response.send('');
+    response.send();
   });
-
-
-module.exports = router;
-
-function typicalPostRequest(route, requestAction) {
-  router.route(route)
-    .post(parseJSON, function(request, response){
-      const inData = request.body; // принимаем данные
-
-      outData = requestAction(inData);
-
-      response.send(JSON.stringify(outData)); // отправляем данные
-    });
-}
