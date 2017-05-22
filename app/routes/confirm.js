@@ -39,13 +39,18 @@ router.route('/registration/:email/:token')
           // авторизируем пользователя
           request.session.isAuth = true;
           request.session.userId = data[0].id;
+
+          // переходим на сайт
+          response.redirect('/');
         } else {
           // пользователь уже зарегистрирован. нужно восстановить пароль
-          response.send({error: "already registered"});
+          // response.send({error: "already registered"});
+          response.redirect('/');
         }
       } else {
         // сообщаем о том, что ссылка недействительна (почта не зарегистрирована) и переводим на страницу авторизации
-        response.send({error: "token invalid"});
+        // response.send({error: "token invalid"});
+        response.redirect('/');
       }
     });
   });
