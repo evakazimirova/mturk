@@ -12,12 +12,19 @@ export class SiteComponent implements OnInit {
   constructor(private common: CommonService, private http: HttpService) {}
 
   ngOnInit() {
-    // читаем файл конфигурации
-    // ДОП 2. в конфигурационном файле указывается список шкал для разметки и диапазон разметки. Диапазон может быть либо от 1 до 5 либо от -2 до +2.
-    this.http.get('./assets/conf.json').subscribe(
-      conf => {
-        this.common.conf = conf
-        this.common.mode = "auth";
+    this.http.get('/sign/ed').subscribe(
+      isSignedIn => {
+        console.log(isSignedIn);
+
+        // читаем файл конфигурации
+        // ДОП 2. в конфигурационном файле указывается список шкал для разметки и диапазон разметки. Диапазон может быть либо от 1 до 5 либо от -2 до +2.
+        this.http.get('./assets/conf.json').subscribe(
+          conf => {
+            this.common.conf = conf;
+            this.common.mode = isSignedIn ? "profile" : "auth";
+          },
+          error => console.log(error)
+        );
       },
       error => console.log(error)
     );

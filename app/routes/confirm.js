@@ -7,11 +7,14 @@ router.route('/registration/:sha1')
   .get(function(request, response){
     // проверяем токен при подтверждении регистрации
     update = {
-      emailToken: '' // удаляем токен
-      // изменяем статус пользователя
-      // авторизируем пользователя
+      emailToken: '', // удаляем токен
+      registered: true// изменяем статус пользователя
     };
-    db.update('Annotators', update, `emailToken = 'request.params.sha1'`);
+
+    db.update('Annotators', update, `emailToken = '${request.params.sha1}'`);
+
+    // авторизируем пользователя
+    request.session.isAuth = true;
 
     // после регистрации перенаправляем в личный кабинет
     response.redirect('/');

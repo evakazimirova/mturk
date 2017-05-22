@@ -8,6 +8,18 @@ const mailer = require('../services/mailer');
 const router = express.Router();
 const parseJSON = bodyParser.json();
 
+
+// отвечаем, зареган ли пользователь
+router.route('/ed')
+  .get((request, response) => {
+    if (request.session.isAuth) {
+      response.send('true');
+    } else {
+      response.send('false');
+    }
+  });
+
+
 router.route('/up')
   .post(parseJSON, function(request, response){
     const newUser = request.body; // принимаем данные
@@ -68,6 +80,8 @@ typicalPostRequest('/out', function(req) {
         // если такой токен у кого-то есть, то предлагаем ему сменить пароль
           // при правильно введённом пароле даём доступ к системе
         // если нет, то выводим ошибку и перенаправляем в форму регистрации
+
+  // req.session.destroy();
 
   res = req;
   return res;
