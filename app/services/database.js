@@ -76,6 +76,22 @@ module.exports = {
     });
 
     global.db.execSql(request);
+  },
+
+  // удаление записи из таблицы
+  deleteDataFromTable: (table, where) => {
+    const sqlQuery = `UPDATE ${table} SET ${queryData} WHERE ${where}`;
+    console.log(sqlQuery);
+
+    request = new Request(sqlQuery, function(err, rowCount) {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(rowCount + ' row(s) deleted from ' + table);
+      }
+    });
+
+    global.db.execSql(request);
   }
 };
 
