@@ -23,9 +23,12 @@ export class SiteComponent implements OnInit {
         this.http.get('/sign/ed').subscribe(
           user => {
             if (user) {
-              console.log(user);
-              this.common.user = user;
-              this.common.mode = "profile";
+              if (user.chPass) {
+                this.common.mode = "changePassword";
+              } else {
+                this.common.user = user;
+                this.common.mode = "profile";
+              }
             } else {
               this.common.mode = "auth";
             }

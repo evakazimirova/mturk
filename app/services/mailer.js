@@ -24,16 +24,15 @@ module.exports = {
       console.log('Message %s sent: %s', info.messageId, info.response);
     });
   },
-  
+
   onForgotPassword: (user) => {
     let mailOptions = {
       from: '"NeuroDataLab" <info@neurodatalab.com>',
       to: user.email,
-      subject: 'NeuroDataLab Registration',
+      subject: 'NeuroDataLab Change Password',
       html: `
         <p>Dear ${user.firstName} ${user.secondName},</p>
-        <p>Your e-mail just had been registered in NeuroDataLab annotation service.</p>
-        <p>To be sure that this e-mail is really yours please click <a href="http://localhost:8080/confirm/forgotpassword/${user.email}/${user.emailToken}">this link</a> to finish registration.</p>
+        <p>Here is <a href="http://localhost:8080/confirm/forgotpassword/${user.email}/${user.emailToken}">your link</a> for changing current password.</p>
         <p>If you do not understand why you have received this letter, please just ignore it.</p>
       `
     };

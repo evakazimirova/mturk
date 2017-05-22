@@ -34,18 +34,6 @@ module.exports = global.db.on('connect', function(err) {
     app.use('/moneyRequests', moneyRequests);
     app.use('/projects', projects);
 
-    // // сессия пользователя
-    // app.get("/", (req, res) => {
-    //   var pass = req.session.loggedIn;
-    //   console.log(pass);
-    //   next();
-    //   // if (pass) {
-    //   //   next();
-    //   // } else {
-    //   //   res.redirect("/");
-    //   // }
-    // });
-
     app.listen(port, function(){
       console.log('Сервер доступен по адресу http://localhost:' + port);
     });

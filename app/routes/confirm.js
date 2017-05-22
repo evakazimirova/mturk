@@ -56,9 +56,7 @@ router.route('/forgotpassword/:email/:token')
 
           db.update('Annotators', update, `email = '${request.params.email}'`);
 
-          // если такой токен у кого-то есть, то предлагаем ему сменить пароль
-            // при правильно введённом пароле даём доступ к системе
-          // если нет, то выводим ошибку и перенаправляем в форму регистрации
+          request.session.changesPassword = request.params.email;
 
           // // авторизируем пользователя
           // request.session.isAuth = true;

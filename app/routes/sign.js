@@ -12,18 +12,26 @@ const parseJSON = bodyParser.json();
 // отвечаем, зареган ли пользователь
 router.route('/ed')
   .get((request, response) => {
-    if (request.session.isAuth) {
-      query = {
-        cols: 'id, firstName, secondName, login, email',
-        where: `id = '${request.session.userId}'`
-      };
-
-      // отдаём данные пользователя
-      db.select('Annotators', query, (data) => {
-        response.send(JSON.stringify(data[0]));
-      });
+    if (request.session.changesPassword) {
+      // смена пароля
+      response.send(JSON.stringify({
+        chPass: true,
+        email: request.session.changesPassword
+      }));
     } else {
-      response.send('false');
+      if (request.session.isAuth) {
+        query = {
+          cols: 'id, firstName, secondName, login, email',
+          where: `id = '${request.session.userId}'`
+        };
+
+        // отдаём данные пользователя
+        db.select('Annotators', query, (data) => {
+          response.send(JSON.stringify(data[0]));
+        });
+      } else {
+        response.send('false');
+      }
     }
   });
 
@@ -113,7 +121,7 @@ router.route('/forgot')
     // ищем пользователя по почте
     query = {
       cols: 'id, firstName, secondName, email',
-      where: `email = '${user.login}'`
+      where: `email = '${user.email}'`
     };
     db.select('Annotators', query, (data) => {
       if (data.length > 0) {
@@ -127,7 +135,7 @@ router.route('/forgot')
         data[0].emailToken = update.emailToken;
         mailer.onForgotPassword(data[0]);
 
-        response.send();
+        response.send('true');
       } else {
         console.log("There is no any account matching this email.");
         response.status(400).send('no email');
@@ -137,11 +145,46 @@ router.route('/forgot')
 
 
 // выходим из системы
+router.route('/changepass')
+  .post(parseJSON, (request, response) => {
+    const newPass = request.body.password; // принимаем данные
+    const email = request.session.changesPassword;
+
+    // запускаем пользователя на сервер
+    query = {
+      cols: 'id, firstName, secondName, login, email',
+      where: `email = '${email}'`
+    };
+    db.select('Annotators', query, (data) => {
+      if (data.length > 0) {
+        // обновляем пароль
+        update = {
+          password: h.encryptPassword(newPass),
+          emailToken: '',
+          registered: 1
+        }
+        db.update('Annotators', update, `email = '${email}'`);
+
+        // редактируем сессию
+        request.session.isAuth = true;
+        request.session.userId = data[0].id;
+
+        // отправляем данные пользователя
+        response.send(JSON.stringify(data[0]));
+      }
+    });
+  });
+
+
+// выходим из системы
 router.route('/out')
-  .get((request, response) => {
+  .post(parseJSON, (request, response) => {
     // редактируем сессию
     request.session.isAuth = false;
     delete request.session.userId;
 
-    response.send();
+    response.send('true');
   });
+
+
+module.exports = router;
