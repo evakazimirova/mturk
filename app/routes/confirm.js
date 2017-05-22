@@ -11,7 +11,7 @@ router.route('/registration/:sha1')
       // изменяем статус пользователя
       // авторизируем пользователя
     };
-    db.updateDataOfTable('Annotators', update, `emailToken = 'request.params.sha1'`);
+    db.update('Annotators', update, `emailToken = 'request.params.sha1'`);
 
     // после регистрации перенаправляем в личный кабинет
     response.redirect('/');

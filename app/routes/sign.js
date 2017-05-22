@@ -21,7 +21,7 @@ router.route('/up')
         cols: 'email',
         where: `email = '${newUser.email}'`
       };
-      db.selectDataFromTable('Annotators', query, (data) => {
+      db.select('Annotators', query, (data) => {
         if (data.length > 0) {
           console.log("Annotator with this email is already exists in the system.");
           response.status(400).send('user exists');
@@ -35,7 +35,7 @@ router.route('/up')
           newUser.emailToken = emailToken;
 
           // регистрируем аннотатора
-          db.insertDataIntoTable('Annotators', newUser);
+          db.insert('Annotators', newUser);
 
           // отправляем оповещение на почту новому аннотатору
           mailer.onSignUp(newUser);

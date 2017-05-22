@@ -2,7 +2,7 @@ const Request = require('tedious').Request;
 
 module.exports = {
   // вынуть данные из таблицы
-  selectDataFromTable: (table, query, cb) => {
+  select: (table, query, cb) => {
     let where;
     if (query.where) {
       where = 'WHERE ' + query.where;
@@ -44,7 +44,7 @@ module.exports = {
   },
 
   // вставка ряда в таблицу базы данных
-  insertDataIntoTable: (table, data) => {
+  insert: (table, data) => {
     const queryData = generateQueryData(data);
 
     const sqlQuery = `INSERT INTO Annot_video.dbo.${table} (${queryData.cols}) VALUES (${queryData.vals})`;
@@ -61,7 +61,7 @@ module.exports = {
   },
 
   // обновление данных таблицы
-  updateDataOfTable: (table, data, where) => {
+  update: (table, data, where) => {
     const queryData = generateQueryDataForSet(data);
 
     const sqlQuery = `UPDATE ${table} SET ${queryData} WHERE ${where}`;
@@ -79,7 +79,7 @@ module.exports = {
   },
 
   // удаление записи из таблицы
-  deleteDataFromTable: (table, where) => {
+  delete: (table, where) => {
     const sqlQuery = `UPDATE ${table} SET ${queryData} WHERE ${where}`;
     console.log(sqlQuery);
 
