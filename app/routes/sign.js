@@ -178,10 +178,13 @@ router.route('/changepass')
 
 // выходим из системы
 router.route('/out')
-  .post(parseJSON, (request, response) => {
+  .get((request, response) => {
     // редактируем сессию
     request.session.isAuth = false;
     delete request.session.userId;
+
+    // выходим из режима восстановления пароля
+    delete request.session.changesPassword;
 
     response.send('true');
   });
