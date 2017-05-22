@@ -78,7 +78,7 @@ router.route('/in')
     // ищем пользователя с указанными данными
     query = {
       cols: 'id, firstName, secondName, login, email, password, registered',
-      where: `email = '${user.login}'`
+      where: `email = '${user.login}' OR login = '${user.login}'`
     };
     db.select('Annotators', query, (data) => {
       if (data.length > 0) {

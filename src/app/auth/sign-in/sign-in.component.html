@@ -1,7 +1,7 @@
 <!-- вход для зарегистрированных пользователей -->
 <form [formGroup]="form" (ngSubmit)="signIn($event)">
   <div class="form-group">
-    <label for="login">Login</label>
+    <label for="login">Login or e-mail</label>
     <input type="text" class="form-control" id="login"
       formControlName="login" placeholder="johndoe_42">
   </div>
