@@ -3,7 +3,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 @Injectable()
 export class CommonService {
   // общие свойства для всех компонент
-  user = {
+  user: any = {
     name: '',
     id: 0
   };

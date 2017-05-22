@@ -1,13 +1,14 @@
 <!-- вход для зарегистрированных пользователей -->
-<form>
+<form [formGroup]="form" (ngSubmit)="signIn($event)">
   <div class="form-group">
-    <label for="Login">Login or e-mail</label>
-    <input type="text" class="form-control" id="Login" placeholder="johndoe_42">
+    <label for="login">Login</label>
+    <input type="text" class="form-control" id="login"
+      formControlName="login" placeholder="johndoe_42">
   </div>
   <div class="form-group">
     <label for="password">Password</label>
-    <input type="password" class="form-control" id="password" placeholder="Password">
+    <input type="password" class="form-control" id="password"
+      formControlName="password" placeholder="Password">
   </div>
-  <button type="submit" class="btn btn-primary btn-block"
-    (click)="signIn()">Sign In</button>
+  <button type="submit" class="btn btn-primary btn-block">Sign In</button>
 </form>

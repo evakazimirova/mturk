@@ -1,3 +1,4 @@
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from '../../http.service';
 import { CommonService } from '../../common.service';
 import { Component, OnInit } from '@angular/core';
@@ -8,21 +9,34 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit {
+  form: FormGroup;
 
-  constructor(public common: CommonService, private http: HttpService) { }
+  constructor(public common: CommonService, private http: HttpService, private formBuilder: FormBuilder) {
+    this.form = formBuilder.group({
+      'login': ['', [
+        Validators.required
+      ]],
+      'password': ['', [
+        Validators.required,
+        Validators.pattern('.{5,}')
+      ]]
+    });
+  }
 
   ngOnInit() {
   }
 
-  signIn() {
-    const obj = {
-      id: 10,
-      name: 'iGor'
+  signIn(event) {
+    event.preventDefault();
+
+    const req = {
+      login: this.form.value.login,
+      password: this.form.value.password
     };
 
-    this.http.post(obj, '/sign/in').subscribe(
-      res => {
-        console.log(res);
+    this.http.post(req, '/sign/in').subscribe(
+      user => {
+        this.common.user = user;
         this.common.mode = 'profile';
       },
       err => console.log(err)

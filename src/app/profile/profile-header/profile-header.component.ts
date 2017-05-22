@@ -1,3 +1,5 @@
+import { HttpService } from '../../http.service';
+import { CommonService } from '../../common.service';
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 @Component({
@@ -21,9 +23,22 @@ export class ProfileHeaderComponent implements OnInit {
     }
   }
 
-  constructor() { }
+  constructor(public common: CommonService, private http: HttpService) { }
 
   ngOnInit() {
+    this.user.nickname = this.common.user.login;
   }
 
+  signOut() {
+    const confirmed = confirm("Do you really want to sign out?");
+
+    if (confirmed) {
+      this.http.getRough('/sign/out').subscribe(
+        (res) => {
+          this.common.mode = 'auth';
+        },
+        err => console.log(err)
+      );
+    }
+  }
 }

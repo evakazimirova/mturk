@@ -12,7 +12,6 @@ const parseJSON = bodyParser.json();
 // отвечаем, зареган ли пользователь
 router.route('/ed')
   .get((request, response) => {
-    console.log(request.session);
     if (request.session.isAuth) {
       query = {
         cols: 'id, firstName, secondName, login, email',
@@ -68,20 +67,48 @@ router.route('/up')
   });
 
 
-typicalPostRequest('/in', function(req) {
-  // данные приходят в зашифрованном виде
-  // ищем пользователя с указанными данными
-    // если есть пользователь с такими данными, то
-      // авторизируем
-      // запускаем в систему
-      // возвращаем все данные текущего пользователя и сохраняем во фронтенде
-    // если нет, то выводим сообщение об ошибке
+router.route('/in')
+  .post(parseJSON, function(request, response){
+    const user = request.body; // принимаем данные
+    let error;
 
-  res = req;
-  return res;
-});
+    // шифруем пароль
+    user.password = h.encryptPassword(user.password);
 
-typicalPostRequest('/out', function(req) {
+    // ищем пользователя с указанными данными
+    query = {
+      cols: 'id, firstName, secondName, login, email, password, registered',
+      where: `email = '${user.login}'`
+    };
+    db.select('Annotators', query, (data) => {
+      if (data.length > 0) {
+        if (user.password === data[0].password) {
+          if (data[0].registered) {
+            // авторизируем пользователя
+            request.session.isAuth = true;
+            request.session.userId = data[0].id;
+
+            // удаляем пароль из пересылаемого объекта
+            delete data[0].password;
+            delete data[0].registered; // и инфу о валидации почты
+
+            // возвращаем все данные текущего пользователя
+            response.send(JSON.stringify(data[0])); // отправляем данные
+          } else {
+            response.status(400).send('email is not validated');
+          }
+        } else {
+          response.status(400).send('incorrect password');
+        }
+      } else {
+        console.log("There is no any account matching this email.");
+        response.status(400).send('no email');
+      }
+    });
+  });
+
+
+typicalPostRequest('/forgot', function(req) {
   // ищем пользователя по почте
     // если есть пользователь, то
       // генерируем токен и записываем в базу
@@ -90,11 +117,21 @@ typicalPostRequest('/out', function(req) {
           // при правильно введённом пароле даём доступ к системе
         // если нет, то выводим ошибку и перенаправляем в форму регистрации
 
-  // req.session.destroy();
-
   res = req;
   return res;
 });
+
+
+// выходим из системы
+router.route('/out')
+  .get((request, response) => {
+    // редактируем сессию
+    request.session.isAuth = false;
+    delete request.session.userId;
+
+    response.send('');
+  });
+
 
 module.exports = router;
 
