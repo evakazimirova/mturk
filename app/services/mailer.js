@@ -12,7 +12,7 @@ module.exports = {
       html: `
         <p>Dear ${newUser.firstName} ${newUser.secondName},</p>
         <p>Your e-mail just had been registered in NeuroDataLab annotation service.</p>
-        <p>To be sure that this e-mail is really yours please click <a href="http://localhost:8080/confirm/registration/${newUser.emailToken}">this link</a> to finish registration.</p>
+        <p>To be sure that this e-mail is really yours please click <a href="http://localhost:8080/confirm/registration/${newUser.email}/${newUser.emailToken}">this link</a> to finish registration.</p>
         <p>If you do not understand why you have received this letter, please just ignore it.</p>
       `
     };

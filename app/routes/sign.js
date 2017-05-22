@@ -12,8 +12,17 @@ const parseJSON = bodyParser.json();
 // отвечаем, зареган ли пользователь
 router.route('/ed')
   .get((request, response) => {
+    console.log(request.session);
     if (request.session.isAuth) {
-      response.send('true');
+      query = {
+        cols: 'id, firstName, secondName, login, email',
+        where: `id = '${request.session.userId}'`
+      };
+
+      // отдаём данные пользователя
+      db.select('Annotators', query, (data) => {
+        response.send(JSON.stringify(data[0]));
+      });
     } else {
       response.send('false');
     }

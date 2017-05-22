@@ -5,5 +5,6 @@ CREATE TABLE Annotators (
   login VARCHAR(50) NOT NULL,
   email VARCHAR(50) NOT NULL,
   password VARCHAR(40) NOT NULL, -- в зашифрованном (SHA1) виде
-  emailToken VARCHAR(40) -- SHA1
+  emailToken VARCHAR(40), -- SHA1
+  registered BIT DEFAULT ((0))
 )
