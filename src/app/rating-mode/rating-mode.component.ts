@@ -12,34 +12,11 @@ export class RatingModeComponent implements OnInit {
   constructor(private http: HttpService, private common: CommonService) {}
 
   ngOnInit() {
-    // 1. интерфейс авторизации (имя + id)
-    if (this.common.user.name.length === 0) {
-      this.http.get(this.common.conf.pathToData + "/users.json").subscribe(
-        (users) => {
-          // let answer: any;
-          // while (true) {
-          //   answer = prompt("Как вас зовут?");
-
-          //   if (answer !== null) {
-          //     if (answer.length > 0) {
-          //       this.common.user.name = answer;
-          //       this.common.user.id = users.length; // нужна БД
-          //       // console.log(this.common.user);
-
-          //       break; // перестаём спрашивать
-          //     }
-          //   }
-          // }
-
-          // 2. Web-интерфейс отображает список видеозаписей доступных для разметки.
-          // 4. Выбор шкалы осуществляется пользователем из некоторого заранее заданного файла.
-          // загружаем первое видео
-          this.common.cv = this.common.cv;
-          this.common.setVideo(this.common.conf.pathToData + this.common.cv);
-        },
-        (error) => console.log(error)
-      );
-    }
+    // 2. Web-интерфейс отображает список видеозаписей доступных для разметки.
+    // 4. Выбор шкалы осуществляется пользователем из некоторого заранее заданного файла.
+    // загружаем первое видео
+    this.common.cv = this.common.cv;
+    this.common.setVideo(this.common.conf.pathToData + this.common.cv);
   }
 
   return() {

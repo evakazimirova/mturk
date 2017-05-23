@@ -28,6 +28,7 @@
     "@angular/platform-browser-dynamic": "^4.1.2",
     "@angular/platform-server": "^4.1.2",
     "@angular/router": "^4.1.2",
+    "azure-storage": "^2.1.0",
     "body-parser": "^1.17.2",
     "bootstrap-sass": "3.3.7",
     "concurrently": "^3.4.0",

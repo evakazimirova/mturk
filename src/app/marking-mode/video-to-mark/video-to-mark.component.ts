@@ -15,6 +15,7 @@ export class VideoToMarkComponent implements OnInit {
 
   ngOnInit() {
     this.currentVideo = this.common.conf.pathToData + this.video + ".mp4";
+    console.log(this.currentVideo);
     this.vp.videoContainer = document.getElementById('videoToMark');
     this.vp.videoContainer.load();
 

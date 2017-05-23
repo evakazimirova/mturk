@@ -45,13 +45,19 @@ router.route('/up')
     } else {
       // проверяем, есть ли такой пользователь
       query = {
-        cols: 'email',
-        where: `email = '${newUser.email}'`
+        cols: 'email, login',
+        where: `email = '${newUser.email}' OR login = '${newUser.login}'`
       };
       db.select('Annotators', query, (data) => {
         if (data.length > 0) {
-          console.log("Annotator with this email is already exists in the system.");
-          response.status(400).send('user exists');
+          if (data[0].login === newUser.login) {
+            console.log("Annotator with this login is already exists in the system.");
+            response.status(400).send('login exists');
+          }
+          if (data[0].email === newUser.email) {
+            console.log("Annotator with this email is already exists in the system.");
+            response.status(400).send('user exists');
+          }
         } else {
           console.log("Adding a new annotator...");
           // шифруем пароль
