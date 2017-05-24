@@ -1,6 +1,10 @@
-var express = require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
-var router = express.Router();
+
+const h = require('../services/helpers');
+const db = require('../services/database');
+
+const router = express.Router();
 const parseJSON = bodyParser.json();
 
 typicalPostRequest('/edit/:userID', function(user) {
@@ -18,14 +22,32 @@ typicalPostRequest('/edit/:userID', function(user) {
 typicalGetRequest('/user/rating', function(request) {
   // вынимаем всех аннотаторов, сортируя по рейтингу (по убыванию)
 
-  return res;
-});
-
-typicalGetRequest('/user/registered', function(request) {
-  // вынимаем всех аннотаторов, подтвердивших email
 
   return res;
 });
+
+router.route('/registered')
+    .get(function(request, response){
+      // вынимаем всех аннотаторов, подтвердивших email
+      query = {
+        cols: 'firstName, secondName, email',
+        where: `registered = '1'`
+      };
+      db.select('Annotators', query, (data) => {
+        for (user of data) {
+          // собираем информацию по проектам
+          user.projects = 2;
+          user.completed = 7;
+          user.progress = [
+            50,
+            83
+          ];
+        }
+
+        response.send(JSON.stringify(data)); // отправляем данные
+      });
+    });
+
 
 // typicalGetRequest('/user/:id', function(request) {
 //   // находим пользователя по id
