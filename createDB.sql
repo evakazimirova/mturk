@@ -1,19 +1,19 @@
 -- Список зарегистрированных аннотаторов. Read/Write
 CREATE TABLE Annotators (
-  id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-  firstName VARCHAR(50) NOT NULL,
-  secondName VARCHAR(50) NOT NULL,
+  AID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   login VARCHAR(50) NOT NULL,
   email VARCHAR(50) NOT NULL,
   password VARCHAR(40) NOT NULL, -- в зашифрованном (SHA1) виде
   emailToken VARCHAR(40), -- SHA1
-  registered BIT DEFAULT ((0))
+  registered BIT DEFAULT ((0)),
+  firstName VARCHAR(50) NOT NULL,
+  secondName VARCHAR(50) NOT NULL
 )
 
 -- Таблица содержит URI необработанных видеозаписей и некоторые характеристики видео. Read Only
 CREATE TABLE RAWVideo (
-  id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-  uri VARCHAR(255) NOT NULL
+  VID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  URI VARCHAR(255) NOT NULL
 )
 
 -- Список заданий разметки. Read only.
@@ -49,7 +49,7 @@ CREATE TABLE TasksMarkUP (
 CREATE TABLE TasksEventSelection (
   TID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   VID INT NOT NULL,
-  EventList VARCHAR(50) NOT NULL
+  eventList VARCHAR(50) NOT NULL
 )
 
 -- Таблица содержит URI файлов с разметкой и связывает их с соответствующей видеозаписью через VID. Read/write
@@ -60,8 +60,8 @@ CREATE TABLE PersonSelection (
   TID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   VID INT NOT NULL,
   CURI VARCHAR(50) NOT NULL,
-  PersonName VARCHAR(50) NOT NULL,
-  PersonImage bit DEFAULT ((0))
+  personName VARCHAR(50) NOT NULL,
+  personImage bit DEFAULT ((0))
 )
 
 -- Результаты разметки. Read/write
@@ -94,9 +94,9 @@ CREATE TABLE MarkUPResults (
 -- Информация по проектам. Read only
 CREATE TABLE Projects (
   PID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-  ProjectName VARCHAR(50) NOT NULL,
-  PricePerTask float(6) NOT NULL,
-  AnnoPerTask	INT NOT NULL
+  projectName VARCHAR(50) NOT NULL,
+  pricePerTask float(6) NOT NULL,
+  annoPerTask	INT NOT NULL
 )
 
 -- Список заданий выполняемых / выполненных аннотатором. Read/Write
@@ -109,8 +109,8 @@ CREATE TABLE AnnotatorTasks (
   AID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   TID_M INT NOT NULL,
   TID_E INT NOT NULL,
-  Status INT NOT NULL,
-  Price float(6) NOT NULL
+  status INT NOT NULL,
+  price float(6) NOT NULL
 )
 
 -- Содержит расшифровку столбцов Ei в таблице TasksMarkUP. Read only
@@ -120,8 +120,8 @@ CREATE TABLE AnnotatorTasks (
 -- ...
 -- E10 EmotionThree
 CREATE TABLE EmotionInfo (
-  ShortName VARCHAR(50) NOT NULL,
-  LongName VARCHAR(50) NOT NULL
+  shortName VARCHAR(50) NOT NULL,
+  longName VARCHAR(50) NOT NULL
 )
 
 -- Содержит расшифровку записей в столбце EmotionList в таблице TasksEventSelection. Read only
@@ -132,6 +132,6 @@ CREATE TABLE EmotionInfo (
 -- ...
 -- Ev6 реклама
 CREATE TABLE EventInfo (
-  ShortName VARCHAR(50) NOT NULL,
-  LongName VARCHAR(50) NOT NULL
+  shortName VARCHAR(50) NOT NULL,
+  longName VARCHAR(50) NOT NULL
 )

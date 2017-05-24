@@ -21,8 +21,8 @@ router.route('/ed')
     } else {
       if (request.session.isAuth) {
         query = {
-          cols: 'id, firstName, secondName, login, email',
-          where: `id = '${request.session.userId}'`
+          cols: 'AID, firstName, secondName, login, email',
+          where: `AID = '${request.session.userId}'`
         };
 
         // отдаём данные пользователя
@@ -89,7 +89,7 @@ router.route('/in')
 
     // ищем пользователя с указанными данными
     query = {
-      cols: 'id, firstName, secondName, login, email, password, registered',
+      cols: 'AID, firstName, secondName, login, email, password, registered',
       where: `email = '${user.login}' OR login = '${user.login}'`
     };
     db.select('Annotators', query, (data) => {
@@ -98,7 +98,7 @@ router.route('/in')
           if (data[0].registered) {
             // авторизируем пользователя
             request.session.isAuth = true;
-            request.session.userId = data[0].id;
+            request.session.userId = data[0].AID;
 
             // удаляем пароль из пересылаемого объекта
             delete data[0].password;
@@ -126,7 +126,7 @@ router.route('/forgot')
 
     // ищем пользователя по почте
     query = {
-      cols: 'id, firstName, secondName, email',
+      cols: 'AID, firstName, secondName, email',
       where: `email = '${user.email}'`
     };
     db.select('Annotators', query, (data) => {
@@ -135,7 +135,7 @@ router.route('/forgot')
         update = {
           emailToken: h.generateTokenFromJSON(data)
         }
-        db.update('Annotators', update, `id = '${data[0].id}'`);
+        db.update('Annotators', update, `AID = '${data[0].AID}'`);
 
         // высылаем письмо со ссылкой на страницу смены пароля
         data[0].emailToken = update.emailToken;
@@ -158,7 +158,7 @@ router.route('/changepass')
 
     // запускаем пользователя на сервер
     query = {
-      cols: 'id, firstName, secondName, login, email',
+      cols: 'AID, firstName, secondName, login, email',
       where: `email = '${email}'`
     };
     db.select('Annotators', query, (data) => {
@@ -173,7 +173,7 @@ router.route('/changepass')
 
         // редактируем сессию
         request.session.isAuth = true;
-        request.session.userId = data[0].id;
+        request.session.userId = data[0].AID;
 
         // отправляем данные пользователя
         response.send(JSON.stringify(data[0]));

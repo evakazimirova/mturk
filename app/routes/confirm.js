@@ -7,7 +7,7 @@ router.route('/registration/:email/:token')
   .get(function(request, response){
     // проверяем токен при подтверждении регистрации
     query = {
-      cols: 'id, email, emailToken',
+      cols: 'AID, email, emailToken',
       where: `email = '${request.params.email}'`
     };
     db.select('Annotators', query, (data) => {
@@ -22,7 +22,7 @@ router.route('/registration/:email/:token')
 
           // авторизируем пользователя
           request.session.isAuth = true;
-          request.session.userId = data[0].id;
+          request.session.userId = data[0].AID;
 
           // переходим на сайт
           response.redirect('/');
@@ -44,7 +44,7 @@ router.route('/forgotpassword/:email/:token')
   .get(function(request, response){
     // проверяем токен
     query = {
-      cols: 'id, email, emailToken',
+      cols: 'AID, email, emailToken',
       where: `email = '${request.params.email}'`
     };
     db.select('Annotators', query, (data) => {
@@ -57,10 +57,6 @@ router.route('/forgotpassword/:email/:token')
           db.update('Annotators', update, `email = '${request.params.email}'`);
 
           request.session.changesPassword = request.params.email;
-
-          // // авторизируем пользователя
-          // request.session.isAuth = true;
-          // request.session.userId = data[0].id;
 
           // переходим на сайт
           response.redirect('/');

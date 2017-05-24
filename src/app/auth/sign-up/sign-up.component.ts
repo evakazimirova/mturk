@@ -48,8 +48,8 @@ export class SignUpComponent implements OnInit {
     };
 
     this.http.post(userData, '/sign/up').subscribe(
-      email => {
-        console.log(`We have sent an e-mail to the "${email}". Please check it out!`);
+      user => {
+        console.log(`We have sent an e-mail to the "${user.email}". Please check it out!`);
       },
       error => {
         const status = error._body;
