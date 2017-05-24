@@ -15,12 +15,37 @@ typicalPostRequest('/post', function(user) {
   return res;
 });
 
-typicalGetRequest('/get', function(user) {
-  // вынимаем все поступившие вопросы о выводе средств
+router.route('/get')
+    .get(function(request, response){
+      // вынимаем все поступившие вопросы о выводе средств
+      query = {
+        cols: '*'
+      };
+      db.select('MoneyRequests', query, (rData) => {
+        for (r of rData) {
+          query = {
+            cols: '*',
+            where: `AID = '${r.AID}'`
+          };
+          db.select('Annotators', query, (aData) => {
 
-  res = user;
-  return res;
-});
+            response.send(JSON.stringify(data)); // отправляем данные
+          });
+
+
+
+
+          // собираем информацию по проектам
+          user.projects = 2;
+          user.completed = 7;
+          user.progress = [
+            50,
+            83
+          ];
+        }
+      });
+    });
+
 
 typicalPostRequest('/update/:requestID', function(user) {
   // обновляем выбранный запрос

@@ -30,10 +30,12 @@ router.route('/registered')
     .get(function(request, response){
       // вынимаем всех аннотаторов, подтвердивших email
       query = {
-        cols: 'firstName, secondName, email',
-        where: `registered = '1'`
+        cols: 'firstName, secondName, email, price',
+        where: `Annot_video.dbo.AnnotatorTasksMarkUP.AID = Annot_video.dbo.Annotators.AID`
       };
-      db.select('Annotators', query, (data) => {
+      db.select('Annotators, Annot_video.dbo.AnnotatorTasksMarkUP', query, (data) => {
+        console.log(data)
+
         for (user of data) {
           // собираем информацию по проектам
           user.projects = 2;
