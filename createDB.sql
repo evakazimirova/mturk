@@ -10,17 +10,25 @@ CREATE TABLE Annotators (
   secondName VARCHAR(50) NOT NULL
 )
 
--- Список заданий выполняемых / выполненных аннотатором. Read/Write
+-- Список заданий разметки выполняемых / выполненных аннотатором. Read/Write
 -- Изменяется при принятии пользователем задания.
 -- В зависимости от типа задания поля TID_M и TID_E принимают соответствующие значения.
    -- M - из таблицы TaskMarkUP
    -- E - из таблицы TaskEventSelection
 -- Неиспользуемый ID равный null.
-CREATE TABLE AnnotatorTasks (
-  TID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+CREATE TABLE AnnotatorTasksMarkUP (
+  ATID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   AID INT NOT NULL,
-  TID_M INT NOT NULL,
-  TID_E INT NOT NULL,
+  TID INT NOT NULL,
+  status INT NOT NULL, -- 0 - inactive; 1 - active
+  price float(6) NOT NULL
+)
+
+-- Список заданий нарезки выполняемых / выполненных аннотатором. Read/Write
+CREATE TABLE AnnotatorTasksEventSelection (
+  ATID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  AID INT NOT NULL,
+  TID INT NOT NULL,
   status INT NOT NULL, -- 0 - inactive; 1 - active
   price float(6) NOT NULL
 )
@@ -74,6 +82,15 @@ CREATE TABLE MarkUPResults (
   E18 TEXT,
   E19 TEXT,
   E20 TEXT
+)
+
+-- Таблица из запросов на оплату
+CREATE TABLE MoneyRequests (
+  RID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  AID INT NOT NULL,
+  date DATETIME NOT NULL,
+  defrayed bit DEFAULT ((0)),
+  price float(6) NOT NULL
 )
 
 -- Таблица содержит URI файлов с разметкой и связывает их с соответствующей видеозаписью через VID. Read/write
