@@ -1,8 +1,5 @@
 require('dotenv').config();
-const Connection = require('tedious').Connection;
 const configuration = require('./config');
-// пытаемся подключиться к базе данных
-global.db = new Connection(configuration.db);
 
 // console.log(configuration);
 
@@ -19,13 +16,6 @@ var confirm = require('./routes/confirm');
 var moneyRequests = require('./routes/moneyRequests');
 var projects = require('./routes/projects');
 
-// методы для всех путей
-app.use('/sign', sign);
-app.use('/users', users);
-app.use('/confirm', confirm);
-app.use('/moneyRequests', moneyRequests);
-app.use('/projects', projects);
-
 app.use(cookieParser());
 app.use(session({
   secret: configuration.secret,
@@ -33,14 +23,14 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.use(express.static('dist'));
-// module.exports = global.db.on('connect', function(err) {
-//   if (err) {
-//     console.log(err)
-//   } else {
+// методы для всех путей
+app.use('/sign', sign);
+app.use('/users', users);
+app.use('/confirm', confirm);
+app.use('/moneyRequests', moneyRequests);
+app.use('/projects', projects);
 
-//   }
-// });
+app.use(express.static('dist'));
 
 app.listen(port, function(){
   console.log('Сервер доступен по адресу http://localhost:' + port);
