@@ -1,6 +1,8 @@
 const Connection = require('tedious').Connection;
 const configuration = require('./config');
 
+console.log(configuration);
+
 // пытаемся подключиться к базе данных
 global.db = new Connection(configuration.db);
 module.exports = global.db.on('connect', function(err) {

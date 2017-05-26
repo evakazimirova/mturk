@@ -1,13 +1,11 @@
-const fs = require('fs');
-
 let localConf = {};
 
 try {
-  localConf = require('./configLocal.json');
+  localConf = require('./configLoвcal.json');
 } catch (error) {}
 
 module.exports = {
-  secret: process.env.APP_SECRET || 'wrqr39q4twer8tvq9u48fdr9qwu',
+  secret: process.env.APP_SECRET || 'keyboard cat',
   email: {
     service: 'gmail',
     auth: {
