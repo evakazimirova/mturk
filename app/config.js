@@ -1,24 +1,18 @@
-let localConf = {};
-
-try {
-  localConf = require('./configLoвcal.json');
-} catch (error) {}
-
 module.exports = {
   secret: process.env.APP_SECRET || 'keyboard cat',
   email: {
     service: 'gmail',
     auth: {
-      user: process.env.MAILER_EMAIL || localConf.email,
-      pass: process.env.MAILER_PASS || localConf.emailPass
+      user: process.env.MAILER_EMAIL,
+      pass: process.env.MAILER_PASS
     }
   },
   db: {
-    userName: process.env.DB_USER || localConf.dbUser,
-    password: process.env.DB_PASS || localConf.dbPassword,
-    server: process.env.DB_SERVER || localConf.dbServer,
+    userName: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    server: process.env.DB_SERVER,
     options: {
-      database: process.env.DB || localConf.db,
+      database: process.env.DB,
       encrypt: true
     }
   }

@@ -1,7 +1,8 @@
+require('dotenv').config();
 const Connection = require('tedious').Connection;
 const configuration = require('./config');
 
-console.log(configuration);
+// console.log(configuration);
 
 // пытаемся подключиться к базе данных
 global.db = new Connection(configuration.db);
