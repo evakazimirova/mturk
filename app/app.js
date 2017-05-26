@@ -22,7 +22,7 @@ module.exports = global.db.on('connect', function(err) {
     app.use(express.static('dist'));
     app.use(cookieParser());
     app.use(session({
-      secret: 'wrqr39q4twer8tvq9u48fdr9qwu',
+      secret: configuration.secret,
       resave: true,
       saveUninitialized: true
     }));
