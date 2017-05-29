@@ -47,7 +47,7 @@ export class SignUpComponent implements OnInit {
       password: this.form.value.password
     };
 
-    this.http.post(userData, '/sign/up').subscribe(
+    this.http.post(userData, '/annotators/add').subscribe(
       user => {
         console.log(`We have sent an e-mail to the "${user.email}". Please check it out!`);
       },

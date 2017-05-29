@@ -20,7 +20,7 @@ export class SiteComponent implements OnInit {
         this.common.conf = conf;
 
         // авторизуем пользователя
-        this.http.get('/sign/ed').subscribe(
+        this.http.get('/annotators/authorized').subscribe(
           user => {
             if (user) {
               if (user.chPass) {

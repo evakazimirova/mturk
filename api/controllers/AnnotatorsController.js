@@ -6,7 +6,11 @@
  */
 
 module.exports = {
-  add: function(req, res, next){
+  authorized: function(req, res, next) {
+    res.send('false');
+  },
+
+  add: function(req, res, next) {
     console.log(req.params.all());
 
     // Annotators.create(req.params.all(), function (err, annotator) {
