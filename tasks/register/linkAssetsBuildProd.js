@@ -1,16 +1,22 @@
 /**
- * `tasks/register/linkAssetsBuildProd.js`
+ * `linkAssetsBuildProd`
  *
  * ---------------------------------------------------------------
  *
+ * This Grunt tasklist is not designed to be used directly-- rather
+ * it is a helper called by the `buildProd` tasklist.
+ *
  * For more information see:
- *   https://sailsjs.com/anatomy/tasks/register/link-assets-build-prod-js
+ *   http://sailsjs.org/documentation/anatomy/my-app/tasks/register/link-assets-build-prod-js
  *
  */
 module.exports = function(grunt) {
   grunt.registerTask('linkAssetsBuildProd', [
-    'sails-linker:prodJsBuild',
-    'sails-linker:prodStylesBuild',
-    'sails-linker:clientSideTemplatesBuild'
+    'sails-linker:prodJsRelative',
+    'sails-linker:prodStylesRelative',
+    'sails-linker:devTpl',
+    'sails-linker:prodJsRelativeJade',
+    'sails-linker:prodStylesRelativeJade',
+    'sails-linker:devTplJade'
   ]);
 };

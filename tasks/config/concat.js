@@ -1,13 +1,17 @@
 /**
- * `tasks/config/concat`
+ * `concat`
  *
  * ---------------------------------------------------------------
  *
- * An intermediate step to generate monolithic files that can
- * then be passed in to `uglify` and/or `cssmin` for minification.
+ * Concatenates the contents of multiple JavaScript and/or CSS files
+ * into two new files, each located at `concat/production.js` and
+ * `concat/production.css` respectively in `.tmp/public/concat`.
  *
- * For more information, see:
- *   https://sailsjs.com/anatomy/tasks/config/concat-js
+ * This is used as an intermediate step to generate monolithic files
+ * that can then be passed in to `uglify` and/or `cssmin` for minification.
+ *
+ * For usage docs see:
+ *   https://github.com/gruntjs/grunt-contrib-concat
  *
  */
 module.exports = function(grunt) {
@@ -23,28 +27,5 @@ module.exports = function(grunt) {
     }
   });
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  // This Grunt plugin is part of the default asset pipeline in Sails,
-  // so it's already been automatically loaded for you at this point.
-  //
-  // Of course, you can always remove this Grunt plugin altogether by
-  // deleting this file.  But check this out: you can also use your
-  // _own_ custom version of this Grunt plugin.
-  //
-  // Here's how:
-  //
-  // 1. Install it as a local dependency of your Sails app:
-  //    ```
-  //    $ npm install grunt-contrib-concat --save-dev --save-exact
-  //    ```
-  //
-  //
-  // 2. Then uncomment the following code:
-  //
-  // ```
-  // // Load Grunt plugin from the node_modules/ folder.
-  // grunt.loadNpmTasks('grunt-contrib-concat');
-  // ```
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  grunt.loadNpmTasks('grunt-contrib-concat');
 };
