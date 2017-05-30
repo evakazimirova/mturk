@@ -34,7 +34,7 @@ export class SignInComponent implements OnInit {
       password: this.form.value.password
     };
 
-    this.http.post(req, '/sign/in').subscribe(
+    this.http.post(req, '/annotators/login').subscribe(
       user => {
         this.common.user = user;
         this.common.mode = 'profile';

@@ -26,25 +26,6 @@ export class ForgotPassComponent implements OnInit {
   ngOnInit() {
   }
 
-  signIn(event) {
-    event.preventDefault();
-
-    const req = {
-      login: this.form.value.login,
-      password: this.form.value.password
-    };
-
-    this.http.post(req, '/sign/in').subscribe(
-      user => {
-        this.common.user = user;
-        this.common.mode = 'profile';
-      },
-      err => console.log(err)
-    );
-  }
-
-
-
   forgotPass(event) {
     event.preventDefault();
 
@@ -52,7 +33,7 @@ export class ForgotPassComponent implements OnInit {
       email: this.form.value.login
     };
 
-    this.http.post(req, '/sign/forgot').subscribe(
+    this.http.post(req, '/annotators/forgot').subscribe(
       res => {
         console.log(`The instructions have been sent to ${this.form.value.login}.`)
       },

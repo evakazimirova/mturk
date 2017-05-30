@@ -30,7 +30,7 @@ export class ChangePasswordComponent implements OnInit {
       password: this.form.value.password
     };
 
-    this.http.post(req, '/sign/changepass').subscribe(
+    this.http.post(req, '/annotators/changepass').subscribe(
       user => {
         this.common.user = user;
         this.common.mode = 'profile';
