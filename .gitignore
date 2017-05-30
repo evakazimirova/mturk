@@ -121,11 +121,7 @@ nbproject
 
 
 
-.env
-assets
-
-
-
+# Angular
 
 node_modules
 !protractor.conf.js
@@ -180,3 +176,7 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+
+
+
+.env
