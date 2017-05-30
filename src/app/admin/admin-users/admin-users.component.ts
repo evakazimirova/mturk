@@ -12,7 +12,7 @@ export class AdminUsersComponent implements OnInit {
   constructor(private http: HttpService) { }
 
   ngOnInit() {
-    this.http.get('/users/registered').subscribe(
+    this.http.get('/annotators/registered').subscribe(
       users => this.users = users,
       error => console.log(error)
     )
