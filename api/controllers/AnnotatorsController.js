@@ -8,30 +8,26 @@
 module.exports = {
   // отвечаем авторизован ли пользователь
   authorized: (req, res, next) => {
-    res.send('false');
-
-    // if (request.session.changesPassword) {
-    //   // смена пароля
-    //   response.send(JSON.stringify({
-    //     chPass: true,
-    //     email: request.session.changesPassword
-    //   }));
-    // } else {
-    //   if (request.session.isAuth) {
-    //     query = {
-    //       cols: 'AID, firstName, secondName, login, email',
-    //       where: `AID = '${request.session.userId}'`
-    //     };
-
-    //     // отдаём данные пользователя
-    //     db.select('Annotators', query, (data) => {
-    //       response.send(JSON.stringify(data[0]));
-    //     });
-    //   } else {
-    //     response.send('false');
-    //   }
-    // }
+    if (req.session.changesPassword) {
+      // смена пароля
+      res.json({
+        chPass: true,
+        email: req.session.changesPassword
+      });
+    } else {
+      if (req.session.isAuth) {
+        // отдаём данные пользователя
+        Annotators.findOne({
+          AID: req.session.userId
+        }).exec((error, annotator) => {
+          res.json(annotator);
+        });
+      } else {
+        res.send('false');
+      }
+    }
   },
+
 
   // список всех аннотаторов и проектов
   withTasks: (req, res, next) => {
@@ -40,6 +36,7 @@ module.exports = {
       res.json(annotators);
     });
   },
+
 
   // регистрация нового аннотатора
   register: (req, res, next) => {
@@ -97,111 +94,126 @@ module.exports = {
 
   // вход в систему
   login: (req, res, next) => {
+    let user = req.params.all();
 
-    // const user = request.body; // принимаем данные
-    // // шифруем пароль
-    // user.password = h.encryptPassword(user.password);
+    // шифруем пароль
+    user.password = CryptoService.encryptPassword(user.password);
 
-    // // ищем пользователя с указанными данными
-    // query = {
-    //   cols: 'AID, firstName, secondName, login, email, password, registered',
-    //   where: `email = '${user.login}' OR login = '${user.login}'`
-    // };
-    // db.select('Annotators', query, (data) => {
-    //   if (data.length > 0) {
-    //     if (user.password === data[0].password) {
-    //       if (data[0].registered) {
-    //         // авторизируем пользователя
-    //         request.session.isAuth = true;
-    //         request.session.userId = data[0].AID;
+    // ищем пользователя по указанным данным
+    Annotators.findOne({
+      or: [
+        {email: user.login},
+        {login: user.login}
+      ]
+    }).exec((error, annotator) => {
+      if (annotator) {
+        if (user.password === annotator.password) {
+          if (annotator.registered) {
+            // авторизируем пользователя
+            req.session.isAuth = true;
+            req.session.userId = annotator.AID;
 
-    //         // удаляем пароль из пересылаемого объекта
-    //         delete data[0].password;
-    //         delete data[0].registered; // и инфу о валидации почты
+            // удаляем пароль из пересылаемого объекта
+            delete annotator.password;
+            delete annotator.registered; // и инфу о валидации почты
 
-    //         // возвращаем все данные текущего пользователя
-    //         response.send(JSON.stringify(data[0])); // отправляем данные
-    //       } else {
-    //         response.status(400).send('email is not validated');
-    //       }
-    //     } else {
-    //       response.status(400).send('incorrect password');
-    //     }
-    //   } else {
-    //     console.log("There is no any account matching this email.");
-    //     response.status(400).send('no email');
-    //   }
-    // });
+            // возвращаем все данные текущего пользователя
+            res.json(annotator); // отправляем данные
+          } else {
+            res
+              .status(400)
+              .send('email is not validated');
+          }
+        } else {
+          res
+            .status(400)
+            .send('incorrect password');
+        }
+      } else {
+        console.log("There is no any account matching this email.");
+        res
+          .status(400)
+          .send('no email');
+      }
+    });
   },
 
 
   forgot: (req, res, next) => {
-    // const user = request.body; // принимаем данные
+    let user = req.params.all();
+    Annotators.findOne({
+      or: [
+        {email: user.login},
+        {login: user.login}
+      ]
+    }).exec((error, annotator) => {
+      if (annotator) {
+        annotator.emailToken = CryptoService.generateTokenFromJSON(annotator);
 
-    // // ищем пользователя по почте
-    // query = {
-    //   cols: 'AID, firstName, secondName, email',
-    //   where: `email = '${user.email}'`
-    // };
-    // db.select('Annotators', query, (data) => {
-    //   if (data.length > 0) {
-    //     // генерируем токен и записываем в базу
-    //     update = {
-    //       emailToken: h.generateTokenFromJSON(data)
-    //     }
-    //     db.update('Annotators', update, `AID = '${data[0].AID}'`);
-
-    //     // высылаем письмо со ссылкой на страницу смены пароля
-    //     data[0].emailToken = update.emailToken;
-    //     mailer.onForgotPassword(data[0]);
-
-    //     response.send('true');
-    //   } else {
-    //     console.log("There is no any account matching this email.");
-    //     response.status(400).send('no email');
-    //   }
-    // });
+        // генерируем токен и записываем в базу
+        Annotators.update(
+          {
+            AID: annotator.AID
+          },
+          {
+            emailToken: annotator.emailToken
+          }
+        ).exec((error, annotator) => {
+          // высылаем письмо со ссылкой на страницу смены пароля
+          EmailService.onForgotPassword(annotator);
+          res.send('true');
+        });
+      } else {
+        console.log("There is no any account matching this email.");
+        res
+          .status(400)
+          .send('no email');
+      }
+    });
   },
 
   changepass: (req, res, next) => {
-    // const newPass = request.body.password; // принимаем данные
-    // const email = request.session.changesPassword;
+    // принимаем данные
+    const newPass = CryptoService.encryptPassword(req.params('password'));
+    const email = req.session.changesPassword;
 
-    // // запускаем пользователя на сервер
-    // query = {
-    //   cols: 'AID, firstName, secondName, login, email',
-    //   where: `email = '${email}'`
-    // };
-    // db.select('Annotators', query, (data) => {
-    //   if (data.length > 0) {
-    //     // обновляем пароль
-    //     update = {
-    //       password: h.encryptPassword(newPass),
-    //       emailToken: '',
-    //       registered: 1
-    //     }
-    //     db.update('Annotators', update, `email = '${email}'`);
+    // запускаем пользователя на сервер
+    Annotators.findOne({
+      email: email
+    }).exec((error, annotator) => {
+      if (annotator) {
+        // обновляем пароль
+        Annotators.update(
+          {
+            email: email
+          },
+          {
+            password: newPass,
+            emailToken: '',
+            registered: 1
+          }
+        ).exec((error, annotator) => {
+          // редактируем сессию
+          req.session.isAuth = true;
+          req.session.userId = annotator.AID;
 
-    //     // редактируем сессию
-    //     request.session.isAuth = true;
-    //     request.session.userId = data[0].AID;
-
-    //     // отправляем данные пользователя
-    //     response.send(JSON.stringify(data[0]));
-    //   }
-    // });
+          // отправляем данные пользователя
+          res.json(annotator);
+        });
+      }
+    });
   },
 
   // выходим из системы
   logout: (req, res, next) => {
-    // // редактируем сессию
-    // request.session.isAuth = false;
-    // delete request.session.userId;
+    // редактируем сессию
+    req.session.isAuth = false;
+    delete req.session.userId;
 
-    // // выходим из режима восстановления пароля
-    // delete request.session.changesPassword;
+    // выходим из режима восстановления пароля
+    delete req.session.changesPassword;
 
-    // response.send('true');
+    res.send('true');
   }
 
   // login: (req, res, next) => {},
@@ -213,7 +225,7 @@ module.exports = {
 
 
 
-// typicalPostRequest('/edit/:userID', function(user) {
+// typicalPostreq('/edit/:userID', function(user) {
 //   // находим пользователя по id
 //   // обновляем все поля, указанные в объекте
 //     // если получается, то
@@ -225,7 +237,7 @@ module.exports = {
 //   return res;
 // });
 
-// typicalGetRequest('/user/rating', function(request) {
+// typicalGetreq('/user/rating', function(req) {
 //   // вынимаем всех аннотаторов, сортируя по рейтингу (по убыванию)
 
 
@@ -233,7 +245,7 @@ module.exports = {
 // });
 
 // router.route('/registered')
-//     .get(function(request, response){
+//     .get(function(req, res){
 //       // вынимаем всех аннотаторов, подтвердивших email
 //       query = {
 //         cols: 'firstName, secondName, email, price',
@@ -252,7 +264,7 @@ module.exports = {
 //           ];
 //         }
 
-//         response.send(JSON.stringify(data)); // отправляем данные
+//         res.send(JSON.stringify(data)); // отправляем данные
 //       });
 //     });
 
@@ -264,71 +276,71 @@ module.exports = {
 
 
 // router.route('/registration/:email/:token')
-//   .get(function(request, response){
+//   .get(function(req, res){
 //     // проверяем токен при подтверждении регистрации
 //     query = {
 //       cols: 'AID, email, emailToken',
-//       where: `email = '${request.params.email}'`
+//       where: `email = '${req.params.email}'`
 //     };
 //     db.select('Annotators', query, (data) => {
 //       if (data.length > 0) {
-//         if (data[0].emailToken === request.params.token) {
+//         if (data[0].emailToken === req.params.token) {
 //           update = {
 //             emailToken: '', // удаляем токен
 //             registered: 1   // изменяем статус пользователя
 //           };
 
-//           db.update('Annotators', update, `emailToken = '${request.params.token}'`);
+//           db.update('Annotators', update, `emailToken = '${req.params.token}'`);
 
 //           // авторизируем пользователя
-//           request.session.isAuth = true;
-//           request.session.userId = data[0].AID;
+//           req.session.isAuth = true;
+//           req.session.userId = data[0].AID;
 
 //           // переходим на сайт
-//           response.redirect('/');
+//           res.redirect('/');
 //         } else {
 //           // пользователь уже зарегистрирован. нужно восстановить пароль
-//           // response.send({error: "already registered"});
-//           response.redirect('/');
+//           // res.send({error: "already registered"});
+//           res.redirect('/');
 //         }
 //       } else {
 //         // сообщаем о том, что ссылка недействительна (почта не зарегистрирована) и переводим на страницу авторизации
-//         // response.send({error: "token invalid"});
-//         response.redirect('/');
+//         // res.send({error: "token invalid"});
+//         res.redirect('/');
 //       }
 //     });
 //   });
 
 
 // router.route('/forgotpassword/:email/:token')
-//   .get(function(request, response){
+//   .get(function(req, res){
 //     // проверяем токен
 //     query = {
 //       cols: 'AID, email, emailToken',
-//       where: `email = '${request.params.email}'`
+//       where: `email = '${req.params.email}'`
 //     };
 //     db.select('Annotators', query, (data) => {
 //       if (data.length > 0) {
-//         if (data[0].emailToken === request.params.token) {
+//         if (data[0].emailToken === req.params.token) {
 //           update = {
 //             emailToken: '', // удаляем токен
 //           };
 
-//           db.update('Annotators', update, `email = '${request.params.email}'`);
+//           db.update('Annotators', update, `email = '${req.params.email}'`);
 
-//           request.session.changesPassword = request.params.email;
+//           req.session.changesPassword = req.params.email;
 
 //           // переходим на сайт
-//           response.redirect('/');
+//           res.redirect('/');
 //         } else {
 //           // пользователь уже зарегистрирован. нужно восстановить пароль
-//           // response.send({error: "already registered"});
-//           response.redirect('/');
+//           // res.send({error: "already registered"});
+//           res.redirect('/');
 //         }
 //       } else {
 //         // сообщаем о том, что ссылка недействительна (почта не зарегистрирована) и переводим на страницу авторизации
-//         // response.send({error: "token invalid"});
-//         response.redirect('/');
+//         // res.send({error: "token invalid"});
+//         res.redirect('/');
 //       }
 //     });
 //   });

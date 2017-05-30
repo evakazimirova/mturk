@@ -33,7 +33,7 @@ export class ProfileHeaderComponent implements OnInit {
     const confirmed = confirm("Do you really want to sign out?");
 
     if (confirmed) {
-      this.http.getRough('/sign/out').subscribe(
+      this.http.getRough('/annotators/logout').subscribe(
         (res) => {
           this.common.mode = 'auth';
         },
