@@ -11,15 +11,15 @@ const config = {
 let transporter = nodemailer.createTransport(config);
 
 module.exports = {
-  onSignUp: (newUser) => {
+  onSignUp: (user) => {
     let mailOptions = {
       from: '"NeuroDataLab" <info@neurodatalab.com>',
-      to: newUser.email,
+      to: user.email,
       subject: 'NeuroDataLab Registration',
       html: `
-        <p>Dear ${newUser.firstName} ${newUser.secondName},</p>
+        <p>Dear ${user.firstName} ${user.secondName},</p>
         <p>Your e-mail just had been registered in NeuroDataLab annotation service.</p>
-        <p>To be sure that this e-mail is really yours please click <a href="http://localhost:8080/confirm/registration/${newUser.email}/${newUser.emailToken}">this link</a> to finish registration.</p>
+        <p>To be sure that this e-mail is really yours please click <a href="http://${user.hostName}/annotators/confirmEmail?email=${user.email}&token=${user.emailToken}">this link</a> to finish registration.</p>
         <p>If you do not understand why you have received this letter, please just ignore it.</p>
       `
     };
@@ -32,6 +32,7 @@ module.exports = {
     });
   },
 
+
   onForgotPassword: (user) => {
     let mailOptions = {
       from: '"NeuroDataLab" <info@neurodatalab.com>',
@@ -39,7 +40,7 @@ module.exports = {
       subject: 'NeuroDataLab Change Password',
       html: `
         <p>Dear ${user.firstName} ${user.secondName},</p>
-        <p>Here is <a href="http://localhost:8080/confirm/forgotpassword/${user.email}/${user.emailToken}">your link</a> for changing current password.</p>
+        <p>Here is <a href="http://${user.hostName}/annotators/forgotPassword?email=${user.email}&token=${user.emailToken}">your link</a> for changing current password.</p>
         <p>If you do not understand why you have received this letter, please just ignore it.</p>
       `
     };
