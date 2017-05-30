@@ -1,1 +1,1 @@
-web: ng build && node app.js
+web: ng build && sails lift
