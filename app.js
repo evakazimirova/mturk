@@ -59,3 +59,19 @@ try {
 
 // Start server
 sails.lift(rc('sails'));
+
+
+
+
+// var express = require('express');
+// var cookieParser = require('cookie-parser');
+// var session = require('express-session');
+
+// var app = express();
+
+// app.use(cookieParser());
+// app.use(session({
+//   secret: process.env.APP_SECRET || 'keyboard cat',
+//   resave: true,
+//   saveUninitialized: true
+// }));

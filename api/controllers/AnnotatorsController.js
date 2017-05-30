@@ -6,59 +6,69 @@
  */
 
 module.exports = {
-  authorized: function(req, res, next) {
+  // авторизован ли пользователь
+  authorized: (req, res, next) => {
     res.send('false');
   },
 
-  add: function(req, res, next) {
-    console.log(req.params.all());
+  add: (req, res, next) => {
+    let user = req.params.all();
 
-    // Annotators.create(req.params.all(), function (err, annotator) {
-    //   if (err) return next(err);
-    // });
+    // проверяем, есть ли такой пользователь
+    if (user.email === "") {
+      res
+        .status(400)
+        .send('no email');
+    } else {
+      Annotators.findOne({
+        or: [
+          {email: user.email},
+          {login: user.login}
+        ]
+      }).exec((error, annotator) => {
+        // если пользователь новый, то регистрируем
+        if (!annotator) {
+          // шифруем пароль
+          user.password = CryptoService.encryptPassword(user.password);
+
+          // генерируем токен
+          const emailToken = CryptoService.generateTokenFromJSON(user);
+          user.emailToken = emailToken;
+
+          // регистрируем аннотатора
+          Annotators.create(user, (err, annotator) => {
+            if (err) {
+              return next(err);
+            } else {
+              // отправляем оповещение на почту новому аннотатору
+              EmailService.onSignUp(user);
+
+              res.json({email: user.email}); // отправляем данные
+            }
+          });
+        } else {
+          if (annotator.login === user.login) {
+            console.log("Annotator with this login is already exists in the system.");
+            res
+              .status(400)
+              .send('login exists');
+          }
+          if (annotator.email === user.email) {
+            console.log("Annotator with this email is already exists in the system.");
+            res
+              .status(400)
+              .send('user exists');
+          }
+        }
+      });
+    }
+  },
+
+  withTasks: (req, res, next) => {
+    Annotators.find().populateAll().exec((error, annotators) => {
+      console.log(annotators);
+      res.json(annotators);
+    });
   }
-
-	// router.route('/up')
-  // .post(parseJSON, function(request, response){
-  //   const newUser = request.body; // принимаем данные
-
-  //   if (newUser.email === "") {
-  //     response.status(400).send('no email');
-  //   } else {
-  //     // проверяем, есть ли такой пользователь
-  //     query = {
-  //       cols: 'email, login',
-  //       where: `email = '${newUser.email}' OR login = '${newUser.login}'`
-  //     };
-  //     db.select('Annotators', query, (data) => {
-  //       if (data.length > 0) {
-  //         if (data[0].login === newUser.login) {
-  //           console.log("Annotator with this login is already exists in the system.");
-  //           response.status(400).send('login exists');
-  //         }
-  //         if (data[0].email === newUser.email) {
-  //           console.log("Annotator with this email is already exists in the system.");
-  //           response.status(400).send('user exists');
-  //         }
-  //       } else {
-  //         console.log("Adding a new annotator...");
-  //         // шифруем пароль
-  //         newUser.password = h.encryptPassword(newUser.password);
-
-  //         // генерируем токен
-  //         const emailToken = h.generateTokenFromJSON(newUser);
-  //         newUser.emailToken = emailToken;
-
-  //         // регистрируем аннотатора
-  //         db.insert('Annotators', newUser);
-
-  //         // отправляем оповещение на почту новому аннотатору
-  //         mailer.onSignUp(newUser);
-
-  //         response.send(JSON.stringify({email: newUser.email})); // отправляем данные
-  //       }
-  //     });
-  //   }
-  // });
 };
 

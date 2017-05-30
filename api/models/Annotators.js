@@ -10,8 +10,7 @@ module.exports = {
     AID: {
       type: 'integer',
       primaryKey: true,
-      autoIncrement: true,
-      required: true
+      autoIncrement: true
     },
 
     login: {
@@ -47,6 +46,11 @@ module.exports = {
     secondName: {
       type: 'string',
       required: true
+    },
+
+    projects: {
+      collection: 'AnnotatorTasksEventSelection',
+      via: 'AID'
     }
   }
 };
