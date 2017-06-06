@@ -8,13 +8,11 @@
 module.exports = {
   attributes: {
     TID_M: {
-      model: 'TasksMarkUP',
-      required: true
+      model: 'TasksMarkUP'
     },
 
     TID_E: {
-      model: 'TasksEventSelection',
-      required: true
+      model: 'TasksEventSelection'
     }
   }
 };

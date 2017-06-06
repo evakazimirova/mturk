@@ -11,8 +11,7 @@ module.exports = {
     ATID: {
       type: 'integer',
       primaryKey: true,
-      autoIncrement: true,
-      required: true
+      autoIncrement: true
     },
 
     TID: {

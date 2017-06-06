@@ -6,7 +6,38 @@
  */
 
 module.exports = {
-	
+	annoTasks: (req, res, next) => {
+    AnnotatorTasksEventSelection.find({
+      AID: req.session.userId
+    }).populate('TID').exec((error, tasks) => {
+      console.log(tasks)
+      res.json(tasks);
+    });
+  },
+
+	take: (req, res, next) => {
+    Projects.findOne({
+      PID: 2
+    }).exec((error, project) => {
+      // Если аннотатор подписался на задачу, то стоимость для него фиксируется, и отображается в личном кабинете именно в том размере на который он подписался, даже если администратор для новых аннотаторов увеличил или уменьшил размер выплаты.
+
+      newTask = {
+        TID: 1, // это то самое значение должно выбираться неслучайно
+        AID: req.session.userId,
+        status: 1,
+        price: project.pricePerTask
+      };
+
+      // берём задачу
+      AnnotatorTasksEventSelection.create(newTask, (err, task) => {
+        if (err) {
+          return next(err);
+        } else {
+          res.json(task);
+        }
+      });
+    });
+  }
 };
 
 

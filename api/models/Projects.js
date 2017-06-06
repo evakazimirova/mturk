@@ -6,7 +6,6 @@
  */
 
 module.exports = {
-
   attributes: {
     PID: {
       type: 'integer',

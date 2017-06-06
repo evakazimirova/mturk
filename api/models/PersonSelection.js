@@ -26,6 +26,11 @@ module.exports = {
     personImage: {
       type: 'string',
       required: true
+    },
+
+    video: {
+      collection: 'RAWVideo',
+      via: 'VID'
     }
   }
 };

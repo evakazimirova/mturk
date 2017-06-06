@@ -1,3 +1,4 @@
+import { HttpService } from '../../http.service';
 import { CommonService } from '../../common.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -47,10 +48,31 @@ export class ProjectsComponent implements OnInit {
     ]
   }
 
-  constructor(public common: CommonService) { }
+  constructor(public common: CommonService, private http: HttpService) { }
 
   ngOnInit() {
+    this.http.get('AnnotatorTasksEventSelection/annoTasks').subscribe(
+      newTask => console.log(newTask),
+      err => console.log(err)
+    );
+
+    this.http.get('AnnotatorTasksMarkUP/annoTasks').subscribe(
+      newTask => console.log(newTask),
+      err => console.log(err)
+    );
   }
 
-  // Если аннотатор подписался на задачу, то стоимость для него фиксируется, и отображается в личном кабинете именно в том размере на который он подписался, даже если администратор для новых аннотаторов увеличил или уменьшил размер выплаты.
+  takeEventSelection() {
+    this.http.get('AnnotatorTasksEventSelection/take').subscribe(
+      newTask => console.log(newTask),
+      err => console.log(err)
+    );
+  }
+
+  takeMarkUp() {
+    this.http.get('AnnotatorTasksMarkUP/take').subscribe(
+      newTask => console.log(newTask),
+      err => console.log(err)
+    );
+  }
 }
