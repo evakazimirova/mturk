@@ -6,9 +6,22 @@
  */
 
 module.exports = {
-
   attributes: {
+    shortName: {
+      type: 'string',
+      primaryKey: true,
+      autoIncrement: true
+    },
 
+    longName: {
+      type: 'string',
+      required: true
+    },
+
+    scale: {
+      type: 'integer',
+      required: true
+    }
   }
 };
 

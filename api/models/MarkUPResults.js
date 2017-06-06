@@ -6,9 +6,32 @@
  */
 
 module.exports = {
-
   attributes: {
+    TID: {
+      type: 'integer',
+      primaryKey: true,
+      autoIncrement: true
+    },
 
+    CID: {
+      type: 'integer',
+      required: true
+    },
+
+    AID: {
+      type: 'integer',
+      required: true
+    },
+
+    CSV: {
+      type: 'text',
+      required: true
+    },
+
+    done: {
+      type: 'boolean',
+      required: true
+    }
   }
 };
 

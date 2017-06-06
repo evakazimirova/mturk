@@ -6,9 +6,33 @@
  */
 
 module.exports = {
-
   attributes: {
+    ATID: {
+      type: 'integer',
+      primaryKey: true,
+      autoIncrement: true,
+      required: true
+    },
 
+    AID: {
+      model: 'Annotators',
+      required: true
+    },
+
+    TID: {
+      type: 'integer',
+      required: true
+    },
+
+    status: {
+      type: 'integer',
+      required: true
+    },
+
+    price: {
+      type: 'float',
+      required: true
+    }
   }
 };
 

@@ -6,9 +6,17 @@
  */
 
 module.exports = {
-
   attributes: {
+    shortName: {
+      type: 'string',
+      primaryKey: true,
+      autoIncrement: true
+    },
 
+    longName: {
+      type: 'integer',
+      required: true
+    }
   }
 };
 

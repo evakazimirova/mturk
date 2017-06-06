@@ -6,9 +6,21 @@
  */
 
 module.exports = {
-
   attributes: {
+    TID_E: {
+      type: 'integer',
+      required: true
+    },
 
+    TID_M: {
+      type: 'integer',
+      required: true
+    },
+
+    annotatorsCount: {
+      type: 'integer',
+      required: true
+    }
   }
 };
 

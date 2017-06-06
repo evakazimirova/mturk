@@ -6,8 +6,27 @@
  */
 
 module.exports = {
-
   attributes: {
+    TID: {
+      type: 'integer',
+      primaryKey: true,
+      autoIncrement: true
+    },
+
+    AID: {
+      type: 'integer',
+      required: true
+    },
+
+    result: {
+      type: 'text',
+      required: true
+    },
+
+    done: {
+      type: 'boolean',
+      required: true
+    }
 
   }
 };

@@ -8,7 +8,26 @@
 module.exports = {
 
   attributes: {
+    PID: {
+      type: 'integer',
+      primaryKey: true,
+      autoIncrement: true
+    },
 
+    projectName: {
+      type: 'string',
+      required: true
+    },
+
+    pricePerTask: {
+      type: 'float',
+      required: true
+    },
+
+    annoPerTask: {
+      type: 'integer',
+      required: true
+    }
   }
 };
 

@@ -5,10 +5,28 @@
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
-module.exports = {
+let attributes = {
+  TID: {
+    type: 'integer',
+    primaryKey: true,
+    autoIncrement: true
+  },
 
-  attributes: {
-
+  CID: {
+    type: 'integer',
+    required: true
   }
+}
+
+for (let i = 1; i <= 20; i++) {
+  attributes[`E${i}`] = {
+    type: 'boolean',
+    required: true
+  }
+}
+
+
+module.exports = {
+  attributes: attributes
 };
 

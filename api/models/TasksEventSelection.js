@@ -6,9 +6,32 @@
  */
 
 module.exports = {
-
   attributes: {
+    TID: {
+      type: 'integer',
+      primaryKey: true,
+      autoIncrement: true
+    },
 
+    VID: {
+      type: 'integer',
+      required: true
+    },
+
+    eventList: {
+      type: 'string',
+      required: true
+    },
+
+    personName: {
+      type: 'string',
+      required: true
+    },
+
+    personImage: {
+      type: 'string',
+      required: true
+    }
   }
 };
 

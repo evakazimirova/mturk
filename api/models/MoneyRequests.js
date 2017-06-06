@@ -6,9 +6,27 @@
  */
 
 module.exports = {
-
   attributes: {
+    RID: {
+      type: 'integer',
+      primaryKey: true,
+      autoIncrement: true
+    },
 
+    AID: {
+      type: 'integer',
+      required: true
+    },
+
+    defrayed: {
+      type: 'boolean',
+      required: true
+    },
+
+    price: {
+      type: 'float',
+      required: true
+    }
   }
 };
 

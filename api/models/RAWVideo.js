@@ -6,9 +6,17 @@
  */
 
 module.exports = {
-
   attributes: {
+    VID: {
+      type: 'integer',
+      primaryKey: true,
+      autoIncrement: true
+    },
 
+    URI: {
+      type: 'string',
+      required: true
+    }
   }
 };
 

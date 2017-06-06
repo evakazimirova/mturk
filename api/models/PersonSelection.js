@@ -6,9 +6,32 @@
  */
 
 module.exports = {
-
   attributes: {
+    CID: {
+      type: 'integer',
+      primaryKey: true,
+      autoIncrement: true
+    },
 
+    VID: {
+      type: 'integer',
+      required: true
+    },
+
+    CURI: {
+      type: 'string',
+      required: true
+    },
+
+    personName: {
+      type: 'string',
+      required: true
+    },
+
+    PersonImage: {
+      type: 'string',
+      required: true
+    }
   }
 };
 
