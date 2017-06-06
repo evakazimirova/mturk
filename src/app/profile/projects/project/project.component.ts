@@ -8,10 +8,19 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 export class ProjectComponent implements OnInit {
   @Input() projectId;
   @Output() returned = new EventEmitter();
+  projectName;
 
   constructor() { }
 
   ngOnInit() {
+    switch (this.projectId) {
+      case 1:
+        this.projectName = 'Mark up a video';
+        break;
+      case 2:
+        this.projectName = 'Event selection';
+        break;
+    }
   }
 
   return() {
