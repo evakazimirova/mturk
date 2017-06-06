@@ -13,22 +13,12 @@ module.exports = {
       autoIncrement: true
     },
 
-    VID: {
-      type: 'integer',
+    CID: {
+      model: 'PersonSelection',
       required: true
     },
 
     eventList: {
-      type: 'string',
-      required: true
-    },
-
-    personName: {
-      type: 'string',
-      required: true
-    },
-
-    personImage: {
       type: 'string',
       required: true
     }

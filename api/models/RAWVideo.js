@@ -13,7 +13,7 @@ module.exports = {
       autoIncrement: true
     },
 
-    URI: {
+    URL: {
       type: 'string',
       required: true
     }

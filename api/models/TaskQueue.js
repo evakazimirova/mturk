@@ -7,18 +7,13 @@
 
 module.exports = {
   attributes: {
-    TID_E: {
-      type: 'integer',
-      required: true
-    },
-
     TID_M: {
-      type: 'integer',
+      model: 'TasksMarkUP',
       required: true
     },
 
-    annotatorsCount: {
-      type: 'integer',
+    TID_E: {
+      model: 'TasksEventSelection',
       required: true
     }
   }

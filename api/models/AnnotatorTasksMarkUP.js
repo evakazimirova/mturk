@@ -14,13 +14,13 @@ module.exports = {
       required: true
     },
 
-    AID: {
-      model: 'Annotators',
+    TID: {
+      model: 'TasksMarkUP',
       required: true
     },
 
-    TID: {
-      type: 'integer',
+    AID: {
+      model: 'Annotators',
       required: true
     },
 

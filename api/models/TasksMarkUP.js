@@ -13,7 +13,7 @@ let attributes = {
   },
 
   CID: {
-    type: 'integer',
+    model: 'PersonSelection',
     required: true
   }
 }

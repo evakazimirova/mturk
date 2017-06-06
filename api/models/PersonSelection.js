@@ -14,12 +14,7 @@ module.exports = {
     },
 
     VID: {
-      type: 'integer',
-      required: true
-    },
-
-    CURI: {
-      type: 'string',
+      model: 'RAWVideo',
       required: true
     },
 
@@ -28,7 +23,7 @@ module.exports = {
       required: true
     },
 
-    PersonImage: {
+    personImage: {
       type: 'string',
       required: true
     }
