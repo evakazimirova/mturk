@@ -10,16 +10,18 @@ import { Component, OnInit } from '@angular/core';
 export class ProjectsComponent implements OnInit {
   projectMode = false;
   projectId = 0;
+  isLoaded = false;
 
   projects = [
     {
       id: 1,
+      isProcessing: false,
       title: 'Mark up a video',
       activity: "Inactive",
       video: 'sharapova',
       percentage: 0,
       earned: 0,
-      price: 3000,
+      price: 0,
       action: {
         title: '',
         doIt: (event) => console.log()
@@ -27,12 +29,13 @@ export class ProjectsComponent implements OnInit {
     },
     {
       id: 2,
+      isProcessing: false,
       title: 'Event selection',
       activity: "Active",
       video: 'sharapova',
-      percentage: 90,
+      percentage: 0,
       earned: 0,
-      price: 5000,
+      price: 0,
       action: {
         title: '',
         doIt: (event) => console.log()
@@ -46,6 +49,7 @@ export class ProjectsComponent implements OnInit {
     this.http.get('AnnotatorTasksMarkUP/annoTask').subscribe(
       task => {
         this.updateProjectInfo(this.projects[0], task);
+        this.isLoaded = true;
       },
       err => console.log(err)
     );
@@ -53,32 +57,43 @@ export class ProjectsComponent implements OnInit {
     this.http.get('AnnotatorTasksEventSelection/annoTask').subscribe(
       task => {
         this.updateProjectInfo(this.projects[1], task);
+        this.isLoaded = true;
+      },
+      err => console.log(err)
+    );
+  }
+
+  takeMarkUp() {
+    this.projects[0].isProcessing = true;
+
+    this.http.get('AnnotatorTasksMarkUP/take').subscribe(
+      task => {
+        this.updateProjectInfo(this.projects[0], task);
+        this.projects[0].isProcessing = false;
       },
       err => console.log(err)
     );
   }
 
   takeEventSelection() {
+    this.projects[1].isProcessing = true;
+
     this.http.get('AnnotatorTasksEventSelection/take').subscribe(
-      newTask => console.log(newTask),
+      task => {
+        this.updateProjectInfo(this.projects[1], task);
+        this.projects[1].isProcessing = false;
+      },
       err => console.log(err)
     );
-  }
-
-  takeMarkUp() {
-    this.http.get('AnnotatorTasksMarkUP/take').subscribe(
-      newTask => console.log(newTask),
-      err => console.log(err)
-    );
-  }
-
-  startEventSelection(video) {
-    this.common.mode = 'fragmentsRating';
-    this.common.cv = video;
   }
 
   startMarkUp(video) {
     this.common.mode = 'fragmentsMarking';
+    this.common.cv = video;
+  }
+
+  startEventSelection(video) {
+    this.common.mode = 'fragmentsRating';
     this.common.cv = video;
   }
 

@@ -21,6 +21,11 @@ module.exports = {
     events: {
       type: 'string',
       required: true
+    },
+
+    annoCount: {
+      type: 'integer',
+      defaultTo: 0
     }
   }
 };

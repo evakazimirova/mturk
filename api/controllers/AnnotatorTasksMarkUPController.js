@@ -14,6 +14,7 @@ module.exports = {
       if (task) {
         let emotionsCount;
         if (task.TID.emotions.length > 0) {
+          console.log(task.TID);
           emotionsCount = task.TID.emotions.split(',').length;
 
           const part = +(task.done / emotionsCount).toFixed(0);
@@ -74,7 +75,36 @@ module.exports = {
         if (err) {
           return next(err);
         } else {
-          res.json(task);
+          const taskInfo = {
+            activity: "Active",
+            video: 'sharapova',
+            percentage: 0,
+            earned: 0,
+            price: project.pricePerTask,
+          };
+
+          // увеличиваем число аннотаторов задачи
+          TasksMarkUP.findOne({
+            TID: task.TID
+          }).exec((error, thisTask) => {
+            const newCount = thisTask.annoCount == null ? 1 : thisTask.annoCount + 1;
+            TasksMarkUP.update(
+              {
+                TID: task.TID
+              },
+              {
+                annoCount: newCount
+              }
+            ).exec((err, updated) => {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log(updated);
+              }
+            });
+          });
+
+          res.json(taskInfo);
         }
       });
     });

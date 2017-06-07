@@ -1,5 +1,5 @@
 <na-project *ngIf="projectMode" [projectId]="projectId" (returned)="projectMode = false"></na-project>
-<div *ngIf="!projectMode">
+<div *ngIf="!projectMode && isLoaded">
   <!-- Задания -->
   <h2>Projects</h2>
   <table class="table table-hover">
@@ -23,7 +23,7 @@
         <td>{{ project.percentage }}%</td>
         <td>{{ project.earned }}/{{ project.price }}</td>
         <td>
-          <a href="#" (click)="project.action.doIt($event)">
+          <a href="#" (click)="project.action.doIt($event)" *ngIf="!project.isProcessing">
             {{ project.action.title }}
           </a>
         </td>

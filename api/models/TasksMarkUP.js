@@ -20,6 +20,11 @@ let attributes = {
   emotions: {
     type: 'string',
     required: true
+  },
+
+  annoCount: {
+    type: 'integer',
+    defaultsTo: 0
   }
 }
 

@@ -74,7 +74,15 @@ module.exports = {
         if (err) {
           return next(err);
         } else {
-          res.json(task);
+          const taskInfo = {
+            activity: "Active",
+            video: 'sharapova',
+            percentage: 0,
+            earned: 0,
+            price: project.pricePerTask,
+          };
+
+          res.json(taskInfo);
         }
       });
     });
