@@ -2,9 +2,9 @@
   <button class="btn btn-default" (click)="return()">
     <span class="fa fa-angle-left"></span> Return to project list
   </button>
-  <h2>Разбивка видео «{{ video }}.mp4» на фрагменты</h2>
+  <h2>Event selection</h2>
   <div class="form-group">
-    <label for="task">Задача:</label><br>
+    <label for="task">Task:</label><br>
     <select id="task" class="form-control" [(ngModel)]="vp.task" [disabled]="this.vp.cf !== -1">
       <option *ngFor="let task of common.conf.tasks; let i = index" value="{{ i }}">{{ task }}</option>
     </select>

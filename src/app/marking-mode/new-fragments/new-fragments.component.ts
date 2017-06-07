@@ -17,7 +17,7 @@ export class NewFragmentsComponent implements OnInit {
 
   // 19. Сохранение в режиме разметки на фрагменты, приводит к созданию файла с именем включающем название видео файла и ID аннотатора.
   saveMarkup() {
-    for (let i in this.common.conf.tasks) {
+    for (let i in this.common.task.events) {
       // заголовок для выходного CSV
       let outputCSV = 'ID,start,end\n';
 

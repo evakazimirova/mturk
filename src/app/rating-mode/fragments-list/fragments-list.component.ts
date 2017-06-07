@@ -16,7 +16,7 @@ export class FragmentsListComponent implements OnInit {
 
   saveRating() {
     // 11. При нажатии клавиши сохранить происходит проверка, все ли фрагменты видео оценены во всех доступных шкалах. Если нет, то необходимо перейти к первому неоцененному фрагменту.
-    let totalEmotions = this.common.conf.emotions.length;
+    let totalEmotions = this.common.task.emotions.length;
     let totalFragments =  this.common.csv.length;
     let isBroken = false;
 
@@ -28,7 +28,7 @@ export class FragmentsListComponent implements OnInit {
 
       for (let j = 0; j < totalFragments; j++) {
         if(this.common.rating[i][j] === -1) {
-          alert(`Фрагмент ${j + 1} в шкале "${this.common.conf.emotions[i]}" не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
+          alert(`Фрагмент ${j + 1} в шкале "${this.common.task.emotions[i]}" не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
 
           // переходим к неоцененному фрагменту
           this.common.emotion = i;
@@ -56,7 +56,7 @@ export class FragmentsListComponent implements OnInit {
 
       // заголовок для выходного CSV
       let outputCSV = 'ID,Начало,Конец';
-      for(let emotion of this.common.conf.emotions) {
+      for(let emotion of this.common.task.emotions) {
         outputCSV += `,Оценка по шкале "${emotion}"`
       }
       outputCSV += "\n";

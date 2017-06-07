@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./marking-mode.component.scss']
 })
 export class MarkingModeComponent implements OnInit {
-  video: string = this.common.cv;
+  video: string = this.common.task.video;
   task: number = this.vp.task;
 
   constructor(public common: CommonService, private vp: VideoPlayerService) { }
@@ -17,7 +17,7 @@ export class MarkingModeComponent implements OnInit {
     // this.common.unwatchVideo('stop'); // выключаем видео основного плеера
 
     // Создаём массив для разбивки фрагменов для всех задач
-    for (let i in this.common.conf.tasks) {
+    for (let i in this.common.task.events) {
       this.vp.fragments.push([]);
     }
   }

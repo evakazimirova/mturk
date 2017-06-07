@@ -15,7 +15,7 @@ export class FragmentsComponent implements OnInit {
     this.common.fragmentRated.subscribe(
       (rating) => {
         this.common.rating[this.common.emotion][this.common.cf] = rating;
-        if(this.common.cf < this.common.csv.length - 1) {
+        if (this.common.cf < this.common.csv.length - 1) {
           this.common.setFragment(this.common.cf + 1);
         }
       }
@@ -23,30 +23,16 @@ export class FragmentsComponent implements OnInit {
 
     // 3. При выборе видеозаписи, открывается файл на сервере с именем, совпадающим с именем csv. В этом файле содержится информация о фрагментах, которые необходимо оценить. Структура файла: Номер фрагмента;Начало фрагмента;Конец фрагмента
     // 4. Web-интерфейс отображает список фрагментов, и выставленную им оценку в выбранной шкале.
-    this.common.videoChanged.subscribe(
-      (video) => {
-        this.http.getRough(video + ".csv").subscribe(
-          data => {
-            let csv = this.CSVToArray(data.text(), ";");
 
-            // выкидываем первую и последнюю строки (названия столбцов и пустая строка)
-            csv.pop();
-            csv.shift();
+    console.log(this.common.task.result);
+    let csv = this.CSVToArray(this.common.task.result, ',');
+    console.log(csv);
 
-            this.common.updateCSV(csv); // запоминаем данные для доступа во всех компонентах
-          },
-          error => {
-            console.log(error);
-            // // 14. Если для видеофайла нет соответствующего csv или есть но пустой, не содержащий список фрагментов, то включается режим разметки видео на фрагменты.
-            // alert("К сожалению, это видео ещё не подготовлено для оценивания, поэтому сейчас Вы перейдёте в режим, в котором сможете разбить видео на фрагменты самостоятельно.");
+    // // выкидываем первую и последнюю строки (названия столбцов и пустая строка)
+    // csv.pop();
+    // csv.shift();
 
-            // this.common.mode = "fragmentsMarking";
-            // this.common.unwatchVideo('stop'); // выключаем видео основного плеера
-          }
-        );
-      },
-      (error) => console.log(error)
-    );
+    this.common.updateCSV(csv); // запоминаем данные для доступа во всех компонентах
   }
 
   // парсер CSV

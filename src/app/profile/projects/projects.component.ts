@@ -106,6 +106,9 @@ export class ProjectsComponent implements OnInit {
       task => {
         console.log(task);
         this.common.task = task;
+
+        this.common.setVideo();
+
         this.common.mode = 'fragmentsRating';
         this.projects[0].isProcessing = false;
       },
@@ -115,7 +118,7 @@ export class ProjectsComponent implements OnInit {
 
   startEventSelection(task) {
     this.common.mode = 'fragmentsMarking';
-    this.common.cv = task;
+    this.common.task = task;
   }
 
   viewProjectDescription(id) {

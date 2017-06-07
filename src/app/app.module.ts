@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { SiteComponent } from './site.component';
-import { VideoListComponent } from './rating-mode/video-list/video-list.component';
 import { VideoPlayerComponent } from './rating-mode/video-player/video-player.component';
 import { FragmentsListComponent } from './rating-mode/fragments-list/fragments-list.component';
 import { TimePipe } from './time.pipe';
@@ -44,7 +43,6 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 @NgModule({
   declarations: [
     SiteComponent,
-    VideoListComponent,
     VideoPlayerComponent,
     FragmentsListComponent,
     TimePipe,

@@ -37,7 +37,7 @@ export class ControlsComponent implements OnInit {
         // 10. Смена шкалы оценивания осуществляется нажатием клавиши Right Shift или в соответствующем списке интерфейса.
         if (e.keyCode === 16) { // Shift
           // this.replayVideo();
-          if(this.common.emotion === this.common.conf.emotions.length - 1) {
+          if(this.common.emotion === this.common.task.emotions.length - 1) {
             this.common.emotion = 0;
           } else {
             this.common.emotion++;

@@ -9,12 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VideoToMarkComponent implements OnInit {
   currentVideo: string;
-  video: string = this.common.cv;
+  video: string = this.common.task.video;
 
   constructor(private common: CommonService, private vp: VideoPlayerService) { }
 
   ngOnInit() {
-    this.currentVideo = this.common.conf.pathToData + this.video + ".mp4";
+    this.currentVideo = this.common.task.video;
     console.log(this.currentVideo);
     this.vp.videoContainer = document.getElementById('videoToMark');
     this.vp.videoContainer.load();

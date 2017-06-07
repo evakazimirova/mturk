@@ -74,7 +74,7 @@ module.exports = {
         if (err) {
           return next(err);
         } else {
-          const taskInfo = {
+          let taskInfo = {
             activity: "Active",
             video: 'sharapova',
             percentage: 0,
@@ -87,6 +87,10 @@ module.exports = {
             TID: task.TID
           }).exec((error, thisTask) => {
             const newCount = thisTask.annoCount == null ? 1 : thisTask.annoCount + 1;
+
+            // определяем разметку аннотируемых кусков
+            taskInfo.result = thisTask.csv;
+
             TasksMarkUP.update(
               {
                 TID: task.TID
