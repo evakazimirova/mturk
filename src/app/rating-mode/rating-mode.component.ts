@@ -15,8 +15,7 @@ export class RatingModeComponent implements OnInit {
     // 2. Web-интерфейс отображает список видеозаписей доступных для разметки.
     // 4. Выбор шкалы осуществляется пользователем из некоторого заранее заданного файла.
     // загружаем первое видео
-    this.common.cv = this.common.cv;
-    this.common.setVideo(this.common.conf.pathToData + this.common.cv);
+    this.common.setVideo(this.common.task.video);
   }
 
   return() {

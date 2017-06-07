@@ -17,8 +17,9 @@ export class VideoComponent implements OnInit {
     // 3. При выборе видеозаписи, открывается файл на сервере с именем, совпадающим с именем видеозаписи
     this.common.videoChanged.subscribe(
       (video) => {
+        console.log(video);
         // меняем источник видео
-        this.currentVideo = video + ".mp4";
+        this.currentVideo = video;
         this.common.videoContainer.load();
 
         this.common.videoContainer.addEventListener('loadeddata', () => {

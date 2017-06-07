@@ -106,7 +106,7 @@ export class ProjectsComponent implements OnInit {
       task => {
         console.log(task);
         this.common.task = task;
-        this.common.mode = 'fragmentsMarking';
+        this.common.mode = 'fragmentsRating';
         this.projects[0].isProcessing = false;
       },
       err => console.log(err)
@@ -114,7 +114,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   startEventSelection(task) {
-    this.common.mode = 'fragmentsRating';
+    this.common.mode = 'fragmentsMarking';
     this.common.cv = task;
   }
 
