@@ -37,7 +37,7 @@ module.exports = {
       type: 'integer',
       defaultsTo: 0
     },
-     
+
     result: {
       type: 'text'
     }

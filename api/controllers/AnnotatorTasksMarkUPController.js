@@ -61,53 +61,90 @@ module.exports = {
     Projects.findOne({
       PID: 1
     }).exec((error, project) => {
-      // Если аннотатор подписался на задачу, то стоимость для него фиксируется, и отображается в личном кабинете именно в том размере на который он подписался, даже если администратор для новых аннотаторов увеличил или уменьшил размер выплаты.
+      TasksMarkUP.find({
+        annoCount: {'<': project.annoPerTask}
+      }).populate('annotators').sort('annoCount ASC').exec((error, tasks) => {
+        // не даём аннотатору брать одну и ту же задачу
+        let foundFreeTask = false;
 
-      newTask = {
-        TID: 1, // это то самое значение должно выбираться неслучайно
-        AID: req.session.userId,
-        price: project.pricePerTask
-      };
+        for (let task of tasks) {
+          for (let i in task.annotators) {
+            if (task.annotators[i].AID === req.session.userId) {
+              // это задание аннотатор уже делал
+              break;
+            }
 
-      // берём задачу
-      AnnotatorTasksMarkUP.create(newTask, (err, task) => {
-        if (err) {
-          return next(err);
-        } else {
-          let taskInfo = {
-            activity: "Active",
-            video: 'sharapova',
-            percentage: 0,
-            earned: 0,
-            price: project.pricePerTask,
-          };
+            if (i === task.annotators.length - 1) {
+              // берём это задание
+              foundFreeTask = true;
+            }
+          }
 
-          // увеличиваем число аннотаторов задачи
-          TasksMarkUP.findOne({
-            TID: task.TID
-          }).exec((error, thisTask) => {
-            const newCount = thisTask.annoCount == null ? 1 : thisTask.annoCount + 1;
+          if (foundFreeTask) {
+            // нашли то, что надо. заканчиваем шерстить
 
-            // определяем разметку аннотируемых кусков
-            taskInfo.result = thisTask.csv;
+            // Если аннотатор подписался на задачу, то стоимость для него фиксируется, и отображается в личном кабинете именно в том размере на который он подписался, даже если администратор для новых аннотаторов увеличил или уменьшил размер выплаты.
 
-            TasksMarkUP.update(
-              {
-                TID: task.TID
-              },
-              {
-                annoCount: newCount
-              }
-            ).exec((err, updated) => {
+            newTask = {
+              TID: task.TID, // это то самое значение должно выбираться неслучайно
+              AID: req.session.userId,
+              price: project.pricePerTask
+            };
+
+            // берём задачу
+            AnnotatorTasksMarkUP.create(newTask, (err, annoTask) => {
               if (err) {
-                console.log(err);
+                return next(err);
               } else {
-                console.log(updated);
+                let taskInfo = {
+                  activity: "Active",
+                  video: 'sharapova',
+                  percentage: 0,
+                  earned: 0,
+                  price: project.pricePerTask,
+                  task: {
+                    ATID: annoTask.id,
+                    TID: task.TID,
+                    CID: task.CID,
+                    emotions: task.emotions
+                  }
+                };
+
+                // увеличиваем число аннотаторов задачи
+                TasksMarkUP.findOne({
+                  TID: task.TID
+                }).exec((error, thisTask) => {
+                  const newCount = thisTask.annoCount == null ? 1 : thisTask.annoCount + 1;
+
+                  // определяем разметку аннотируемых кусков
+                  taskInfo.result = thisTask.csv;
+
+                  TasksMarkUP.update(
+                    {
+                      TID: task.TID
+                    },
+                    {
+                      annoCount: newCount
+                    }
+                  ).exec((err, updated) => {
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      console.log(updated);
+                    }
+                  });
+                });
+
+                res.json(taskInfo);
               }
             });
-          });
 
-          res.json(taskInfo);
+            break;
+          }
+        }
+
+        if (!foundFreeTask) {
+          res.json('no free tasks');
         }
       });
     });

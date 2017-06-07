@@ -84,7 +84,10 @@ export class ProjectsComponent implements OnInit {
 
     this.http.get('AnnotatorTasksMarkUP/take').subscribe(
       task => {
-        this.updateProjectInfo(this.projects[0], task);
+        console.log(task);
+        if (task !== 'no free tasks') {
+          this.updateProjectInfo(this.projects[0], task);
+        }
         this.projects[0].isProcessing = false;
       },
       err => console.log(err)

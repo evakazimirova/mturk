@@ -25,7 +25,12 @@ let attributes = {
   annoCount: {
     type: 'integer',
     defaultsTo: 0
-  }
+  },
+
+    annotators: {
+      collection: 'AnnotatorTasksMarkUP',
+      via: 'TID'
+    }
 }
 
 // for (let i = 1; i <= 20; i++) {

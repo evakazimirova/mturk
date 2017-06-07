@@ -26,6 +26,11 @@ module.exports = {
     annoCount: {
       type: 'integer',
       defaultTo: 0
+    },
+
+    annotators: {
+      collection: 'AnnotatorTasksEventSelection',
+      via: 'TID'
     }
   }
 };
