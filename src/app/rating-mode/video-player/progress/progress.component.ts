@@ -28,7 +28,7 @@ export class ProgressComponent implements OnInit {
           if (this.common.cf === -1) {
             this.common.videoContainer.currentTime = 0;
           } else {
-            this.common.videoContainer.currentTime = this.common.csv[this.common.cf][1];
+            this.common.videoContainer.currentTime = this.common.csv[this.common.cf][0];
           }
 
           this.percentage = 0;
@@ -39,32 +39,32 @@ export class ProgressComponent implements OnInit {
   }
 
   startWatching() {
-    if(this.watchingVideo !== undefined) {
-      if(this.watchingVideo._zoneDelegates !== null) {
+    if (this.watchingVideo !== undefined) {
+      if (this.watchingVideo._zoneDelegates !== null) {
         clearInterval(this.watchingVideo);
       }
     }
 
-    if(this.common.cf === -1) {
+    if (this.common.cf === -1) {
       this.fragmentStart = 0;
       this.fragmentEnd = this.common.videoLength;
     } else {
-      this.fragmentStart = this.common.csv[this.common.cf][1];
-      this.fragmentEnd = this.common.csv[this.common.cf][2];
+      this.fragmentStart = this.common.csv[this.common.cf][0];
+      this.fragmentEnd = this.common.csv[this.common.cf][1];
     }
-    let fragmentDuration = this.fragmentEnd - this.fragmentStart;
+    const fragmentDuration = this.fragmentEnd - this.fragmentStart;
 
-    let updateProgressBar = () => {
-      let currentTime = this.common.videoContainer.currentTime;
+    const updateProgressBar = () => {
+      const currentTime = this.common.videoContainer.currentTime;
 
       // проиграв фрагмент, останавливаем видео
-      if(this.common.videoContainer.currentTime >= this.fragmentEnd) {
-        this.common.unwatchVideo("stop");
+      if (this.common.videoContainer.currentTime >= this.fragmentEnd) {
+        this.common.unwatchVideo('stop');
       }
 
-      let timeSpent = currentTime - this.fragmentStart;
+      const timeSpent = currentTime - this.fragmentStart;
       this.percentage = (timeSpent / fragmentDuration * 100).toFixed(0);
-    }
+    };
 
     this.watchingVideo = setInterval(updateProgressBar, 50);
   }

@@ -136,6 +136,7 @@ module.exports = {
           ATID: ids.ATID
         }).exec((err, annoTask) => {
           all = {
+            ATID: ids.ATID,
             video: person.VID.URL,
             person: {
               name: person.personName,
@@ -146,6 +147,38 @@ module.exports = {
           };
 
           res.json(all);
+        });
+      });
+    });
+  },
+
+  updateResult: (req, res, next) => {
+    let input = req.params.all();
+
+    AnnotatorTasksMarkUP.findOne({
+      ATID: input.ATID
+    }).populate('AID').exec((err, task) => {
+      AnnotatorTasksMarkUP.update(
+        {
+          ATID: input.ATID
+        },
+        {
+          result: input.result,
+          done: input.done,
+          status: 3
+        }
+      ).exec((err, updated) => {
+        const newAmount = task.AID.moneyAvailable + task.price;
+
+        Annotators.update(
+          {
+            AID: req.session.userId
+          },
+          {
+            moneyAvailable: newAmount,
+          }
+        ).exec((err, updated) => {
+          res.json({money: newAmount});
         });
       });
     });

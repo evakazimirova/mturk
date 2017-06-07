@@ -20,7 +20,16 @@ module.exports = {
         Annotators.findOne({
           AID: req.session.userId
         }).exec((error, annotator) => {
-          res.json(annotator);
+          const user = {
+            nickname: annotator.login,
+            rating: annotator.rating,
+            money: {
+              available: annotator.moneyAvailable,
+              reserved: 0,
+            }
+          };
+
+          res.json(user);
         });
       } else {
         res.send('false');
@@ -178,12 +187,17 @@ module.exports = {
             req.session.isAuth = true;
             req.session.userId = annotator.AID;
 
-            // удаляем пароль из пересылаемого объекта
-            delete annotator.password;
-            delete annotator.registered; // и инфу о валидации почты
+            const user = {
+              nickname: annotator.login,
+              rating: annotator.rating,
+              money: {
+                available: annotator.moneyAvailable,
+                reserved: 0,
+              }
+            };
 
             // возвращаем все данные текущего пользователя
-            res.json(annotator); // отправляем данные
+            res.json(user);
           } else {
             res
               .status(400)

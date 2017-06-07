@@ -14,20 +14,11 @@ export class ProfileHeaderComponent implements OnInit {
     this.profileModeSelected.emit(page);
   }
 
-  user = {
-    nickname: "iGor",
-    rating: 4,
-    money: {
-      available: 1000,
-      reserved: 2000,
-    }
-  }
+  user;
 
-  constructor(public common: CommonService, private http: HttpService) { }
+  constructor(public common: CommonService, private http: HttpService) {}
 
-  ngOnInit() {
-    this.user.nickname = this.common.user.login;
-  }
+  ngOnInit() {}
 
   signOut() {
     const confirmed = confirm("Do you really want to sign out?");

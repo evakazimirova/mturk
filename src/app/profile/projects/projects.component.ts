@@ -53,7 +53,7 @@ export class ProjectsComponent implements OnInit {
         events: '1,2,3'
       }
     }
-  ]
+  ];
 
   constructor(public common: CommonService, private http: HttpService) { }
 
@@ -62,6 +62,8 @@ export class ProjectsComponent implements OnInit {
       task => {
         this.updateProjectInfo(this.projects[0], task);
         this.isLoaded = true;
+
+        this.common.user.money.reserved = this.projects[0].price + this.projects[1].price;
       },
       err => console.log(err)
     );
@@ -70,6 +72,8 @@ export class ProjectsComponent implements OnInit {
       task => {
         this.updateProjectInfo(this.projects[1], task);
         this.isLoaded = true;
+
+        this.common.user.money.reserved = this.projects[0].price + this.projects[1].price;
       },
       err => console.log(err)
     );
@@ -104,11 +108,8 @@ export class ProjectsComponent implements OnInit {
 
     this.http.post(ids, 'AnnotatorTasksMarkUP/start').subscribe(
       task => {
-        console.log(task);
         this.common.task = task;
-
         this.common.setVideo();
-
         this.common.mode = 'fragmentsRating';
         this.projects[0].isProcessing = false;
       },

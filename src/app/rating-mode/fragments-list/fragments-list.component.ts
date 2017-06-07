@@ -1,3 +1,4 @@
+import { HttpService } from '../../http.service';
 import { CommonService } from '../../common.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FragmentsListComponent implements OnInit {
 
-  constructor(private common: CommonService) {}
+  constructor(private common: CommonService, private http: HttpService) {}
 
   ngOnInit() {
   }
@@ -27,8 +28,8 @@ export class FragmentsListComponent implements OnInit {
       }
 
       for (let j = 0; j < totalFragments; j++) {
-        if(this.common.rating[i][j] === -1) {
-          alert(`Фрагмент ${j + 1} в шкале "${this.common.task.emotions[i]}" не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
+        if (this.common.rating[i][j] === -1) {
+          alert(`Фрагмент ${j + 1} в шкале "${this.common.task.emotions[i].title}" не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
 
           // переходим к неоцененному фрагменту
           this.common.emotion = i;
@@ -40,7 +41,7 @@ export class FragmentsListComponent implements OnInit {
       }
     }
 
-    if(!isBroken) {
+    if (!isBroken) {
       // 12. Выставленные оценки для всех шкал сохраняются на сервере по уникальным для каждого пользователя именем в формате csv или xls/xlsx, в столбцах: Номер фрагмента/Начало фрагмента/Конец фрагмента/Оценка по шкале 1/Оценка по шкале 2/и. т. д.
       let ratedCSV = JSON.parse(JSON.stringify(this.common.csv));
       // ratedCSV = ratedCSV.concat();
@@ -55,9 +56,9 @@ export class FragmentsListComponent implements OnInit {
       }
 
       // заголовок для выходного CSV
-      let outputCSV = 'ID,Начало,Конец';
-      for(let emotion of this.common.task.emotions) {
-        outputCSV += `,Оценка по шкале "${emotion}"`
+      let outputCSV = 'Start,End';
+      for (let emotion of this.common.task.emotions) {
+        outputCSV += `,Em${emotion.EID}`
       }
       outputCSV += "\n";
 
@@ -69,7 +70,27 @@ export class FragmentsListComponent implements OnInit {
       // разрешаем переходить к другому видео или закрывать сайт
       this.common.allFragmentsRated = true;
 
-      console.log(outputCSV);
+
+      // считаем, сколько эмоций проработано
+      const emotionsCount = this.common.task.emotions.length;
+
+      const output = {
+        result: outputCSV,
+        ATID: this.common.task.ATID,
+        done: emotionsCount
+      };
+
+      // сохраняем резульат
+      this.http.post(output, 'AnnotatorTasksMarkUP/updateResult').subscribe(
+        (res) => {
+          // обновляем баланс пользователя
+          this.common.user.money.available = res.money;
+
+          // возвращаемся в личный кабинет
+          this.common.mode = 'profile';
+        },
+        err => console.log(err)
+      );
     }
   }
 }

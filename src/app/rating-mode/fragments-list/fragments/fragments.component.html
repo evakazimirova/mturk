@@ -18,7 +18,8 @@
         danger: common.cf > i && common.rating[common.emotion][i] === -1
       }" (click)="common.setFragment(i)">
         <td>{{ i + 1 }}</td>
-        <td *ngFor="let cell of row">{{ cell }}</td>
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
         <td>{{
           common.rating[common.emotion][i] === -1 ?
             "—" :

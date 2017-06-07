@@ -50,6 +50,16 @@ module.exports = {
     projects: {
       collection: 'AnnotatorTasksEventSelection',
       via: 'AID'
+    },
+
+    moneyAvailable: {
+      type: 'float',
+      defaultsTo: 0
+    },
+
+    rating: {
+      type: 'integer',
+      defaultsTo: 0
     }
   }
 };

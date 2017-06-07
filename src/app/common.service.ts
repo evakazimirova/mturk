@@ -4,8 +4,12 @@ import { EventEmitter, Injectable } from '@angular/core';
 export class CommonService {
   // общие свойства для всех компонент
   user: any = {
-    name: '',
-    id: 0
+    nickname: '',
+    rating: 0,
+    money: {
+      available: 0,
+      reserved: 0,
+    }
   };
   csv = [[1, 0, 0, -1]];
   rating = [[]];
@@ -31,7 +35,7 @@ export class CommonService {
       if (number === -1) {
         this.fragmentChanged.emit(0);
       } else {
-        this.fragmentChanged.emit(this.csv[number][1]);
+        this.fragmentChanged.emit(this.csv[number][0]);
       }
     }
   }
@@ -71,7 +75,6 @@ export class CommonService {
     if (itsOk || this.allFragmentsRated) {
       this.cf = -1;
       this.allFragmentsRated = false;
-      console.log('12312');
       this.videoChanged.emit();
     }
   }
@@ -84,7 +87,7 @@ export class CommonService {
   }
 
   unwatchVideo(event) {
-    if(!this.videoContainer.paused) {
+    if (!this.videoContainer.paused) {
       this.videoContainer.pause();
       this.videoTurnedOff.emit(event); // передаём "пауза" или "стоп"
     }
