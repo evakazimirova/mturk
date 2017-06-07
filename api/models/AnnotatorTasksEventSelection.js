@@ -6,7 +6,6 @@
  */
 
 module.exports = {
-
   attributes: {
     ATID: {
       type: 'integer',
@@ -26,12 +25,21 @@ module.exports = {
 
     status: {
       type: 'integer',
-      required: true
+      defaultsTo: 1
     },
 
     price: {
       type: 'float',
-      required: true
+      defaultsTo: 0
+    },
+
+    done: {
+      type: 'integer',
+      defaultsTo: 0
+    },
+
+    result: {
+      type: 'text'
     }
   }
 };

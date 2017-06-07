@@ -20,7 +20,7 @@ module.exports = {
 
     scale: {
       type: 'integer',
-      required: true
+      defaultsTo: 1
     }
   }
 };

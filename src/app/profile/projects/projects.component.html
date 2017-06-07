@@ -1,16 +1,9 @@
 <na-project *ngIf="projectMode" [projectId]="projectId" (returned)="projectMode = false"></na-project>
 <div *ngIf="!projectMode">
   <!-- Задания -->
-  <h2>Tasks</h2>
-  <h3 (click)="projectMode = true; projectId = 1">
-    Annotating emotional conditions
-  </h3>
+  <h2>Projects</h2>
   <table class="table table-hover">
     <thead>
-      <tr>
-        <th colspan="2">Projects</th>
-        <th colspan="4">Status</th>
-      </tr>
       <tr>
         <th>#</th>
         <th>Title</th>
@@ -21,62 +14,20 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let project of projects.annotating; let i = index">
+      <tr *ngFor="let project of projects; let i = index">
         <td>{{ i + 1 }}</td>
-        <td>{{ project.title }}</td>
+        <td><a href="#" (click)='viewProjectDescription(project.id)'>
+          {{ project.title }}
+        </a></td>
         <td>{{ project.activity }}</td>
         <td>{{ project.percentage }}%</td>
-        <td>{{ project.earned() }}/{{ project.price }}</td>
+        <td>{{ project.earned }}/{{ project.price }}</td>
         <td>
-          <a href="#" (click)="common.mode = 'fragmentsRating'; common.cv = project.title">
-            {{ project.activity !== "Contest stage" ?
-                project.percentage === 0 ? "Start" : "Continue" : ""
-            }}
+          <a href="#" (click)="project.action.doIt($event)">
+            {{ project.action.title }}
           </a>
         </td>
       </tr>
     </tbody>
   </table>
-  <button class="btn btn-primary" (click)="takeEventSelection()">
-    Start new task
-  </button>
-
-  <h3 (click)="projectMode = true; projectId = 2">
-    Marking video fragments
-  </h3>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th colspan="2">Projects</th>
-        <th colspan="4">Status</th>
-      </tr>
-      <tr>
-        <th>#</th>
-        <th>Title</th>
-        <th>Activity</th>
-        <th>Completed</th>
-        <th>Earned</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let project of projects.marking; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ project.title }}</td>
-        <td>{{ project.activity }}</td>
-        <td>{{ project.percentage }}%</td>
-        <td>{{ project.earned() }}/{{ project.price }}</td>
-        <td>
-          <a href="#" (click)="common.mode = 'fragmentsMarking'; common.cv = project.title">
-            {{ project.activity !== "Contest stage" ?
-                project.percentage === 0 ? "Start" : "Continue" : ""
-            }}
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <button class="btn btn-primary" (click)="takeMarkUp()">
-    Start new task
-  </button>
 </div>

@@ -11,42 +11,34 @@ export class ProjectsComponent implements OnInit {
   projectMode = false;
   projectId = 0;
 
-  projects = {
-    marking: [
-      {
-        id: 1,
-        title: 'sharapova',
-        activity: "Active",
-        percentage: 90,
-        earned: function() {
-          return +(this.price * this.percentage / 100).toFixed(0);
-        },
-        price: 5000
+  projects = [
+    {
+      id: 1,
+      title: 'Mark up a video',
+      activity: "Inactive",
+      video: 'sharapova',
+      percentage: 0,
+      earned: 0,
+      price: 3000,
+      action: {
+        title: '',
+        doIt: (event) => console.log()
       }
-    ],
-    annotating: [
-      {
-        id: 17,
-        title: 'bilan_0005',
-        activity: "Inactive",
-        percentage: 0,
-        earned: function() {
-          return +(this.price * this.percentage / 100).toFixed(0);
-        },
-        price: 3000
-      },
-      {
-        id: 99,
-        title: 'bilan_0001',
-        activity: "Contest stage",
-        percentage: 0,
-        earned: function() {
-          return +(this.price * this.percentage / 100).toFixed(0);
-        },
-        price: 1000
+    },
+    {
+      id: 2,
+      title: 'Event selection',
+      activity: "Active",
+      video: 'sharapova',
+      percentage: 90,
+      earned: 0,
+      price: 5000,
+      action: {
+        title: '',
+        doIt: (event) => console.log()
       }
-    ]
-  }
+    }
+  ]
 
   constructor(public common: CommonService, private http: HttpService) { }
 
@@ -60,6 +52,43 @@ export class ProjectsComponent implements OnInit {
       newTask => console.log(newTask),
       err => console.log(err)
     );
+
+
+    for (let project of this.projects) {
+      project.earned = +(project.price * project.percentage / 100).toFixed(0)
+
+      switch (project.activity) {
+        case "Inactive":
+          project.action.title = "Start new task";
+          if (project.id === 1) {
+            project.action.doIt = (event) => {
+              event.preventDefault();
+              this.takeMarkUp();
+            }
+          } else if (project.id === 2) {
+            project.action.doIt = (event) => {
+              event.preventDefault();
+              this.takeEventSelection();
+            }
+          }
+          break;
+
+        case "Active":
+          project.action.title = "Continue";
+          if (project.id === 1) {
+            project.action.doIt = (event) => {
+              event.preventDefault();
+              this.startMarkUp(project.video);
+            }
+          } else if (project.id === 2) {
+            project.action.doIt = (event) => {
+              event.preventDefault();
+              this.startEventSelection(project.video);
+            }
+          }
+          break;
+      }
+    }
   }
 
   takeEventSelection() {
@@ -74,5 +103,20 @@ export class ProjectsComponent implements OnInit {
       newTask => console.log(newTask),
       err => console.log(err)
     );
+  }
+
+  startEventSelection(video) {
+    this.common.mode = 'fragmentsRating';
+    this.common.cv = video;
+  }
+
+  startMarkUp(video) {
+    this.common.mode = 'fragmentsMarking';
+    this.common.cv = video;
+  }
+
+  viewProjectDescription(id) {
+    this.projectMode = true;
+    this.projectId = id;
   }
 }

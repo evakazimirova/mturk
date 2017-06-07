@@ -21,7 +21,7 @@ let attributes = {
 for (let i = 1; i <= 20; i++) {
   attributes[`E${i}`] = {
     type: 'boolean',
-    required: true
+    defaultsTo: 0
   }
 }
 

@@ -24,7 +24,6 @@ module.exports = {
       newTask = {
         TID: 1, // это то самое значение должно выбираться неслучайно
         AID: req.session.userId,
-        status: 1,
         price: project.pricePerTask
       };
 

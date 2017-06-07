@@ -25,7 +25,7 @@ module.exports = {
 
     annoPerTask: {
       type: 'integer',
-      required: true
+      defaultsTo: 6
     }
   }
 };

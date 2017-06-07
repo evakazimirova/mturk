@@ -34,7 +34,6 @@ module.exports = {
 
     registered: {
       type: 'boolean',
-      required: true,
       defaultsTo: false
     },
 

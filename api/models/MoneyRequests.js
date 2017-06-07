@@ -20,7 +20,7 @@ module.exports = {
 
     defrayed: {
       type: 'boolean',
-      required: true
+      defaultsTo: false
     },
 
     price: {

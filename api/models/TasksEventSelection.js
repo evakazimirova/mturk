@@ -21,11 +21,6 @@ module.exports = {
     eventList: {
       type: 'string',
       required: true
-    },
-
-    person: {
-      collection: 'PersonSelection',
-      via: 'CID'
     }
   }
 };
