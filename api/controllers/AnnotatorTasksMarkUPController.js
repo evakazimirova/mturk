@@ -14,7 +14,6 @@ module.exports = {
       if (task) {
         let emotionsCount;
         if (task.TID.emotions.length > 0) {
-          console.log(task.TID);
           emotionsCount = task.TID.emotions.split(',').length;
 
           const part = +(task.done / emotionsCount).toFixed(0);
@@ -106,6 +105,44 @@ module.exports = {
 
           res.json(taskInfo);
         }
+      });
+    });
+  },
+
+
+  start:  (req, res, next) => {
+    let ids = req.params.all();
+
+    let emotions = [];
+    for (let e of ids.emotions.split(',')) {
+      emotions.push({
+        EID: e,
+      });
+    }
+
+    // вынимаем эмоции для разметки
+    // (!) можно сделать синхронно
+    EmotionInfo.find({
+      or: emotions
+    }).exec((err, emotions) => {
+      PersonSelection.findOne({
+        CID: ids.CID
+      }).populate('VID').exec((err, person) => {
+        AnnotatorTasksMarkUP.findOne({
+          ATID: ids.ATID
+        }).exec((err, annoTask) => {
+          all = {
+            video: person.VID.URL,
+            person: {
+              name: person.personName,
+              image: person.personImage
+            },
+            emotions: emotions,
+            result: annoTask.result === null ? '' : annoTask.result
+          };
+
+          res.json(all);
+        });
       });
     });
   }

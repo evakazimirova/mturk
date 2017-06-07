@@ -25,6 +25,12 @@ export class ProjectsComponent implements OnInit {
       action: {
         title: '',
         doIt: (event) => console.log()
+      },
+      task: {
+        ATID: 13,
+        TID: 1,
+        CID: 1,
+        emotions: '1,3'
       }
     },
     {
@@ -39,6 +45,12 @@ export class ProjectsComponent implements OnInit {
       action: {
         title: '',
         doIt: (event) => console.log()
+      },
+      task: {
+        ATID: 1,
+        TID: 1,
+        CID: 1,
+        events: '1,2,3'
       }
     }
   ]
@@ -87,14 +99,23 @@ export class ProjectsComponent implements OnInit {
     );
   }
 
-  startMarkUp(video) {
-    this.common.mode = 'fragmentsMarking';
-    this.common.cv = video;
+  startMarkUp(ids) {
+    this.projects[0].isProcessing = true;
+
+    this.http.post(ids, 'AnnotatorTasksMarkUP/start').subscribe(
+      task => {
+        console.log(task);
+        this.common.task = task;
+        this.common.mode = 'fragmentsMarking';
+        this.projects[0].isProcessing = false;
+      },
+      err => console.log(err)
+    );
   }
 
-  startEventSelection(video) {
+  startEventSelection(task) {
     this.common.mode = 'fragmentsRating';
-    this.common.cv = video;
+    this.common.cv = task;
   }
 
   viewProjectDescription(id) {
@@ -124,12 +145,12 @@ export class ProjectsComponent implements OnInit {
         if (project.id === 1) {
           project.action.doIt = (event) => {
             event.preventDefault();
-            this.startMarkUp(project.video);
+            this.startMarkUp(project.task);
           }
         } else if (project.id === 2) {
           project.action.doIt = (event) => {
             event.preventDefault();
-            this.startEventSelection(project.video);
+            this.startEventSelection(project.task);
           }
         }
         break;
