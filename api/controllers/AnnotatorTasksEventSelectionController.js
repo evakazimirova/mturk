@@ -6,12 +6,54 @@
  */
 
 module.exports = {
-	annoTasks: (req, res, next) => {
-    AnnotatorTasksEventSelection.find({
-      AID: req.session.userId
-    }).populate('TID').exec((error, tasks) => {
-      console.log(tasks)
-      res.json(tasks);
+	annoTask: (req, res, next) => {
+    AnnotatorTasksEventSelection.findOne({
+      AID: req.session.userId,
+      status: 1 // активные задачи
+    }).populate('TID').exec((error, task) => {
+      if (task) {
+        let eventsCount;
+        if (task.TID.events.length > 0) {
+          eventsCount = task.TID.events.split(',').length;
+
+          const part = +(task.done / eventsCount).toFixed(0);
+          const earned = +(part * task.price).toFixed(0);
+
+          let activity;
+
+          switch (task.status) {
+            case 1:
+              activity = "Active";
+              break;
+
+            default:
+              activity = "Inactive";
+              break;
+          }
+
+          const taskInfo = {
+            activity: activity,
+            video: 'sharapova',
+            percentage: part * 100,
+            earned: earned,
+            price: task.price,
+          }
+
+          res.json(taskInfo);
+        } else {
+          res.json({error: "no events"});
+        }
+      } else {
+        const taskInfo = {
+          activity: "Inactive",
+          video: 'sharapova',
+          percentage: 0,
+          earned: 0,
+          price: 0,
+        }
+
+        res.json(taskInfo);
+      }
     });
   },
 

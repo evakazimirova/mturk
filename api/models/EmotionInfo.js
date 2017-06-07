@@ -7,13 +7,13 @@
 
 module.exports = {
   attributes: {
-    shortName: {
-      type: 'string',
+    EID: {
+      type: 'integer',
       primaryKey: true,
       autoIncrement: true
     },
 
-    longName: {
+    title: {
       type: 'string',
       required: true
     },

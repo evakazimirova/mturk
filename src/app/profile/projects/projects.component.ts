@@ -43,52 +43,19 @@ export class ProjectsComponent implements OnInit {
   constructor(public common: CommonService, private http: HttpService) { }
 
   ngOnInit() {
-    this.http.get('AnnotatorTasksEventSelection/annoTasks').subscribe(
-      newTask => console.log(newTask),
+    this.http.get('AnnotatorTasksMarkUP/annoTask').subscribe(
+      task => {
+        this.updateProjectInfo(this.projects[0], task);
+      },
       err => console.log(err)
     );
 
-    this.http.get('AnnotatorTasksMarkUP/annoTasks').subscribe(
-      newTask => console.log(newTask),
+    this.http.get('AnnotatorTasksEventSelection/annoTask').subscribe(
+      task => {
+        this.updateProjectInfo(this.projects[1], task);
+      },
       err => console.log(err)
     );
-
-
-    for (let project of this.projects) {
-      project.earned = +(project.price * project.percentage / 100).toFixed(0)
-
-      switch (project.activity) {
-        case "Inactive":
-          project.action.title = "Start new task";
-          if (project.id === 1) {
-            project.action.doIt = (event) => {
-              event.preventDefault();
-              this.takeMarkUp();
-            }
-          } else if (project.id === 2) {
-            project.action.doIt = (event) => {
-              event.preventDefault();
-              this.takeEventSelection();
-            }
-          }
-          break;
-
-        case "Active":
-          project.action.title = "Continue";
-          if (project.id === 1) {
-            project.action.doIt = (event) => {
-              event.preventDefault();
-              this.startMarkUp(project.video);
-            }
-          } else if (project.id === 2) {
-            project.action.doIt = (event) => {
-              event.preventDefault();
-              this.startEventSelection(project.video);
-            }
-          }
-          break;
-      }
-    }
   }
 
   takeEventSelection() {
@@ -118,5 +85,48 @@ export class ProjectsComponent implements OnInit {
   viewProjectDescription(id) {
     this.projectMode = true;
     this.projectId = id;
+  }
+
+  updateTasksAction(project) {
+    switch (project.activity) {
+      case "Inactive":
+        project.action.title = "Start new task";
+        if (project.id === 1) {
+          project.action.doIt = (event) => {
+            event.preventDefault();
+            this.takeMarkUp();
+          }
+        } else if (project.id === 2) {
+          project.action.doIt = (event) => {
+            event.preventDefault();
+            this.takeEventSelection();
+          }
+        }
+        break;
+
+      case "Active":
+        project.action.title = "Continue";
+        if (project.id === 1) {
+          project.action.doIt = (event) => {
+            event.preventDefault();
+            this.startMarkUp(project.video);
+          }
+        } else if (project.id === 2) {
+          project.action.doIt = (event) => {
+            event.preventDefault();
+            this.startEventSelection(project.video);
+          }
+        }
+        break;
+    }
+  }
+
+  updateProjectInfo(project, task) {
+    project.activity = task.activity;
+    project.earned = task.earned;
+    project.percentage = task.percentage;
+    project.price = task.price;
+    project.video = task.video;
+    this.updateTasksAction(project);
   }
 }

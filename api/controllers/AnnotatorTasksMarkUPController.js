@@ -6,11 +6,54 @@
  */
 
 module.exports = {
-	annoTasks: (req, res, next) => {
-    AnnotatorTasksMarkUP.find({
-      AID: req.session.userId
-    }).exec((error, tasks) => {
-      res.json(tasks);
+	annoTask: (req, res, next) => {
+    AnnotatorTasksMarkUP.findOne({
+      AID: req.session.userId,
+      status: 1 // активные задачи
+    }).populate('TID').exec((error, task) => {
+      if (task) {
+        let emotionsCount;
+        if (task.TID.emotions.length > 0) {
+          emotionsCount = task.TID.emotions.split(',').length;
+
+          const part = +(task.done / emotionsCount).toFixed(0);
+          const earned = +(part * task.price).toFixed(0);
+
+          let activity;
+
+          switch (task.status) {
+            case 1:
+              activity = "Active";
+              break;
+
+            default:
+              activity = "Inactive";
+              break;
+          }
+
+          const taskInfo = {
+            activity: activity,
+            video: 'sharapova',
+            percentage: part * 100,
+            earned: earned,
+            price: task.price,
+          }
+
+          res.json(taskInfo);
+        } else {
+          res.json({error: "no emotions"});
+        }
+      } else {
+        const taskInfo = {
+          activity: "Inactive",
+          video: 'sharapova',
+          percentage: 0,
+          earned: 0,
+          price: 0,
+        }
+
+        res.json(taskInfo);
+      }
     });
   },
 
@@ -23,7 +66,6 @@ module.exports = {
       newTask = {
         TID: 1, // это то самое значение должно выбираться неслучайно
         AID: req.session.userId,
-        status: 1,
         price: project.pricePerTask
       };
 

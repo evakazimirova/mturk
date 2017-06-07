@@ -15,15 +15,20 @@ let attributes = {
   CID: {
     model: 'PersonSelection',
     required: true
+  },
+
+  emotions: {
+    type: 'string',
+    required: true
   }
 }
 
-for (let i = 1; i <= 20; i++) {
-  attributes[`E${i}`] = {
-    type: 'boolean',
-    defaultsTo: 0
-  }
-}
+// for (let i = 1; i <= 20; i++) {
+//   attributes[`E${i}`] = {
+//     type: 'boolean',
+//     defaultsTo: 0
+//   }
+// }
 
 
 module.exports = {

@@ -18,7 +18,7 @@ module.exports = {
       required: true
     },
 
-    eventList: {
+    events: {
       type: 'string',
       required: true
     }
