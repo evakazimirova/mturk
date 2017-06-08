@@ -12,53 +12,13 @@ export class ProjectsComponent implements OnInit {
   projectId = 0;
   isLoaded = false;
 
-  projects = [
-    {
-      id: 1,
-      isProcessing: false,
-      title: 'Mark up a video',
-      activity: "Inactive",
-      percentage: 0,
-      earned: 0,
-      price: 0,
-      action: {
-        title: '',
-        doIt: (event) => console.log()
-      },
-      task: {
-        ATID: 13,
-        TID: 1,
-        CID: 1,
-        emotions: '1,3'
-      }
-    },
-    {
-      id: 2,
-      isProcessing: false,
-      title: 'Event selection',
-      activity: "Active",
-      percentage: 0,
-      earned: 0,
-      price: 0,
-      action: {
-        title: '',
-        doIt: (event) => console.log()
-      },
-      task: {
-        ATID: 1,
-        TID: 1,
-        CID: 1,
-        events: '1,2,3'
-      }
-    }
-  ];
+  projects: any = [{}, {}];
 
   constructor(public common: CommonService, private http: HttpService) { }
 
   ngOnInit() {
     this.http.get('AnnoTasks/annoTasks').subscribe(
       tasks => {
-        console.log(tasks);
         this.updateProjectInfo(this.projects[0], tasks[0]);
         this.updateProjectInfo(this.projects[1], tasks[1]);
         this.isLoaded = true;
@@ -67,24 +27,13 @@ export class ProjectsComponent implements OnInit {
       },
       err => console.log(err)
     );
-
-    // this.http.get('AnnotatorTasksEventSelection/annoTask').subscribe(
-    //   task => {
-    //     this.updateProjectInfo(this.projects[1], task);
-    //     this.isLoaded = true;
-
-    //     this.common.user.money.reserved = this.projects[0].price + this.projects[1].price;
-    //   },
-    //   err => console.log(err)
-    // );
   }
 
   takeMarkUp() {
     this.projects[0].isProcessing = true;
 
-    this.http.get('AnnoTasks/take').subscribe(
+    this.http.get('AnnoTasks/take?PID=1').subscribe(
       task => {
-        console.log(task);
         if (task !== 'no free tasks') {
           this.updateProjectInfo(this.projects[0], task);
         }
@@ -97,7 +46,7 @@ export class ProjectsComponent implements OnInit {
   takeEventSelection() {
     this.projects[1].isProcessing = true;
 
-    this.http.get('AnnotatorTasksEventSelection/take').subscribe(
+    this.http.get('AnnoTasks/take?PID=2').subscribe(
       task => {
         this.updateProjectInfo(this.projects[1], task);
         this.projects[1].isProcessing = false;
@@ -111,7 +60,6 @@ export class ProjectsComponent implements OnInit {
 
     this.http.post(ids, 'AnnoTasks/start').subscribe(
       task => {
-        console.log(task)
         this.common.task = task;
         this.common.setVideo();
         this.common.mode = 'fragmentsRating';
@@ -132,6 +80,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   updateTasksAction(project) {
+    project.action = {};
     switch (project.activity) {
       case "Inactive":
         project.action.title = "Start new task";
@@ -171,6 +120,17 @@ export class ProjectsComponent implements OnInit {
     project.earned = task.earned;
     project.price = task.price;
     project.task = task.task;
+
+    project.id = task.task.PID;
+
+    if (project.id === 1) {
+      project.title = 'Mark up a video';
+    }
+
+    if (project.id === 2) {
+      project.title = 'Event selection';
+    }
+
     this.updateTasksAction(project);
   }
 }

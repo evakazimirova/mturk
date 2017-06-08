@@ -81,7 +81,7 @@ export class FragmentsListComponent implements OnInit {
       };
 
       // сохраняем резульат
-      this.http.post(output, 'AnnotatorTasksMarkUP/updateResult').subscribe(
+      this.http.post(output, 'AnnoTasks/save').subscribe(
         (res) => {
           // обновляем баланс пользователя
           this.common.user.money.available = res.money;

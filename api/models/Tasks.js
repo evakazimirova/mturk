@@ -19,11 +19,11 @@ module.exports = {
     },
 
     CID: {
-      model: 'PersonSelection',
+      model: 'Persons',
       required: true
     },
 
-    emotions: {
+    task: {
       type: 'string',
       required: true
     },

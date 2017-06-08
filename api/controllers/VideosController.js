@@ -1,7 +1,7 @@
 /**
- * TaskQueueController
+ * VideosController
  *
- * @description :: Server-side logic for managing Taskqueues
+ * @description :: Server-side logic for managing Rawvideos
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 

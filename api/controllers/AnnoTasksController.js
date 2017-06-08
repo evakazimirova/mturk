@@ -40,6 +40,7 @@ module.exports = {
               earned: earned,
               price: task.price,
               task: {
+                PID: task.TID.PID,
                 ATID: task.ATID,
                 TID: task.TID.TID,
                 CID: task.TID.CID,
@@ -65,6 +66,7 @@ module.exports = {
               earned: 0,
               price: 0,
               task: {
+                PID: i + 1,
                 ATID: 0,
                 TID: 0,
                 CID: 0,
@@ -81,10 +83,9 @@ module.exports = {
 
 
 	take: (req, res, next) => {
-    Projects.findOne({
-      PID: 1
-    }).exec((error, project) => {
+    Projects.findOne(req.params.all()).exec((error, project) => {
       Tasks.find({
+        PID: project.PID,
         annoCount: {'<': project.annoPerTask}
       }).populate('annotators').sort('annoCount ASC').exec((error, tasks) => {
         // не даём аннотатору брать одну и ту же задачу
@@ -129,6 +130,7 @@ module.exports = {
                   earned: 0,
                   price: project.pricePerTask,
                   task: {
+                    PID: project.PID,
                     ATID: annoTask.id,
                     TID: task.TID,
                     CID: task.CID,
@@ -152,8 +154,6 @@ module.exports = {
                   ).exec((err, updated) => {
                     if (err) {
                       console.log(err);
-                    } else {
-                      console.log(updated);
                     }
                   });
                 });
@@ -178,7 +178,7 @@ module.exports = {
     let ids = req.params.all();
 
     let emotions = [];
-    for (let e of ids.emotions.split(',')) {
+    for (let e of ids.task.split(',')) {
       emotions.push({
         EID: e,
       });
@@ -186,10 +186,10 @@ module.exports = {
 
     // вынимаем эмоции для разметки
     // (!) можно сделать синхронно
-    EmotionInfo.find({
+    EmotionsInfo.find({
       or: emotions
     }).exec((err, emotions) => {
-      PersonSelection.findOne({
+      Persons.findOne({
         CID: ids.CID
       }).populate('VID').exec((err, person) => {
         AnnoTasks.findOne({
@@ -213,7 +213,7 @@ module.exports = {
   },
 
 
-  updateResult: (req, res, next) => {
+  save: (req, res, next) => {
     let input = req.params.all();
 
     AnnoTasks.findOne({
@@ -251,3 +251,18 @@ module.exports = {
   }
 };
 
+
+
+// проекты, доступные аннотатору
+//   // вынимаем все проекты, доступные для аннотатора, кроме тех, которые он уже выполнял и тех, которую сделали 10 раз (для каждой задачи своё значение)
+//   // порядок задач: чем меньше людей её делали, тем на более высоком месте она стоит
+
+
+// взять задачу
+//   // если задача не была ранее выполнена аннотатором
+//     // проект присваивается пользователю
+//     // фиксируется стоимость проекта для этого пользователя
+//     // Когда аннотатор в личном кабинете нажимает «нажмите для начала» ему выдается задача по порядку, не случайным образом. То-есть если для задачи 1 установлено количество аннотаторов 10, то задача 2 не выдается пока не будет выдано половина от лимита 5 раз. Таким образом задача 1 будет выдана в 6 ой раз после того как Задача i (последняя) будет выдана 5 раз.
+
+
+//   // обновляем проект

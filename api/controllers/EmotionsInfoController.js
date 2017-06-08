@@ -1,7 +1,7 @@
 /**
- * RAWVideoController
+ * EmotionsInfoController
  *
- * @description :: Server-side logic for managing Rawvideos
+ * @description :: Server-side logic for managing Emotioninfoes
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
