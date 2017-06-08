@@ -1,3 +1,4 @@
+import { HttpService } from '../../http.service';
 import { VideoPlayerService } from '../video-player.service';
 import { CommonService } from '../../common.service';
 import { Component, Input, OnInit } from '@angular/core';
@@ -11,24 +12,52 @@ export class NewFragmentsComponent implements OnInit {
   @Input() video;
   fragments = this.vp.fragments;
 
-  constructor(private common: CommonService, private vp: VideoPlayerService) { }
+  constructor(private common: CommonService, private vp: VideoPlayerService, private http: HttpService) { }
 
   ngOnInit() {}
 
   // 19. Сохранение в режиме разметки на фрагменты, приводит к созданию файла с именем включающем название видео файла и ID аннотатора.
   saveMarkup() {
-    for (let i in this.common.task.events) {
+    let results = [];
+    for (let i in this.common.task.tasks) {
       // заголовок для выходного CSV
-      let outputCSV = 'ID,start,end\n';
+      let outputCSV = 'start,end\n';
 
       // преобразуем данные в CSV
       outputCSV += this.vp.fragments[i].map(function(d){
         return d.join();
       }).join('\n');
 
-      let filename = `${this.video}_${this.common.user.id}_task_${i + 1}.mp4`;
-      console.log(filename, outputCSV);
+      results.push(outputCSV);
     }
+
+
+    // // разрешаем переходить к другому видео или закрывать сайт
+    // this.common.allFragmentsRated = true;
+
+
+    // считаем, сколько эмоций проработано
+    const eventsCount = this.common.task.tasks.length;
+
+    const output = {
+      result: results,
+      ATID: this.common.task.ATID,
+      done: eventsCount
+    };
+
+    // сохраняем резульат
+    this.http.post(output, 'AnnoTasks/save').subscribe(
+      (res) => {
+        // обновляем баланс пользователя
+        this.common.user.money.available = res.money;
+        // и рейтинг
+        this.common.user.rating = res.rating;
+
+        // возвращаемся в личный кабинет
+        this.common.mode = 'profile';
+      },
+      err => console.log(err)
+    );
   }
 
   selectFragment(fragment) {

@@ -48,7 +48,9 @@ export class ProjectsComponent implements OnInit {
 
     this.http.get('AnnoTasks/take?PID=2').subscribe(
       task => {
-        this.updateProjectInfo(this.projects[1], task);
+        if (task !== 'no free tasks') {
+          this.updateProjectInfo(this.projects[1], task);
+        }
         this.projects[1].isProcessing = false;
       },
       err => console.log(err)
@@ -60,6 +62,9 @@ export class ProjectsComponent implements OnInit {
 
     this.http.post(ids, 'AnnoTasks/start').subscribe(
       task => {
+        task.emotions = task.tasks;
+        delete task.tasks;
+
         this.common.task = task;
         this.common.setVideo();
         this.common.mode = 'fragmentsRating';
@@ -69,9 +74,18 @@ export class ProjectsComponent implements OnInit {
     );
   }
 
-  startEventSelection(task) {
-    this.common.mode = 'fragmentsMarking';
-    this.common.task = task;
+  startEventSelection(ids) {
+    this.projects[1].isProcessing = true;
+
+    this.http.post(ids, 'AnnoTasks/start').subscribe(
+      task => {
+        this.common.task = task;
+        this.common.setVideo();
+        this.common.mode = 'fragmentsMarking';
+        this.projects[1].isProcessing = false;
+      },
+      err => console.log(err)
+    );
   }
 
   viewProjectDescription(id) {

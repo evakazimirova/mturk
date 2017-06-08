@@ -9,11 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MarkingModeComponent implements OnInit {
   video: string = this.common.task.video;
-  task: number = this.vp.task;
 
   constructor(public common: CommonService, private vp: VideoPlayerService) { }
 
   ngOnInit() {
+    // this.vp.task = this.common.task.tasks[0].EID;
+
     // this.common.unwatchVideo('stop'); // выключаем видео основного плеера
 
     // Создаём массив для разбивки фрагменов для всех задач

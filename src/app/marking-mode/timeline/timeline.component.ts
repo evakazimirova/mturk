@@ -28,6 +28,11 @@ export class TimelineComponent implements OnInit {
   constructor(private vp: VideoPlayerService, private common: CommonService) { }
 
   ngOnInit() {
+    // готовим массив для нарезки
+    for (let i in this.common.task.tasks) {
+      this.vp.fragments.push([]);
+    }
+
     // скролл по нажатию стрелок на клавиатуре
     $(document).keyup((e) => {
       if(this.common.mode === "fragmentsMarking") {
@@ -179,19 +184,18 @@ export class TimelineComponent implements OnInit {
   saveFragment(event) {
     event.preventDefault();
 
-    if(this.drag.startIsSet && this.drag.endIsSet && this.endFragment > this.startFragment) {
+    if (this.drag.startIsSet && this.drag.endIsSet && this.endFragment > this.startFragment) {
       if (this.vp.cf === -1) {
         // добавляем новый фрагмент
-        let newID = this.vp.fragments[this.vp.task].length + 1;
+        // let newID = this.vp.fragments[this.vp.task].length + 1;
         this.vp.fragments[this.vp.task].push([
-          newID,
           this.startFragment,
           this.endFragment
         ]);
       } else {
         // перезаписываем старый фрагмент
-        this.vp.fragments[this.vp.task][this.vp.cf][1] = this.startFragment;
-        this.vp.fragments[this.vp.task][this.vp.cf][2] = this.endFragment;
+        this.vp.fragments[this.vp.task][this.vp.cf][0] = this.startFragment;
+        this.vp.fragments[this.vp.task][this.vp.cf][1] = this.endFragment;
         this.vp.cf = -1; // возвращаемся в режим добавления нового фрагмента
       }
 

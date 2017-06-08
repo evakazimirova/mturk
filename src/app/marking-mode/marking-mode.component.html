@@ -6,14 +6,11 @@
   <div class="form-group">
     <label for="task">Task:</label><br>
     <select id="task" class="form-control" [(ngModel)]="vp.task" [disabled]="this.vp.cf !== -1">
-      <option *ngFor="let task of common.conf.tasks; let i = index" value="{{ i }}">{{ task }}</option>
+      <option *ngFor="let task of common.task.tasks; let i = index" value="{{ i }}">{{ task.title }}</option>
     </select>
     <div class="pics">
-      <span *ngIf="vp.task == 0 || vp.task == 2 || vp.task == 4">
-        <img src="{{ common.conf.pathToData + common.cv + '_person1.png' }}" alt="Person 1" class="img-circle">Человек 1
-      </span>
-      <span *ngIf="vp.task == 1 || vp.task == 3 || vp.task == 4">
-        <img src="{{ common.conf.pathToData + common.cv + '_person2.png' }}" alt="Person 2" class="img-circle">Человек 2
+      <span>
+        <img src="{{ common.task.person.image }}" alt="{{ common.task.person.name }}" class="img-circle">{{ common.task.person.name }}
       </span>
     </div>
   </div>

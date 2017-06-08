@@ -15,7 +15,6 @@ export class VideoToMarkComponent implements OnInit {
 
   ngOnInit() {
     this.currentVideo = this.common.task.video;
-    console.log(this.currentVideo);
     this.vp.videoContainer = document.getElementById('videoToMark');
     this.vp.videoContainer.load();
 

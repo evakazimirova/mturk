@@ -176,19 +176,28 @@ module.exports = {
 
   start:  (req, res, next) => {
     let ids = req.params.all();
+    let TasksInfo;
 
-    let emotions = [];
+    console.log(ids);
+
+    if (ids.PID === 1) {
+      TasksInfo = EmotionsInfo;
+    } else if (ids.PID === 2) {
+      TasksInfo = EventsInfo;
+    }
+
+    let tasks = [];
     for (let e of ids.task.split(',')) {
-      emotions.push({
+      tasks.push({
         EID: e,
       });
     }
 
     // вынимаем эмоции для разметки
     // (!) можно сделать синхронно
-    EmotionsInfo.find({
-      or: emotions
-    }).exec((err, emotions) => {
+    TasksInfo.find({
+      or: tasks
+    }).exec((err, tasks) => {
       Persons.findOne({
         CID: ids.CID
       }).populate('VID').exec((err, person) => {
@@ -202,7 +211,7 @@ module.exports = {
               name: person.personName,
               image: person.personImage
             },
-            emotions: emotions,
+            tasks: tasks,
             result: annoTask.result === null ? '' : annoTask.result
           };
 
