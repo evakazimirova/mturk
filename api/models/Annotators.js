@@ -47,11 +47,6 @@ module.exports = {
       required: true
     },
 
-    projects: {
-      collection: 'AnnoTasks',
-      via: 'AID'
-    },
-
     moneyAvailable: {
       type: 'float',
       defaultsTo: 0
@@ -60,6 +55,11 @@ module.exports = {
     rating: {
       type: 'integer',
       defaultsTo: 0
+    },
+
+    tasks: {
+      collection: 'AnnoTasks',
+      via: 'AID'
     }
   }
 };

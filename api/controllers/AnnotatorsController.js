@@ -41,7 +41,6 @@ module.exports = {
   // список всех аннотаторов и проектов
   withTasks: (req, res, next) => {
     Annotators.find().populateAll().exec((error, annotators) => {
-      console.log(annotators);
       res.json(annotators);
     });
   },
@@ -58,7 +57,7 @@ module.exports = {
       for (annotator of annotators) {
         annoList.push({
           name: `${annotator.firstName} ${annotator.secondName}`,
-          completed: annotator.projectsMU.length + annotator.projectsES.length,
+          completed: annotator.tasks.length,
           rating: annotator.rating
         });
       }
@@ -78,30 +77,18 @@ module.exports = {
 
       // собираем информацию по проектам
       for (annotator of annotators) {
-        let cpMU = 0,
-            cpES = 0,
-            npMU = 0,
-            npES = 0,
-            ppMU = 0,
-            ppES = 0;
+        let cp = 0,
+            np = 0,
+            pp = 0;
 
-        for (let a of annotator.projectsMU) {
+        for (let a of annotator.tasks) {
           if (a.status === 3) {
-            cpMU++;
+            cp++;
           }
           if (a.status === 1) {
-            npMU++;
+            np++;
             // total = task.TID.emotions.split(',').length;
-            // ppMU = a.;
-          }
-        }
-
-        for (let a of annotator.projectsES) {
-          if (a.status === 3) {
-            cpES++;
-          }
-          if (a.status === 1) {
-            npES++;
+            // pp = a.;
           }
         }
 
@@ -109,10 +96,10 @@ module.exports = {
         annoList.push({
           name: `${annotator.firstName} ${annotator.secondName}`,
           email: annotator.email,
-          projects: npMU + npES,
-          completed: cpMU + cpES,
+          projects: np,
+          completed: cp,
           rating: annotator.rating,
-          progress: 0
+          progress: pp
         });
       }
 
