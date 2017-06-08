@@ -56,9 +56,11 @@ export class ProjectsComponent implements OnInit {
   constructor(public common: CommonService, private http: HttpService) { }
 
   ngOnInit() {
-    this.http.get('AnnotatorTasksMarkUP/annoTask').subscribe(
-      task => {
-        this.updateProjectInfo(this.projects[0], task);
+    this.http.get('AnnoTasks/annoTasks').subscribe(
+      tasks => {
+        console.log(tasks);
+        this.updateProjectInfo(this.projects[0], tasks[0]);
+        this.updateProjectInfo(this.projects[1], tasks[1]);
         this.isLoaded = true;
 
         this.common.user.money.reserved = this.projects[0].price + this.projects[1].price;
@@ -66,21 +68,21 @@ export class ProjectsComponent implements OnInit {
       err => console.log(err)
     );
 
-    this.http.get('AnnotatorTasksEventSelection/annoTask').subscribe(
-      task => {
-        this.updateProjectInfo(this.projects[1], task);
-        this.isLoaded = true;
+    // this.http.get('AnnotatorTasksEventSelection/annoTask').subscribe(
+    //   task => {
+    //     this.updateProjectInfo(this.projects[1], task);
+    //     this.isLoaded = true;
 
-        this.common.user.money.reserved = this.projects[0].price + this.projects[1].price;
-      },
-      err => console.log(err)
-    );
+    //     this.common.user.money.reserved = this.projects[0].price + this.projects[1].price;
+    //   },
+    //   err => console.log(err)
+    // );
   }
 
   takeMarkUp() {
     this.projects[0].isProcessing = true;
 
-    this.http.get('AnnotatorTasksMarkUP/take').subscribe(
+    this.http.get('AnnoTasks/take').subscribe(
       task => {
         console.log(task);
         if (task !== 'no free tasks') {
@@ -107,7 +109,7 @@ export class ProjectsComponent implements OnInit {
   startMarkUp(ids) {
     this.projects[0].isProcessing = true;
 
-    this.http.post(ids, 'AnnotatorTasksMarkUP/start').subscribe(
+    this.http.post(ids, 'AnnoTasks/start').subscribe(
       task => {
         console.log(task)
         this.common.task = task;

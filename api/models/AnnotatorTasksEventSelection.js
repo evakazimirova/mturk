@@ -14,7 +14,7 @@ module.exports = {
     },
 
     TID: {
-      model: 'TasksEventSelection',
+      model: 'Tasks',
       required: true
     },
 

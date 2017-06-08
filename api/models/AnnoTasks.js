@@ -1,5 +1,5 @@
 /**
- * TasksEventSelection.js
+ * AnnoTasks.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -7,30 +7,39 @@
 
 module.exports = {
   attributes: {
-    TID: {
+    ATID: {
       type: 'integer',
       primaryKey: true,
       autoIncrement: true
     },
 
-    CID: {
-      model: 'PersonSelection',
+    TID: {
+      model: 'Tasks',
       required: true
     },
 
-    events: {
-      type: 'string',
+    AID: {
+      model: 'Annotators',
       required: true
     },
 
-    annoCount: {
+    status: {
       type: 'integer',
-      defaultTo: 0
+      defaultsTo: 1
     },
 
-    annotators: {
-      collection: 'AnnotatorTasksEventSelection',
-      via: 'TID'
+    price: {
+      type: 'float',
+      defaultsTo: 0
+    },
+
+    done: {
+      type: 'integer',
+      defaultsTo: 0
+    },
+
+    result: {
+      type: 'text'
     }
   }
 };

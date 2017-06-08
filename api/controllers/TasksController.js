@@ -1,7 +1,7 @@
 /**
- * TasksEventSelectionController
+ * TasksController
  *
- * @description :: Server-side logic for managing Taskseventselections
+ * @description :: Server-side logic for managing Tasks
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 

@@ -1,5 +1,5 @@
 /**
- * AnnotatorTasksMarkUP.js
+ * Tasks.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -7,39 +7,39 @@
 
 module.exports = {
   attributes: {
-    ATID: {
+    TID: {
       type: 'integer',
       primaryKey: true,
       autoIncrement: true
     },
 
-    TID: {
-      model: 'TasksMarkUP',
+    PID: {
+      model: 'Projects',
       required: true
     },
 
-    AID: {
-      model: 'Annotators',
+    CID: {
+      model: 'PersonSelection',
       required: true
     },
 
-    status: {
-      type: 'integer',
-      defaultsTo: 1
+    emotions: {
+      type: 'string',
+      required: true
     },
 
-    price: {
-      type: 'float',
-      defaultsTo: 0
-    },
-
-    done: {
-      type: 'integer',
-      defaultsTo: 0
-    },
-
-    result: {
+    csv: {
       type: 'text'
+    },
+
+    annoCount: {
+      type: 'integer',
+      defaultsTo: 0
+    },
+
+    annotators: {
+      collection: 'AnnoTasks',
+      via: 'TID'
     }
   }
 };

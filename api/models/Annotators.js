@@ -48,7 +48,7 @@ module.exports = {
     },
 
     projectsMU: {
-      collection: 'AnnotatorTasksMarkUP',
+      collection: 'AnnoTasks',
       via: 'AID'
     },
 

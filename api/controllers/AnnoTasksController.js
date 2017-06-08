@@ -1,77 +1,90 @@
 /**
- * AnnotatorTasksMarkUPController
+ * AnnoTasksController
  *
- * @description :: Server-side logic for managing Annotatortasksmarkups
+ * @description :: Server-side logic for managing AnnoTasks
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
 module.exports = {
-	annoTask: (req, res, next) => {
-    AnnotatorTasksMarkUP.findOne({
+	annoTasks: (req, res, next) => {
+    AnnoTasks.find({
       AID: req.session.userId,
       status: 1 // активные задачи
-    }).populate('TID').exec((error, task) => {
-      if (task) {
-        let emotionsCount;
-        if (task.TID.emotions.length > 0) {
-          emotionsCount = task.TID.emotions.split(',').length;
+    }).populate('TID').exec((error, tasks) => {
+      if (tasks) {
+        tasksInfo = [];
 
-          const part = +(task.done / emotionsCount).toFixed(0);
-          const earned = +(part * task.price).toFixed(0);
+        for (task of tasks) {
+          let emotionsCount;
+          if (task.TID.task.length > 0) {
+            emotionsCount = task.TID.task.split(',').length;
 
-          let activity;
+            const part = +(task.done / emotionsCount).toFixed(0);
+            const earned = +(part * task.price).toFixed(0);
 
-          switch (task.status) {
-            case 1:
-              activity = "Active";
-              break;
+            let activity;
 
-            default:
-              activity = "Inactive";
-              break;
-          }
+            switch (task.status) {
+              case 1:
+                activity = "Active";
+                break;
 
-          const taskInfo = {
-            activity: activity,
-            percentage: part * 100,
-            earned: earned,
-            price: task.price,
-            task: {
-              ATID: task.ATID,
-              TID: task.TID.TID,
-              CID: task.TID.CID,
-              emotions: task.TID.emotions
+              default:
+                activity = "Inactive";
+                break;
+            }
+
+            const taskInfo = {
+              activity: activity,
+              percentage: part * 100,
+              earned: earned,
+              price: task.price,
+              task: {
+                ATID: task.ATID,
+                TID: task.TID.TID,
+                CID: task.TID.CID,
+                task: task.TID.task
+              }
+            }
+
+            if (task.TID.PID === 1) {
+              tasksInfo[0] = taskInfo
+            }
+
+            if (task.TID.PID === 2) {
+              tasksInfo[1] = taskInfo
             }
           }
-
-          res.json(taskInfo);
-        } else {
-          res.json({error: "no emotions"});
         }
-      } else {
-        const taskInfo = {
-          activity: "Inactive",
-          percentage: 0,
-          earned: 0,
-          price: 0,
-          task: {
-            ATID: 0,
-            TID: 0,
-            CID: 0,
-            emotions: 0
+
+        for (let i = 0; i < 2; i++) {
+          if (tasksInfo[i] === undefined) {
+            tasksInfo[i] = {
+              activity: "Inactive",
+              percentage: 0,
+              earned: 0,
+              price: 0,
+              task: {
+                ATID: 0,
+                TID: 0,
+                CID: 0,
+                task: 0
+              }
+            }
           }
         }
 
-        res.json(taskInfo);
+        res.json(tasksInfo);
       }
     });
   },
+
 
 	take: (req, res, next) => {
     Projects.findOne({
       PID: 1
     }).exec((error, project) => {
-      TasksMarkUP.find({
+      Tasks.find({
         annoCount: {'<': project.annoPerTask}
       }).populate('annotators').sort('annoCount ASC').exec((error, tasks) => {
         // не даём аннотатору брать одну и ту же задачу
@@ -106,7 +119,7 @@ module.exports = {
             };
 
             // берём задачу
-            AnnotatorTasksMarkUP.create(newTask, (err, annoTask) => {
+            AnnoTasks.create(newTask, (err, annoTask) => {
               if (err) {
                 return next(err);
               } else {
@@ -119,17 +132,17 @@ module.exports = {
                     ATID: annoTask.id,
                     TID: task.TID,
                     CID: task.CID,
-                    emotions: task.emotions
+                    task: task.task
                   }
                 };
 
                 // увеличиваем число аннотаторов задачи
-                TasksMarkUP.findOne({
+                Tasks.findOne({
                   TID: task.TID
                 }).exec((error, thisTask) => {
                   const newCount = thisTask.annoCount == null ? 1 : thisTask.annoCount + 1;
 
-                  TasksMarkUP.update(
+                  Tasks.update(
                     {
                       TID: task.TID
                     },
@@ -179,7 +192,7 @@ module.exports = {
       PersonSelection.findOne({
         CID: ids.CID
       }).populate('VID').exec((err, person) => {
-        AnnotatorTasksMarkUP.findOne({
+        AnnoTasks.findOne({
           ATID: ids.ATID
         }).exec((err, annoTask) => {
           all = {
@@ -199,13 +212,14 @@ module.exports = {
     });
   },
 
+
   updateResult: (req, res, next) => {
     let input = req.params.all();
 
-    AnnotatorTasksMarkUP.findOne({
+    AnnoTasks.findOne({
       ATID: input.ATID
     }).populate('AID').exec((err, task) => {
-      AnnotatorTasksMarkUP.update(
+      AnnoTasks.update(
         {
           ATID: input.ATID
         },

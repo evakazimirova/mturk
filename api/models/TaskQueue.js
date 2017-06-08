@@ -8,11 +8,11 @@
 module.exports = {
   attributes: {
     TID_M: {
-      model: 'TasksMarkUP'
+      model: 'Tasks'
     },
 
     TID_E: {
-      model: 'TasksEventSelection'
+      model: 'Tasks'
     }
   }
 };
