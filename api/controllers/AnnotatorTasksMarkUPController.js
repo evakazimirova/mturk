@@ -33,10 +33,15 @@ module.exports = {
 
           const taskInfo = {
             activity: activity,
-            video: 'sharapova',
             percentage: part * 100,
             earned: earned,
             price: task.price,
+            task: {
+              ATID: task.ATID,
+              TID: task.TID.TID,
+              CID: task.TID.CID,
+              emotions: task.TID.emotions
+            }
           }
 
           res.json(taskInfo);
@@ -46,10 +51,15 @@ module.exports = {
       } else {
         const taskInfo = {
           activity: "Inactive",
-          video: 'sharapova',
           percentage: 0,
           earned: 0,
           price: 0,
+          task: {
+            ATID: 0,
+            TID: 0,
+            CID: 0,
+            emotions: 0
+          }
         }
 
         res.json(taskInfo);
@@ -68,27 +78,31 @@ module.exports = {
         let foundFreeTask = false;
 
         for (let task of tasks) {
-          for (let i in task.annotators) {
-            if (task.annotators[i].AID === req.session.userId) {
-              // это задание аннотатор уже делал
-              break;
-            }
+          if (task.annotators.length === 0) {
+            // берём это задание (никто его ещё не брал)
+            foundFreeTask = true;
+          } else {
+            for (let i in task.annotators) {
+              if (task.annotators[i].AID === req.session.userId) {
+                // это задание аннотатор уже делал
+                break;
+              }
 
-            if (i === task.annotators.length - 1) {
-              // берём это задание
-              foundFreeTask = true;
+              if (i === task.annotators.length - 1) {
+                // берём это задание
+                foundFreeTask = true;
+              }
             }
           }
 
           if (foundFreeTask) {
             // нашли то, что надо. заканчиваем шерстить
 
-            // Если аннотатор подписался на задачу, то стоимость для него фиксируется, и отображается в личном кабинете именно в том размере на который он подписался, даже если администратор для новых аннотаторов увеличил или уменьшил размер выплаты.
-
             newTask = {
               TID: task.TID, // это то самое значение должно выбираться неслучайно
               AID: req.session.userId,
-              price: project.pricePerTask
+              price: project.pricePerTask, // Если аннотатор подписался на задачу, то стоимость для него фиксируется, и отображается в личном кабинете именно в том размере на который он подписался, даже если администратор для новых аннотаторов увеличил или уменьшил размер выплаты.
+              result: task.csv // определяем разметку аннотируемых кусков
             };
 
             // берём задачу
@@ -98,7 +112,6 @@ module.exports = {
               } else {
                 let taskInfo = {
                   activity: "Active",
-                  video: 'sharapova',
                   percentage: 0,
                   earned: 0,
                   price: project.pricePerTask,
@@ -115,9 +128,6 @@ module.exports = {
                   TID: task.TID
                 }).exec((error, thisTask) => {
                   const newCount = thisTask.annoCount == null ? 1 : thisTask.annoCount + 1;
-
-                  // определяем разметку аннотируемых кусков
-                  taskInfo.result = thisTask.csv;
 
                   TasksMarkUP.update(
                     {

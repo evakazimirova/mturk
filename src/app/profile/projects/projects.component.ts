@@ -18,7 +18,6 @@ export class ProjectsComponent implements OnInit {
       isProcessing: false,
       title: 'Mark up a video',
       activity: "Inactive",
-      video: 'sharapova',
       percentage: 0,
       earned: 0,
       price: 0,
@@ -38,7 +37,6 @@ export class ProjectsComponent implements OnInit {
       isProcessing: false,
       title: 'Event selection',
       activity: "Active",
-      video: 'sharapova',
       percentage: 0,
       earned: 0,
       price: 0,
@@ -111,6 +109,7 @@ export class ProjectsComponent implements OnInit {
 
     this.http.post(ids, 'AnnotatorTasksMarkUP/start').subscribe(
       task => {
+        console.log(task)
         this.common.task = task;
         this.common.setVideo();
         this.common.mode = 'fragmentsRating';
@@ -153,12 +152,12 @@ export class ProjectsComponent implements OnInit {
           project.action.doIt = (event) => {
             event.preventDefault();
             this.startMarkUp(project.task);
-          }
+          };
         } else if (project.id === 2) {
           project.action.doIt = (event) => {
             event.preventDefault();
             this.startEventSelection(project.task);
-          }
+          };
         }
         break;
     }
@@ -166,10 +165,10 @@ export class ProjectsComponent implements OnInit {
 
   updateProjectInfo(project, task) {
     project.activity = task.activity;
-    project.earned = task.earned;
     project.percentage = task.percentage;
+    project.earned = task.earned;
     project.price = task.price;
-    project.video = task.video;
+    project.task = task.task;
     this.updateTasksAction(project);
   }
 }
