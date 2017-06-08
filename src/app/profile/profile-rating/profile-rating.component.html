@@ -17,8 +17,8 @@
   <tbody>
     <tr *ngFor="let user of users; let i = index">
       <td>{{ i + 1 }}</td>
-      <td>{{ user.firstName + ' ' + user.secondName }}</td>
-      <td>{{ user.projects }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.completed }}</td>
       <td>{{ user.rating }}</td>
     </tr>
   </tbody>

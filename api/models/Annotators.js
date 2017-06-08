@@ -47,7 +47,12 @@ module.exports = {
       required: true
     },
 
-    projects: {
+    projectsMU: {
+      collection: 'AnnotatorTasksMarkUP',
+      via: 'AID'
+    },
+
+    projectsES: {
       collection: 'AnnotatorTasksEventSelection',
       via: 'AID'
     },

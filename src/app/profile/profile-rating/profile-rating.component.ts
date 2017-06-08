@@ -1,3 +1,4 @@
+import { HttpService } from '../../http.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,24 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile-rating.component.scss']
 })
 export class ProfileRatingComponent implements OnInit {
-  users = [
-    {
-      firstName: 'Максим',
-      secondName: 'Рябов',
-      projects: 5,
-      rating: 9
-    },
-    {
-      firstName: 'Игорь',
-      secondName: 'Поляков',
-      projects: 2,
-      rating: 4
-    }
-  ];
+  users = [];
 
-  constructor() { }
+  constructor(private http: HttpService) { }
 
   ngOnInit() {
+    this.http.get('annotators/rating').subscribe(
+      annotators => {
+        this.users = annotators;
+      },
+      err => console.log(err)
+    );
   }
 
 }

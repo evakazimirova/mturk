@@ -48,6 +48,24 @@ module.exports = {
 
 
   // вынимаем всех аннотаторов, сортируя по рейтингу (по убыванию)
+  rating: (req, res, next) => {
+    Annotators.find({
+      registered: 1,
+    }).populateAll().sort('rating DESC').exec((error, annotators) => {
+      let annoList = [];
+
+      // собираем информацию по проектам
+      for (annotator of annotators) {
+        annoList.push({
+          name: `${annotator.firstName} ${annotator.secondName}`,
+          completed: annotator.projectsMU.length + annotator.projectsES.length,
+          rating: annotator.rating
+        });
+      }
+
+      res.json(annoList);
+    });
+  },
 
 
   // вынимаем всех аннотаторов, подтвердивших email
