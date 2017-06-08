@@ -72,18 +72,51 @@ module.exports = {
   registered: (req, res, next) => {
     Annotators.find({
       registered: 1
-    }).populateAll().exec((error, annotators) => {
+    }).populateAll().sort('rating DESC').exec((error, annotators) => {
+      let annoList = [];
+
+
       // собираем информацию по проектам
       for (annotator of annotators) {
-        annotator.projects = 2;
-        annotator.completed = 7;
-        annotator.progress = [
-          50,
-          83
-        ];
+        let cpMU = 0,
+            cpES = 0,
+            npMU = 0,
+            npES = 0,
+            ppMU = 0,
+            ppES = 0;
+
+        for (let a of annotator.projectsMU) {
+          if (a.status === 3) {
+            cpMU++;
+          }
+          if (a.status === 1) {
+            npMU++;
+            // total = task.TID.emotions.split(',').length;
+            // ppMU = a.;
+          }
+        }
+
+        for (let a of annotator.projectsES) {
+          if (a.status === 3) {
+            cpES++;
+          }
+          if (a.status === 1) {
+            npES++;
+          }
+        }
+
+
+        annoList.push({
+          name: `${annotator.firstName} ${annotator.secondName}`,
+          email: annotator.email,
+          projects: npMU + npES,
+          completed: cpMU + cpES,
+          rating: annotator.rating,
+          progress: 0
+        });
       }
 
-      res.json(annotators);
+      res.json(annoList);
     });
   },
 

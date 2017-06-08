@@ -12,11 +12,11 @@
   </thead>
   <tbody>
     <tr *ngFor="let user of users">
-      <td>{{ user.firstName + ' ' + user.secondName }}</td>
+      <td>{{ user.name }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.completed }}</td>
       <td>{{ user.projects }}</td>
-      <td>{{ ((user.progress[0] + user.progress[1])/2).toFixed(0) }}</td>
+      <td>{{ user.progress }}</td>
     </tr>
   </tbody>
 </table>
