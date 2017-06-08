@@ -85,6 +85,8 @@ export class FragmentsListComponent implements OnInit {
         (res) => {
           // обновляем баланс пользователя
           this.common.user.money.available = res.money;
+          // и рейтинг
+          this.common.user.rating = res.rating;
 
           // возвращаемся в личный кабинет
           this.common.mode = 'profile';

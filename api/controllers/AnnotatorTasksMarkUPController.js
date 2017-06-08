@@ -206,6 +206,7 @@ module.exports = {
         }
       ).exec((err, updated) => {
         const newAmount = task.AID.moneyAvailable + task.price;
+        const newRating = task.AID.rating + 1;
 
         Annotators.update(
           {
@@ -213,9 +214,13 @@ module.exports = {
           },
           {
             moneyAvailable: newAmount,
+            rating: newRating
           }
         ).exec((err, updated) => {
-          res.json({money: newAmount});
+          res.json({
+            money: newAmount,
+            rating: newRating
+          });
         });
       });
     });
