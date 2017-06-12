@@ -15,11 +15,11 @@ module.exports = {
         tasksInfo = [];
 
         for (task of tasks) {
-          let emotionsCount;
+          let tasksCount;
           if (task.TID.task.length > 0) {
-            emotionsCount = task.TID.task.split(',').length;
+            tasksCount = task.TID.task.split(',').length;
 
-            const part = +(task.done / emotionsCount).toFixed(0);
+            const part = +(task.done / tasksCount).toFixed(0);
             const earned = +(part * task.price).toFixed(0);
 
             let activity;
@@ -43,7 +43,7 @@ module.exports = {
                 PID: task.TID.PID,
                 ATID: task.ATID,
                 TID: task.TID.TID,
-                CID: task.TID.CID,
+                HID: task.TID.HID,
                 task: task.TID.task
               }
             }
@@ -69,7 +69,7 @@ module.exports = {
                 PID: i + 1,
                 ATID: 0,
                 TID: 0,
-                CID: 0,
+                HID: 0,
                 task: 0
               }
             }
@@ -83,15 +83,16 @@ module.exports = {
 
 
 	take: (req, res, next) => {
-    Projects.findOne(req.params.all()).exec((error, project) => {
-      Tasks.find({
-        PID: project.PID,
-        annoCount: {'<=': project.annoPerTask}
-      }).populate('annoTasks').sort('annoCount ASC').exec((error, tasks) => {
-        // не даём аннотатору брать одну и ту же задачу
-        let foundFreeTask = false;
+    Tasks.find(req.params.all())
+      .populateAll()
+      .sort('annoCount ASC')
+      .exec((error, tasks) => {
+      // не даём аннотатору брать одну и ту же задачу
+      let foundFreeTask = false;
 
-        for (let task of tasks) {
+      for (let task of tasks) {
+        // выбираем только те задачи, для которых ещё не набрано максимальное количество аннотаторов
+        if (task.annoCount <= task.PID.annoPerTask) {
           if (task.annoTasks.length === 0) {
             // берём это задание (никто его ещё не брал)
             foundFreeTask = true;
@@ -106,114 +107,125 @@ module.exports = {
               }
             }
           }
+        }
 
-          if (foundFreeTask) {
-            // нашли то, что надо. заканчиваем шерстить
+        if (foundFreeTask) {
+          // нашли то, что надо. заканчиваем шерстить
 
-            newTask = {
-              TID: task.TID, // это то самое значение должно выбираться неслучайно
-              AID: req.session.userId,
-              price: project.pricePerTask, // Если аннотатор подписался на задачу, то стоимость для него фиксируется, и отображается в личном кабинете именно в том размере на который он подписался, даже если администратор для новых аннотаторов увеличил или уменьшил размер выплаты.
-              result: task.csv // определяем разметку аннотируемых кусков
-            };
+          newTask = {
+            TID: task.TID, // это то самое значение должно выбираться неслучайно
+            AID: req.session.userId,
+            price: task.PID.pricePerTask, // Если аннотатор подписался на задачу, то стоимость для него фиксируется, и отображается в личном кабинете именно в том размере на который он подписался, даже если администратор для новых аннотаторов увеличил или уменьшил размер выплаты.
+            result: task.FID.csv // определяем разметку аннотируемых кусков
+          };
 
-            // берём задачу
-            AnnoTasks.create(newTask, (err, annoTask) => {
-              if (err) {
-                return next(err);
-              } else {
-                let taskInfo = {
-                  activity: "Active",
-                  percentage: 0,
-                  earned: 0,
-                  price: project.pricePerTask,
-                  task: {
-                    PID: project.PID,
-                    ATID: annoTask.id,
-                    TID: task.TID,
-                    CID: task.CID,
-                    task: task.task
+          // берём задачу
+          AnnoTasks.create(newTask, (err, annoTask) => {
+            if (err) {
+              return next(err);
+            } else {
+              let taskInfo = {
+                activity: "Active",
+                percentage: 0,
+                earned: 0,
+                price: task.PID.pricePerTask,
+                task: {
+                  PID: task.PID.PID,
+                  ATID: annoTask.id,
+                  TID: task.TID,
+                  HID: task.FID.HID,
+                  task: task.task
+                }
+              };
+
+              // увеличиваем число аннотаторов задачи
+              Tasks.findOne({
+                TID: task.TID
+              }).exec((error, thisTask) => {
+                const newCount = thisTask.annoCount == null ? 1 : thisTask.annoCount + 1;
+
+                Tasks.update(
+                  {
+                    TID: task.TID
+                  },
+                  {
+                    annoCount: newCount
                   }
-                };
-
-                // увеличиваем число аннотаторов задачи
-                Tasks.findOne({
-                  TID: task.TID
-                }).exec((error, thisTask) => {
-                  const newCount = thisTask.annoCount == null ? 1 : thisTask.annoCount + 1;
-
-                  Tasks.update(
-                    {
-                      TID: task.TID
-                    },
-                    {
-                      annoCount: newCount
-                    }
-                  ).exec((err, updated) => {
-                    if (err) {
-                      console.log(err);
-                    }
-                  });
+                ).exec((err, updated) => {
+                  if (err) {
+                    console.log(err);
+                  }
                 });
+              });
 
-                res.json(taskInfo);
-              }
-            });
+              res.json(taskInfo);
+            }
+          });
 
-            break;
-          }
+          break;
         }
+      }
 
-        if (!foundFreeTask) {
-          res.json('no free tasks');
-        }
-      });
+      if (!foundFreeTask) {
+        res.json('no free tasks');
+      }
     });
   },
 
 
   start:  (req, res, next) => {
     let ids = req.params.all();
-    let TasksInfo;
-
-    if (ids.PID === 1) {
-      TasksInfo = EmotionsInfo;
-    } else if (ids.PID === 2) {
-      TasksInfo = EventsInfo;
-    }
-
-    let tasks = [];
-    for (let e of ids.task.split(',')) {
-      tasks.push({
-        EID: e,
-      });
-    }
 
     // вынимаем эмоции для разметки
-    // (!) можно сделать синхронно
-    TasksInfo.find({
-      or: tasks
-    }).exec((err, tasks) => {
-      Persons.findOne({
-        CID: ids.CID
-      }).populate('VID').exec((err, person) => {
-        AnnoTasks.findOne({
-          ATID: ids.ATID
-        }).exec((err, annoTask) => {
-          all = {
-            ATID: ids.ATID,
-            video: person.VID.URL,
-            person: {
-              name: person.personName,
-              image: person.personImage
-            },
-            tasks: tasks,
-            result: annoTask.result === null ? '' : annoTask.result
-          };
+    Tasks.findOne({
+      TID: ids.TID
+    }).populateAll().exec((err, task) => {
+      let TasksInfo;
 
-          res.json(all);
+      if (ids.PID === 1) {
+        TasksInfo = EmotionsInfo;
+      } else if (ids.PID === 2) {
+        TasksInfo = EventsInfo;
+      }
+
+      // оставляем только те задачи, которые нужно делать
+      let tasks = [];
+      for (let e of ids.task.split(',')) {
+        tasks.push({
+          EID: e,
         });
+      }
+
+      let all = {};
+
+      TasksInfo.find({
+        or: tasks
+      }).exec((err, tasks) => {
+        all.tasks = tasks;
+
+        tryToResponse();
       });
+
+      Fragments.findOne({
+        FID: task.FID.FID
+      }).populateAll().exec((err, fragment) => {
+        all.ATID = ids.ATID;
+        all.video = fragment.VID.URL;
+        all.person = {
+          name: fragment.HID.personName,
+          image: fragment.HID.personImage
+        };
+        all.result = fragment.csv === null ? '' : fragment.csv; // для того, чтобы загрузить сохранённые данные, нужно ещё обратиться к таблице AnnoTask
+
+        tryToResponse();
+      });
+
+      function tryToResponse() {
+        // если все данные собраны, то отправляем ответ
+        if (all.tasks && all.ATID) {
+          res.json(all);
+        }
+      }
     });
   },
 
