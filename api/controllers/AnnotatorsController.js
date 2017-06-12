@@ -74,7 +74,6 @@ module.exports = {
     }).populateAll().sort('rating DESC').exec((error, annotators) => {
       let annoList = [];
 
-
       // собираем информацию по проектам
       for (annotator of annotators) {
         let cp = 0,
@@ -96,7 +95,7 @@ module.exports = {
         annoList.push({
           name: `${annotator.firstName} ${annotator.secondName}`,
           email: annotator.email,
-          projects: np,
+          active: np,
           completed: cp,
           rating: annotator.rating,
           progress: pp
