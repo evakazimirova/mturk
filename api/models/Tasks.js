@@ -37,7 +37,7 @@ module.exports = {
       defaultsTo: 0
     },
 
-    annotators: {
+    annoTasks: {
       collection: 'AnnoTasks',
       via: 'TID'
     }

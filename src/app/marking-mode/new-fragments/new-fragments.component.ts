@@ -28,7 +28,10 @@ export class NewFragmentsComponent implements OnInit {
         return d.join();
       }).join('\n');
 
-      results.push(outputCSV);
+      results.push({
+        event: this.common.task.tasks[i].EID,
+        fragments: outputCSV
+      });
     }
 
 
