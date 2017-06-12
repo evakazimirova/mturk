@@ -229,7 +229,7 @@ module.exports = {
           ATID: input.ATID
         },
         {
-          result: input.result,
+          result: JSON.stringify(input.result),
           done: input.done,
           status: 3
         }
