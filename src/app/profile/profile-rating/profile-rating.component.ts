@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileRatingComponent implements OnInit {
   users = [];
+  isLoaded = false;
 
   constructor(private http: HttpService) { }
 
@@ -15,8 +16,12 @@ export class ProfileRatingComponent implements OnInit {
     this.http.get('annotators/rating').subscribe(
       annotators => {
         this.users = annotators;
+        this.isLoaded = true;
       },
-      err => console.log(err)
+      err => {
+        console.log(err);
+        this.isLoaded = true;
+      }
     );
   }
 

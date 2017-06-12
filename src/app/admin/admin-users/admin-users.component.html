@@ -1,6 +1,6 @@
 <!-- Список аннотаторов прошедших регистрацию (подтвердили мейл) -->
 <!-- Список аннотаторов с статусами: количество проектов на которые подписан, количество выполненных задач, % выполнения текущей задачи (если две, то усредненный), галочка -->
-<table class="table table-striped">
+<table class="table table-striped" *ngIf="isLoaded">
   <thead>
     <tr>
       <th>First&Second Name</th>
@@ -20,3 +20,6 @@
     </tr>
   </tbody>
 </table>
+<div class="loading">
+  <span class="fa fa-cog fa-spin fa-5x" *ngIf="!isLoaded"></span>
+</div>

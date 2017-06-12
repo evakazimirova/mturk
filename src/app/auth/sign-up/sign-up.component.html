@@ -26,7 +26,10 @@
     <input type="password" class="form-control" id="password"
       formControlName="password" placeholder="Password">
   </div>
-  <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+  <button type="submit" class="btn btn-primary btn-block" [ngClass]="{disabled: loading}">
+    Sign Up
+    <span class="fa fa-cog fa-spin fa-2x" *ngIf="loading"></span>
+  </button>
 </form>
 <!--
   Подтверждение регистрации. происходит переходом по ссылке, высланной на почту.

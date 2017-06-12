@@ -8,14 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminUsersComponent implements OnInit {
   users = [];
+  isLoaded = false;
 
   constructor(private http: HttpService) { }
 
   ngOnInit() {
     this.http.get('/annotators/registered').subscribe(
-      users => this.users = users,
-      error => console.log(error)
-    )
+      users => {
+        this.users = users;
+        this.isLoaded = true;
+      },
+      error => {
+        console.log(error);
+        this.isLoaded = true;
+      }
+    );
   }
 
 }

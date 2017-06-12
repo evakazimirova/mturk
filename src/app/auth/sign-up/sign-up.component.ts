@@ -10,6 +10,7 @@ import { HttpService } from '../../http.service';
 })
 export class SignUpComponent implements OnInit {
   form: FormGroup;
+  loading = false;
 
   constructor(public common: CommonService, private http: HttpService, private formBuilder: FormBuilder) {
     this.form = formBuilder.group({
@@ -47,9 +48,11 @@ export class SignUpComponent implements OnInit {
       password: this.form.value.password
     };
 
+    this.loading = true;
     this.http.post(userData, '/annotators/register').subscribe(
       user => {
         console.log(`We have sent an e-mail to the "${user.email}". Please check it out!`);
+        this.loading = false;
       },
       error => {
         const status = error._body;
@@ -63,6 +66,7 @@ export class SignUpComponent implements OnInit {
             console.log(status);
             break;
         }
+        this.loading = false;
       }
     );
   }

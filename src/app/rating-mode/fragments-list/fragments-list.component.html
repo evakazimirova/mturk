@@ -1,4 +1,7 @@
 <na-ranges></na-ranges>
 <na-fragments></na-fragments>
 
-<button class="btn btn-primary btn-block" (click)="saveRating()">Сохранить</button>
+<button class="btn btn-primary btn-block" (click)="saveRating()" [ngClass]="{disabled: loading}">
+  Save
+  <span class="fa fa-cog fa-spin fa-2x" *ngIf="loading"></span>
+</button>

@@ -2,24 +2,29 @@
   Публикуется по решению заказчика.
   Иногда используется в качестве дополнительной мотивации, например, призы лучшим 3 аннотаторам по проекту.
 -->
-<p>
-  Методика подсчета рейтинга раскрывается на этой же странице.
-</p>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>First&Second Name</th>
-      <th>Completed tasks</th>
-      <th>Rating</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let user of users; let i = index">
-      <td>{{ i + 1 }}</td>
-      <td>{{ user.name }}</td>
-      <td>{{ user.completed }}</td>
-      <td>{{ user.rating }}</td>
-    </tr>
-  </tbody>
-</table>
+<div *ngIf="isLoaded">
+  <p>
+    Методика подсчета рейтинга раскрывается на этой же странице.
+  </p>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>First&Second Name</th>
+        <th>Completed tasks</th>
+        <th>Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.completed }}</td>
+        <td>{{ user.rating }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="loading">
+  <span class="fa fa-cog fa-spin fa-5x" *ngIf="!isLoaded"></span>
+</div>
