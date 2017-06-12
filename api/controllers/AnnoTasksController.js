@@ -86,23 +86,21 @@ module.exports = {
     Projects.findOne(req.params.all()).exec((error, project) => {
       Tasks.find({
         PID: project.PID,
-        annoCount: {'<': project.annoPerTask}
-      }).populate('annotators').sort('annoCount ASC').exec((error, tasks) => {
+        annoCount: {'<=': project.annoPerTask}
+      }).populate('annoTasks').sort('annoCount ASC').exec((error, tasks) => {
         // не даём аннотатору брать одну и ту же задачу
         let foundFreeTask = false;
 
         for (let task of tasks) {
-          if (task.annotators.length === 0) {
+          if (task.annoTasks.length === 0) {
             // берём это задание (никто его ещё не брал)
             foundFreeTask = true;
           } else {
-            for (let i in task.annotators) {
-              if (task.annotators[i].AID === req.session.userId) {
+            for (let i in task.annoTasks) {
+              if (task.annoTasks[i].AID === req.session.userId) {
                 // это задание аннотатор уже делал
                 break;
-              }
-
-              if (i === task.annotators.length - 1) {
+              } else if (Number(i) === Number(task.annoTasks.length - 1)) {
                 // берём это задание
                 foundFreeTask = true;
               }
@@ -177,8 +175,6 @@ module.exports = {
   start:  (req, res, next) => {
     let ids = req.params.all();
     let TasksInfo;
-
-    console.log(ids);
 
     if (ids.PID === 1) {
       TasksInfo = EmotionsInfo;
