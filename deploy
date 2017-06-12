@@ -43,5 +43,6 @@ if [[ $# -eq 0 ]]; then
 else
   case $1 in
     heroku) git co production && git merge master && git push && git co master;;
+    azure) git co azure && git merge master && git push && git co master;;
   esac
 fi
