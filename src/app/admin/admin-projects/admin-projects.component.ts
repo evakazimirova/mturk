@@ -1,3 +1,4 @@
+import { HttpService } from '../../http.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,30 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminProjectsComponent implements OnInit {
   projectId = 0;
-  projects = [
-    {
-      id: 0,
-      title: "video_1",
-      status: "Active",
-      price: 3000
-    },
-    {
-      id: 1,
-      title: "video_2",
-      status: "Inactive",
-      price: 2000
-    },
-    {
-      id: 2,
-      title: "video_3",
-      status: "Contest stage",
-      price: 1000
-    }
-  ];
+  projects = [];
+  isLoaded = false;
 
-  constructor() { }
+  constructor(private http: HttpService) { }
 
   ngOnInit() {
+    this.http.get('projects/getAll').subscribe(
+      projects => {
+        this.projects = projects;
+        this.isLoaded = true;
+      },
+      error => {
+        console.log(error);
+        this.isLoaded = true;
+      }
+    );
   }
 
 }
