@@ -7,15 +7,10 @@
 
 module.exports = {
   attributes: {
-    CID: {
+    HID: {
       type: 'integer',
       primaryKey: true,
       autoIncrement: true
-    },
-
-    VID: {
-      model: 'Videos',
-      required: true
     },
 
     personName: {

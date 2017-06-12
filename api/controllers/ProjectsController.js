@@ -6,6 +6,10 @@
  */
 
 module.exports = {
-
+  getAll: (req, res, next) => {
+    Projects.find().exec((error, projects) => {
+      res.json(projects);
+    });
+  }
 };
 

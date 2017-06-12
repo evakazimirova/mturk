@@ -23,11 +23,17 @@
         <td>{{ project.percentage }}%</td>
         <td>{{ project.earned }}/{{ project.price }}</td>
         <td>
-          <a href="#" (click)="project.action.doIt($event)" *ngIf="!project.isProcessing">
+          <a href="#" (click)="project.action.doIt($event)" *ngIf="!project.isProcessing && loadingTask !== i">
             {{ project.action.title }}
           </a>
+          <span *ngIf="loadingTask === i">
+            Loading... <span class="fa fa-cog fa-spin fa-lg"></span>
+          </span>
         </td>
       </tr>
     </tbody>
   </table>
+</div>
+<div class="loading">
+  <span class="fa fa-cog fa-spin fa-5x" *ngIf="!isLoaded"></span>
 </div>

@@ -11,6 +11,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class NewFragmentsComponent implements OnInit {
   @Input() video;
   fragments = this.vp.fragments;
+  loading = false;
 
   constructor(private common: CommonService, private vp: VideoPlayerService, private http: HttpService) { }
 
@@ -49,6 +50,7 @@ export class NewFragmentsComponent implements OnInit {
     };
 
     // сохраняем резульат
+    this.loading = true;
     this.http.post(output, 'AnnoTasks/save').subscribe(
       (res) => {
         // обновляем баланс пользователя
@@ -58,8 +60,13 @@ export class NewFragmentsComponent implements OnInit {
 
         // возвращаемся в личный кабинет
         this.common.mode = 'profile';
+
+        this.loading = false;
       },
-      err => console.log(err)
+      err => {
+        console.log(err);
+        this.loading = false;
+      }
     );
   }
 

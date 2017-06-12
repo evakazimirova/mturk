@@ -28,3 +28,13 @@ thead {
   overflow-y: scroll;
   margin-bottom: 20px;
 }
+
+button {
+  position: relative;
+
+  .fa {
+    position: absolute;
+    top: 2px;
+    right: 5px;
+  }
+}

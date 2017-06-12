@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./fragments-list.component.scss']
 })
 export class FragmentsListComponent implements OnInit {
+  loading = false;
 
   constructor(private common: CommonService, private http: HttpService) {}
 
@@ -81,6 +82,7 @@ export class FragmentsListComponent implements OnInit {
       };
 
       // сохраняем резульат
+      this.loading = true;
       this.http.post(output, 'AnnoTasks/save').subscribe(
         (res) => {
           // обновляем баланс пользователя
@@ -90,8 +92,12 @@ export class FragmentsListComponent implements OnInit {
 
           // возвращаемся в личный кабинет
           this.common.mode = 'profile';
+          this.loading = false;
         },
-        err => console.log(err)
+        err => {
+          console.log(err);
+          this.loading = false;
+        }
       );
     }
   }

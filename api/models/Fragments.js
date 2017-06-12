@@ -1,5 +1,5 @@
 /**
- * Tasks.js
+ * Fragments.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -7,35 +7,24 @@
 
 module.exports = {
   attributes: {
-    TID: {
+    FID: {
       type: 'integer',
       primaryKey: true,
       autoIncrement: true
     },
 
-    PID: {
-      model: 'Projects',
+    VID: {
+      model: 'Videos',
       required: true
     },
 
-    FID: {
-      model: 'Fragments',
+    HID: {
+      model: 'Humans',
       required: true
     },
 
-    task: {
-      type: 'string',
-      required: true
-    },
-
-    annoCount: {
-      type: 'integer',
-      defaultsTo: 0
-    },
-
-    annoTasks: {
-      collection: 'AnnoTasks',
-      via: 'TID'
+    csv: {
+      type: 'text'
     }
   }
 };

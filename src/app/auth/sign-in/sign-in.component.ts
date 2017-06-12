@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignInComponent implements OnInit {
   form: FormGroup;
+  loading = false;
 
   constructor(public common: CommonService, private http: HttpService, private formBuilder: FormBuilder) {
     this.form = formBuilder.group({
@@ -34,12 +35,17 @@ export class SignInComponent implements OnInit {
       password: this.form.value.password
     };
 
+    this.loading = true;
     this.http.post(req, '/annotators/login').subscribe(
       user => {
         this.common.user = user;
         this.common.mode = 'profile';
+        this.loading = false;
       },
-      err => console.log(err)
+      err => {
+        console.log(err);
+        this.loading = false;
+      }
     );
   }
 }

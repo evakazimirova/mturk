@@ -11,6 +11,7 @@ export class ProjectsComponent implements OnInit {
   projectMode = false;
   projectId = 0;
   isLoaded = false;
+  loadingTask = -1;
 
   projects: any = [{}, {}];
 
@@ -21,71 +22,104 @@ export class ProjectsComponent implements OnInit {
       tasks => {
         this.updateProjectInfo(this.projects[0], tasks[0]);
         this.updateProjectInfo(this.projects[1], tasks[1]);
-        this.isLoaded = true;
 
         this.common.user.money.reserved = this.projects[0].price + this.projects[1].price;
+        this.isLoaded = true;
       },
-      err => console.log(err)
+      err => {
+        console.log(err);
+        this.isLoaded = true;
+      }
     );
   }
 
   takeMarkUp() {
-    this.projects[0].isProcessing = true;
+    if (this.loadingTask === -1) {
+      this.projects[0].isProcessing = true;
+      this.loadingTask = 0;
 
-    this.http.get('AnnoTasks/take?PID=1').subscribe(
-      task => {
-        if (task !== 'no free tasks') {
-          this.updateProjectInfo(this.projects[0], task);
+      this.http.get('AnnoTasks/take?PID=1').subscribe(
+        task => {
+          if (task !== 'no free tasks') {
+            this.updateProjectInfo(this.projects[0], task);
+          }
+          this.projects[0].isProcessing = false;
+          this.loadingTask = -1;
+        },
+        err => {
+          console.log(err);
+          this.loadingTask = -1;
         }
-        this.projects[0].isProcessing = false;
-      },
-      err => console.log(err)
-    );
+      );
+    }
   }
 
   takeEventSelection() {
-    this.projects[1].isProcessing = true;
+    if (this.loadingTask === -1) {
+      this.projects[1].isProcessing = true;
+      this.loadingTask = 1;
 
-    this.http.get('AnnoTasks/take?PID=2').subscribe(
-      task => {
-        if (task !== 'no free tasks') {
-          this.updateProjectInfo(this.projects[1], task);
+      this.http.get('AnnoTasks/take?PID=2').subscribe(
+        task => {
+          if (task !== 'no free tasks') {
+            this.updateProjectInfo(this.projects[1], task);
+          }
+          this.projects[1].isProcessing = false;
+          this.loadingTask = -1;
+        },
+        err => {
+          console.log(err);
+          this.loadingTask = -1;
         }
-        this.projects[1].isProcessing = false;
-      },
-      err => console.log(err)
-    );
+      );
+    }
   }
 
   startMarkUp(ids) {
-    this.projects[0].isProcessing = true;
+    if (this.loadingTask === -1) {
+      this.projects[0].isProcessing = true;
+      this.loadingTask = 0;
 
-    this.http.post(ids, 'AnnoTasks/start').subscribe(
-      task => {
-        task.emotions = task.tasks;
-        delete task.tasks;
+      this.http.post(ids, 'AnnoTasks/start').subscribe(
+        task => {
+          task.emotions = task.tasks;
+          delete task.tasks;
 
-        this.common.task = task;
-        this.common.setVideo();
-        this.common.mode = 'fragmentsRating';
-        this.projects[0].isProcessing = false;
-      },
-      err => console.log(err)
-    );
+          this.common.task = task;
+          this.common.setVideo();
+          this.common.mode = 'fragmentsRating';
+          this.projects[0].isProcessing = false;
+
+          this.loadingTask = -1;
+        },
+        err => {
+          console.log(err);
+          this.loadingTask = -1;
+        }
+      );
+    }
   }
 
   startEventSelection(ids) {
-    this.projects[1].isProcessing = true;
+    if (this.loadingTask === -1) {
+      this.projects[1].isProcessing = true;
+      this.loadingTask = 1;
 
-    this.http.post(ids, 'AnnoTasks/start').subscribe(
-      task => {
-        this.common.task = task;
-        this.common.setVideo();
-        this.common.mode = 'fragmentsMarking';
-        this.projects[1].isProcessing = false;
-      },
-      err => console.log(err)
-    );
+      this.http.post(ids, 'AnnoTasks/start').subscribe(
+        task => {
+          this.common.task = task;
+          this.common.setVideo();
+          this.common.mode = 'fragmentsMarking';
+          this.projects[1].isProcessing = false;
+
+          this.loadingTask = -1;
+        },
+        err => {
+          console.log(err);
+          this.loadingTask = -1;
+        }
+      );
+    }
   }
 
   viewProjectDescription(id) {

@@ -10,5 +10,8 @@
     <input type="password" class="form-control" id="password"
       formControlName="password" placeholder="Password">
   </div>
-  <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+  <button type="submit" class="btn btn-primary btn-block" [ngClass]="{disabled: loading}">
+    Sign In
+    <span class="fa fa-cog fa-spin fa-2x" *ngIf="loading"></span>
+  </button>
 </form>

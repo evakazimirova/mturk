@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForgotPassComponent implements OnInit {
   form: FormGroup;
+  loading = false;
 
   constructor(public common: CommonService, private http: HttpService, private formBuilder: FormBuilder) {
     this.form = formBuilder.group({
@@ -33,11 +34,16 @@ export class ForgotPassComponent implements OnInit {
       email: this.form.value.login
     };
 
+    this.loading = true;
     this.http.post(req, '/annotators/forgot').subscribe(
       res => {
-        console.log(`The instructions have been sent to ${this.form.value.login}.`)
+        console.log(`The instructions have been sent to ${this.form.value.login}.`);
+        this.loading = false;
       },
-      err => console.log(err)
+      err => {
+        console.log(err);
+        this.loading = false;
+      }
     );
   }
 }
