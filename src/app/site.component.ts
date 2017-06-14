@@ -19,12 +19,13 @@ export class SiteComponent implements OnInit {
     this.http.get('/annotators/authorized').subscribe(
       user => {
         if (user) {
-          if (user.chPass) {
-            this.common.mode = "changePassword";
-          } else {
-            this.common.user = user;
-            this.common.mode = "profile";
-          }
+          console.log(user);
+          // if (user.chPass) {
+          //   this.common.mode = "changePassword";
+          // } else {
+          //   this.common.user = user;
+            this.common.mode = "auth"; // profile
+          // }
         } else {
           this.common.mode = "auth";
         }

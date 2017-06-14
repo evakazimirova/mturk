@@ -32,7 +32,7 @@ module.exports = {
           res.json(user);
         });
       } else {
-        res.send('false');
+        res.json(process.env.DB);
       }
     }
   },
