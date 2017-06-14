@@ -42,7 +42,7 @@ if [[ $# -eq 0 ]]; then
   rm -rf "$DEPLOY_DIR/index.htmle" "$DEPLOY_DIR/script.jse" "$DEPLOY_DIR/conf.jsone"
 else
   case $1 in
-    heroku) git co production && git merge master && git push && git co master;;
-    azure) git co azure && git merge master && ng build && git c "updating assets" && git push && git co master;;
+    heroku) git co production && git pull && git merge master && git push && git co master;;
+    azure) git co azure && git pull && git merge master && ng build && git c "updating assets" && git push && git co master;;
   esac
 fi
