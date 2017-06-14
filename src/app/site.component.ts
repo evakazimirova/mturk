@@ -23,7 +23,7 @@ export class SiteComponent implements OnInit {
             this.common.mode = "changePassword";
           } else {
             this.common.user = user;
-            this.common.mode = "auth"; // profile
+            this.common.mode = "profile";
           }
         } else {
           this.common.mode = "auth";
