@@ -27,8 +27,7 @@ export class MarkingModeComponent implements OnInit {
     this.vp.videoPosition = 0;
     this.vp.startFragment = 0;
     this.vp.endFragment = 0;
-
-    console.log(this.vp.fragments);
+    this.vp.isComplete = false;
 
     // Создаём массив для разбивки фрагменов для всех задач
     for (let i in this.common.task.events) {
@@ -37,6 +36,10 @@ export class MarkingModeComponent implements OnInit {
   }
 
   return() {
-    this.common.mode = 'profile';
+    const confirmed = confirm('Are you sure you want to leave the task without saving progress?');
+
+    if (confirmed) {
+      this.common.mode = 'profile';
+    }
   }
 }
