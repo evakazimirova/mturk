@@ -39,6 +39,7 @@ module.exports.connections = {
     host: process.env.DB_SERVER, // azure database
     database: process.env.DB,
     options: {
+      port: 1433,
       encrypt: true // use this for Azure databases
     }
   }
