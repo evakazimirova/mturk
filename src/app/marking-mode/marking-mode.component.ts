@@ -17,6 +17,19 @@ export class MarkingModeComponent implements OnInit {
 
     // this.common.unwatchVideo('stop'); // выключаем видео основного плеера
 
+    // очищаем кэш
+    this.vp.fragments = [];
+    this.vp.task = 0;
+    this.vp.cf = -1;
+    this.vp.videoLength = 0;
+    this.vp.timelineWidth = 0;
+    this.vp.tickPosition = 0;
+    this.vp.videoPosition = 0;
+    this.vp.startFragment = 0;
+    this.vp.endFragment = 0;
+
+    console.log(this.vp.fragments);
+
     // Создаём массив для разбивки фрагменов для всех задач
     for (let i in this.common.task.events) {
       this.vp.fragments.push([]);
