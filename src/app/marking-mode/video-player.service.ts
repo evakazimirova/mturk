@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { CommonService } from '../common.service';
 
 @Injectable()
 export class VideoPlayerService {
@@ -19,8 +20,11 @@ export class VideoPlayerService {
 
   startFragment = 0;
   endFragment = 0;
+  isComplete = false;
 
   fragmentSelected = new EventEmitter;
+
+  constructor(private common: CommonService) {}
 
   setTickPosition(pos) {
     this.tickPosition = pos;
@@ -52,5 +56,16 @@ export class VideoPlayerService {
 
   selectFragment() {
     this.fragmentSelected.emit();
+  }
+
+  checkIfComplete() {
+    for (let i in this.common.task.tasks) {
+      if (this.fragments[i].length === 0) {
+        this.isComplete = false;
+        break;
+      } else {
+        this.isComplete = true;
+      }
+    }
   }
 }

@@ -199,6 +199,9 @@ export class TimelineComponent implements OnInit {
         this.vp.cf = -1; // возвращаемся в режим добавления нового фрагмента
       }
 
+      // проверяем, все ли задачи заполнены
+      this.vp.checkIfComplete();
+
       // обнуляем значения
       this.clearTimeline();
     }

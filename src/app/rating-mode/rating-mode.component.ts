@@ -15,6 +15,10 @@ export class RatingModeComponent implements OnInit {
   }
 
   return() {
-    this.common.mode = 'profile';
+    const confirmed = confirm('Are you sure you want to leave the task without saving progress?');
+
+    if (confirmed) {
+      this.common.mode = 'profile';
+    }
   }
 }

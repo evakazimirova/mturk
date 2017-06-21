@@ -10,7 +10,6 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class NewFragmentsComponent implements OnInit {
   @Input() video;
-  // fragments = this.vp.fragments;
   loading = false;
 
   constructor(private common: CommonService, private vp: VideoPlayerService, private http: HttpService) { }
@@ -19,55 +18,57 @@ export class NewFragmentsComponent implements OnInit {
 
   // 19. Сохранение в режиме разметки на фрагменты, приводит к созданию файла с именем включающем название видео файла и ID аннотатора.
   saveMarkup() {
-    let results = [];
-    for (let i in this.common.task.tasks) {
-      // заголовок для выходного CSV
-      let outputCSV = 'start,end\n';
+    if (!this.loading && this.vp.isComplete) {
+      let results = [];
+      for (let i in this.common.task.tasks) {
+        // заголовок для выходного CSV
+        let outputCSV = 'start,end\n';
 
-      // преобразуем данные в CSV
-      outputCSV += this.vp.fragments[i].map(function(d){
-        return d.join();
-      }).join('\n');
+        // преобразуем данные в CSV
+        outputCSV += this.vp.fragments[i].map(function(d){
+          return d.join();
+        }).join('\n');
 
-      results.push({
-        event: this.common.task.tasks[i].EID,
-        fragments: outputCSV
-      });
-    }
-
-
-    // // разрешаем переходить к другому видео или закрывать сайт
-    // this.common.allFragmentsRated = true;
-
-
-    // считаем, сколько эмоций проработано
-    const eventsCount = this.common.task.tasks.length;
-
-    const output = {
-      result: results,
-      ATID: this.common.task.ATID,
-      done: eventsCount
-    };
-
-    // сохраняем резульат
-    this.loading = true;
-    this.http.post(output, 'AnnoTasks/save').subscribe(
-      (res) => {
-        // обновляем баланс пользователя
-        this.common.user.money.available = res.money;
-        // и рейтинг
-        this.common.user.rating = res.rating;
-
-        // возвращаемся в личный кабинет
-        this.common.mode = 'profile';
-
-        this.loading = false;
-      },
-      err => {
-        console.log(err);
-        this.loading = false;
+        results.push({
+          event: this.common.task.tasks[i].EID,
+          fragments: outputCSV
+        });
       }
-    );
+
+
+      // // разрешаем переходить к другому видео или закрывать сайт
+      // this.common.allFragmentsRated = true;
+
+
+      // считаем, сколько эмоций проработано
+      const eventsCount = this.common.task.tasks.length;
+
+      const output = {
+        result: results,
+        ATID: this.common.task.ATID,
+        done: eventsCount
+      };
+
+      // сохраняем резульат
+      this.loading = true;
+      this.http.post(output, 'AnnoTasks/save').subscribe(
+        (res) => {
+          // обновляем баланс пользователя
+          this.common.user.money.available = res.money;
+          // и рейтинг
+          this.common.user.rating = res.rating;
+
+          // возвращаемся в личный кабинет
+          this.common.mode = 'profile';
+
+          this.loading = false;
+        },
+        err => {
+          console.log(err);
+          this.loading = false;
+        }
+      );
+    }
   }
 
   selectFragment(fragment) {
