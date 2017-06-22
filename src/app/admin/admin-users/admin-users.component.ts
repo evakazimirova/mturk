@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class AdminUsersComponent implements OnInit {
   users = [];
   isLoaded = false;
+  isBanning = -1;
 
   constructor(private http: HttpService) { }
 
@@ -21,6 +22,21 @@ export class AdminUsersComponent implements OnInit {
       error => {
         console.log(error);
         this.isLoaded = true;
+      }
+    );
+  }
+
+  ban(i, AID, banned) {
+    this.users[i].banned = undefined;
+    this.http.get(`/annotators/ban?AID=${AID}&banned=${!banned}`).subscribe(
+      user => {
+        console.log(user)
+        this.users[i].banned = user.banned;
+        // this.isBanning = -1;
+      },
+      error => {
+        console.log(error);
+        // this.isBanning = -1;
       }
     );
   }

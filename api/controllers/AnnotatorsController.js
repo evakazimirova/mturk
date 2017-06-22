@@ -20,16 +20,20 @@ module.exports = {
         Annotators.findOne({
           AID: req.session.userId
         }).exec((error, annotator) => {
-          const user = {
-            nickname: annotator.login,
-            rating: annotator.rating,
-            money: {
-              available: annotator.moneyAvailable,
-              reserved: 0,
-            }
-          };
+          if (!annotator.banned) {
+            const user = {
+              nickname: annotator.login,
+              rating: annotator.rating,
+              money: {
+                available: annotator.moneyAvailable,
+                reserved: 0,
+              }
+            };
 
-          res.json(user);
+            res.json(user);
+          } else {
+            res.send('false');
+          }
         });
       } else {
         res.send('false');
@@ -91,14 +95,15 @@ module.exports = {
           }
         }
 
-
         annoList.push({
+          AID: annotator.AID,
           name: `${annotator.firstName} ${annotator.secondName}`,
           email: annotator.email,
           active: np,
           completed: cp,
           rating: annotator.rating,
-          progress: pp
+          progress: pp,
+          banned: annotator.banned
         });
       }
 
@@ -220,21 +225,27 @@ module.exports = {
       if (annotator) {
         if (user.password === annotator.password) {
           if (annotator.registered) {
-            // авторизируем пользователя
-            req.session.isAuth = true;
-            req.session.userId = annotator.AID;
+            if (!annotator.banned) {
+              // авторизируем пользователя
+              req.session.isAuth = true;
+              req.session.userId = annotator.AID;
 
-            const user = {
-              nickname: annotator.login,
-              rating: annotator.rating,
-              money: {
-                available: annotator.moneyAvailable,
-                reserved: 0,
-              }
-            };
+              const user = {
+                nickname: annotator.login,
+                rating: annotator.rating,
+                money: {
+                  available: annotator.moneyAvailable,
+                  reserved: 0,
+                }
+              };
 
-            // возвращаем все данные текущего пользователя
-            res.json(user);
+              // возвращаем все данные текущего пользователя
+              res.json(user);
+            } else {
+              res
+                .status(400)
+                .send('you are banned');
+            }
           } else {
             res
               .status(400)
@@ -368,6 +379,25 @@ module.exports = {
 
           // отправляем данные пользователя
           res.json(annotator);
+        });
+      }
+    });
+  },
+
+  ban: (req, res, next) => {
+    const banned = req.param('banned') == 'true';
+    Annotators.update(
+      {
+        AID: req.param('AID')
+      },
+      {
+        banned: banned
+      }
+    ).exec((error, annotator) => {
+      if (annotator) {
+        // отправляем данные пользователя
+        res.json({
+          banned: banned
         });
       }
     });
