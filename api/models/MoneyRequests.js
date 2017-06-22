@@ -26,6 +26,16 @@ module.exports = {
     price: {
       type: 'float',
       required: true
+    },
+
+    account: {
+      type: 'string',
+      required: true
+    },
+
+    system: {
+      type: 'string',
+      required: true
     }
   }
 };

@@ -6,7 +6,45 @@
  */
 
 module.exports = {
+  send: (req, res, next) => {
+    const params = req.params.all();
+    params.money = +params.money;
 
+    MoneyRequests.create({
+      AID: req.session.userId,
+      price: params.money,
+      account: params.account,
+      system: params.system
+    }).exec((error, mReq) => {
+      if (mReq) {
+        Annotators.findOne({
+          AID: req.session.userId
+        }).exec((error, annotator) => {
+          if (params.money <= annotator.moneyAvailable) {
+            const moneyAvailable = annotator.moneyAvailable - params.money;
+
+            Annotators.update(
+              {
+                AID: req.session.userId
+              },
+              {
+                moneyAvailable: moneyAvailable
+              }
+            ).exec((error, annotator) => {});
+
+            res.json({
+              available: moneyAvailable
+            });
+          } else {
+            res.json({error: 'cant request this amount'});
+          }
+        });
+      } else {
+        res.json({error: 'error'});
+      }
+    });
+  },
+  // send: (req, res, next) => {},
 };
 
 
