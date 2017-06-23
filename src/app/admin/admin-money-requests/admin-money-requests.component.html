@@ -10,7 +10,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let request of requests" data-toggle="modal" data-target="#requestInfo" (click)="requestId = request.id"
+      <tr *ngFor="let request of requests; let i = index" data-toggle="modal" data-target="#requestInfo" (click)="requestId = i"
         [ngClass]="{
           success: request.bill.isDefrayed,
           danger: !request.bill.isDefrayed
@@ -44,15 +44,18 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary btn-success" *ngIf="requests[requestId].bill.isDefrayed"
-            (click)="requests[requestId].bill.isDefrayed = false">
-            <span class="fa fa-check"></span>
-            Defrayed
-          </button>
-          <button type="submit" class="btn btn-primary btn-danger" *ngIf="!requests[requestId].bill.isDefrayed"
-            (click)="requests[requestId].bill.isDefrayed = true">
-            <span class="fa fa-times"></span>
-            Not defrayed
+          <button type="submit" class="btn" [ngClass]="{
+              'btn-success': requests[requestId].bill.isDefrayed,
+              'btn-danger': !requests[requestId].bill.isDefrayed,
+              disabled: isDefraing
+            }" (click)="defray()">
+            <span class="fa" [ngClass]="{
+              'fa-check': requests[requestId].bill.isDefrayed && !isDefraing,
+              'fa-times': !requests[requestId].bill.isDefrayed && !isDefraing,
+              'fa-cog': isDefraing,
+              'fa-spin': isDefraing
+            }"></span>
+            {{ requests[requestId].bill.isDefrayed ? "Defrayed" : "Not defrayed" }}
           </button>
         </div>
       </div>

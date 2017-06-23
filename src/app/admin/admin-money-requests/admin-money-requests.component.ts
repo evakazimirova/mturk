@@ -9,6 +9,7 @@ import { HttpService } from '../../http.service';
 export class AdminMoneyRequestsComponent implements OnInit {
   requestId = 0;
   isLoaded = false;
+  isDefraing = false;
   requests = [];
   requestDataFiller = [];
 
@@ -18,7 +19,6 @@ export class AdminMoneyRequestsComponent implements OnInit {
     this.http.get('/moneyRequests/getAll').subscribe(
       requests => {
         this.requests = requests;
-
 
         this.requestDataFiller = [
           {
@@ -47,7 +47,6 @@ export class AdminMoneyRequestsComponent implements OnInit {
           }
         ];
 
-
         // console.log(requests);
         this.isLoaded = true;
       },
@@ -58,4 +57,22 @@ export class AdminMoneyRequestsComponent implements OnInit {
     );
   }
 
+  defray() {
+    if (!this.isDefraing) {
+      this.isDefraing = true;
+      let cond = this.requests[this.requestId].bill.isDefrayed;
+      const RID = this.requests[this.requestId].RID;
+
+      this.http.get(`/moneyRequests/defray?defrayed=${!cond}&RID=${RID}`).subscribe(
+        res => {
+          this.requests[this.requestId].bill.isDefrayed = res.defrayed
+          this.isDefraing = false;
+        },
+        err => {
+          console.log(err);
+          this.isDefraing = false;
+        }
+      );
+    }
+  }
 }

@@ -11,7 +11,7 @@ module.exports = {
       requests = [];
       for (let r of mRequests) {
         requests.push({
-          id: r.RID,
+          RID: r.RID,
           date: r.createdAt,
           user: {
             firstName: r.AID.firstName,
@@ -75,45 +75,23 @@ module.exports = {
       }
     });
   },
+
+
+  defray: (req, res, next) => {
+    const params = req.params.all();
+    params.defrayed = params.defrayed == 'true';
+
+    MoneyRequests.update(
+      {
+        RID: params.RID
+      },
+      {
+        defrayed: params.defrayed
+      }
+    ).exec((error, mReq) => {
+      res.json({defrayed: params.defrayed});
+    });
+  },
+
   // send: (req, res, next) => {},
 };
-
-
-// новый запрос на выдачу средств
-//   // добавляем запрос в базу данных
-//     // если всё ок, то
-//       // отправляем уведомление на почту администратора
-//       // сообщаем пользователю о том, что всё ок
-//     // если не ок, то
-//       // сообщаем пользователю о том, что всё не ок
-
-
-// показать все запросы
-  // // вынимаем все поступившие вопросы о выводе средств
-  // query = {
-  //   cols: '*'
-  // };
-  // db.select('MoneyRequests', query, (rData) => {
-  //   for (r of rData) {
-  //     query = {
-  //       cols: '*',
-  //       where: `AID = '${r.AID}'`
-  //     };
-  //     db.select('Annotators', query, (aData) => {
-
-  //       response.send(JSON.stringify(data)); // отправляем данные
-  //     });
-
-  //     // собираем информацию по проектам
-  //     user.projects = 2;
-  //     user.completed = 7;
-  //     user.progress = [
-  //       50,
-  //       83
-  //     ];
-  //   }
-  // });
-
-
-// обновление запоса
-//   // обновляем выбранный запрос
