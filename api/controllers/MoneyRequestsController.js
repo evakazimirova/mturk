@@ -6,6 +6,33 @@
  */
 
 module.exports = {
+  getAll: (req, res, next) => {
+    MoneyRequests.find().populate('AID').exec((error, mRequests) => {
+      requests = [];
+      for (let r of mRequests) {
+        requests.push({
+          id: r.RID,
+          date: r.createdAt,
+          user: {
+            firstName: r.AID.firstName,
+            secondName: r.AID.secondName,
+            email: r.AID.email,
+            phone: '+7 (926) 123-45-67'
+          },
+          bill: {
+            amount: r.price,
+            method: r.system,
+            account: r.account,
+            isDefrayed: r.defrayed
+          }
+        });
+      }
+
+      res.json(requests);
+    });
+  },
+
+
   send: (req, res, next) => {
     const params = req.params.all();
     params.money = +params.money;
