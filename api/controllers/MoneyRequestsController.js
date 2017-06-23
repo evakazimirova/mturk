@@ -47,6 +47,10 @@ module.exports = {
         Annotators.findOne({
           AID: req.session.userId
         }).exec((error, annotator) => {
+          mReq.AID = annotator;
+          mReq.hostName = req.headers.host;
+          EmailService.onMoneyRequest(mReq);
+
           if (params.money <= annotator.moneyAvailable) {
             const moneyAvailable = annotator.moneyAvailable - params.money;
 
