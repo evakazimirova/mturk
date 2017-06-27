@@ -53,8 +53,12 @@ export class ControlsComponent implements OnInit {
     // 6. При выборе фрагмента из списка происходит его воспроизведение. В списке воспроизводимый в текущий момент фрагмент помечается.
     this.common.fragmentChanged.subscribe(
       (fragmentPosition) => {
-        this.stopVideo();
-        this.common.videoContainer.currentTime = fragmentPosition;
+        this.pauseVideo();
+        if (this.common.isYouTube) {
+          this.common.ytPlayer.seekTo(fragmentPosition, true);
+        } else {
+          this.common.videoContainer.currentTime = fragmentPosition;
+        }
         this.playVideo();
       },
       (error) => console.log(error)

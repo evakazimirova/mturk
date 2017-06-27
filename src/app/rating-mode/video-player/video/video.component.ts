@@ -1,5 +1,6 @@
 import { CommonService } from '../../../common.service';
 import { Component, OnInit } from '@angular/core';
+import YouTubePlayer from 'youtube-player';
 
 @Component({
   selector: 'na-video',
@@ -12,32 +13,90 @@ export class VideoComponent implements OnInit {
   constructor(private common: CommonService) { }
 
   ngOnInit() {
-    this.common.videoContainer = document.getElementById('currentVideo');
+    if (this.common.task.video.substr(0, 17) === 'https://youtu.be/') {
+      this.common.isYouTube = true;
+    } else {
+      this.common.isYouTube = false;
+    }
 
-    // 3. При выборе видеозаписи, открывается файл на сервере с именем, совпадающим с именем видеозаписи
+    if (this.common.isYouTube) {
+      $(document).ready(() => {
+        const vid = this.common.task.video.substring(17);
+        this.common.ytPlayer = YouTubePlayer('youtube', {
+          width: 847,
+          height: 476,
+          videoId: vid,
+          playerVars: {
+            controls: 0,
+            disablekb: 1,
+            fs: 0,
+            iv_load_policy: 3,
+            modestbranding: 1,
+            rel: 0,
+            showinfo: 0
+          },
+        });
+        const player = this.common.ytPlayer;
 
-    // меняем источник видео
-    this.currentVideo = this.common.task.video;
-    this.common.videoContainer.load();
+        // player.on('ready', (event) => {
+        // });
 
-    this.common.videoContainer.addEventListener('loadeddata', () => {
-      this.common.videoLength = this.common.videoContainer.duration;
+        player.getDuration().then((time) => {
+          this.common.videoLength = time;
+          this.common.setFragment(-1);
+        });
 
-      if (this.common.mode === "fragmentsRating") {
-        this.common.setFragment(-1); // запускаем видео целиком
-      }
+        // player.loadVideoById(vid);
+        // player.setSize(847, 476);
+        // player.playVideo();
 
-      if (this.common.mode === "fragmentsMarking") {
-        this.common.unwatchVideo('stop');
-      }
-    }, false);
+        // player.getCurrentTime()
 
-    // // 5. По умолчанию воспроизведение начинается с 0-го фрагмента.
-    // this.common.videoContainer.currentTime = this.common.csv[this.common.cf][1];
+        // player.getPlayerState():Number // Возвращает состояние проигрывателя. Возможные значения:
+        // -1 – воспроизведение видео не началось
+        // 0 – воспроизведение видео завершено
+        // 1 – воспроизведение
+        // 2 – пауза
+        // 3 – буферизация
+        // 5 – видео находится в очереди
 
-    // ДОП 1. сделать возможность просматривать весь видеофайл (это необходимо сделать аннотаторам перед разметкой каждого видео, по умолчанию выбор нового видео должен приводить к тому что включается воспроизведение видео без фрагментов). То есть должна быть кнопка в управлении, которая запускает видео таймлайн при этом это длина всего файла. Когда такой тип воспроизведения активен, соответствующая кнопка подсвечивается, чтобы перейти к разметке надо ее отжать, либо выбрать фрагмент.
-    this.common.videoContainer.currentTime = 0;
-    // this.common.updateCSV();
+        // player.getDuration()
+
+        // player.loadVideoByUrl({
+        //   mediaContentUrl: `http://www.youtube.com/v/${vid}?version=3`,
+        //   startSeconds: 30,
+        //   endSeconds: 44
+        // });
+
+        // player.seekTo(10, false);
+      });
+    } else {
+      this.common.videoContainer = document.getElementById('currentVideo');
+
+      // 3. При выборе видеозаписи, открывается файл на сервере с именем, совпадающим с именем видеозаписи
+
+      // меняем источник видео
+      this.currentVideo = this.common.task.video;
+      this.common.videoContainer.load();
+
+      this.common.videoContainer.addEventListener('loadeddata', () => {
+        this.common.videoLength = this.common.videoContainer.duration;
+
+        if (this.common.mode === "fragmentsRating") {
+          this.common.setFragment(-1); // запускаем видео целиком
+        }
+
+        if (this.common.mode === "fragmentsMarking") {
+          this.common.unwatchVideo('stop');
+        }
+      }, false);
+
+      // // 5. По умолчанию воспроизведение начинается с 0-го фрагмента.
+      // this.common.videoContainer.currentTime = this.common.csv[this.common.cf][1];
+
+      // ДОП 1. сделать возможность просматривать весь видеофайл (это необходимо сделать аннотаторам перед разметкой каждого видео, по умолчанию выбор нового видео должен приводить к тому что включается воспроизведение видео без фрагментов). То есть должна быть кнопка в управлении, которая запускает видео таймлайн при этом это длина всего файла. Когда такой тип воспроизведения активен, соответствующая кнопка подсвечивается, чтобы перейти к разметке надо ее отжать, либо выбрать фрагмент.
+      this.common.videoContainer.currentTime = 0;
+      // this.common.updateCSV();
+    }
   }
-
 }

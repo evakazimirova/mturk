@@ -1,3 +1,4 @@
-<video id="currentVideo" width="100%" preload="auto">
+<video id="currentVideo" width="100%" preload="auto" *ngIf='!common.isYouTube'>
   <source src="{{ currentVideo }}" type='video/mp4'>
 </video>
+<div id='youtube' *ngIf='common.isYouTube'></div>
