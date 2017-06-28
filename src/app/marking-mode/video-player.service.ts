@@ -29,29 +29,27 @@ export class VideoPlayerService {
   setTickPosition(pos) {
     this.tickPosition = pos;
 
-    if (this.videoContainer === undefined) {
-      this.videoContainer = document.getElementById('videoToMark');
-      this.videoLength = +(this.videoContainer.duration).toFixed(2);
-    }
-
     let accurateVP = (pos / this.timelineWidth) * this.videoLength;
     accurateVP = +(+(accurateVP / 0.04).toFixed(0) * 0.04).toFixed(2); // подгоняем под целое число кадров
 
     this.videoPosition = accurateVP;
-    this.videoContainer.currentTime = this.videoPosition;
+    if (this.common.isYouTube) {
+      this.videoContainer.seekTo(this.videoPosition, true);
+    } else {
+      this.videoContainer.currentTime = this.videoPosition;
+    }
   }
 
   setVideoPosition(pos) {
     pos = +(+(pos / 0.04).toFixed(0) * 0.04).toFixed(2);
     this.videoPosition = pos; // подгоняем под целое число кадров
 
-    if (this.videoContainer === undefined) {
-      this.videoContainer = document.getElementById('videoToMark');
-      this.videoLength = +(this.videoContainer.duration).toFixed(2);
-    }
-
     this.tickPosition = +((pos / this.videoLength) * this.timelineWidth).toFixed(2);
-    this.videoContainer.currentTime = pos;
+    if (this.common.isYouTube) {
+      this.videoContainer.seekTo(pos, true);
+    } else {
+      this.videoContainer.currentTime = pos;
+    }
   }
 
   selectFragment() {

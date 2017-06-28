@@ -14,6 +14,7 @@ export class TimelineComponent implements OnInit {
   startFragment = this.vp.startFragment;
   endFragment = this.vp.endFragment;
   watchingVideo;
+  paused = true;
 
   speeds = [1, 0.5, 0.1, 0.04];
 
@@ -63,10 +64,23 @@ export class TimelineComponent implements OnInit {
 
         // воспроизведение / пауза
         if (e.keyCode === 32) { // пробел
-          if (this.vp.videoContainer.paused) {
-            this.playVideo();
+          if (this.common.isYouTube) {
+            this.vp.videoContainer.getPlayerState().then((state) => {
+              if (state === 1) {
+                this.paused = false;
+                this.pauseVideo();
+              } else {
+                this.paused = true;
+                this.playVideo();
+              }
+            });
           } else {
-            this.pauseVideo();
+            this.paused = this.vp.videoContainer.paused;
+            if (this.paused) {
+              this.playVideo();
+            } else {
+              this.pauseVideo();
+            }
           }
         }
 
@@ -223,21 +237,35 @@ export class TimelineComponent implements OnInit {
 
   playVideo() {
     let updateTickPosition = () => {
-      if (this.vp.videoContainer === undefined) {
-        this.vp.videoContainer = document.getElementById('videoToMark');
+      if (this.common.isYouTube) {
+        this.vp.videoContainer.getCurrentTime().then((time) => {
+          const pos = +(time).toFixed(2);
+          this.vp.videoPosition = pos;
+          this.vp.tickPosition = +((pos / this.vp.videoLength) * this.vp.timelineWidth).toFixed(2);
+        });
+      } else {
+        const pos = +(this.vp.videoContainer.currentTime).toFixed(2);
+        this.vp.videoPosition = pos;
+        this.vp.tickPosition = +((pos / this.vp.videoLength) * this.vp.timelineWidth).toFixed(2);
       }
-
-      let pos = +(this.vp.videoContainer.currentTime).toFixed(2);
-      this.vp.videoPosition = pos;
-      this.vp.tickPosition = +((pos / this.vp.videoLength) * this.vp.timelineWidth).toFixed(2);
     }
 
-    this.vp.videoContainer.play();
+    if (this.common.isYouTube) {
+      this.vp.videoContainer.playVideo();
+    } else {
+      this.vp.videoContainer.play();
+    }
+    this.paused = false;
     this.watchingVideo = setInterval(updateTickPosition, 40);
   }
 
   pauseVideo() {
-    this.vp.videoContainer.pause();
+    if (this.common.isYouTube) {
+      this.vp.videoContainer.pauseVideo();
+    } else {
+      this.vp.videoContainer.pause();
+    }
+    this.paused = true;
     clearInterval(this.watchingVideo);
   }
 }
