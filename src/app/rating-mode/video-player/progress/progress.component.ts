@@ -25,10 +25,17 @@ export class ProgressComponent implements OnInit {
         this.stopWatching();
         if (event === "stop") {
           // возвращаемся в начало фрагмента
+          let fragmentPosition;
           if (this.common.cf === -1) {
-            this.common.videoContainer.currentTime = 0;
+            fragmentPosition = 0;
           } else {
-            this.common.videoContainer.currentTime = this.common.csv[this.common.cf][0];
+            fragmentPosition = this.common.csv[this.common.cf][0];
+          }
+
+          if (this.common.isYouTube) {
+            this.common.ytPlayer.stopVideo();
+          } else {
+            this.common.videoContainer.currentTime = fragmentPosition;
           }
 
           this.percentage = 0;
@@ -55,15 +62,26 @@ export class ProgressComponent implements OnInit {
     const fragmentDuration = this.fragmentEnd - this.fragmentStart;
 
     const updateProgressBar = () => {
-      const currentTime = this.common.videoContainer.currentTime;
-
-      // проиграв фрагмент, останавливаем видео
-      if (this.common.videoContainer.currentTime >= this.fragmentEnd) {
-        this.common.unwatchVideo('stop');
+      let currentTime;
+      if (this.common.isYouTube) {
+        this.common.ytPlayer.getCurrentTime().then((time) => {
+          currentTime = time;
+          countPercentage(this);
+        });
+      } else {
+        currentTime = this.common.videoContainer.currentTime;
+        countPercentage(this);
       }
 
-      const timeSpent = currentTime - this.fragmentStart;
-      this.percentage = (timeSpent / fragmentDuration * 100).toFixed(0);
+      function countPercentage(that) {
+        // проиграв фрагмент, останавливаем видео
+        if (currentTime >= that.fragmentEnd) {
+          that.common.unwatchVideo('pause');
+        }
+
+        const timeSpent = currentTime - that.fragmentStart;
+        that.percentage = (timeSpent / fragmentDuration * 100).toFixed(0);
+      }
     };
 
     this.watchingVideo = setInterval(updateProgressBar, 50);

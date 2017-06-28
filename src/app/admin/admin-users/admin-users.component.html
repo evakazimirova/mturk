@@ -8,15 +8,23 @@
       <th>Completed tasks</th>
       <th>Active tasks</th>
       <th>Progress</th>
+      <th>Activity</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of users">
+    <tr *ngFor="let user of users; let i = index">
       <td>{{ user.name }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.completed }}</td>
       <td>{{ user.active }}</td>
       <td>{{ user.progress }}</td>
+      <td>
+        <span class="fa fa-cog fa-spin fa-lg" *ngIf="user.banned === undefined"></span>
+        <button class="btn btn-sm" *ngIf="user.banned !== undefined" [ngClass]="{'btn-danger': user.banned, 'btn-success': !user.banned}"
+          (click)="ban(i, user.AID, user.banned)">
+          {{ user.banned ? "Banned" : "Active" }}
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>

@@ -37,6 +37,11 @@ module.exports = {
       defaultsTo: false
     },
 
+    banned: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
     firstName: {
       type: 'string',
       required: true

@@ -51,5 +51,26 @@ module.exports = {
       }
       console.log('Message %s sent: %s', info.messageId, info.response);
     });
+  },
+
+
+  onMoneyRequest: (mRequest) => {
+    let mailOptions = {
+      from: '"NeuroDataLab" <robot@neurodatalab.com>',
+      to: 'm.ryabov@neurodatalab.com, y.lavrinenko@neurodatalab.com',
+      subject: 'New Money Request',
+      html: `
+        <p>Dear Mr. Admin,</p>
+        <p>Annotator <strong>${mRequest.AID.firstName} ${mRequest.AID.secondName}</strong> has earned <strong>${mRequest.price} RUR</strong> and wants to receive this amount of money.</p>
+        <p>Please, <a href="http://${mRequest.hostName}">go to the web-site and pay</a> as soon as possible.</p>
+      `
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message %s sent: %s', info.messageId, info.response);
+    });
   }
 }

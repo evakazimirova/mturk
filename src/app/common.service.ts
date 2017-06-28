@@ -21,6 +21,9 @@ export class CommonService {
   mode: string; // auth | profile | fragmentsRating | fragmentsMarking
   task: any;
 
+  isYouTube: boolean;
+  ytPlayer;
+
   // события
   videoTurnedOff = new EventEmitter();
   videoTurnedOn = new EventEmitter();
@@ -82,16 +85,24 @@ export class CommonService {
   }
 
   watchVideo() {
-    if (this.videoContainer.paused) {
-      this.videoContainer.play();
-      this.videoTurnedOn.emit();
+    if (this.isYouTube) {
+      this.ytPlayer.playVideo();
+    } else {
+      if (this.videoContainer.paused) {
+        this.videoContainer.play();
+      }
     }
+    this.videoTurnedOn.emit(); // передаём "пауза" или "стоп"
   }
 
   unwatchVideo(event) {
-    if (!this.videoContainer.paused) {
-      this.videoContainer.pause();
-      this.videoTurnedOff.emit(event); // передаём "пауза" или "стоп"
+    if (this.isYouTube) {
+      this.ytPlayer.pauseVideo();
+    } else {
+      if (!this.videoContainer.paused) {
+        this.videoContainer.pause();
+      }
     }
+    this.videoTurnedOff.emit(event); // передаём "пауза" или "стоп"
   }
 }

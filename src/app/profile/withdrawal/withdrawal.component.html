@@ -9,11 +9,11 @@
       <!-- Окно куда необходимо ввести сумму вывода -->
       <div class="form-group">
         <label for="amount">Amount</label>
-        <input type="text" class="form-control" id="amount" placeholder="1000">
+        <input type="text" class="form-control" name="amount" placeholder="1000" [(ngModel)]="money">
       </div>
       <div class="form-group">
         <label for="account">Account</label>
-        <input type="text" class="form-control" id="account" placeholder="1234567890">
+        <input type="text" class="form-control" name="account" placeholder="1234567890" [(ngModel)]="account">
       </div>
       <!-- Ниже логотипы доступных пользователю платежных систем, при нажатии на любую из которых запрашивается реквизиты счета в данной платежной системе. -->
       <div class="row logos">
@@ -33,7 +33,11 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-primary btn-block">Send a request</button>
+      <button class="btn btn-primary btn-block"
+        (click)=sendRequest() [ngClass]="{disabled: isRequesting}">
+        Send a request
+        <span class="fa fa-cog fa-spin fa-2x" *ngIf="isRequesting"></span>
+      </button>
     </form>
     <!-- Поручение на вывод отправляется администратору на эмейл. И дублируется в личном кабинете администратора. -->
   </div>
