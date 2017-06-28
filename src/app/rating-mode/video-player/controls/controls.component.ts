@@ -79,11 +79,19 @@ export class ControlsComponent implements OnInit {
   }
 
   replayVideo() {
+    let fragmentPosition;
     if (this.common.cf === -1) {
-      this.common.videoContainer.currentTime = 0;
+      fragmentPosition = 0;
     } else {
-      this.common.videoContainer.currentTime = this.common.csv[this.common.cf][1];
+      fragmentPosition = this.common.csv[this.common.cf][0];
     }
+
+    if (this.common.isYouTube) {
+      this.common.ytPlayer.seekTo(fragmentPosition, true);
+    } else {
+      this.common.videoContainer.currentTime = fragmentPosition;
+    }
+
     this.playVideo();
   }
 

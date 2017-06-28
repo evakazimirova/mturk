@@ -30,7 +30,6 @@ export class FragmentsComponent implements OnInit {
     csv.shift(); // первую (названия столбцов)
     // csv.pop(); // последнюю (пустая строка)
 
-    console.log(csv);
     this.common.updateCSV(csv); // запоминаем данные для доступа во всех компонентах
   }
 

@@ -34,7 +34,6 @@ export class ProgressComponent implements OnInit {
 
           if (this.common.isYouTube) {
             this.common.ytPlayer.stopVideo();
-            // this.common.ytPlayer.seekTo(fragmentPosition, false);
           } else {
             this.common.videoContainer.currentTime = fragmentPosition;
           }

@@ -13,6 +13,27 @@ export class VideoComponent implements OnInit {
   constructor(private common: CommonService) { }
 
   ngOnInit() {
+    const videoContainer = $('.video');
+    const shield = $('.shield');
+
+    let w = videoContainer.innerWidth();
+    let h = w * 0.5625; // 9:16
+
+    shield.innerWidth(w);
+    shield.innerHeight(h);
+
+    $(window).resize(() => {
+      w = videoContainer.innerWidth();
+      if (this.common.isYouTube) {
+        h = w * 0.5625; // 9:16
+        this.common.ytPlayer.setSize(w, h);
+      } else {
+        h = videoContainer.innerHeight();
+      }
+      shield.innerWidth(w);
+      shield.innerHeight(h);
+    });
+
     if (this.common.task.video.substr(0, 17) === 'https://youtu.be/') {
       this.common.isYouTube = true;
     } else {
@@ -23,8 +44,8 @@ export class VideoComponent implements OnInit {
       $(document).ready(() => {
         const vid = this.common.task.video.substring(17);
         this.common.ytPlayer = YouTubePlayer('youtube', {
-          width: 847,
-          height: 476,
+          width: w,
+          height: h,
           videoId: vid,
           playerVars: {
             controls: 0,

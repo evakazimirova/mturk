@@ -46,7 +46,6 @@ export class CommonService {
   updateCSV(newCSV) {
     this.csv = newCSV;
     this.rating = [];
-    console.log(this.csv);
 
     let totalEmotions = this.task.emotions.length;
     let totalFragments = newCSV.length;
