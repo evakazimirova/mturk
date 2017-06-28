@@ -73,7 +73,8 @@
   },
   "scripts": {
     "debug": "node debug app.js",
-    "start": "concurrently --kill-others 'npm run watch:frontend' 'npm run watch:backend'",
+    "start": "ng build && sails lift",
+    "dev": "concurrently --kill-others 'npm run watch:frontend' 'npm run watch:backend'",
     "deploy:azure": "npm run backend",
     "watch:frontend": "ng build -w",
     "watch:backend": "nodemon app.js",
