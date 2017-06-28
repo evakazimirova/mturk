@@ -34,7 +34,8 @@ export class VideoComponent implements OnInit {
       shield.innerHeight(h);
     });
 
-    if (this.common.task.video.substr(0, 17) === 'https://youtu.be/') {
+    if (this.common.task.video.substr(0, 17) === 'https://youtu.be/' ||
+      this.common.task.video.substr(0, 32) === 'https://www.youtube.com/watch?v=') {
       this.common.isYouTube = true;
     } else {
       this.common.isYouTube = false;
@@ -42,7 +43,7 @@ export class VideoComponent implements OnInit {
 
     if (this.common.isYouTube) {
       $(document).ready(() => {
-        const vid = this.common.task.video.substring(17);
+        const vid = this.common.task.video.slice(-11);
         this.common.ytPlayer = YouTubePlayer('youtube', {
           width: w,
           height: h,
