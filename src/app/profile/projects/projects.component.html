@@ -1,39 +1,20 @@
 <na-project *ngIf="projectMode" [projectId]="projectId" (returned)="projectMode = false"></na-project>
 <div *ngIf="!projectMode && isLoaded">
-  <!-- Задания -->
-  <h2>Projects</h2>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Title</th>
-        <th>Activity</th>
-        <th>Completed</th>
-        <th>Earned</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let project of projects; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td><a href="#" (click)='viewProjectDescription(project.id)'>
-          {{ project.title }}
-        </a></td>
-        <td>{{ project.activity }}</td>
-        <td>{{ project.percentage }}%</td>
-        <td>{{ project.earned }}/{{ project.price }}</td>
-        <td>
-          <a href="#" (click)="project.action.doIt($event)" *ngIf="!project.isProcessing && loadingTask !== i">
-            {{ project.action.title }}
-          </a>
-          <span *ngIf="loadingTask === i">
-            Loading... <span class="fa fa-cog fa-spin fa-lg"></span>
-          </span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="task" *ngFor="let project of projects; let i = index"
+    [ngClass]="{locked: i !== 0}"
+    (click)="project.action.doIt($event)">
+    {{ project.projectName }}
+    <span class="fa fa-cog fa-spin" *ngIf="loadingTask === i"></span>
+    <div class="description">
+      <span>Completed: {{ project.percentage || "0" }}%</span>
+      <span>Earned: {{ project.earned || "0" }}/{{ project.pricePerTask }}</span>
+    </div>
+    <span class="fa fa-lock fa-5x"></span>
+  </div>
+  <!-- *ngIf="!project.isProcessing && loadingTask !== i" -->
+  <!-- (click)='viewProjectDescription(project.id)' -->
 </div>
+
 <div class="loading">
   <span class="fa fa-cog fa-spin fa-5x" *ngIf="!isLoaded"></span>
 </div>

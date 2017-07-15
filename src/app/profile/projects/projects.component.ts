@@ -18,12 +18,33 @@ export class ProjectsComponent implements OnInit {
   constructor(public common: CommonService, private http: HttpService) { }
 
   ngOnInit() {
-    this.http.get('AnnoTasks/annoTasks').subscribe(
+    this.http.get('Projects/getAll').subscribe(
       tasks => {
-        this.updateProjectInfo(this.projects[0], tasks[0]);
-        this.updateProjectInfo(this.projects[1], tasks[1]);
+        console.log(tasks);
+        this.projects = tasks;
 
-        this.common.user.money.reserved = this.projects[0].price + this.projects[1].price;
+
+      // project.activity = task.activity;
+      // project.percentage = task.percentage;
+      // project.earned = task.earned;
+      // project.price = task.price;
+      // project.task = task.task;
+
+      // project.id = task.task.PID;
+
+      // if (project.id === 1) {
+      //   project.title = 'Mark up a video';
+
+        // PID
+        // annoPerTask
+        // pricePerTask
+        // projectName
+        // projectType
+
+        // this.updateProjectInfo(this.projects[0], tasks[0]);
+        // this.updateProjectInfo(this.projects[1], tasks[1]);
+
+        // this.common.user.money.reserved = this.projects[0].price + this.projects[1].price;
         this.isLoaded = true;
       },
       err => {
@@ -31,6 +52,20 @@ export class ProjectsComponent implements OnInit {
         this.isLoaded = true;
       }
     );
+
+    // this.http.get('AnnoTasks/annoTasks').subscribe(
+    //   tasks => {
+    //     this.updateProjectInfo(this.projects[0], tasks[0]);
+    //     this.updateProjectInfo(this.projects[1], tasks[1]);
+
+    //     this.common.user.money.reserved = this.projects[0].price + this.projects[1].price;
+    //     this.isLoaded = true;
+    //   },
+    //   err => {
+    //     console.log(err);
+    //     this.isLoaded = true;
+    //   }
+    // );
   }
 
   takeMarkUp() {
