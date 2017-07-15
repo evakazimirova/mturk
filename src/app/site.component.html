@@ -1,8 +1,10 @@
-<na-admin *ngIf="common.mode === 'admin'"></na-admin>
+<!-- Авторизация -->
 <na-auth *ngIf="common.mode === 'auth'"></na-auth>
-<na-profile *ngIf="common.mode === 'profile'"></na-profile>
-<na-rating-mode *ngIf="common.mode === 'fragmentsRating'"></na-rating-mode>
-<na-marking-mode *ngIf="common.mode === 'fragmentsMarking'"></na-marking-mode>
 <na-change-password *ngIf="common.mode === 'changePassword'"></na-change-password>
 
-<input type="hidden" name="smth"><!--чтобы MTurk не ругался-->
+<!-- Основной функционал -->
+<na-profile *ngIf="common.mode === 'profile'"></na-profile>
+<na-rating-mode *ngIf="common.mode === 'fragmentsRating'"></na-rating-mode>
+
+<!-- Админка -->
+<na-admin *ngIf="common.mode === 'admin'"></na-admin>
