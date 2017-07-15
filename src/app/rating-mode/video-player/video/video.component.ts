@@ -78,11 +78,11 @@ export class VideoComponent implements OnInit {
       const player = this.common.ytPlayer;
 
       const vid = this.common.task.fragments[this.common.task.currentFragment].video.slice(-11);
-      player.loadVideoById(vid);
-
-      player.getDuration().then((time) => {
-        this.common.videoLength = time;
-        this.common.setFragment(-1);
+      player.loadVideoById(vid, () => {
+        player.getDuration().then((time) => {
+          this.common.videoLength = time;
+          this.common.setFragment(-1);
+        });
       });
     } else {
       this.common.videoContainer = document.getElementById('currentVideo');

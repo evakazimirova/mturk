@@ -28,7 +28,6 @@ export class ProjectsComponent implements OnInit {
             for (const p in this.projects) {
               this.projects[p].annoTask = tasks[p];
             }
-            console.log(this.projects);
 
             // Считаем зарезервиродванную сумму
             this.common.user.money.reserved = 0;
@@ -156,11 +155,11 @@ export class ProjectsComponent implements OnInit {
 
   taskSelected(project) {
     if (project.annoTask) {
-      console.log('Задача взята');
+      // console.log('Задача взята');
       // Продолжить выполнение
       this.startTask(project.annoTask.task);
     } else {
-      console.log('Задача не взята');
+      // console.log('Задача не взята');
       // Дать задачу или запретить
       this.takeTask(project.PID);
     }

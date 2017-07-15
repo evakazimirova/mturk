@@ -204,7 +204,7 @@ module.exports = {
       Fragments.findOne({
         FID: all.fragments[all.currentFragment].FID
       }).populateAll().exec((err, fragment) => {
-        all.fragments[all.currentFragment].ATID = ids.ATID;
+        all.ATID = ids.ATID;
         all.fragments[all.currentFragment].video = fragment.VID.URL;
         // all.person = {
         //   name: fragment.HID.personName,
@@ -217,7 +217,7 @@ module.exports = {
 
       function tryToResponse() {
         // если все данные собраны, то отправляем ответ
-        if (all.tasks && all.fragments[all.currentFragment].ATID) {
+        if (all.tasks && all.ATID) {
           res.json(all);
         }
       }
@@ -237,8 +237,8 @@ module.exports = {
         },
         {
           result: JSON.stringify(input.result),
-          done: input.done,
-          status: 3
+          done: input.done
+          // status: 3
         }
       ).exec((err, updated) => {
         const newAmount = task.AID.moneyAvailable + task.price;

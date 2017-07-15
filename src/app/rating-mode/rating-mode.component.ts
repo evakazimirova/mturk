@@ -13,8 +13,11 @@ export class RatingModeComponent implements OnInit {
   constructor(private http: HttpService, private common: CommonService) {}
 
   ngOnInit() {
-    console.log(this.common.task);
     this.videos = this.common.task.fragments;
+
+    for (const f of this.common.task.fragments) {
+      this.common.fragmentsWip[f.FID] = f.result;
+    }
   }
 
   return() {
@@ -26,28 +29,29 @@ export class RatingModeComponent implements OnInit {
   }
 
   videoChanged(vi) {
+    if (this.common.task.currentFragment !== vi) {
+      const setVideo = () => {
+        this.common.task.currentFragment = vi;
+        this.common.setVideo();
+      };
 
-    const setVideo = () => {
-      this.common.task.currentFragment = vi;
-      this.common.setVideo();
-    };
-
-    if (this.common.task.fragments[vi].video) {
-      // Ссылка на видос есть
-      setVideo();
-    } else {
-      // Ссылки нет — вынимаем из базы
-      const FID = this.common.task.fragments[vi].FID;
-      this.http.get(`Fragments/getFragment?FID=${FID}`).subscribe(
-        fragment => {
-          console.log(fragment);
-          this.common.task.fragments[vi] = fragment;
-          setVideo();
-        },
-        err => {
-          console.log(err);
-        }
-      );
+      if (this.common.task.fragments[vi].video) {
+        // Ссылка на видос есть
+        setVideo();
+      } else {
+        // Ссылки нет — вынимаем из базы
+        const FID = this.common.task.fragments[vi].FID;
+        this.http.get(`Fragments/getFragment?FID=${FID}`).subscribe(
+          fragment => {
+            this.common.task.fragments[vi] = fragment;
+            setVideo();
+          },
+          err => {
+            console.log(err);
+          }
+        );
+      }
     }
+
   }
 }

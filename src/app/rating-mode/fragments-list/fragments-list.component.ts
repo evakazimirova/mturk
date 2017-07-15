@@ -71,12 +71,13 @@ export class FragmentsListComponent implements OnInit {
       // разрешаем переходить к другому видео или закрывать сайт
       this.common.allFragmentsRated = true;
 
-
       // считаем, сколько эмоций проработано
       const emotionsCount = this.common.task.emotions.length;
 
+      const FID = this.common.task.fragments[this.common.task.currentFragment].FID;
+      this.common.fragmentsWip[FID] = outputCSV;
       const output = {
-        result: outputCSV,
+        result: this.common.fragmentsWip,
         ATID: this.common.task.ATID,
         done: emotionsCount
       };
@@ -90,8 +91,9 @@ export class FragmentsListComponent implements OnInit {
           // и рейтинг
           this.common.user.rating = res.rating;
 
-          // возвращаемся в личный кабинет
-          this.common.mode = 'profile';
+          // // возвращаемся в личный кабинет
+          // this.common.mode = 'profile';
+
           this.loading = false;
         },
         err => {

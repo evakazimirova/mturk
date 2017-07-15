@@ -20,6 +20,7 @@ export class CommonService {
   allFragmentsRated = true;
   mode: string; // auth | profile | fragmentsRating | fragmentsMarking
   task: any;
+  fragmentsWip = {};
 
   isYouTube: boolean;
   ytPlayer;
