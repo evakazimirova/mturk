@@ -48,33 +48,27 @@ module.exports = {
               }
             }
 
-            if (task.TID.PID === 1) {
-              tasksInfo[0] = taskInfo
-            }
-
-            if (task.TID.PID === 2) {
-              tasksInfo[1] = taskInfo
-            }
+            tasksInfo[task.TID.PID - 1] = taskInfo
           }
         }
 
-        for (let i = 0; i < 2; i++) {
-          if (tasksInfo[i] === undefined) {
-            tasksInfo[i] = {
-              activity: "Inactive",
-              percentage: 0,
-              earned: 0,
-              price: 0,
-              task: {
-                PID: i + 1,
-                ATID: 0,
-                TID: 0,
-                HID: 0,
-                task: 0
-              }
-            }
-          }
-        }
+        // for (let i = 0; i < 2; i++) {
+        //   if (tasksInfo[i] === undefined) {
+        //     tasksInfo[i] = {
+        //       activity: "Inactive",
+        //       percentage: 0,
+        //       earned: 0,
+        //       price: 0,
+        //       task: {
+        //         PID: i + 1,
+        //         ATID: 0,
+        //         TID: 0,
+        //         HID: 0,
+        //         task: 0
+        //       }
+        //     }
+        //   }
+        // }
 
         res.json(tasksInfo);
       }
@@ -180,14 +174,6 @@ module.exports = {
     Tasks.findOne({
       TID: ids.TID
     }).populateAll().exec((err, task) => {
-      let TasksInfo;
-
-      if (ids.PID === 1) {
-        TasksInfo = EmotionsInfo;
-      } else if (ids.PID === 2) {
-        TasksInfo = EventsInfo;
-      }
-
       // оставляем только те задачи, которые нужно делать
       let tasks = [];
       for (let e of ids.task.split(',')) {
@@ -198,7 +184,7 @@ module.exports = {
 
       let all = {};
 
-      TasksInfo.find({
+      EmotionsInfo.find({
         or: tasks
       }).exec((err, tasks) => {
         all.tasks = tasks;
@@ -206,23 +192,32 @@ module.exports = {
         tryToResponse();
       });
 
+      all.fragments = [];
+      for (const fid of task.FID.split(',')) {
+        all.fragments.push({
+          FID: fid
+        });
+      }
+
+      all.currentFragment = 0;
+
       Fragments.findOne({
-        FID: task.FID.FID
+        FID: all.fragments[all.currentFragment].FID
       }).populateAll().exec((err, fragment) => {
-        all.ATID = ids.ATID;
-        all.video = fragment.VID.URL;
-        all.person = {
-          name: fragment.HID.personName,
-          image: fragment.HID.personImage
-        };
-        all.result = fragment.csv === null ? '' : fragment.csv; // для того, чтобы загрузить сохранённые данные, нужно ещё обратиться к таблице AnnoTask
+        all.fragments[all.currentFragment].ATID = ids.ATID;
+        all.fragments[all.currentFragment].video = fragment.VID.URL;
+        // all.person = {
+        //   name: fragment.HID.personName,
+        //   image: fragment.HID.personImage
+        // };
+        all.fragments[all.currentFragment].result = fragment.csv === null ? '' : fragment.csv; // для того, чтобы загрузить сохранённые данные, нужно ещё обратиться к таблице AnnoTask
 
         tryToResponse();
       });
 
       function tryToResponse() {
         // если все данные собраны, то отправляем ответ
-        if (all.tasks && all.ATID) {
+        if (all.tasks && all.fragments[all.currentFragment].ATID) {
           res.json(all);
         }
       }

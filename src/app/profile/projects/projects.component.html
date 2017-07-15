@@ -2,12 +2,12 @@
 <div *ngIf="!projectMode && isLoaded">
   <div class="task" *ngFor="let project of projects; let i = index"
     [ngClass]="{locked: i !== 0}"
-    (click)="project.action.doIt($event)">
+    (click)="taskSelected(project)">
     {{ project.projectName }}
     <span class="fa fa-cog fa-spin" *ngIf="loadingTask === i"></span>
-    <div class="description">
-      <span>Completed: {{ project.percentage || "0" }}%</span>
-      <span>Earned: {{ project.earned || "0" }}/{{ project.pricePerTask }}</span>
+    <div class="description" *ngIf="project.annoTask">
+      <span>Completed: {{ project.annoTask.percentage }}%</span>
+      <span>Earned: {{ project.annoTask.earned }}/{{ project.pricePerTask }}</span>
     </div>
     <span class="fa fa-lock fa-5x"></span>
   </div>

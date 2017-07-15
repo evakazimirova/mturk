@@ -21,10 +21,23 @@ export class FragmentsComponent implements OnInit {
       }
     );
 
+    this.updateCSV();
+
+    this.common.videoChanged.subscribe(
+      success => {
+        this.updateCSV();
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  updateCSV() {
     // 3. При выборе видеозаписи, открывается файл на сервере с именем, совпадающим с именем csv. В этом файле содержится информация о фрагментах, которые необходимо оценить. Структура файла: Номер фрагмента;Начало фрагмента;Конец фрагмента
     // 4. Web-интерфейс отображает список фрагментов, и выставленную им оценку в выбранной шкале.
-    this.common.task.result = this.common.task.result.replace(/\\n/g, '\n'); // если символы переноса строки выглядят как '\n', то меняем их именно на переносы
-    const csv = this.CSVToArray(this.common.task.result, ',');
+    this.common.task.result = this.common.task.fragments[this.common.task.currentFragment].result.replace(/\\n/g, '\n'); // если символы переноса строки выглядят как '\n', то меняем их именно на переносы
+    const csv = this.CSVToArray(this.common.task.fragments[this.common.task.currentFragment].result, ',');
 
     // выкидываем строки
     csv.shift(); // первую (названия столбцов)

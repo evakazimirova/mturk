@@ -1,3 +1,26 @@
 .container {
   margin-top: 20px
 }
+
+.video-list {
+  padding-right: 0;
+  .list-unstyled {
+    li {
+      padding: 5px;
+      margin-bottom: 5px;
+      cursor: pointer;
+
+      &.current {
+        background-color: lighten(blue, 45);
+      }
+
+      &:hover {
+        background-color: lighten(blue, 40);
+      }
+    }
+  }
+}
+
+.vidos {
+  padding-left: 0;
+}

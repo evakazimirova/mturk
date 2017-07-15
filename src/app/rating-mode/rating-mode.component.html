@@ -4,7 +4,17 @@
   </button>
   <h2>Marking up video fragments</h2>
   <div class="row">
-    <div class="col col-xs-9">
+    <div class="col col-xs-1 video-list">
+      <!-- <na-video-list></na-video-list> -->
+      <ul class="list-unstyled">
+        <li *ngFor="let video of videos; let i = index"
+          [ngClass]="{current: i === common.task.currentFragment}"
+          (click)="videoChanged(i)">
+          video_{{ video.FID }}
+        </li>
+      </ul>
+    </div>
+    <div class="col col-xs-8 vidos">
       <na-video-player></na-video-player>
     </div>
 

@@ -78,6 +78,9 @@ export class CommonService {
     let itsOk = true;
 
     if (itsOk || this.allFragmentsRated) {
+      if (this.ytPlayer || this.videoContainer) {
+        this.unwatchVideo('stop');
+      }
       this.cf = -1;
       this.allFragmentsRated = false;
       this.videoChanged.emit();
