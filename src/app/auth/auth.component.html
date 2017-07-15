@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col col-md-4 col-md-push-4 col-sm-6 col-sm-push-2">
       <div class="text-center">
-        <img src="assets/logo_black.png" alt="logo" (dblclick)="secret()">
+        <img class="img-responsive" src="assets/logo.png" alt="logo" (dblclick)="secret()">
       </div>
       <na-forgot-pass *ngIf="formType === 'forgot'"></na-forgot-pass>
       <na-sign-in *ngIf="formType === 'login'"></na-sign-in>
