@@ -4,9 +4,9 @@ import { CommonService } from '../../common.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'na-forgot-pass',
-  templateUrl: './forgot-pass.component.html',
-  styleUrls: ['./forgot-pass.component.scss']
+  selector: 'na-pass-forgot',
+  templateUrl: './pass-forgot.component.html',
+  styleUrls: ['./pass-forgot.component.scss']
 })
 export class ForgotPassComponent implements OnInit {
   form: FormGroup;

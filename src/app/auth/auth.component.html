@@ -4,7 +4,7 @@
       <div class="text-center">
         <img class="img-responsive" src="assets/logo.png" alt="logo" (dblclick)="secret()">
       </div>
-      <na-forgot-pass *ngIf="formType === 'forgot'"></na-forgot-pass>
+      <na-pass-forgot *ngIf="formType === 'forgot'"></na-pass-forgot>
       <na-sign-in *ngIf="formType === 'login'"></na-sign-in>
       <na-sign-up *ngIf="formType === 'reg'"></na-sign-up>
       <div class="text-right">

@@ -1,12 +1,12 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpService } from '../http.service';
-import { CommonService } from '../common.service';
+import { HttpService } from '../../http.service';
+import { CommonService } from '../../common.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'na-change-password',
-  templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.scss']
+  selector: 'na-pass-change',
+  templateUrl: './pass-change.component.html',
+  styleUrls: ['./pass-change.component.scss']
 })
 export class ChangePasswordComponent implements OnInit {
   form: FormGroup;
