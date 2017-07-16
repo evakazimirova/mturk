@@ -1,12 +1,17 @@
 <div class="container">
   <div class="row">
     <div class="col col-md-4 col-md-push-4 col-sm-6 col-sm-push-2">
+      <!-- Логотип -->
       <div class="text-center">
         <img class="img-responsive" src="assets/logo.png" alt="logo" (dblclick)="secret()">
       </div>
+
+      <!-- Формы авторизации -->
       <na-pass-forgot *ngIf="formType === 'forgot'"></na-pass-forgot>
       <na-sign-in *ngIf="formType === 'login'"></na-sign-in>
       <na-sign-up *ngIf="formType === 'reg'"></na-sign-up>
+
+      <!-- Кнопки переключения форм -->
       <div class="text-right">
         <button class="btn btn-link" (click)="formType = 'forgot'" *ngIf="formType !== 'forgot'">Forgot password</button>
         <button class="btn btn-link" (click)="formType = 'login'" *ngIf="formType !== 'login'">Sign in</button>

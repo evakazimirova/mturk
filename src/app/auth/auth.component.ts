@@ -1,26 +1,19 @@
-import { CommonService } from '../common.service';
 import { Component, OnInit } from '@angular/core';
-// import * as globs from '../globals';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'na-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent {
   formType = 'reg';
-
-  constructor(public common: CommonService) { }
-
-  ngOnInit() {
-    // console.log(globs.x);
-  }
+  constructor(public common: CommonService) {}
 
   secret() {
-    const answer = prompt("Enter password");
-    if (answer === "password") {
+    const answer = prompt('Enter password');
+    if (answer === 'password') {
       this.common.mode = 'admin';
     }
   }
-
 }

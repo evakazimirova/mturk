@@ -2,7 +2,8 @@ import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable()
 export class CommonService {
-  // общие свойства для всех компонент
+  mode: string; // auth | profile | fragmentsRating | fragmentsMarking
+
   user: any = {
     nickname: '',
     rating: 0,
@@ -18,7 +19,6 @@ export class CommonService {
   videoContainer;
   videoLength = 0;
   allFragmentsRated = true;
-  mode: string; // auth | profile | fragmentsRating | fragmentsMarking
   task: any;
   fragmentsWip = {};
 
