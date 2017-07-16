@@ -1,5 +1,6 @@
 import { CommonService } from '../common.service';
 import { Component, OnInit } from '@angular/core';
+// import * as globs from '../globals';
 
 @Component({
   selector: 'na-auth',
@@ -12,6 +13,7 @@ export class AuthComponent implements OnInit {
   constructor(public common: CommonService) { }
 
   ngOnInit() {
+    // console.log(globs.x);
   }
 
   secret() {
