@@ -4,8 +4,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'na-annotating-fragments',
-  templateUrl: './annotating-fragments.component.html',
-  styleUrls: ['./annotating-fragments.component.scss']
+  templateUrl: './annotating-fragments.component.html'
 })
 export class AnnotatingFragmentsComponent implements OnInit {
   loading = false;
