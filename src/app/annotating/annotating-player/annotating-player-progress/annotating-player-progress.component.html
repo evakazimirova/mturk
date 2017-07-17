@@ -1,7 +1,11 @@
+<!-- Progress Bar -->
 <div class="row">
+  <!-- Начало фрагмента -->
   <div class="col col-xs-2 text-right">
     {{ fragmentStart | time }}
   </div>
+
+  <!-- Полоса воспроизведения -->
   <div class="col col-xs-8">
     <div class="progress">
       <div class="progress-bar" role="progressbar" [ngStyle]="{width: percentage + '%'}">
@@ -9,6 +13,8 @@
       </div>
     </div>
   </div>
+
+  <!-- Конец фрагмента -->
   <div class="col col-xs-2">
     {{ fragmentEnd | time }}
   </div>

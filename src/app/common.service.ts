@@ -13,27 +13,22 @@ export class CommonService {
     }
   };
 
-  // список проектов
-  projects;
-
-
+  projects; // список проектов
+  task: any;
 
   csv = [[1, 0, 0, -1]];
   rating = [[]];
+  fragmentsWip = {};
   cf = -1;
   emotion = 0;
   videoContainer;
   videoLength = 0;
   allFragmentsRated = true;
-  task: any;
-  fragmentsWip = {};
 
   isYouTube: boolean;
   ytPlayer;
 
   // события
-  videoTurnedOff = new EventEmitter();
-  videoTurnedOn = new EventEmitter();
   videoChanged = new EventEmitter();
   fragmentChanged = new EventEmitter();
   fragmentRated = new EventEmitter();
@@ -96,7 +91,9 @@ export class CommonService {
     }
   }
 
+  videoTurnedOn = new EventEmitter();
   watchVideo() {
+    // выбираем нужное действие для соответствующего плеера
     if (this.isYouTube) {
       this.ytPlayer.playVideo();
     } else {
@@ -104,17 +101,45 @@ export class CommonService {
         this.videoContainer.play();
       }
     }
-    this.videoTurnedOn.emit(); // передаём "пауза" или "стоп"
+
+    // передаём событие другим компонентам
+    this.videoTurnedOn.emit();
   }
 
+  videoTurnedOff = new EventEmitter();
   unwatchVideo(event) {
-    if (this.isYouTube) {
-      this.ytPlayer.pauseVideo();
-    } else {
-      if (!this.videoContainer.paused) {
-        this.videoContainer.pause();
+    if (event === "stop") {
+      // останавливаем видео
+      let startTime;
+
+      // целиком ли воспроизводится видео
+      if (this.cf === -1) {
+        // начало видео
+        startTime = 0;
+      } else {
+        // начало фрагмента
+        startTime = this.csv[this.cf][0];
+      }
+
+      // задаём позицию видео для данного плеера
+      if (this.isYouTube) {
+        this.ytPlayer.seekTo(startTime, true);
+      } else {
+        this.videoContainer.currentTime = startTime;
+      }
+    } else if (event === "pause") {
+      // ставим видео на паузу
+      // выбираем нужное действие для соответствующего плеера
+      if (this.isYouTube) {
+        this.ytPlayer.pauseVideo();
+      } else {
+        if (!this.videoContainer.paused) {
+          this.videoContainer.pause();
+        }
       }
     }
-    this.videoTurnedOff.emit(event); // передаём "пауза" или "стоп"
+
+    // передаём событие другим компонентам
+    this.videoTurnedOff.emit(event);
   }
 }

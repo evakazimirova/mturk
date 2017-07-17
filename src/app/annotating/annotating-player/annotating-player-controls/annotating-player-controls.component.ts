@@ -74,25 +74,9 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
 
   // Повторить фрагмент
   replayVideo() {
-    let startTime;
-
-    // целиком ли воспроизводится видео
-    if (this.common.cf === -1) {
-      // начало видео
-      startTime = 0;
-    } else {
-      // начало фрагмента
-      startTime = this.common.csv[this.common.cf][0];
-    }
-
-    // задаём позицию видео для данного плеера
-    if (this.common.isYouTube) {
-      this.common.ytPlayer.seekTo(startTime, true);
-    } else {
-      this.common.videoContainer.currentTime = startTime;
-    }
-
-    // воспроизовдим видео
+    // останавливаем видео
+    this.stopVideo();
+    // воспроизводим видео
     this.playVideo();
   }
 
