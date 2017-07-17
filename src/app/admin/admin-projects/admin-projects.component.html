@@ -1,5 +1,6 @@
-<!-- Редактирование списка и параметров проектов (название, статус, размер оплаты за задачу) -->
+<!-- Параметры проектов -->
 <div *ngIf="isLoaded">
+  <!-- Список проектов -->
   <table class="table table-hover">
     <thead>
       <tr>
@@ -17,24 +18,33 @@
     </tbody>
   </table>
 
+  <!-- Окно редактирования проекта -->
   <div class="modal fade" id="projectSettings" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-sm" role="document">
+      <!-- Параметры проекта -->
       <div class="modal-content">
         <form>
           <div class="modal-body">
+              <!-- Название -->
               <div class="form-group">
                 <label for="titleInput">Title</label>
                 <input type="text" class="form-control" id="titleInput" placeholder="Title" [value]="projects[projectId].projectName">
               </div>
+
+              <!-- Максимальное число аннотаторов на задачу -->
               <div class="form-group">
                 <label for="statusInput">Annotators limit per task</label>
                 <input type="text" class="form-control" id="statusInput" placeholder="Status" [value]="projects[projectId].annoPerTask">
               </div>
+
+              <!-- Стоимость задачи -->
               <div class="form-group">
                 <label for="priceInput">Price per task</label>
                 <input type="text" class="form-control" id="priceInput" placeholder="1000" [value]="projects[projectId].pricePerTask">
               </div>
           </div>
+
+          <!-- Возможные действия -->
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             <button type="submit" class="btn btn-primary">Save</button>
