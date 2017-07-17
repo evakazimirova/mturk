@@ -108,8 +108,18 @@ export class CommonService {
 
   videoTurnedOff = new EventEmitter();
   unwatchVideo(event) {
-    if (event === "stop") {
-      // останавливаем видео
+    // ставим видео на паузу
+    // выбираем нужное действие для соответствующего плеера
+    if (this.isYouTube) {
+      this.ytPlayer.pauseVideo();
+    } else {
+      if (!this.videoContainer.paused) {
+        this.videoContainer.pause();
+      }
+    }
+
+    // возвращаемся в начало при полной остановке
+    if (event === 'stop') {
       let startTime;
 
       // целиком ли воспроизводится видео
@@ -126,16 +136,6 @@ export class CommonService {
         this.ytPlayer.seekTo(startTime, true);
       } else {
         this.videoContainer.currentTime = startTime;
-      }
-    } else if (event === "pause") {
-      // ставим видео на паузу
-      // выбираем нужное действие для соответствующего плеера
-      if (this.isYouTube) {
-        this.ytPlayer.pauseVideo();
-      } else {
-        if (!this.videoContainer.paused) {
-          this.videoContainer.pause();
-        }
       }
     }
 
