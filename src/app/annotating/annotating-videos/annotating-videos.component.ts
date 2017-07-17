@@ -14,29 +14,31 @@ export class AnnotatingVideosComponent implements OnInit {
               private http: HttpService) { }
 
   ngOnInit() {
+    // обновляем список видео
     this.videos = this.common.task.fragments;
-
-    for (const f of this.common.task.fragments) {
+    for (const f of this.videos) {
       this.common.fragmentsWip[f.FID] = f.result;
     }
   }
 
-
+  // смена видео
   videoChanged(vi) {
     if (this.common.task.currentFragment !== vi) {
+      // функция смены видео
       const setVideo = () => {
         this.common.task.currentFragment = vi;
         this.common.setVideo();
       };
 
-      if (this.common.task.fragments[vi].video) {
-        // Ссылка на видос есть
+      // есть ли ссылка на видос
+      if (this.videos[vi].video) {
         setVideo();
       } else {
-        // Ссылки нет — вынимаем из базы
-        const FID = this.common.task.fragments[vi].FID;
+        // вынимаем информацию по видео из БД
+        const FID = this.videos[vi].FID;
         this.http.get(`Fragments/getFragment?FID=${FID}`).subscribe(
           fragment => {
+            // кэшируем данные по видео
             this.common.task.fragments[vi] = fragment;
             setVideo();
           },
