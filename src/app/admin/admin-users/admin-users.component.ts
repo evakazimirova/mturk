@@ -20,7 +20,7 @@ export class AdminUsersComponent implements OnInit {
         this.isLoaded = true;
       },
       error => {
-        console.log(error);
+        console.error(error);
         this.isLoaded = true;
       }
     );
@@ -30,12 +30,11 @@ export class AdminUsersComponent implements OnInit {
     this.users[i].banned = undefined;
     this.http.get(`/annotators/ban?AID=${AID}&banned=${!banned}`).subscribe(
       user => {
-        console.log(user)
         this.users[i].banned = user.banned;
         // this.isBanning = -1;
       },
       error => {
-        console.log(error);
+        console.error(error);
         // this.isBanning = -1;
       }
     );

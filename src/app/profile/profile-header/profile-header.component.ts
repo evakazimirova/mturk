@@ -27,7 +27,7 @@ export class ProfileHeaderComponent {
           // выходим из системы
           this.common.mode = 'auth';
         },
-        err => console.log(err)
+        err => console.error(err)
       );
     }
   }

@@ -17,7 +17,7 @@ export class ProgressComponent implements OnInit {
   ngOnInit() {
     this.common.videoTurnedOn.subscribe(
       () => this.startWatching(),
-      (error) => console.log(error)
+      error => console.error(error)
     );
 
     this.common.videoTurnedOff.subscribe(
@@ -41,7 +41,7 @@ export class ProgressComponent implements OnInit {
           this.percentage = 0;
         }
       },
-      (error) => console.log(error)
+      error => console.error(error)
     );
   }
 

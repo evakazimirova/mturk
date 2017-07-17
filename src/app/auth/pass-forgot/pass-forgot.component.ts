@@ -42,7 +42,7 @@ export class ForgotPassComponent {
       },
       err => {
         this.loading = false;
-        console.log(err);
+        console.error(err);
       }
     );
   }

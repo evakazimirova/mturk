@@ -57,7 +57,7 @@ export class VideoComponent implements OnInit {
         this.loadVideo();
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     );
   }

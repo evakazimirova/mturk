@@ -28,7 +28,7 @@ export class FragmentsComponent implements OnInit {
         this.updateCSV();
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     );
   }

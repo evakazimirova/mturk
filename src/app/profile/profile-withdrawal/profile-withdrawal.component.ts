@@ -30,12 +30,11 @@ export class ProfileWithdrawalComponent implements OnInit {
         this.isRequesting = true;
         this.http.post(request, '/moneyRequests/send').subscribe(
           res => {
-            // console.log(res);
             this.common.user.money.available = res.available;
             this.isRequesting = false;
           },
           err => {
-            console.log(err);
+            console.error(err);
             this.isRequesting = false;
           }
         );

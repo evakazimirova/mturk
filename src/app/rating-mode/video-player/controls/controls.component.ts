@@ -44,8 +44,6 @@ export class ControlsComponent implements OnInit {
           }
           this.common.cf = 0;
         }
-
-        // console.log(e.keyCode);
       }
     });
 
@@ -61,7 +59,7 @@ export class ControlsComponent implements OnInit {
         }
         this.playVideo();
       },
-      (error) => console.log(error)
+      error => console.error(error)
     );
   }
 

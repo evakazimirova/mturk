@@ -19,7 +19,7 @@ export class AdminProjectsComponent implements OnInit {
         this.isLoaded = true;
       },
       error => {
-        console.log(error);
+        console.error(error);
         this.isLoaded = true;
       }
     );

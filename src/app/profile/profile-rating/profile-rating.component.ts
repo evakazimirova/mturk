@@ -21,7 +21,7 @@ export class ProfileRatingComponent implements OnInit {
       },
       err => {
         this.isLoaded = true;
-        console.log(err);
+        console.error(err);
       }
     );
   }

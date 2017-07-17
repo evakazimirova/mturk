@@ -47,7 +47,7 @@ export class RatingModeComponent implements OnInit {
             setVideo();
           },
           err => {
-            console.log(err);
+            console.error(err);
           }
         );
       }

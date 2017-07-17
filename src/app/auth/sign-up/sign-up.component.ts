@@ -65,11 +65,11 @@ export class SignUpComponent {
         switch (status) {
           case 'user exists':
             // если такой пользователь уже есть, то предлагается восстановить пароль
-            console.log('Annotator with this email is already exists in the system.');
+            console.error('Annotator with this email is already exists in the system.');
             break;
 
           default:
-            console.log(status);
+            console.error(status);
             break;
         }
       }
