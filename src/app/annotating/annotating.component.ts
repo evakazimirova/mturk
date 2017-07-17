@@ -1,6 +1,6 @@
+import { Component, OnInit } from '@angular/core';
 import { CommonService } from './../common.service';
 import { HttpService } from './../http.service';
-import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'na-annotating',
@@ -8,13 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./annotating.component.scss']
 })
 export class AnnotatingComponent {
+  constructor(private common: CommonService) {}
 
-  constructor(private http: HttpService, private common: CommonService) {}
-
+  // вернуться к списку проектов
   return() {
+    // подтверждение действия
     const confirmed = confirm('Are you sure you want to leave the task without saving progress?');
-
     if (confirmed) {
+      // переход к списку проектов
       this.common.mode = 'profile';
     }
   }
