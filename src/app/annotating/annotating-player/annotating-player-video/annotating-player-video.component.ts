@@ -1,6 +1,6 @@
-import { CommonService } from '../../../common.service';
 import { Component, OnInit } from '@angular/core';
 import YouTubePlayer from 'youtube-player';
+import { CommonService } from '../../../common.service';
 
 @Component({
   selector: 'na-annotating-player-video',
@@ -14,15 +14,13 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
 
   ngOnInit() {
     $(document).ready(() => {
+      // находитм все DOM-элементы
       const videoContainer = $('.video');
       const shield = $('.shield');
+      this.common.videoContainer = document.getElementById('currentVideo');
 
-      let w = videoContainer.innerWidth();
-      let h = w * 0.5625; // 9:16
-
+      // настраиваем YouTube-плеер
       this.common.ytPlayer = YouTubePlayer('youtube', {
-        width: w,
-        height: h,
         playerVars: {
           controls: 0,
           disablekb: 1,
@@ -34,34 +32,33 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
         },
       });
 
-      shield.innerWidth(w);
-      shield.innerHeight(h);
+      // задём размеры плеера
+      const setSize = () => {
+        // вычисляем размеры плеера
+        const w = videoContainer.innerWidth();
+        // h = videoContainer.innerHeight();
+        const h = w * 0.5625; // 9:16
 
-      $(window).resize(() => {
-        w = videoContainer.innerWidth();
-        if (this.common.isYouTube) {
-          h = w * 0.5625; // 9:16
-          this.common.ytPlayer.setSize(w, h);
-        } else {
-          h = videoContainer.innerHeight();
-        }
+        this.common.ytPlayer.setSize(w, h);
         shield.innerWidth(w);
         shield.innerHeight(h);
-      });
+      };
+      setSize();
+      // обновляем размеры плеера при изменнии размера окна браузера
+      $(window).resize(setSize);
 
+      // запускаем видео при заходе на страницу
       this.loadVideo();
     });
 
+    // загрузка видео по запросу
     this.common.videoChanged.subscribe(
-      success => {
-        this.loadVideo();
-      },
-      error => {
-        console.error(error);
-      }
+      success => this.loadVideo(),
+      error => console.error(error)
     );
   }
 
+  // проверка источника видео и назначение плеера
   checkIfYouTube() {
     if (this.common.task.fragments[this.common.task.currentFragment].video.substr(0, 17) === 'https://youtu.be/' ||
       this.common.task.fragments[this.common.task.currentFragment].video.substr(0, 32) === 'https://www.youtube.com/watch?v=') {
@@ -71,44 +68,38 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
     }
   }
 
+  // загружаем видео
   loadVideo() {
+    // проверяем, какой плеер нужно использовать
     this.checkIfYouTube();
 
     if (this.common.isYouTube) {
+      // YouTube
       const player = this.common.ytPlayer;
 
+      // указываем видео с YouTube
       const vid = this.common.task.fragments[this.common.task.currentFragment].video.slice(-11);
       player.loadVideoById(vid, () => {
         player.getDuration().then((time) => {
+          // задаём длительность видео
           this.common.videoLength = time;
+          // запускаем видео целиком
           this.common.setFragment(-1);
         });
       });
     } else {
-      this.common.videoContainer = document.getElementById('currentVideo');
-      // 3. При выборе видеозаписи, открывается файл на сервере с именем, совпадающим с именем видеозаписи
+      // Стандартный HTML5
       // меняем источник видео
       this.currentVideo = this.common.task.fragments[this.common.task.currentFragment].video;
+
+      // загружаем видео
       this.common.videoContainer.load();
-
       this.common.videoContainer.addEventListener('loadeddata', () => {
+        // задаём длительность видео
         this.common.videoLength = this.common.videoContainer.duration;
-
-        if (this.common.mode === "fragmentsRating") {
-          this.common.setFragment(-1); // запускаем видео целиком
-        }
-
-        if (this.common.mode === "fragmentsMarking") {
-          this.common.unwatchVideo('stop');
-        }
+        // запускаем видео целиком
+        this.common.setFragment(-1);
       }, false);
-
-      // // 5. По умолчанию воспроизведение начинается с 0-го фрагмента.
-      // this.common.videoContainer.currentTime = this.common.csv[this.common.cf][1];
-
-      // ДОП 1. сделать возможность просматривать весь видеофайл (это необходимо сделать аннотаторам перед разметкой каждого видео, по умолчанию выбор нового видео должен приводить к тому что включается воспроизведение видео без фрагментов). То есть должна быть кнопка в управлении, которая запускает видео таймлайн при этом это длина всего файла. Когда такой тип воспроизведения активен, соответствующая кнопка подсвечивается, чтобы перейти к разметке надо ее отжать, либо выбрать фрагмент.
-      this.common.videoContainer.currentTime = 0;
-      // this.common.updateCSV();
     }
   }
 }

@@ -12,7 +12,7 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
   ngOnInit() {
     // Обработка нажатий клавиш
     $(document).keyup((e) => {
-      if(this.common.mode === "fragmentsRating") {
+      if(this.common.mode === 'fragmentsRating') {
         if (e.keyCode >= 49 && e.keyCode <= 53) { // клавиши 1, 2, 3, 4, 5
           // Оценка фрагмента
           this.common.rateFragment(e.key);
@@ -64,12 +64,12 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
 
   // Пауза
   pauseVideo() {
-    this.common.unwatchVideo("pause");
+    this.common.unwatchVideo('pause');
   }
 
   // Остановка
   stopVideo() {
-    this.common.unwatchVideo("stop");
+    this.common.unwatchVideo('stop');
   }
 
   // Повторить фрагмент
