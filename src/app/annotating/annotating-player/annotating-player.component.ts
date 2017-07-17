@@ -1,13 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'na-annotating-player',
-  templateUrl: './annotating-player.component.html',
-  styleUrls: ['./annotating-player.component.scss']
+  templateUrl: './annotating-player.component.html'
 })
-export class AnnotatingPlayerComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {}
-}
+export class AnnotatingPlayerComponent {}
