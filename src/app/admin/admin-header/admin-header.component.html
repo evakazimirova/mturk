@@ -1,12 +1,17 @@
 <nav class="navbar navbar-default">
   <div class="container">
     <ul class="nav nav-pills nav-justified">
+      <!-- Список зарегистрированных аннотаторов -->
       <li [ngClass]="{active: page === 'users'}">
         <a href="#" (click)="changePage($event, 'users')">Users</a>
       </li>
+
+      <!-- Список проектов -->
       <li [ngClass]="{active: page === 'projects'}">
         <a href="#" (click)="changePage($event, 'projects')">Projects</a>
       </li>
+
+      <!-- Список запросов на вывод средств -->
       <li [ngClass]="{active: page === 'moneyRequests'}">
         <a href="#" (click)="changePage($event, 'moneyRequests')">Money requests</a>
       </li>
