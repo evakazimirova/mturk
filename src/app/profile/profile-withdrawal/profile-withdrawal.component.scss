@@ -1,0 +1,35 @@
+.logos {
+  .col {
+    padding: 15px;
+
+    div {
+      cursor: pointer;
+      border-radius: 10px;
+      padding: 5px;
+      min-height: 70px;
+
+      &:hover {
+        background-color: #f6f6f6;
+      }
+
+      &.active {
+        background-color: #eee;
+      }
+
+      img {
+        width: 100%;
+      }
+
+    }
+  }
+}
+
+button {
+  position: relative;
+
+  .fa {
+    position: absolute;
+    top: 2px;
+    right: 5px;
+  }
+}
