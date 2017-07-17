@@ -1,5 +1,5 @@
-import { CommonService } from '../../../common.service';
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from '../../../common.service';
 
 @Component({
   selector: 'na-annotating-player-controls',
@@ -7,94 +7,98 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./annotating-player-controls.component.scss']
 })
 export class AnnotatingPlayerControlsComponent implements OnInit {
-
   constructor(private common: CommonService) { }
 
   ngOnInit() {
     // Обработка нажатий клавиш
     $(document).keyup((e) => {
       if(this.common.mode === "fragmentsRating") {
-        // 7. Оценка фрагменту выставляется с помощью кнопок в web-интерфейсе или по нажатию клавиш 1 2 3 4 5.
-        if (e.keyCode >= 49 && e.keyCode <= 53) {
+        if (e.keyCode >= 49 && e.keyCode <= 53) { // клавиши 1, 2, 3, 4, 5
+          // Оценка фрагмента
           this.common.rateFragment(e.key);
-        }
-
-        // 9. Переход между фрагментами осуществляется с помощью соответствующих кнопок на интерфейсе или стрелками на клавиатуре.
-        if (e.keyCode === 37) { // влево
+        } else if (e.keyCode === 37) { // стрелка влево
+          // Предыдущий фрагмент
           this.common.setFragment(this.common.cf - 1);
-        }
-
-        if (e.keyCode === 39) { // вправо
+        } else if (e.keyCode === 39) { // стрелка вправо
+          // Следующий фрагмент
           this.common.setFragment(this.common.cf + 1);
-        }
-
-        // Повторить фрагмент
-        if (e.keyCode === 40) { // вниз
+        } else if (e.keyCode === 40) { // стрелка вниз
+          // Повторить фрагмент
           this.replayVideo();
-        }
-
-        // Смена шкалы оценивания
-        // 10. Смена шкалы оценивания осуществляется нажатием клавиши Right Shift или в соответствующем списке интерфейса.
-        if (e.keyCode === 16) { // Shift
-          // this.replayVideo();
+        } else if (e.keyCode === 16) { // shift
+          // Смена шкалы оценивания
           if(this.common.emotion === this.common.task.emotions.length - 1) {
+            // Возвращаемся к первой эмоции
             this.common.emotion = 0;
           } else {
+            // Следующая эмоция
             this.common.emotion++;
           }
+          // Переходим к первому фрагменту
           this.common.cf = 0;
         }
       }
     });
 
-    // 5. По умолчанию воспроизведение начинается с 0-го фрагмента.
-    // 6. При выборе фрагмента из списка происходит его воспроизведение. В списке воспроизводимый в текущий момент фрагмент помечается.
+    // При выборе фрагмента из списка происходит его воспроизведение
     this.common.fragmentChanged.subscribe(
-      (fragmentPosition) => {
-        this.pauseVideo();
+      fragmentPosition => {
+        // выбираем плеер
         if (this.common.isYouTube) {
           this.common.ytPlayer.seekTo(fragmentPosition, true);
         } else {
           this.common.videoContainer.currentTime = fragmentPosition;
         }
+
+        // воспроизводим фрагмент
         this.playVideo();
       },
       error => console.error(error)
     );
   }
 
-  // 8. Остановка/пауза/продолжение воспроизведения фрагмента осуществляется через соотв. кнопки в web-интерфейсе.
+  // Воспроизведение
   playVideo() {
     this.common.watchVideo();
   }
 
+  // Пауза
   pauseVideo() {
     this.common.unwatchVideo("pause");
   }
 
+  // Остановка
   stopVideo() {
     this.common.unwatchVideo("stop");
   }
 
+  // Повторить фрагмент
   replayVideo() {
-    let fragmentPosition;
+    let startTime;
+
+    // целиком ли воспроизводится видео
     if (this.common.cf === -1) {
-      fragmentPosition = 0;
+      // начало видео
+      startTime = 0;
     } else {
-      fragmentPosition = this.common.csv[this.common.cf][0];
+      // начало фрагмента
+      startTime = this.common.csv[this.common.cf][0];
     }
 
+    // задаём позицию видео для данного плеера
     if (this.common.isYouTube) {
-      this.common.ytPlayer.seekTo(fragmentPosition, true);
+      this.common.ytPlayer.seekTo(startTime, true);
     } else {
-      this.common.videoContainer.currentTime = fragmentPosition;
+      this.common.videoContainer.currentTime = startTime;
     }
 
+    // воспроизовдим видео
     this.playVideo();
   }
 
-  // ДОП 1. сделать возможность просматривать весь видеофайл (это необходимо сделать аннотаторам перед разметкой каждого видео, по умолчанию выбор нового видео должен приводить к тому что включается воспроизведение видео без фрагментов). То есть должна быть кнопка в управлении, которая запускает видео таймлайн при этом это длина всего файла. Когда такой тип воспроизведения активен, соответствующая кнопка подсвечивается, чтобы перейти к разметке надо ее отжать, либо выбрать фрагмент.
+  // Видео целиком
   wholeVideo() {
+    // Воспроизводим видел целиком, либо первый фрагмент
     if(this.common.cf === -1) {
       this.common.setFragment(0);
     } else {

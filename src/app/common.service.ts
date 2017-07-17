@@ -39,6 +39,8 @@ export class CommonService {
   fragmentRated = new EventEmitter();
 
   setFragment(number) {
+    // останавливаем воспроизведение
+    this.unwatchVideo('pause');
     // не выходим за пределы таблицы
     if (number >= -1 && number < this.csv.length) {
       this.cf = number;
