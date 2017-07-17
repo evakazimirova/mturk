@@ -1,17 +1,22 @@
 <div class="container">
   <div class="row">
     <div class="col col-md-4 col-md-push-4 col-sm-6 col-sm-push-2">
+      <!-- Логотип -->
       <div class="text-center">
-        <img src="assets/logo_black.png" alt="logo" (dblclick)="secret()">
+        <img src="assets/logo.png" alt="logo" (dblclick)="secret()">
       </div>
+
+      <!-- Форма смены пароля -->
       <form [formGroup]="form" (ngSubmit)="changePassword($event)">
         <div class="form-group">
           <label for="password">New password</label>
           <input type="password" class="form-control" id="password"
             formControlName="password" placeholder="Password">
         </div>
+
         <button type="submit" class="btn btn-primary btn-block" [ngClass]="{disabled: loading}">
           Change password and sign in
+          <!-- Индикатор загрузки -->
           <span class="fa fa-cog fa-spin fa-2x" *ngIf="loading"></span>
         </button>
       </form>

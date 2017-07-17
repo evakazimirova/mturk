@@ -12,7 +12,9 @@ export class SignUpComponent {
   form: FormGroup;
   loading = false;
 
-  constructor(public common: CommonService, private http: HttpService, private formBuilder: FormBuilder) {
+  constructor(public common: CommonService,
+              private http: HttpService,
+              private formBuilder: FormBuilder) {
     this.form = formBuilder.group({
       'firstName': ['', [
         Validators.required
@@ -35,8 +37,9 @@ export class SignUpComponent {
   }
 
   signUp(event) {
-    event.preventDefault();
+    event.preventDefault(); // отменяем стандартное действие
 
+    // собираем информацию с полей
     const userData = {
       firstName: this.form.value.firstName,
       secondName: this.form.value.secondName,
@@ -45,13 +48,19 @@ export class SignUpComponent {
       password: this.form.value.password
     };
 
+    // отправляем запрос на сервер
     this.loading = true;
     this.http.post(userData, '/annotators/register').subscribe(
       user => {
-        console.log(`We have sent an e-mail to the "${user.email}". Please check it out!`);
         this.loading = false;
+
+        // выводим сообщение об успехе
+        console.log(`We have sent an e-mail to the "${user.email}". Please check it out!`);
       },
       error => {
+        this.loading = false;
+
+        // обработка ошибок
         const status = error._body;
         switch (status) {
           case 'user exists':
@@ -63,7 +72,6 @@ export class SignUpComponent {
             console.log(status);
             break;
         }
-        this.loading = false;
       }
     );
   }
