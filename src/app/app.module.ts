@@ -23,16 +23,23 @@ import { ProjectComponent } from './profile/profile-projects/project/project.com
 import { ProfileRatingComponent } from './profile/profile-rating/profile-rating.component';
 import { ProfileWithdrawalComponent } from './profile/profile-withdrawal/profile-withdrawal.component';
 
-import { VideoPlayerComponent } from './rating-mode/video-player/video-player.component';
-import { FragmentsListComponent } from './rating-mode/fragments-list/fragments-list.component';
-import { RangesComponent } from './rating-mode/fragments-list/ranges/ranges.component';
-import { FragmentsComponent } from './rating-mode/fragments-list/fragments/fragments.component';
-import { VideoComponent } from './rating-mode/video-player/video/video.component';
-import { ProgressComponent } from './rating-mode/video-player/progress/progress.component';
-import { ControlsComponent } from './rating-mode/video-player/controls/controls.component';
-import { RateBarComponent } from './rating-mode/video-player/rate-bar/rate-bar.component';
-import { TipsComponent } from './rating-mode/video-player/tips/tips.component';
-import { RatingModeComponent } from './rating-mode/rating-mode.component';
+import { AnnotatingComponent } from './annotating/annotating.component';
+import { AnnotatingFragmentsComponent } from './annotating/annotating-fragments/annotating-fragments.component';
+import { AnnotatingFragmentsRangesComponent } from './annotating/annotating-fragments/annotating-fragments-ranges/annotating-fragments-ranges.component';
+import { AnnotatingFragmentsTableComponent } from './annotating/annotating-fragments/annotating-fragments-table/annotating-fragments-table.component';
+import { AnnotatingVideosComponent } from './annotating/annotating-videos/annotating-videos.component';
+import { AnnotatingPlayerComponent } from './annotating/annotating-player/annotating-player.component';
+
+// import { AnnotatingPlayerComponent } from './annotating/annotating-player/annotating-player.component';
+// import { AnnotatingPlayerComponent } from './annotating/annotating-player/annotating-player.component';
+// import { AnnotatingPlayerComponent } from './annotating/annotating-player/annotating-player.component';
+// import { AnnotatingPlayerComponent } from './annotating/annotating-player/annotating-player.component';
+// import { AnnotatingPlayerComponent } from './annotating/annotating-player/annotating-player.component';
+import { VideoComponent } from './annotating/annotating-player/video/video.component';
+import { ProgressComponent } from './annotating/annotating-player/progress/progress.component';
+import { ControlsComponent } from './annotating/annotating-player/controls/controls.component';
+import { RateBarComponent } from './annotating/annotating-player/rate-bar/rate-bar.component';
+import { TipsComponent } from './annotating/annotating-player/tips/tips.component';
 
 import { AdminComponent } from './admin/admin.component';
 import { AdminHeaderComponent } from './admin/admin-header/admin-header.component';
@@ -44,17 +51,18 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
   declarations: [
     SiteComponent,
     LoaderBigComponent,
-    VideoPlayerComponent,
-    FragmentsListComponent,
+    AnnotatingPlayerComponent,
+    AnnotatingFragmentsRangesComponent,
     TimePipe,
-    RangesComponent,
-    FragmentsComponent,
+    AnnotatingFragmentsTableComponent,
+    AnnotatingFragmentsComponent,
     VideoComponent,
     ProgressComponent,
     ControlsComponent,
     RateBarComponent,
     TipsComponent,
-    RatingModeComponent,
+    AnnotatingVideosComponent,
+    AnnotatingComponent,
     AuthComponent,
     SignInComponent,
     SignUpComponent,
