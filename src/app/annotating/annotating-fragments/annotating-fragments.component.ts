@@ -1,105 +1,103 @@
+import { Component } from '@angular/core';
 import { HttpService } from '../../http.service';
 import { CommonService } from '../../common.service';
-import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'na-annotating-fragments',
   templateUrl: './annotating-fragments.component.html'
 })
-export class AnnotatingFragmentsComponent implements OnInit {
+export class AnnotatingFragmentsComponent {
+  // индикатор загрузки
   loading = false;
 
-  constructor(private common: CommonService, private http: HttpService) {}
+  // размеры массивов с данными
+  totalEmotions = this.common.task.emotions.length;
+  totalFragments = this.common.csv.length;
 
-  ngOnInit() {
-  }
+  constructor(private common: CommonService,
+              private http: HttpService) {}
 
-
+  // сохраняем данные на сервере
   saveRating() {
-    // 11. При нажатии клавиши сохранить происходит проверка, все ли фрагменты видео оценены во всех доступных шкалах. Если нет, то необходимо перейти к первому неоцененному фрагменту.
-    let totalEmotions = this.common.task.emotions.length;
-    let totalFragments =  this.common.csv.length;
-    let isBroken = false;
+    const isUnrated = this.checkIfUnrated();
 
-    // перебираем все эмоции
-    for (let i = 0; i < totalEmotions; i++) {
-      if (isBroken) {
-        break;
-      }
-
-      for (let j = 0; j < totalFragments; j++) {
-        if (this.common.rating[i][j] === -1) {
-          alert(`Фрагмент ${j + 1} в шкале "${this.common.task.emotions[i].title}" не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
-
-          // переходим к неоцененному фрагменту
-          this.common.emotion = i;
-          this.common.cf = j;
-
-          isBroken = true;
-          break;
-        }
-      }
-    }
-
-    if (!isBroken) {
-      // 12. Выставленные оценки для всех шкал сохраняются на сервере по уникальным для каждого пользователя именем в формате csv или xls/xlsx, в столбцах: Номер фрагмента/Начало фрагмента/Конец фрагмента/Оценка по шкале 1/Оценка по шкале 2/и. т. д.
-      let ratedCSV = JSON.parse(JSON.stringify(this.common.csv));
-      // ratedCSV = ratedCSV.concat();
-      //  = this.common.csv.slice(0); // клонируем массив (а не ссылку)
-
-      for (let i = 0; i < totalFragments; i++) {
-        // ratedCSV.push(this.common.csv[i]);
-
-        for (let j = 0; j < totalEmotions; j++) {
+    if (!isUnrated) {
+      // добавляем результаты аннотирования к фрагментам
+      const ratedCSV = JSON.parse(JSON.stringify(this.common.csv)); // клонируем массив, а не ссылку на него
+      for (let i = 0; i < this.totalFragments; i++) {
+        for (let j = 0; j < this.totalEmotions; j++) {
           ratedCSV[i].push(this.common.rating[j][i]);
         }
       }
 
       // заголовок для выходного CSV
       let outputCSV = 'Start,End';
-      for (let emotion of this.common.task.emotions) {
-        outputCSV += `,Em${emotion.EID}`
+      for (const emotion of this.common.task.emotions) {
+        outputCSV += `,E${emotion.EID}`;
       }
-      outputCSV += "\n";
+      outputCSV += '\n';
 
       // преобразуем данные в CSV
       outputCSV += ratedCSV.map(function(d){
         return d.join();
       }).join('\n');
 
-      // разрешаем переходить к другому видео или закрывать сайт
-      this.common.allFragmentsRated = true;
-
-      // считаем, сколько эмоций проработано
-      const emotionsCount = this.common.task.emotions.length;
-
+      // переводим разметку в нужный формат
       const FID = this.common.task.fragments[this.common.task.currentFragment].FID;
       this.common.fragmentsWip[FID] = outputCSV;
+
+      // формируем данные для запроса на сервер
       const output = {
         result: this.common.fragmentsWip,
         ATID: this.common.task.ATID,
-        done: emotionsCount
+        done: this.common.task.emotions.length // число проработанных эмоций
       };
 
-      // сохраняем резульат
+      // сохраняем резульат в БД
       this.loading = true;
       this.http.post(output, 'AnnoTasks/save').subscribe(
-        (res) => {
-          // обновляем баланс пользователя
-          this.common.user.money.available = res.money;
-          // и рейтинг
-          this.common.user.rating = res.rating;
-
-          // // возвращаемся в личный кабинет
-          // this.common.mode = 'profile';
-
+        res => {
           this.loading = false;
+
+          // обновляем баланс пользователя и рейтинг
+          this.common.user.money.available = res.money;
+          this.common.user.rating = res.rating;
         },
         err => {
-          console.error(err);
           this.loading = false;
+          console.error(err);
         }
       );
+
+      // разрешаем переходить к другому видео или закрывать сайт
+      this.common.allFragmentsRated = true;
     }
+  }
+
+  // проверка, все ли фрагменты видео оценены во всех доступных шкалах
+  checkIfUnrated() {
+    let isUnrated = false;
+    for (let i = 0; i < this.totalEmotions; i++) {
+      // уже нашли неоценнённый фрагмент
+      if (isUnrated) {
+        break;
+      }
+
+      // проверяем
+      for (let j = 0; j < this.totalFragments; j++) {
+        if (this.common.rating[i][j] === -1) {
+          // не все => переходим к неоцененному фрагменту
+          this.common.emotion = i;
+          this.common.cf = j;
+
+          // сообщаем о находке и не даём сохраняться
+          alert(`Фрагмент ${j + 1} в шкале "${this.common.task.emotions[i].title}" не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
+          isUnrated = true;
+          break;
+        }
+      }
+    }
+
+    return isUnrated;
   }
 }
