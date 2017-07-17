@@ -5,9 +5,9 @@
 
 <!-- Основные части приложения -->
 <div class="container">
-  <na-projects *ngIf="profileMode === 'taskList'"></na-projects>
+  <na-profile-projects *ngIf="profileMode === 'taskList'"></na-profile-projects>
   <na-profile-edit *ngIf="profileMode === 'editing'"
      (profileModeSelected)="profileMode = $event"></na-profile-edit>
   <na-profile-rating *ngIf="profileMode === 'rating'"></na-profile-rating>
-  <na-withdrawal *ngIf="profileMode === 'withdrawal'"></na-withdrawal>
+  <na-profile-withdrawal *ngIf="profileMode === 'withdrawal'"></na-profile-withdrawal>
 </div>

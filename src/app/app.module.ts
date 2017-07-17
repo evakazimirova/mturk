@@ -16,12 +16,12 @@ import { ForgotPassComponent } from './auth/pass-forgot/pass-forgot.component';
 import { ChangePasswordComponent } from './auth/pass-change/pass-change.component';
 
 import { ProfileComponent } from './profile/profile.component';
-import { ProjectComponent } from './profile/projects/project/project.component';
 import { ProfileHeaderComponent } from './profile/profile-header/profile-header.component';
 import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
-import { ProjectsComponent } from './profile/projects/projects.component';
+import { ProfileProjectsComponent } from './profile/profile-projects/profile-projects.component';
+import { ProjectComponent } from './profile/profile-projects/project/project.component';
 import { ProfileRatingComponent } from './profile/profile-rating/profile-rating.component';
-import { WithdrawalComponent } from './profile/withdrawal/withdrawal.component';
+import { ProfileWithdrawalComponent } from './profile/profile-withdrawal/profile-withdrawal.component';
 
 import { VideoPlayerComponent } from './rating-mode/video-player/video-player.component';
 import { FragmentsListComponent } from './rating-mode/fragments-list/fragments-list.component';
@@ -63,9 +63,9 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
     ProjectComponent,
     ProfileHeaderComponent,
     ProfileEditComponent,
-    ProjectsComponent,
+    ProfileProjectsComponent,
     ProfileRatingComponent,
-    WithdrawalComponent,
+    ProfileWithdrawalComponent,
     AdminComponent,
     AdminHeaderComponent,
     AdminUsersComponent,
