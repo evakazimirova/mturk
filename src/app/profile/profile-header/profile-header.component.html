@@ -25,12 +25,30 @@
         </a>
       </li>
 
+      <!-- Нетворкинг -->
+      <li (click)="selectProfileMode('networking')"
+          [ngClass]="{active: profileMode === 'networking'}">
+        <a href="#">
+          <span class="fa fa-wd fa-users"></span>
+          Networking
+        </a>
+      </li>
+
       <!-- Вывод денег -->
       <li (click)="selectProfileMode('withdrawal')"
           [ngClass]="{active: profileMode === 'withdrawal'}">
         <a href="#">
           <span class="fa fa-wd fa-money"></span>
           Withdrawal
+        </a>
+      </li>
+
+      <!-- FAQ -->
+      <li (click)="selectProfileMode('faq')"
+          [ngClass]="{active: profileMode === 'faq'}">
+        <a href="#">
+          <span class="fa fa-wd fa-question"></span>
+          F.A.Q.
         </a>
       </li>
 
