@@ -48,7 +48,7 @@
         (click)=sendRequest() [ngClass]="{disabled: isRequesting}">
         Send a request
         <!-- Индикатор загрузки -->
-        <span class="fa fa-cog fa-spin fa-2x" *ngIf="isRequesting"></span>
+        <na-loader-inbtn *ngIf="isRequesting"></na-loader-inbtn>
       </button>
     </form>
   </div>

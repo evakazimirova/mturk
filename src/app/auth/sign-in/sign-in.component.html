@@ -15,6 +15,6 @@
   <button type="submit" class="btn btn-primary btn-block" [ngClass]="{disabled: loading}">
     Sign In
     <!-- Индикатор загрузки -->
-    <span class="fa fa-cog fa-spin fa-2x" *ngIf="loading"></span>
+    <na-loader-inbtn *ngIf="loading"></na-loader-inbtn>
   </button>
 </form>

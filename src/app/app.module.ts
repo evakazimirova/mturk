@@ -8,6 +8,7 @@ import { HttpModule } from '@angular/http';
 import { SiteComponent } from './site.component';
 import { TimePipe } from './time.pipe';
 import { LoaderBigComponent } from './loaders/loader-big/loader-big.component';
+import { LoaderInbtnComponent } from './loaders/loader-inbtn/loader-inbtn.component';
 
 import { AuthComponent } from './auth/auth.component';
 import { SignInComponent } from './auth/sign-in/sign-in.component';
@@ -45,6 +46,7 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
   declarations: [
     SiteComponent,
     LoaderBigComponent,
+    LoaderInbtnComponent,
     AnnotatingPlayerComponent,
     AnnotatingFragmentsRangesComponent,
     TimePipe,
