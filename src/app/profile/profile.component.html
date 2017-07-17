@@ -1,4 +1,9 @@
-<na-profile-header [profileMode]="profileMode" (profileModeSelected)="profileMode = $event"></na-profile-header>
+<!-- Хедер -->
+<na-profile-header
+  [profileMode]="profileMode"
+  (profileModeSelected)="profileMode = $event"></na-profile-header>
+
+<!-- Основные части приложения -->
 <div class="container">
   <na-projects *ngIf="profileMode === 'taskList'"></na-projects>
   <na-profile-edit *ngIf="profileMode === 'editing'"

@@ -1,16 +1,9 @@
-import { CommonService } from '../common.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'na-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  templateUrl: './profile.component.html'
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
   profileMode = 'taskList';
-
-  constructor(public common: CommonService) { }
-
-  ngOnInit() {
-  }
 }
