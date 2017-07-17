@@ -2,11 +2,11 @@ import { CommonService } from '../../../common.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'na-controls',
-  templateUrl: './controls.component.html',
-  styleUrls: ['./controls.component.scss']
+  selector: 'na-annotating-player-controls',
+  templateUrl: './annotating-player-controls.component.html',
+  styleUrls: ['./annotating-player-controls.component.scss']
 })
-export class ControlsComponent implements OnInit {
+export class AnnotatingPlayerControlsComponent implements OnInit {
 
   constructor(private common: CommonService) { }
 

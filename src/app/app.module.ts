@@ -24,22 +24,16 @@ import { ProfileRatingComponent } from './profile/profile-rating/profile-rating.
 import { ProfileWithdrawalComponent } from './profile/profile-withdrawal/profile-withdrawal.component';
 
 import { AnnotatingComponent } from './annotating/annotating.component';
+import { AnnotatingVideosComponent } from './annotating/annotating-videos/annotating-videos.component';
 import { AnnotatingFragmentsComponent } from './annotating/annotating-fragments/annotating-fragments.component';
 import { AnnotatingFragmentsRangesComponent } from './annotating/annotating-fragments/annotating-fragments-ranges/annotating-fragments-ranges.component';
 import { AnnotatingFragmentsTableComponent } from './annotating/annotating-fragments/annotating-fragments-table/annotating-fragments-table.component';
-import { AnnotatingVideosComponent } from './annotating/annotating-videos/annotating-videos.component';
 import { AnnotatingPlayerComponent } from './annotating/annotating-player/annotating-player.component';
-
-// import { AnnotatingPlayerComponent } from './annotating/annotating-player/annotating-player.component';
-// import { AnnotatingPlayerComponent } from './annotating/annotating-player/annotating-player.component';
-// import { AnnotatingPlayerComponent } from './annotating/annotating-player/annotating-player.component';
-// import { AnnotatingPlayerComponent } from './annotating/annotating-player/annotating-player.component';
-// import { AnnotatingPlayerComponent } from './annotating/annotating-player/annotating-player.component';
-import { VideoComponent } from './annotating/annotating-player/video/video.component';
-import { ProgressComponent } from './annotating/annotating-player/progress/progress.component';
-import { ControlsComponent } from './annotating/annotating-player/controls/controls.component';
-import { RateBarComponent } from './annotating/annotating-player/rate-bar/rate-bar.component';
-import { TipsComponent } from './annotating/annotating-player/tips/tips.component';
+import { AnnotatingPlayerVideoComponent } from './annotating/annotating-player/annotating-player-video/annotating-player-video.component';
+import { AnnotatingPlayerProgressComponent } from './annotating/annotating-player/annotating-player-progress/annotating-player-progress.component';
+import { AnnotatingPlayerControlsComponent } from './annotating/annotating-player/annotating-player-controls/annotating-player-controls.component';
+import { AnnotatingPlayerRateBarComponent } from './annotating/annotating-player/annotating-player-ratebar/annotating-player-ratebar.component';
+import { AnnotatingPlayerTipsComponent } from './annotating/annotating-player/annotating-player-tips/annotating-player-tips.component';
 
 import { AdminComponent } from './admin/admin.component';
 import { AdminHeaderComponent } from './admin/admin-header/admin-header.component';
@@ -56,11 +50,11 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
     TimePipe,
     AnnotatingFragmentsTableComponent,
     AnnotatingFragmentsComponent,
-    VideoComponent,
-    ProgressComponent,
-    ControlsComponent,
-    RateBarComponent,
-    TipsComponent,
+    AnnotatingPlayerVideoComponent,
+    AnnotatingPlayerProgressComponent,
+    AnnotatingPlayerControlsComponent,
+    AnnotatingPlayerRateBarComponent,
+    AnnotatingPlayerTipsComponent,
     AnnotatingVideosComponent,
     AnnotatingComponent,
     AuthComponent,

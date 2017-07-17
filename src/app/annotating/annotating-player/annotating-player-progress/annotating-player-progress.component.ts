@@ -2,11 +2,11 @@ import { CommonService } from '../../../common.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'na-progress',
-  templateUrl: './progress.component.html',
-  styleUrls: ['./progress.component.scss']
+  selector: 'na-annotating-player-progress',
+  templateUrl: './annotating-player-progress.component.html',
+  styleUrls: ['./annotating-player-progress.component.scss']
 })
-export class ProgressComponent implements OnInit {
+export class AnnotatingPlayerProgressComponent implements OnInit {
   percentage: string | number = 0;
   watchingVideo;
   fragmentStart = 0;

@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import YouTubePlayer from 'youtube-player';
 
 @Component({
-  selector: 'na-video',
-  templateUrl: './video.component.html',
-  styleUrls: ['./video.component.scss']
+  selector: 'na-annotating-player-video',
+  templateUrl: './annotating-player-video.component.html',
+  styleUrls: ['./annotating-player-video.component.scss']
 })
-export class VideoComponent implements OnInit {
+export class AnnotatingPlayerVideoComponent implements OnInit {
   currentVideo: string;
 
   constructor(private common: CommonService) { }
