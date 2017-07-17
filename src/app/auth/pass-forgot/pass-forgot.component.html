@@ -1,15 +1,18 @@
-<!--
-Если почтовый адрес уже был зарегистрирован предлагается процедура восстановления пароля.
-Указание почтового адреса, на который высылается ссылка, по ссылке открывается страница, на которой пользователь может поменять пароль.
--->
+<!-- Восстановление пароля -->
 <form [formGroup]="form" (ngSubmit)="forgotPass($event)">
   <div class="form-group">
     <label for="login">Login or e-mail</label>
     <input type="text" class="form-control" id="login"
-      formControlName="login" placeholder="johndoe_42">
+      formControlName="login" placeholder="johndoe_42"
+      [ngClass]="{
+        success: form.controls['login'].valid,
+        danger: !form.controls['login'].valid
+      }">
   </div>
+    
   <button type="submit" class="btn btn-primary btn-block" [ngClass]="{disabled: loading}">
     Restore password
+    <!-- Индикатор загрузки -->
     <span class="fa fa-cog fa-spin fa-2x" *ngIf="loading"></span>
   </button>
 </form>

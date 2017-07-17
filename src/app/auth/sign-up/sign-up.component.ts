@@ -8,7 +8,7 @@ import { HttpService } from '../../http.service';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent {
   form: FormGroup;
   loading = false;
 
@@ -32,9 +32,6 @@ export class SignUpComponent implements OnInit {
         Validators.pattern('.{5,}')
       ]]
     });
-  }
-
-  ngOnInit() {
   }
 
   signUp(event) {
