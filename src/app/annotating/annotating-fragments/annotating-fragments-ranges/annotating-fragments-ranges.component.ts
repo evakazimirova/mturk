@@ -1,5 +1,6 @@
-import { CommonService } from '../../../common.service';
 import { Component } from '@angular/core';
+import { CommonService } from '../../../common.service';
+import { AnnotatingService } from '../../../annotating/annotating.service';
 
 @Component({
   selector: 'na-annotating-fragments-ranges',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./annotating-fragments-ranges.component.scss']
 })
 export class AnnotatingFragmentsRangesComponent {
-  constructor(public common: CommonService) {}
+  constructor(public annot: AnnotatingService) {}
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../../../common.service';
+import { AnnotatingService } from '../../../annotating/annotating.service';
 
 @Component({
   selector: 'na-annotating-player-controls',
@@ -7,7 +8,8 @@ import { CommonService } from '../../../common.service';
   styleUrls: ['./annotating-player-controls.component.scss']
 })
 export class AnnotatingPlayerControlsComponent implements OnInit {
-  constructor(private common: CommonService) { }
+  constructor(private common: CommonService,
+              public annot: AnnotatingService) { }
 
   ngOnInit() {
     // Обработка нажатий клавиш
@@ -15,39 +17,39 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
       if(this.common.mode === 'fragmentsRating') {
         if (e.keyCode >= 49 && e.keyCode <= 53) { // клавиши 1, 2, 3, 4, 5
           // Оценка фрагмента
-          this.common.rateFragment(e.key);
+          this.annot.rateFragment(e.key);
         } else if (e.keyCode === 37) { // стрелка влево
           // Предыдущий фрагмент
-          this.common.setFragment(this.common.cf - 1);
+          this.annot.setFragment(this.annot.cf - 1);
         } else if (e.keyCode === 39) { // стрелка вправо
           // Следующий фрагмент
-          this.common.setFragment(this.common.cf + 1);
+          this.annot.setFragment(this.annot.cf + 1);
         } else if (e.keyCode === 40) { // стрелка вниз
           // Повторить фрагмент
           this.replayVideo();
         } else if (e.keyCode === 16) { // shift
           // Смена шкалы оценивания
-          if(this.common.emotion === this.common.task.emotions.length - 1) {
+          if(this.annot.emotion === this.annot.task.emotions.length - 1) {
             // Возвращаемся к первой эмоции
-            this.common.emotion = 0;
+            this.annot.emotion = 0;
           } else {
             // Следующая эмоция
-            this.common.emotion++;
+            this.annot.emotion++;
           }
           // Переходим к первому фрагменту
-          this.common.cf = 0;
+          this.annot.cf = 0;
         }
       }
     });
 
     // При выборе фрагмента из списка происходит его воспроизведение
-    this.common.fragmentChanged.subscribe(
+    this.annot.fragmentChanged.subscribe(
       fragmentPosition => {
         // выбираем плеер
-        if (this.common.isYouTube) {
-          this.common.ytPlayer.seekTo(fragmentPosition, true);
+        if (this.annot.isYouTube) {
+          this.annot.ytPlayer.seekTo(fragmentPosition, true);
         } else {
-          this.common.videoContainer.currentTime = fragmentPosition;
+          this.annot.videoContainer.currentTime = fragmentPosition;
         }
 
         // воспроизводим фрагмент
@@ -59,17 +61,17 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
 
   // Воспроизведение
   playVideo() {
-    this.common.watchVideo();
+    this.annot.watchVideo();
   }
 
   // Пауза
   pauseVideo() {
-    this.common.unwatchVideo('pause');
+    this.annot.unwatchVideo('pause');
   }
 
   // Остановка
   stopVideo() {
-    this.common.unwatchVideo('stop');
+    this.annot.unwatchVideo('stop');
   }
 
   // Повторить фрагмент
@@ -83,10 +85,10 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
   // Видео целиком
   wholeVideo() {
     // Воспроизводим видел целиком, либо первый фрагмент
-    if(this.common.cf === -1) {
-      this.common.setFragment(0);
+    if(this.annot.cf === -1) {
+      this.annot.setFragment(0);
     } else {
-      this.common.setFragment(-1);
+      this.annot.setFragment(-1);
     }
   }
 }

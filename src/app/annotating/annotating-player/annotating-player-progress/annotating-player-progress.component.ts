@@ -1,5 +1,6 @@
-import { CommonService } from '../../../common.service';
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from '../../../common.service';
+import { AnnotatingService } from '../../../annotating/annotating.service';
 
 @Component({
   selector: 'na-annotating-player-progress',
@@ -15,17 +16,17 @@ export class AnnotatingPlayerProgressComponent implements OnInit {
   // свойство для таймера
   watchingVideo;
 
-  constructor(private common: CommonService) { }
+  constructor(public annot: AnnotatingService) { }
 
   ngOnInit() {
     // при воспроизведении видео считаем процент просмотренной части
-    this.common.videoTurnedOn.subscribe(
+    this.annot.videoTurnedOn.subscribe(
       () => this.startWatching(),
       error => console.error(error)
     );
 
     // при паузе или остановке видео прекращаем считать
-    this.common.videoTurnedOff.subscribe(
+    this.annot.videoTurnedOff.subscribe(
       event => {
         this.stopWatching();
 
@@ -47,14 +48,14 @@ export class AnnotatingPlayerProgressComponent implements OnInit {
     }
 
     // задаём начало и конец воспроизвденеия
-    if (this.common.cf === -1) {
+    if (this.annot.cf === -1) {
       // для целого видео
       this.fragmentStart = 0;
-      this.fragmentEnd = this.common.videoLength;
+      this.fragmentEnd = this.annot.videoLength;
     } else {
       // для фрагмента
-      this.fragmentStart = this.common.csv[this.common.cf][0];
-      this.fragmentEnd = this.common.csv[this.common.cf][1];
+      this.fragmentStart = this.annot.csv[this.annot.cf][0];
+      this.fragmentEnd = this.annot.csv[this.annot.cf][1];
     }
     // задаём длину фрагмента
     const fragmentDuration = this.fragmentEnd - this.fragmentStart;
@@ -67,7 +68,7 @@ export class AnnotatingPlayerProgressComponent implements OnInit {
       const countPercentage = () => {
         // проиграв фрагмент, ставим видео на паузу
         if (currentTime >= this.fragmentEnd) {
-          this.common.unwatchVideo('pause');
+          this.annot.unwatchVideo('pause');
         }
 
         // подсчёт прошедшего времени
@@ -78,13 +79,13 @@ export class AnnotatingPlayerProgressComponent implements OnInit {
       }
 
       // узнаём текущее время воспроизведения и подсчитываем процент для каждого плеера соответственно
-      if (this.common.isYouTube) {
-        this.common.ytPlayer.getCurrentTime().then((time) => {
+      if (this.annot.isYouTube) {
+        this.annot.ytPlayer.getCurrentTime().then((time) => {
           currentTime = time;
           countPercentage();
         });
       } else {
-        currentTime = this.common.videoContainer.currentTime;
+        currentTime = this.annot.videoContainer.currentTime;
         countPercentage();
       }
     };

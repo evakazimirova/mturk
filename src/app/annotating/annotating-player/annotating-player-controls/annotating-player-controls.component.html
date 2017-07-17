@@ -16,16 +16,16 @@
       <img src="http://imgdisk.ru/images/2017/04/18/replay.png" alt="repeat" (click)="replayVideo()">
 
       <!-- Предыдущий фрагмент -->
-      <img src="http://imgdisk.ru/images/2017/04/18/back.png" alt="step-backward" (click)="common.setFragment(common.cf - 1)">
+      <img src="http://imgdisk.ru/images/2017/04/18/back.png" alt="step-backward" (click)="annot.setFragment(annot.cf - 1)">
 
       <!-- Следующий фрагмент -->
-      <img src="http://imgdisk.ru/images/2017/04/18/next.png" alt="step-forward" (click)="common.setFragment(common.cf + 1)">
+      <img src="http://imgdisk.ru/images/2017/04/18/next.png" alt="step-forward" (click)="annot.setFragment(annot.cf + 1)">
     </div>
   </div>
 
   <!-- Видео целиком -->
   <div class="col col-xs-4">
     <button class="btn btn-block btn-default" (click)="wholeVideo()"
-      [ngClass]="{active: common.cf === -1}">Whole video</button>
+      [ngClass]="{active: annot.cf === -1}">Whole video</button>
   </div>
 </div>

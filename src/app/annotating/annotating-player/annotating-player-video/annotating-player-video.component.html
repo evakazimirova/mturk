@@ -1,12 +1,12 @@
 <!-- Проигрыватель -->
 <div class="video">
   <!-- Стандартный HTML5 -->
-  <video id="currentVideo" width="100%" preload="auto" [ngClass]="{hidden: common.isYouTube}">
+  <video id="currentVideo" width="100%" preload="auto" [ngClass]="{hidden: annot.isYouTube}">
     <source src="{{ currentVideo }}" type='video/mp4'>
   </video>
 
   <!-- YouTube iframe -->
-  <div [ngClass]="{hidden: !common.isYouTube}">
+  <div [ngClass]="{hidden: !annot.isYouTube}">
     <div id='youtube'></div>
   </div>
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonService } from './../common.service';
 import { HttpService } from './../http.service';
+import { CommonService } from './../common.service';
+import { AnnotatingService } from './../annotating/annotating.service';
 
 @Component({
   selector: 'na-annotating',
@@ -8,7 +9,8 @@ import { HttpService } from './../http.service';
   styleUrls: ['./annotating.component.scss']
 })
 export class AnnotatingComponent {
-  constructor(private common: CommonService) {}
+  constructor(private common: CommonService,
+              public annot: AnnotatingService) {}
 
   // вернуться к списку проектов
   return() {
@@ -17,6 +19,9 @@ export class AnnotatingComponent {
     if (confirmed) {
       // переход к списку проектов
       this.common.mode = 'profile';
+
+      // чтобы плеер не ругался при повторном запуске
+      this.annot.allFragmentsRated = true;
     }
   }
 }

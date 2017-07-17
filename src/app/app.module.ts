@@ -1,9 +1,10 @@
-import { CommonService } from './common.service';
-import { HttpService } from './http.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { HttpService } from './http.service';
+import { CommonService } from './common.service';
+import { AnnotatingService } from './annotating/annotating.service';
 
 import { SiteComponent } from './site.component';
 import { TimePipe } from './time.pipe';
@@ -83,7 +84,7 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [ HttpService, CommonService ],
+  providers: [ HttpService, CommonService, AnnotatingService ],
   bootstrap: [ SiteComponent ]
 })
 export class AppModule { }

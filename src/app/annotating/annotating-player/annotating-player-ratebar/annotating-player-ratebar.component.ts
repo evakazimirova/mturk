@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonService } from '../../../common.service';
+import { AnnotatingService } from '../../../annotating/annotating.service';
 
 @Component({
   selector: 'na-annotating-player-ratebar',
@@ -7,5 +8,5 @@ import { CommonService } from '../../../common.service';
   styleUrls: ['./annotating-player-ratebar.component.scss']
 })
 export class AnnotatingPlayerRateBarComponent {
-  constructor(private common: CommonService) {}
+  constructor(public annot: AnnotatingService) {}
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../../http.service';
 import { CommonService } from '../../../common.service';
+import { AnnotatingService } from '../../../annotating/annotating.service';
 
 @Component({
   selector: 'na-annotating-fragments-table',
@@ -8,24 +9,24 @@ import { CommonService } from '../../../common.service';
   styleUrls: ['./annotating-fragments-table.component.scss']
 })
 export class AnnotatingFragmentsTableComponent implements OnInit {
-  constructor(private common: CommonService,
-              private http: HttpService) {}
+  constructor(private http: HttpService,
+              public annot: AnnotatingService) {}
 
   ngOnInit() {
     // при оценке фрагмента
-    this.common.fragmentRated.subscribe(
+    this.annot.fragmentRated.subscribe(
       rating => {
         // перескакиваем на следуюущий фрагмент
-        this.common.rating[this.common.emotion][this.common.cf] = rating;
-        if (this.common.cf < this.common.csv.length - 1) {
-          this.common.setFragment(this.common.cf + 1);
+        this.annot.rating[this.annot.emotion][this.annot.cf] = rating;
+        if (this.annot.cf < this.annot.csv.length - 1) {
+          this.annot.setFragment(this.annot.cf + 1);
         }
       }
     );
 
     // обновляем таблицу при заходе на страницу и при смене FID
     this.updateCSV();
-    this.common.videoChanged.subscribe(
+    this.annot.videoChanged.subscribe(
       success => {
         this.updateCSV();
       },
@@ -38,16 +39,16 @@ export class AnnotatingFragmentsTableComponent implements OnInit {
   // обновление таблицы
   updateCSV() {
     // фиксим символы переноса
-    this.common.task.result = this.common.task.fragments[this.common.task.currentFragment].result.replace(/\\n/g, '\n');
+    this.annot.task.result = this.annot.task.fragments[this.annot.task.currentFragment].result.replace(/\\n/g, '\n');
 
     // парсим CSV в массив
-    const csv = this.CSVToArray(this.common.task.fragments[this.common.task.currentFragment].result, ',');
+    const csv = this.CSVToArray(this.annot.task.fragments[this.annot.task.currentFragment].result, ',');
 
     // выкидываем первую строку с заголовками
     csv.shift();
 
     // запоминаем данные
-    this.common.updateCSV(csv);
+    this.annot.updateCSV(csv);
   }
 
   // парсер CSV

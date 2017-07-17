@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import YouTubePlayer from 'youtube-player';
 import { CommonService } from '../../../common.service';
+import { AnnotatingService } from '../../../annotating/annotating.service';
 
 @Component({
   selector: 'na-annotating-player-video',
@@ -10,17 +11,17 @@ import { CommonService } from '../../../common.service';
 export class AnnotatingPlayerVideoComponent implements OnInit {
   currentVideo: string;
 
-  constructor(private common: CommonService) { }
+  constructor(public annot: AnnotatingService) { }
 
   ngOnInit() {
     $(document).ready(() => {
       // находитм все DOM-элементы
       const videoContainer = $('.video');
       const shield = $('.shield');
-      this.common.videoContainer = document.getElementById('currentVideo');
+      this.annot.videoContainer = document.getElementById('currentVideo');
 
       // настраиваем YouTube-плеер
-      this.common.ytPlayer = YouTubePlayer('youtube', {
+      this.annot.ytPlayer = YouTubePlayer('youtube', {
         playerVars: {
           controls: 0,
           disablekb: 1,
@@ -39,7 +40,7 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
         // h = videoContainer.innerHeight();
         const h = w * 0.5625; // 9:16
 
-        this.common.ytPlayer.setSize(w, h);
+        this.annot.ytPlayer.setSize(w, h);
         shield.innerWidth(w);
         shield.innerHeight(h);
       };
@@ -52,7 +53,7 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
     });
 
     // загрузка видео по запросу
-    this.common.videoChanged.subscribe(
+    this.annot.videoChanged.subscribe(
       success => this.loadVideo(),
       error => console.error(error)
     );
@@ -60,11 +61,11 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
 
   // проверка источника видео и назначение плеера
   checkIfYouTube() {
-    if (this.common.task.fragments[this.common.task.currentFragment].video.substr(0, 17) === 'https://youtu.be/' ||
-      this.common.task.fragments[this.common.task.currentFragment].video.substr(0, 32) === 'https://www.youtube.com/watch?v=') {
-      this.common.isYouTube = true;
+    if (this.annot.task.fragments[this.annot.task.currentFragment].video.substr(0, 17) === 'https://youtu.be/' ||
+      this.annot.task.fragments[this.annot.task.currentFragment].video.substr(0, 32) === 'https://www.youtube.com/watch?v=') {
+      this.annot.isYouTube = true;
     } else {
-      this.common.isYouTube = false;
+      this.annot.isYouTube = false;
     }
   }
 
@@ -73,32 +74,32 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
     // проверяем, какой плеер нужно использовать
     this.checkIfYouTube();
 
-    if (this.common.isYouTube) {
+    if (this.annot.isYouTube) {
       // YouTube
-      const player = this.common.ytPlayer;
+      const player = this.annot.ytPlayer;
 
       // указываем видео с YouTube
-      const vid = this.common.task.fragments[this.common.task.currentFragment].video.slice(-11);
+      const vid = this.annot.task.fragments[this.annot.task.currentFragment].video.slice(-11);
       player.loadVideoById(vid, () => {
         player.getDuration().then((time) => {
           // задаём длительность видео
-          this.common.videoLength = time;
+          this.annot.videoLength = time;
           // запускаем видео целиком
-          this.common.setFragment(-1);
+          this.annot.setFragment(-1);
         });
       });
     } else {
       // Стандартный HTML5
       // меняем источник видео
-      this.currentVideo = this.common.task.fragments[this.common.task.currentFragment].video;
+      this.currentVideo = this.annot.task.fragments[this.annot.task.currentFragment].video;
 
       // загружаем видео
-      this.common.videoContainer.load();
-      this.common.videoContainer.addEventListener('loadeddata', () => {
+      this.annot.videoContainer.load();
+      this.annot.videoContainer.addEventListener('loadeddata', () => {
         // задаём длительность видео
-        this.common.videoLength = this.common.videoContainer.duration;
+        this.annot.videoLength = this.annot.videoContainer.duration;
         // запускаем видео целиком
-        this.common.setFragment(-1);
+        this.annot.setFragment(-1);
       }, false);
     }
   }

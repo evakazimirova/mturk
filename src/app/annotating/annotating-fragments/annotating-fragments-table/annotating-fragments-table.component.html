@@ -14,20 +14,20 @@
 <div class="right-col">
   <table class="table table-hover table-bordered">
     <tbody>
-      <tr *ngFor="let row of common.csv; let i = index" [ngClass]="{
-        success: common.rating[common.emotion][i] !== -1,
-        warning: common.cf === i,
-        danger: common.cf > i && common.rating[common.emotion][i] === -1
-      }" (click)="common.setFragment(i)">
+      <tr *ngFor="let row of annot.csv; let i = index" [ngClass]="{
+        success: annot.rating[annot.emotion][i] !== -1,
+        warning: annot.cf === i,
+        danger: annot.cf > i && annot.rating[annot.emotion][i] === -1
+      }" (click)="annot.setFragment(i)">
         <td>{{ i + 1 }}</td>
         <td>{{ row[0] }}</td>
         <td>{{ row[1] }}</td>
         <td>{{
-          common.rating[common.emotion][i] === -1 ?
+          annot.rating[annot.emotion][i] === -1 ?
             "—" :
-            common.task.emotions[common.emotion].scale === 2 ?
-              common.rating[common.emotion][i] - 3 :
-              common.rating[common.emotion][i]
+            annot.task.emotions[annot.emotion].scale === 2 ?
+              annot.rating[annot.emotion][i] - 3 :
+              annot.rating[annot.emotion][i]
         }}</td>
       </tr>
     </tbody>

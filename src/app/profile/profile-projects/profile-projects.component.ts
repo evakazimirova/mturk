@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../http.service';
 import { CommonService } from '../../common.service';
+import { AnnotatingService } from '../../annotating/annotating.service';
 
 @Component({
   selector: 'na-profile-projects',
@@ -17,7 +18,8 @@ export class ProfileProjectsComponent implements OnInit {
   loadingTask = -1;
 
   constructor(public common: CommonService,
-              private http: HttpService) { }
+              private http: HttpService,
+              public annot: AnnotatingService) { }
 
   ngOnInit() {
     // загружаем данные только один раз при входе
@@ -89,11 +91,11 @@ export class ProfileProjectsComponent implements OnInit {
         // обновляем данные задачи
         task.emotions = task.tasks;
         delete task.tasks;
-        this.common.task = task;
+        this.annot.task = task;
 
         // запускаем режим аннотирования и включаем видео
         this.common.mode = 'fragmentsRating';
-        this.common.setVideo();
+        this.annot.setVideo();
       },
       err => {
         this.loadingTask = -1;

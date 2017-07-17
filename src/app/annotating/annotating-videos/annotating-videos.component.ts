@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonService } from '../../common.service';
 import { HttpService } from '../../http.service';
+import { CommonService } from '../../common.service';
+import { AnnotatingService } from '../../annotating/annotating.service';
 
 @Component({
   selector: 'na-annotating-videos',
@@ -11,23 +12,24 @@ export class AnnotatingVideosComponent implements OnInit {
   videos = [];
 
   constructor(public common: CommonService,
-              private http: HttpService) { }
+              private http: HttpService,
+              public annot: AnnotatingService) { }
 
   ngOnInit() {
     // обновляем список видео
-    this.videos = this.common.task.fragments;
+    this.videos = this.annot.task.fragments;
     for (const f of this.videos) {
-      this.common.fragmentsWip[f.FID] = f.result;
+      this.annot.fragmentsWip[f.FID] = f.result;
     }
   }
 
   // смена видео
   videoChanged(vi) {
-    if (this.common.task.currentFragment !== vi) {
+    if (this.annot.task.currentFragment !== vi) {
       // функция смены видео
       const setVideo = () => {
-        this.common.task.currentFragment = vi;
-        this.common.setVideo();
+        this.annot.task.currentFragment = vi;
+        this.annot.setVideo();
       };
 
       // есть ли ссылка на видос
@@ -39,7 +41,7 @@ export class AnnotatingVideosComponent implements OnInit {
         this.http.get(`Fragments/getFragment?FID=${FID}`).subscribe(
           fragment => {
             // кэшируем данные по видео
-            this.common.task.fragments[vi] = fragment;
+            this.annot.task.fragments[vi] = fragment;
             setVideo();
           },
           err => {

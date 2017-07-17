@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpService } from '../../http.service';
 import { CommonService } from '../../common.service';
+import { AnnotatingService } from '../../annotating/annotating.service';
 
 @Component({
   selector: 'na-annotating-fragments',
@@ -11,11 +12,12 @@ export class AnnotatingFragmentsComponent {
   loading = false;
 
   // размеры массивов с данными
-  totalEmotions = this.common.task.emotions.length;
-  totalFragments = this.common.csv.length;
+  totalEmotions = this.annot.task.emotions.length;
+  totalFragments = this.annot.csv.length;
 
   constructor(private common: CommonService,
-              private http: HttpService) {}
+              private http: HttpService,
+              public annot: AnnotatingService) {}
 
   // сохраняем данные на сервере
   saveRating() {
@@ -23,16 +25,16 @@ export class AnnotatingFragmentsComponent {
 
     if (!isUnrated) {
       // добавляем результаты аннотирования к фрагментам
-      const ratedCSV = JSON.parse(JSON.stringify(this.common.csv)); // клонируем массив, а не ссылку на него
+      const ratedCSV = JSON.parse(JSON.stringify(this.annot.csv)); // клонируем массив, а не ссылку на него
       for (let i = 0; i < this.totalFragments; i++) {
         for (let j = 0; j < this.totalEmotions; j++) {
-          ratedCSV[i].push(this.common.rating[j][i]);
+          ratedCSV[i].push(this.annot.rating[j][i]);
         }
       }
 
       // заголовок для выходного CSV
       let outputCSV = 'Start,End';
-      for (const emotion of this.common.task.emotions) {
+      for (const emotion of this.annot.task.emotions) {
         outputCSV += `,E${emotion.EID}`;
       }
       outputCSV += '\n';
@@ -43,14 +45,14 @@ export class AnnotatingFragmentsComponent {
       }).join('\n');
 
       // переводим разметку в нужный формат
-      const FID = this.common.task.fragments[this.common.task.currentFragment].FID;
-      this.common.fragmentsWip[FID] = outputCSV;
+      const FID = this.annot.task.fragments[this.annot.task.currentFragment].FID;
+      this.annot.fragmentsWip[FID] = outputCSV;
 
       // формируем данные для запроса на сервер
       const output = {
-        result: this.common.fragmentsWip,
-        ATID: this.common.task.ATID,
-        done: this.common.task.emotions.length // число проработанных эмоций
+        result: this.annot.fragmentsWip,
+        ATID: this.annot.task.ATID,
+        done: this.annot.task.emotions.length // число проработанных эмоций
       };
 
       // сохраняем резульат в БД
@@ -70,7 +72,7 @@ export class AnnotatingFragmentsComponent {
       );
 
       // разрешаем переходить к другому видео или закрывать сайт
-      this.common.allFragmentsRated = true;
+      this.annot.allFragmentsRated = true;
     }
   }
 
@@ -85,13 +87,13 @@ export class AnnotatingFragmentsComponent {
 
       // проверяем
       for (let j = 0; j < this.totalFragments; j++) {
-        if (this.common.rating[i][j] === -1) {
+        if (this.annot.rating[i][j] === -1) {
           // не все => переходим к неоцененному фрагменту
-          this.common.emotion = i;
-          this.common.cf = j;
+          this.annot.emotion = i;
+          this.annot.cf = j;
 
           // сообщаем о находке и не даём сохраняться
-          alert(`Фрагмент ${j + 1} в шкале "${this.common.task.emotions[i].title}" не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
+          alert(`Фрагмент ${j + 1} в шкале "${this.annot.task.emotions[i].title}" не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
           isUnrated = true;
           break;
         }
