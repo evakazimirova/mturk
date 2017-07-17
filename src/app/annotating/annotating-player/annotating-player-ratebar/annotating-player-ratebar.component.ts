@@ -6,11 +6,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './annotating-player-ratebar.component.html',
   styleUrls: ['./annotating-player-ratebar.component.scss']
 })
-export class AnnotatingPlayerRateBarComponent implements OnInit {
-
-  constructor(private common: CommonService) { }
-
-  ngOnInit() {
-  }
-
+export class AnnotatingPlayerRateBarComponent {
+  constructor(private common: CommonService) {}
 }
