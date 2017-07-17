@@ -12,6 +12,12 @@ export class CommonService {
       reserved: 0,
     }
   };
+
+  // список проектов
+  projects;
+
+
+
   csv = [[1, 0, 0, -1]];
   rating = [[]];
   cf = -1;

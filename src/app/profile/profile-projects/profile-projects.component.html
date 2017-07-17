@@ -1,18 +1,28 @@
-<na-project *ngIf="projectMode" [projectId]="projectId" (returned)="projectMode = false"></na-project>
+<!-- Описание проекта -->
+<na-project *ngIf="projectMode"
+  [projectId]="projectId"
+  (returned)="projectMode = false"></na-project>
+
+<!-- Список проектов -->
 <div *ngIf="!projectMode && isLoaded">
-  <div class="task" *ngFor="let project of projects; let i = index"
+  <div class="task" *ngFor="let project of common.projects; let i = index"
     [ngClass]="{locked: i !== 0}"
-    (click)="taskSelected(project)">
+    (click)="taskSelected(project, i)">
     {{ project.projectName }}
+    <!-- Индикатор загрузки -->
     <span class="fa fa-cog fa-spin" *ngIf="loadingTask === i"></span>
+
+    <!-- Дополнительная информация -->
     <div class="description" *ngIf="project.annoTask">
       <span>Completed: {{ project.annoTask.percentage }}%</span>
       <span>Earned: {{ project.annoTask.earned }}/{{ project.pricePerTask }}</span>
     </div>
+
+    <!-- Замочек -->
     <span class="fa fa-lock fa-5x"></span>
   </div>
-  <!-- *ngIf="!project.isProcessing && loadingTask !== i" -->
-  <!-- (click)='viewProjectDescription(project.id)' -->
+  <!-- <span (click)="viewProjectDescription(i)"></span> -->
 </div>
 
+<!-- Индикатор загрузки страницы -->
 <na-loader-big *ngIf="!isLoaded"></na-loader-big>
