@@ -1,0 +1,24 @@
+<div class="container">
+  <!-- Кнопка "Назад" -->
+  <button class="btn btn-default" (click)="return()">
+    <span class="fa fa-angle-left"></span> Return to project list
+  </button>
+
+  <!-- Интерфейс разметки -->
+  <div class="row">
+    <!-- Список видео -->
+    <div class="col col-xs-1 video-list">
+      <na-annotating-videos></na-annotating-videos>
+    </div>
+
+    <!-- Видео-проигрыватель -->
+    <div class="col col-xs-8 vidos">
+      <na-annotating-player></na-annotating-player>
+    </div>
+
+    <!-- Список фрагментов -->
+    <div class="col col-xs-3">
+      <na-annotating-fragments></na-annotating-fragments>
+    </div>
+  </div>
+</div>

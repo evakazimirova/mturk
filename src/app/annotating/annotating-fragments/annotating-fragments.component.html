@@ -1,0 +1,7 @@
+<na-annotating-fragments-ranges></na-annotating-fragments-ranges>
+<na-annotating-fragments-table></na-annotating-fragments-table>
+
+<button class="btn btn-primary btn-block" (click)="saveRating()" [ngClass]="{disabled: loading}">
+  Save
+  <span class="fa fa-cog fa-spin fa-2x" *ngIf="loading"></span>
+</button>
