@@ -1,6 +1,6 @@
+import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../../http.service';
 import { CommonService } from '../../../common.service';
-import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'na-annotating-fragments-table',
@@ -8,12 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./annotating-fragments-table.component.scss']
 })
 export class AnnotatingFragmentsTableComponent implements OnInit {
-
-  constructor(private common: CommonService, private http: HttpService) {}
+  constructor(private common: CommonService,
+              private http: HttpService) {}
 
   ngOnInit() {
+    // при оценке фрагмента
     this.common.fragmentRated.subscribe(
-      (rating) => {
+      rating => {
+        // перескакиваем на следуюущий фрагмент
         this.common.rating[this.common.emotion][this.common.cf] = rating;
         if (this.common.cf < this.common.csv.length - 1) {
           this.common.setFragment(this.common.cf + 1);
@@ -21,8 +23,8 @@ export class AnnotatingFragmentsTableComponent implements OnInit {
       }
     );
 
+    // обновляем таблицу при заходе на страницу и при смене FID
     this.updateCSV();
-
     this.common.videoChanged.subscribe(
       success => {
         this.updateCSV();
@@ -33,17 +35,19 @@ export class AnnotatingFragmentsTableComponent implements OnInit {
     );
   }
 
+  // обновление таблицы
   updateCSV() {
-    // 3. При выборе видеозаписи, открывается файл на сервере с именем, совпадающим с именем csv. В этом файле содержится информация о фрагментах, которые необходимо оценить. Структура файла: Номер фрагмента;Начало фрагмента;Конец фрагмента
-    // 4. Web-интерфейс отображает список фрагментов, и выставленную им оценку в выбранной шкале.
-    this.common.task.result = this.common.task.fragments[this.common.task.currentFragment].result.replace(/\\n/g, '\n'); // если символы переноса строки выглядят как '\n', то меняем их именно на переносы
+    // фиксим символы переноса
+    this.common.task.result = this.common.task.fragments[this.common.task.currentFragment].result.replace(/\\n/g, '\n');
+
+    // парсим CSV в массив
     const csv = this.CSVToArray(this.common.task.fragments[this.common.task.currentFragment].result, ',');
 
-    // выкидываем строки
-    csv.shift(); // первую (названия столбцов)
-    // csv.pop(); // последнюю (пустая строка)
+    // выкидываем первую строку с заголовками
+    csv.shift();
 
-    this.common.updateCSV(csv); // запоминаем данные для доступа во всех компонентах
+    // запоминаем данные
+    this.common.updateCSV(csv);
   }
 
   // парсер CSV

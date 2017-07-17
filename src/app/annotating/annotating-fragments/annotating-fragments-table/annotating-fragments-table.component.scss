@@ -1,21 +1,21 @@
 .table {
   margin-bottom: 0;
-}
 
-.table tbody tr td, .table thead tr th {
-  width: 28%;
-}
+  tbody tr td, thead tr th {
+    width: 28%;
 
-.table tbody tr td:first-child, .table thead tr th:first-child {
-  width: 16%;
-}
-
-.table-hover tr {
-  cursor: pointer;
+    &:first-child {
+      width: 16%;
+    }
+  }
 }
 
 .right-col {
   max-height: 500px;
   overflow-y: scroll;
   margin: 0 0 20px 0;
+
+  .table-hover tr {
+    cursor: pointer;
+  }
 }
