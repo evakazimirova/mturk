@@ -1,7 +1,7 @@
 <select class="form-control"
   [(ngModel)]="annot.emotion"
   (change)="annot.cf = 0">
-  <option *ngFor="let emotion of annot.task.emotions; let i = index"
+  <option *ngFor="let emotion of annot.task.FIDs[annot.FID].emotions; let i = index"
     [selected]="annot.emotion === i"
-    value="{{ i }}">{{ emotion.title }}</option>
+    value="{{ i }}">{{ annot.emotions[emotion].title }}</option>
 </select>

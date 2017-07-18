@@ -29,7 +29,7 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
           this.replayVideo();
         } else if (e.keyCode === 16) { // shift
           // Смена шкалы оценивания
-          if(this.annot.emotion === this.annot.task.emotions.length - 1) {
+          if(this.annot.emotion === this.annot.task.FIDs[this.annot.FID].emotions.length - 1) {
             // Возвращаемся к первой эмоции
             this.annot.emotion = 0;
           } else {

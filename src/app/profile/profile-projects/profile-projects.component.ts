@@ -84,24 +84,44 @@ export class ProfileProjectsComponent implements OnInit {
 
   // начать выполнение задачи
   startTask(ids) {
-    this.http.post(ids, 'AnnoTasks/start').subscribe(
-      task => {
-        this.loadingTask = -1;
+    const startTask = () => {
+      this.http.post(ids, 'AnnoTasks/start').subscribe(
+        task => {
+          this.loadingTask = -1;
 
-        // обновляем данные задачи
-        task.emotions = task.tasks;
-        delete task.tasks;
-        this.annot.task = task;
+          // обновляем данные задачи
+          this.annot.task = task;
+          this.annot.task.FIDsList = Object.keys(task.FIDs);
+          this.annot.FID = this.annot.task.FIDsList[0];
+          // this.annot.emotion = 0; // task.FIDs[this.annot.FID].emotions[0]
+          console.log(this.annot.task);
+          console.log(this.annot.emotions);
+          console.log(this.annot.emotion);
+          // console.log(this.annot.emotions[task.FIDs[this.annot.FID].emotions[0]]);
 
-        // запускаем режим аннотирования и включаем видео
-        this.common.mode = 'fragmentsRating';
-        this.annot.setVideo();
-      },
-      err => {
-        this.loadingTask = -1;
-        console.error(err);
-      }
-    );
+          // запускаем режим аннотирования и включаем видео
+          this.common.mode = 'fragmentsRating';
+          this.annot.setVideo();
+        },
+        err => {
+          this.loadingTask = -1;
+          console.error(err);
+        }
+      );
+    };
+
+    // вынимаем все эмоции
+    if (this.annot.emotions.length === 0) {
+      this.http.get('EmotionsInfo/getAll').subscribe(
+        emotions => {
+          this.annot.emotions = emotions;
+          startTask();
+        },
+        error => console.error(error)
+      );
+    } else {
+      startTask();
+    }
   }
 
   // взять задачу

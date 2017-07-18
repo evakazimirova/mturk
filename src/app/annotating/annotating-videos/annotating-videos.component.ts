@@ -17,38 +17,42 @@ export class AnnotatingVideosComponent implements OnInit {
 
   ngOnInit() {
     // обновляем список видео
-    this.videos = this.annot.task.fragments;
+    for (const v in this.annot.task.FIDs) {
+      this.annot.task.FIDs[v].FID = v;
+      this.videos.push(this.annot.task.FIDs[v]);
+    }
+
     for (const f of this.videos) {
       this.annot.fragmentsWip[f.FID] = f.result;
     }
   }
 
   // смена видео
-  videoChanged(vi) {
-    if (this.annot.task.currentFragment !== vi) {
+  videoChanged(FID) {
+    if (this.annot.FID !== FID) {
       // функция смены видео
       const setVideo = () => {
-        this.annot.task.currentFragment = vi;
+        this.annot.FID = FID;
         this.annot.setVideo();
       };
 
-      // есть ли ссылка на видос
-      if (this.videos[vi].video) {
+      // // есть ли ссылка на видос
+      // if (this.videos[vi].video) {
         setVideo();
-      } else {
-        // вынимаем информацию по видео из БД
-        const FID = this.videos[vi].FID;
-        this.http.get(`Fragments/getFragment?FID=${FID}`).subscribe(
-          fragment => {
-            // кэшируем данные по видео
-            this.annot.task.fragments[vi] = fragment;
-            setVideo();
-          },
-          err => {
-            console.error(err);
-          }
-        );
-      }
+      // } else {
+      //   // вынимаем информацию по видео из БД
+      //   const FID = this.videos[vi].FID;
+      //   this.http.get(`Fragments/getFragment?FID=${FID}`).subscribe(
+      //     fragment => {
+      //       // кэшируем данные по видео
+      //       this.annot.task.fragments[vi] = fragment;
+      //       setVideo();
+      //     },
+      //     err => {
+      //       console.error(err);
+      //     }
+      //   );
+      // }
     }
   }
 }

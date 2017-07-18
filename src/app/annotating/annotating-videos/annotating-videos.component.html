@@ -1,7 +1,7 @@
 <ul class="list-unstyled">
-  <li *ngFor="let video of videos; let i = index"
-    [ngClass]="{current: i === annot.task.currentFragment}"
-    (click)="videoChanged(i)">
+  <li *ngFor="let video of videos"
+    [ngClass]="{current: video.FID === annot.FID}"
+    (click)="videoChanged(video.FID)">
     video_{{ video.FID }}
   </li>
 </ul>

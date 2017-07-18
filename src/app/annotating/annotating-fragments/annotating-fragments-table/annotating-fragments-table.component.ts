@@ -39,10 +39,10 @@ export class AnnotatingFragmentsTableComponent implements OnInit {
   // обновление таблицы
   updateCSV() {
     // фиксим символы переноса
-    this.annot.task.result = this.annot.task.fragments[this.annot.task.currentFragment].result.replace(/\\n/g, '\n');
+    this.annot.task.FIDs[this.annot.FID].result = this.annot.task.FIDs[this.annot.FID].result.replace(/\\n/g, '\n');
 
     // парсим CSV в массив
-    const csv = this.CSVToArray(this.annot.task.fragments[this.annot.task.currentFragment].result, ',');
+    const csv = this.CSVToArray(this.annot.task.FIDs[this.annot.FID].result, ',');
 
     // выкидываем первую строку с заголовками
     csv.shift();

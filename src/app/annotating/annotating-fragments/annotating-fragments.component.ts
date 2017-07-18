@@ -12,7 +12,7 @@ export class AnnotatingFragmentsComponent {
   loading = false;
 
   // размеры массивов с данными
-  totalEmotions = this.annot.task.emotions.length;
+  totalEmotions = this.annot.task.FIDs[this.annot.FID].emotions.length;
   totalFragments = this.annot.csv.length;
 
   constructor(private common: CommonService,
@@ -21,6 +21,7 @@ export class AnnotatingFragmentsComponent {
 
   // сохраняем данные на сервере
   saveRating() {
+    this.totalFragments = this.annot.csv.length;
     const isUnrated = this.checkIfUnrated();
 
     if (!isUnrated) {
@@ -34,8 +35,8 @@ export class AnnotatingFragmentsComponent {
 
       // заголовок для выходного CSV
       let outputCSV = 'Start,End';
-      for (const emotion of this.annot.task.emotions) {
-        outputCSV += `,E${emotion.EID}`;
+      for (const emotion of this.annot.task.FIDs[this.annot.FID].emotions) {
+        outputCSV += `,E${emotion}`;
       }
       outputCSV += '\n';
 
@@ -45,14 +46,14 @@ export class AnnotatingFragmentsComponent {
       }).join('\n');
 
       // переводим разметку в нужный формат
-      const FID = this.annot.task.fragments[this.annot.task.currentFragment].FID;
+      const FID = this.annot.FID;
       this.annot.fragmentsWip[FID] = outputCSV;
 
       // формируем данные для запроса на сервер
       const output = {
         result: this.annot.fragmentsWip,
         ATID: this.annot.task.ATID,
-        done: this.annot.task.emotions.length // число проработанных эмоций
+        done: this.annot.task.FIDs[this.annot.FID].emotions.length // число проработанных эмоций
       };
 
       // сохраняем резульат в БД
@@ -93,7 +94,7 @@ export class AnnotatingFragmentsComponent {
           this.annot.cf = j;
 
           // сообщаем о находке и не даём сохраняться
-          alert(`Фрагмент ${j + 1} в шкале "${this.annot.task.emotions[i].title}" не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
+          alert(`Фрагмент ${j + 1} в шкале "${this.annot.task.FIDs[this.annot.FID].emotions[i].title}" не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
           isUnrated = true;
           break;
         }

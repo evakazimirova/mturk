@@ -5,6 +5,8 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+let uniq = a => [...new Set(a)];
+
 module.exports = {
 	annoTasks: (req, res, next) => {
     AnnoTasks.find({
@@ -184,43 +186,55 @@ module.exports = {
 
       let all = {};
 
-      EmotionsInfo.find({
-        or: tasks
-      }).exec((err, tasks) => {
-        all.tasks = tasks;
+      // Парсим задачу
+      all.FIDs = JSON.parse(task.FID);
+      const FIDsKeys = Object.keys(all.FIDs);
 
-        tryToResponse();
-      });
-
-      all.fragments = [];
-      for (const fid of task.FID.split(',')) {
-        all.fragments.push({
-          FID: fid
-        });
+      let allEmotions = [];
+      let allFIDs = [];
+      for (const fid in all.FIDs) {
+        allFIDs.push({FID: fid});
+        all.FIDs[fid] = {emotions: all.FIDs[fid].split(',')};
+        // allEmotions = allEmotions.concat(FIDs[t].split(','));
       }
 
-      all.currentFragment = 0;
+      // all.fragments = [];
+      // for (const fid of task.FID.split(',')) {
+      //   all.fragments.push({
+      //     FID: fid
+      //   });
+      // }
 
-      Fragments.findOne({
-        FID: all.fragments[all.currentFragment].FID
-      }).populateAll().exec((err, fragment) => {
+      // all.currentFragment = 0;
+
+      // EmotionsInfo.find({
+      //   or: allEmotions
+      // }).exec((err, emotions) => {
+      //   all.emotions = emotions;
+      //   console.log(all.emotions);
+
+      //   tryToResponse();
+      // });
+
+      Fragments.find({
+        or: allFIDs
+      }).populateAll().exec((err, fragments) => {
         all.ATID = ids.ATID;
-        all.fragments[all.currentFragment].video = fragment.VID.URL;
-        // all.person = {
-        //   name: fragment.HID.personName,
-        //   image: fragment.HID.personImage
-        // };
-        all.fragments[all.currentFragment].result = fragment.csv === null ? '' : fragment.csv; // для того, чтобы загрузить сохранённые данные, нужно ещё обратиться к таблице AnnoTask
 
-        tryToResponse();
+        for (const f of fragments) {
+          all.FIDs[f.FID].video = f.VID.URL,
+          all.FIDs[f.FID].result = f.csv === null ? '' : f.csv; // для того, чтобы загрузить сохранённые данные, нужно ещё обратиться к таблице AnnoTask
+        }
+
+        res.json(all);
       });
 
-      function tryToResponse() {
-        // если все данные собраны, то отправляем ответ
-        if (all.tasks && all.ATID) {
-          res.json(all);
-        }
-      }
+      // function tryToResponse() {
+      //   // если все данные собраны, то отправляем ответ
+      //   if (all.emotions && all.ATID) {
+
+      //   }
+      // }
     });
   },
 

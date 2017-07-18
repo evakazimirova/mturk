@@ -6,11 +6,13 @@ export class AnnotatingService {
   rating = [[]];
   fragmentsWip = {};
   cf = -1;
+  emotions = [];
   emotion = 0;
   videoContainer;
   videoLength = 0;
   allFragmentsRated = true;
   task: any;
+  FID;
 
   isYouTube: boolean;
   ytPlayer;
@@ -38,7 +40,7 @@ export class AnnotatingService {
     this.csv = newCSV;
     this.rating = [];
 
-    const totalEmotions = this.task.emotions.length;
+    const totalEmotions = this.task.FIDs[this.FID].emotions.length;
     const totalFragments = newCSV.length;
 
     // перебираем все эмоции

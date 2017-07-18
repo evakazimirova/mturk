@@ -61,8 +61,8 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
 
   // проверка источника видео и назначение плеера
   checkIfYouTube() {
-    if (this.annot.task.fragments[this.annot.task.currentFragment].video.substr(0, 17) === 'https://youtu.be/' ||
-      this.annot.task.fragments[this.annot.task.currentFragment].video.substr(0, 32) === 'https://www.youtube.com/watch?v=') {
+    if (this.annot.task.FIDs[this.annot.FID].video.substr(0, 17) === 'https://youtu.be/' ||
+      this.annot.task.FIDs[this.annot.FID].video.substr(0, 32) === 'https://www.youtube.com/watch?v=') {
       this.annot.isYouTube = true;
     } else {
       this.annot.isYouTube = false;
@@ -79,7 +79,7 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
       const player = this.annot.ytPlayer;
 
       // указываем видео с YouTube
-      const vid = this.annot.task.fragments[this.annot.task.currentFragment].video.slice(-11);
+      const vid = this.annot.task.FIDs[this.annot.FID].video.slice(-11);
       player.loadVideoById(vid, () => {
         player.getDuration().then((time) => {
           // задаём длительность видео
@@ -91,7 +91,7 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
     } else {
       // Стандартный HTML5
       // меняем источник видео
-      this.currentVideo = this.annot.task.fragments[this.annot.task.currentFragment].video;
+      this.currentVideo = this.annot.task.FIDs[this.annot.FID].video;
 
       // загружаем видео
       this.annot.videoContainer.load();
