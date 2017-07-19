@@ -14,10 +14,16 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
   ngOnInit() {
     // Обработка нажатий клавиш
     $(document).keyup((e) => {
-      if(this.common.mode === 'fragmentsRating') {
+      const isBucketEmotionsMode = this.annot.task.FIDs[this.annot.FID].emoType !== 'OR' && this.annot.task.FIDs[this.annot.FID].emoType !== 'AND';
+
+      if (this.common.mode === 'fragmentsRating') {
         if (e.keyCode >= 49 && e.keyCode <= 53) { // клавиши 1, 2, 3, 4, 5
-          // Оценка фрагмента
-          this.annot.rateFragment(e.key);
+          if (this.annot.cf !== -1) {
+            if (isBucketEmotionsMode) {
+              // Оценка фрагмента
+              this.annot.rateFragment(e.key);
+            }
+          }
         } else if (e.keyCode === 37) { // стрелка влево
           // Предыдущий фрагмент
           this.annot.setFragment(this.annot.cf - 1);
@@ -28,16 +34,18 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
           // Повторить фрагмент
           this.replayVideo();
         } else if (e.keyCode === 16) { // shift
-          // Смена шкалы оценивания
-          if(this.annot.emotion === this.annot.task.FIDs[this.annot.FID].emotions.length - 1) {
-            // Возвращаемся к первой эмоции
-            this.annot.emotion = 0;
-          } else {
-            // Следующая эмоция
-            this.annot.emotion++;
+          if (isBucketEmotionsMode) {
+            // Смена шкалы оценивания
+            if(this.annot.emotion === this.annot.task.FIDs[this.annot.FID].emotions.length - 1) {
+              // Возвращаемся к первой эмоции
+              this.annot.emotion = 0;
+            } else {
+              // Следующая эмоция
+              this.annot.emotion++;
+            }
+            // Переходим к первому фрагменту
+            this.annot.cf = 0;
           }
-          // Переходим к первому фрагменту
-          this.annot.cf = 0;
         }
       }
     });

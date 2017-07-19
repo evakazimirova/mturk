@@ -1,8 +1,62 @@
 <!-- Кнопки выставления оценки -->
-<div class="text-center">
-  <div class="btn-group">
+<div class="text-center" *ngIf="annot.cf !== -1">
+  <!-- 1–5 -->
+  <div class="btn-group" *ngIf="emoType === '5'">
     <button class="btn btn-lg btn-default"
       *ngFor="let n of [1, 2, 3, 4, 5]"
-      (click)="annot.rateFragment(n)">{{ annot.emotions[annot.task.FIDs[this.annot.FID].emotions[annot.emotion]].scale === 2 ? n - 3 : n }}</button>
+      (click)="annot.rateFragment(n)">{{ n }}</button>
+  </div>
+
+  <!-- -2–2 -->
+  <div class="btn-group" *ngIf="emoType === '2'">
+    <button class="btn btn-lg btn-default"
+      *ngFor="let n of [1, 2, 3, 4, 5]"
+      (click)="annot.rateFragment(n)">{{ n - 3 }}</button>
+  </div>
+
+  <!-- И -->
+  <div *ngIf="emoType === 'AND'">
+    <!-- Первая пара -->
+    <div class="btn-group">
+      <button class="btn btn-lg btn-default" (click)="annot.uncheckEmos(1); annot.checkEmo(0)"
+        [ngClass]="{active: annot.rating[0][annot.cf] === 1}">
+        {{ annot.emotions[annot.task.FIDs[this.annot.FID].emotions[0]].title }}
+      </button>
+      <button class="btn btn-lg btn-default" (click)="annot.uncheckEmos(0, 1)"
+        [ngClass]="{active: annot.rating[0][annot.cf] === 0 && annot.rating[1][annot.cf] === 0}">
+        Нет
+      </button>
+      <button class="btn btn-lg btn-default" (click)="annot.uncheckEmos(0); annot.checkEmo(1)"
+        [ngClass]="{active: annot.rating[1][annot.cf] === 1}">
+        {{ annot.emotions[annot.task.FIDs[this.annot.FID].emotions[1]].title }}
+      </button>
+    </div><br>
+    <!-- Вторая пара -->
+    <div class="btn-group">
+      <button class="btn btn-lg btn-default" (click)="annot.uncheckEmos(3); annot.checkEmo(2)"
+        [ngClass]="{active: annot.rating[2][annot.cf] === 1}">
+        {{ annot.emotions[annot.task.FIDs[this.annot.FID].emotions[2]].title }}
+      </button>
+      <button class="btn btn-lg btn-default" (click)="annot.uncheckEmos(2, 3)"
+        [ngClass]="{active: annot.rating[2][annot.cf] === 0 && annot.rating[3][annot.cf] === 0}">
+        Нет
+      </button>
+      <button class="btn btn-lg btn-default" (click)="annot.uncheckEmos(2); annot.checkEmo(3)"
+        [ngClass]="{active: annot.rating[3][annot.cf] === 1}">
+        {{ annot.emotions[annot.task.FIDs[this.annot.FID].emotions[3]].title }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Или -->
+  <div class="btn-group" *ngIf="emoType === 'OR'">
+    <button class="btn btn-lg btn-default" (click)="annot.uncheckEmos('all')"
+      [ngClass]="{active: annot.rating[0][annot.cf] === 0 && annot.rating[1][annot.cf] === 0 && annot.rating[2][annot.cf] === 0 && annot.rating[3][annot.cf] === 0}">
+      Нет
+    </button>
+    <button class="btn btn-lg btn-default"
+      *ngFor="let EID of annot.task.FIDs[this.annot.FID].emotions; let i = index"
+      [ngClass]="{active: annot.rating[i][annot.cf] === 1}"
+      (click)="annot.checkEmo(i)">{{ annot.emotions[EID].title }}</button>
   </div>
 </div>

@@ -59,6 +59,25 @@ export class AnnotatingService {
     this.fragmentRated.emit(value);
   }
 
+  checkEmo(e) {
+    this.rating[e][this.cf] = 1;
+  }
+
+  uncheckEmos(e1, e2?) {
+    if (e2) {
+      this.rating[e1][this.cf] = 0;
+      this.rating[e2][this.cf] = 0;
+    } else {
+      if (e1 === 'all') {
+        for (const e in this.task.FIDs[this.FID].emotions) {
+          this.rating[e][this.cf] = 0;
+        }
+      } else {
+        this.rating[e1][this.cf] = 0;
+      }
+    }
+  }
+
   // смена видео
   setVideo() {
     let itsOk = false;

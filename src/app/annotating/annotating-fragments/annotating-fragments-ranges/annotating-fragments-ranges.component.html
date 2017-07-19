@@ -1,4 +1,4 @@
-<select class="form-control"
+<select class="form-control" *ngIf="annot.task.FIDs[annot.FID].emoType === 5 || annot.task.FIDs[annot.FID].emoType === 2"
   [(ngModel)]="annot.emotion"
   (change)="annot.cf = 0">
   <option *ngFor="let emotion of annot.task.FIDs[annot.FID].emotions; let i = index"

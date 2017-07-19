@@ -89,14 +89,17 @@ export class AnnotatingFragmentsComponent {
       // проверяем
       for (let j = 0; j < this.totalFragments; j++) {
         if (this.annot.rating[i][j] === -1) {
-          // не все => переходим к неоцененному фрагменту
-          this.annot.emotion = i;
-          this.annot.cf = j;
+          // обнуляем те эмоции, по которым не кликали
+          this.annot.rating[i][j] = 0;
 
-          // сообщаем о находке и не даём сохраняться
-          alert(`Фрагмент ${j + 1} в шкале "${this.annot.task.FIDs[this.annot.FID].emotions[i].title}" не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
-          isUnrated = true;
-          break;
+          // // не все => переходим к неоцененному фрагменту
+          // this.annot.emotion = i;
+          // this.annot.cf = j;
+
+          // // сообщаем о находке и не даём сохраняться
+          // alert(`Фрагмент ${j + 1} в шкале "${this.annot.task.FIDs[this.annot.FID].emotions[i].title}" не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
+          // isUnrated = true;
+          // break;
         }
       }
     }

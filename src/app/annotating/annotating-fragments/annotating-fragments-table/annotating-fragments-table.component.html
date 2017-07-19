@@ -25,9 +25,11 @@
         <td>{{
           annot.rating[annot.emotion][i] === -1 ?
             "—" :
-            annot.task.FIDs[annot.FID].emotions[annot.emotion].scale === 2 ?
-              annot.rating[annot.emotion][i] - 3 :
-              annot.rating[annot.emotion][i]
+            (annot.task.FIDs[annot.FID].emoType === "OR" || annot.task.FIDs[annot.FID].emoType === "AND") ?
+              "+" :
+              annot.task.FIDs[annot.FID].emotions[annot.emotion].scale === 2 ?
+                annot.rating[annot.emotion][i] - 3 :
+                annot.rating[annot.emotion][i]
         }}</td>
       </tr>
     </tbody>

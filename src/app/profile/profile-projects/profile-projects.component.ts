@@ -93,11 +93,6 @@ export class ProfileProjectsComponent implements OnInit {
           this.annot.task = task;
           this.annot.task.FIDsList = Object.keys(task.FIDs);
           this.annot.FID = this.annot.task.FIDsList[0];
-          // this.annot.emotion = 0; // task.FIDs[this.annot.FID].emotions[0]
-          console.log(this.annot.task);
-          console.log(this.annot.emotions);
-          console.log(this.annot.emotion);
-          // console.log(this.annot.emotions[task.FIDs[this.annot.FID].emotions[0]]);
 
           // запускаем режим аннотирования и включаем видео
           this.common.mode = 'fragmentsRating';
