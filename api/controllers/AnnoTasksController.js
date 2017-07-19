@@ -17,41 +17,38 @@ module.exports = {
         tasksInfo = [];
 
         for (task of tasks) {
-          let tasksCount;
-          if (task.TID.task.length > 0) {
-            tasksCount = task.TID.task.split(',').length;
+          const tasksCount = Object.keys(JSON.parse(task.TID.FID)).length;
 
-            const part = +(task.done / tasksCount).toFixed(0);
-            const earned = +(part * task.price).toFixed(0);
+          const part = +(task.done / tasksCount).toFixed(0);
+          const earned = +(part * task.price).toFixed(0);
 
-            let activity;
+          let activity;
 
-            switch (task.status) {
-              case 1:
-                activity = "Active";
-                break;
+          switch (task.status) {
+            case 1:
+              activity = "Active";
+              break;
 
-              default:
-                activity = "Inactive";
-                break;
-            }
-
-            const taskInfo = {
-              activity: activity,
-              percentage: part * 100,
-              earned: earned,
-              price: task.price,
-              task: {
-                PID: task.TID.PID,
-                ATID: task.ATID,
-                TID: task.TID.TID,
-                HID: task.TID.HID,
-                task: task.TID.task
-              }
-            }
-
-            tasksInfo[task.TID.PID - 1] = taskInfo
+            default:
+              activity = "Inactive";
+              break;
           }
+
+          const taskInfo = {
+            activity: activity,
+            percentage: part * 100,
+            earned: earned,
+            price: task.price,
+            task: {
+              PID: task.TID.PID,
+              ATID: task.ATID,
+              TID: task.TID.TID,
+              HID: task.TID.HID,
+              task: task.TID.task
+            }
+          }
+
+          tasksInfo[task.TID.PID - 1] = taskInfo;
         }
 
         // for (let i = 0; i < 2; i++) {
@@ -194,9 +191,15 @@ module.exports = {
       let allFIDs = [];
       for (const fid in all.FIDs) {
         allFIDs.push({FID: fid});
-        all.FIDs[fid] = {emotions: all.FIDs[fid].split(',')};
+        let emotions = all.FIDs[fid].split(',');
+        const emoType = emotions.shift();
+        all.FIDs[fid] = {
+          emoType: emoType,
+          emotions: emotions
+        };
         // allEmotions = allEmotions.concat(FIDs[t].split(','));
       }
+
 
       // all.fragments = [];
       // for (const fid of task.FID.split(',')) {
