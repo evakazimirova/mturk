@@ -32,17 +32,17 @@ module.exports.connections = {
     adapter: 'sails-disk'
   },
 
-  sqlserver: {
-    adapter: 'sails-sqlserver',
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    host: process.env.DB_SERVER, // azure database
-    database: process.env.DB,
-    options: {
-      port: 1433,
-      encrypt: true // use this for Azure databases
-    }
-  }
+  // sqlserver: {
+  //   adapter: 'sails-sqlserver',
+  //   user: process.env.DB_USER,
+  //   password: process.env.DB_PASS,
+  //   host: process.env.DB_SERVER, // azure database
+  //   database: process.env.DB,
+  //   options: {
+  //     port: 1433,
+  //     encrypt: true // use this for Azure databases
+  //   }
+  // }
 
   /***************************************************************************
   *                                                                          *
@@ -52,13 +52,14 @@ module.exports.connections = {
   * Run: npm install sails-mysql                                             *
   *                                                                          *
   ***************************************************************************/
-  // someMysqlServer: {
-  //   adapter: 'sails-mysql',
-  //   host: 'YOUR_MYSQL_SERVER_HOSTNAME_OR_IP_ADDRESS',
-  //   user: 'YOUR_MYSQL_USER', //optional
-  //   password: 'YOUR_MYSQL_PASSWORD', //optional
-  //   database: 'YOUR_MYSQL_DB' //optional
-  // },
+  mysqlServer: {
+    adapter: 'sails-mysql',
+    url: `mysql2://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_SERVER}:3306/${process.env.DB}`
+    // host: process.env.DB_SERVER,
+    // user: process.env.DB_USER,
+    // password: process.env.DB_PASS,
+    // database: process.env.DB
+  },
 
   /***************************************************************************
   *                                                                          *

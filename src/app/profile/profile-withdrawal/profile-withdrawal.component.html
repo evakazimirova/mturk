@@ -1,0 +1,55 @@
+<div class="row">
+  <!-- Инструкция по выводу средств -->
+  <div class="col col-lg-7 col-md-6 col-xs-12">
+    На странице содержится справочная информация о максимально возможном выводе в данный момент времени.
+    Приводится информация о стандартных сроках банковских переводов.
+  </div>
+
+  <!-- Форма для вывода средств -->
+  <div class="col col-lg-5 col-md-6 col-xs-12">
+    <form>
+      <!-- Сумма вывода -->
+      <div class="form-group">
+        <label for="amount">Amount</label>
+        <input type="text" class="form-control" name="amount" placeholder="1000" [(ngModel)]="money">
+      </div>
+
+      <!-- Номер счёта -->
+      <div class="form-group">
+        <label for="account">Account</label>
+        <input type="text" class="form-control" name="account" placeholder="1234567890" [(ngModel)]="account">
+      </div>
+
+      <!-- Платёжная система -->
+      <div class="row logos">
+        <!-- PayPal -->
+        <div class="col col-xs-4">
+          <div [ngClass]="{active: paymentSystem === 'paypal'}" (click)="paymentSystem = 'paypal'">
+            <img src="assets/paypal.png" alt="PayPal">
+          </div>
+        </div>
+
+        <!-- QIWI Wallet -->
+        <div class="col col-xs-4">
+          <div [ngClass]="{active: paymentSystem === 'qiwi'}" (click)="paymentSystem = 'qiwi'">
+            <img src="assets/qiwi.png" alt="QIWI Wallet">
+          </div>
+        </div>
+
+        <!-- Яндекс.Деньги -->
+        <div class="col col-xs-4">
+          <div [ngClass]="{active: paymentSystem === 'yandex'}" (click)="paymentSystem = 'yandex'">
+            <img src="assets/yandex.png" alt="Яндекс.Деньги">
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-block"
+        (click)=sendRequest() [ngClass]="{disabled: isRequesting}">
+        Send a request
+        <!-- Индикатор загрузки -->
+        <na-loader-inbtn *ngIf="isRequesting"></na-loader-inbtn>
+      </button>
+    </form>
+  </div>
+</div>

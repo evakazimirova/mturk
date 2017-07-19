@@ -1,8 +1,8 @@
-<!-- Статус -->
 <nav class="navbar navbar-default">
   <div class="container">
+    <!-- Логотип -->
     <span class="navbar-brand clickable hidden-xs" (click)="selectProfileMode('taskList')">
-      <img src="assets/logo_black.png" alt="logo">
+      <img src="assets/logo_small.png" alt="logo">
     </span>
 
     <!-- Меню -->
@@ -12,7 +12,7 @@
           [ngClass]="{active: profileMode === 'taskList'}">
         <a href="#">
           <span class="fa fa-wd fa-tasks"></span>
-          Projects status
+          Task Board
         </a>
       </li>
 
@@ -25,6 +25,15 @@
         </a>
       </li>
 
+      <!-- Нетворкинг -->
+      <li (click)="selectProfileMode('networking')"
+          [ngClass]="{active: profileMode === 'networking'}">
+        <a href="#">
+          <span class="fa fa-wd fa-users"></span>
+          Networking
+        </a>
+      </li>
+
       <!-- Вывод денег -->
       <li (click)="selectProfileMode('withdrawal')"
           [ngClass]="{active: profileMode === 'withdrawal'}">
@@ -33,56 +42,65 @@
           Withdrawal
         </a>
       </li>
+
+      <!-- FAQ -->
+      <li (click)="selectProfileMode('faq')"
+          [ngClass]="{active: profileMode === 'faq'}">
+        <a href="#">
+          <span class="fa fa-wd fa-question"></span>
+          F.A.Q.
+        </a>
+      </li>
+
+      <!-- Информация о пользователе -->
+      <li [ngClass]="{active: profileMode === 'editing'}">
+
+        <a href="#">
+        <span class="dropdown">
+          <!-- Имя пользователя -->
+          <span class="clickable dropdown-toggle" data-toggle="dropdown">
+            Account (<u>{{ common.user.nickname }}</u>)
+          </span>
+
+          <!-- Раскрывающийся список -->
+          <ul class="dropdown-menu">
+            <!-- Сумма вознаграждения доступная для вывода -->
+            <li>
+              <a href="#" (click)="selectProfileMode('withdrawal')">
+                <span class="fa fa-wd fa-money"></span>
+                Money available: {{ common.user.money.available }}
+              </a>
+            </li>
+
+            <!-- Cумма вознаграждения доступная для вывода после выполнения задач на которые подписался аннотатор -->
+            <li>
+              <a href="#" (click)="selectProfileMode('withdrawal')">
+                <span class="fa fa-wd fa-money"></span>
+                Money reserved: {{ common.user.money.reserved }}
+              </a>
+            </li>
+
+            <li role="separator" class="divider"></li><!-- Разделитель -->
+
+            <!-- Редактировать профиль -->
+            <li (click)="selectProfileMode('editing')">
+              <a href="#">
+                <span class="fa fa-wd fa-user"></span>
+                Edit profile
+              </a>
+            </li>
+
+            <!-- Выиход из системы -->
+            <li (click)="signOut()">
+              <a href="#">
+                <span class="fa fa-wd fa-sign-out"></span>
+                Sign out
+              </a>
+            </li>
+          </ul>
+        </span>
+        </a>
+      </li>
     </ul>
-
-    <p class="navbar-text navbar-right">
-      <!-- Nickname (не может повторяться) -->
-      <span class="dropdown">
-        <span class="clickable dropdown-toggle" data-toggle="dropdown">Signed in as <u>{{ common.user.nickname }}</u></span>
-        <ul class="dropdown-menu">
-
-          <!-- Рейтинг аннотатора -->
-          <li>
-            <a href="#" (click)="selectProfileMode('rating')">
-              <span class="fa fa-wd fa-star"></span>
-              Rating: {{ common.user.rating }}
-            </a>
-          </li>
-
-          <!-- Статус баланса -->
-          <!-- Сумма вознаграждения доступная для вывода -->
-          <li>
-            <a href="#" (click)="selectProfileMode('withdrawal')">
-              <span class="fa fa-wd fa-money"></span>
-              Money available: {{ common.user.money.available }}
-            </a>
-          </li>
-          <!-- Также сумма вознаграждения доступная для вывода после выполнения задач на которые подписался аннотатор -->
-          <li>
-            <a href="#" (click)="selectProfileMode('withdrawal')">
-              <span class="fa fa-wd fa-money"></span>
-              Money reserved: {{ common.user.money.reserved }}
-            </a>
-          </li>
-
-          <li role="separator" class="divider"></li>
-
-          <!-- Профиль (меню) -->
-          <li (click)="selectProfileMode('editing')">
-            <a href="#">
-              <span class="fa fa-wd fa-user"></span>
-              Edit profile
-            </a>
-          </li>
-
-          <li (click)="signOut()">
-            <a href="#">
-              <span class="fa fa-wd fa-sign-out"></span>
-              Sign out
-            </a>
-          </li>
-        </ul>
-      </span>
-    </p>
   </div>
 </nav>

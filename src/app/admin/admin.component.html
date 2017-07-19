@@ -1,4 +1,7 @@
+<!-- Шапка -->
 <na-admin-header [page]="page" (pageChanged)="page = $event"></na-admin-header>
+
+<!-- Основные страницы админки -->
 <div class="container">
   <na-admin-users *ngIf="page === 'users'"></na-admin-users>
   <na-admin-projects *ngIf="page === 'projects'"></na-admin-projects>

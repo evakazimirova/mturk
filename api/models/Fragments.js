@@ -18,11 +18,6 @@ module.exports = {
       required: true
     },
 
-    HID: {
-      model: 'Humans',
-      required: true
-    },
-
     csv: {
       type: 'text'
     }

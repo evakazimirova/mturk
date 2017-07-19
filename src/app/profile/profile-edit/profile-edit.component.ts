@@ -7,13 +7,13 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 })
 export class ProfileEditComponent implements OnInit {
   @Output() profileModeSelected = new EventEmitter();
-  selectProfileMode(page) {
-    this.profileModeSelected.emit(page);
-  }
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  selectProfileMode(page) {
+    this.profileModeSelected.emit(page);
+  }
 }

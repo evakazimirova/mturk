@@ -19,7 +19,7 @@ module.exports = {
     },
 
     FID: {
-      model: 'Fragments',
+      type: 'string',
       required: true
     },
 

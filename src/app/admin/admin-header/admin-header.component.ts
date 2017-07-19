@@ -1,19 +1,15 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'na-admin-header',
   templateUrl: './admin-header.component.html',
   styleUrls: ['./admin-header.component.scss']
 })
-export class AdminHeaderComponent implements OnInit {
+export class AdminHeaderComponent {
   @Input() page;
   @Output() pageChanged = new EventEmitter();
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  // смена страницы
   changePage(event, page) {
     event.preventDefault();
     this.pageChanged.emit(page);

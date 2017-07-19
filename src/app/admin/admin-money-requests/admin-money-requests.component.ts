@@ -7,10 +7,12 @@ import { HttpService } from '../../http.service';
   styleUrls: ['./admin-money-requests.component.scss']
 })
 export class AdminMoneyRequestsComponent implements OnInit {
-  requestId = 0;
+  // индикаторы загрузки
   isLoaded = false;
   isDefraing = false;
+
   requests = [];
+  requestId = 0;
   requestDataFiller = [];
 
   constructor(private http: HttpService) { }
@@ -18,8 +20,11 @@ export class AdminMoneyRequestsComponent implements OnInit {
   ngOnInit() {
     this.http.get('/moneyRequests/getAll').subscribe(
       requests => {
+        this.isLoaded = true;
+        // обновляем список запросов
         this.requests = requests;
 
+        // форма вывода информации по запосу
         this.requestDataFiller = [
           {
             title: 'Worker',
@@ -46,31 +51,33 @@ export class AdminMoneyRequestsComponent implements OnInit {
             value: this.requests[this.requestId].bill.account
           }
         ];
-
-        // console.log(requests);
-        this.isLoaded = true;
       },
       err => {
-        console.log(err);
         this.isLoaded = true;
+        console.error(err);
       }
     );
   }
 
+  // подтверждаем оплату
   defray() {
     if (!this.isDefraing) {
+      // блокируем действия пользователя на время оплаты
       this.isDefraing = true;
-      let cond = this.requests[this.requestId].bill.isDefrayed;
+
+      // текущее состояние запроса
+      const cond = this.requests[this.requestId].bill.isDefrayed;
       const RID = this.requests[this.requestId].RID;
 
+      // изменяем состояние запроса на противоположное
       this.http.get(`/moneyRequests/defray?defrayed=${!cond}&RID=${RID}`).subscribe(
         res => {
-          this.requests[this.requestId].bill.isDefrayed = res.defrayed
           this.isDefraing = false;
+          this.requests[this.requestId].bill.isDefrayed = res.defrayed;
         },
         err => {
-          console.log(err);
           this.isDefraing = false;
+          console.error(err);
         }
       );
     }

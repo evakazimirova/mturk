@@ -1,5 +1,4 @@
-<!-- Список аннотаторов прошедших регистрацию (подтвердили мейл) -->
-<!-- Список аннотаторов с статусами: количество проектов на которые подписан, количество выполненных задач, % выполнения текущей задачи (если две, то усредненный), галочка -->
+<!-- Список аннотаторов прошедших регистрацию -->
 <table class="table table-striped" *ngIf="isLoaded">
   <thead>
     <tr>
@@ -15,10 +14,10 @@
     <tr *ngFor="let user of users; let i = index">
       <td>{{ user.name }}</td>
       <td>{{ user.email }}</td>
-      <td>{{ user.completed }}</td>
-      <td>{{ user.active }}</td>
-      <td>{{ user.progress }}</td>
-      <td>
+      <td>{{ user.completed }}</td><!-- количество выполненных задач -->
+      <td>{{ user.active }}</td><!-- количество проектов на которые подписан -->
+      <td>{{ user.progress }}</td><!-- % выполнения текущей задачи -->
+      <td><!-- Индикатор бана -->
         <span class="fa fa-cog fa-spin fa-lg" *ngIf="user.banned === undefined"></span>
         <button class="btn btn-sm" *ngIf="user.banned !== undefined" [ngClass]="{'btn-danger': user.banned, 'btn-success': !user.banned}"
           (click)="ban(i, user.AID, user.banned)">
@@ -28,6 +27,6 @@
     </tr>
   </tbody>
 </table>
-<div class="loading">
-  <span class="fa fa-cog fa-spin fa-5x" *ngIf="!isLoaded"></span>
-</div>
+
+<!-- Индикатор загрузки страницы -->
+<na-loader-big *ngIf="!isLoaded"></na-loader-big>

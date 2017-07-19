@@ -1,12 +1,3 @@
-<!--
-  Заполнение анкеты в Личном кабинете.
-  Данные из анкеты вносятся в профиль.
-  Профиль можно редактировать.
-  Обязательные для заполнения пункты отмечены выделенным текстом.
-
-  Можно поменять/заполнить/дополнить информацию о себе
-  Есть обязательные для заполнения блоки, есть не обязательные.
--->
 <form>
   <div class="row">
     <div class="col col-sm-4 col-xs-12">
@@ -29,6 +20,7 @@
 
       <button type="submit" class="btn btn-primary btn-block hidden-xs" (click)="selectProfileMode('taskList')">Save</button>
     </div>
+
     <div class="col col-sm-4 col-xs-12">
       <h3>О себе</h3>
       <div class="form-group">
@@ -73,6 +65,7 @@
         <input type="text" class="form-control" id="secondName" placeholder="Moscow">
       </div>
     </div>
+
     <div class="col col-sm-4 col-xs-12">
       <h3>Специализация</h3>
 

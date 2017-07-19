@@ -3,8 +3,8 @@ const nodemailer = require('nodemailer');
 const config = {
   service: 'gmail',
   auth: {
-    user: process.env.MAILER_EMAIL,
-    pass: process.env.MAILER_PASS
+    user: process.env.MAILER_EMAIL || sails.config.mail.MAILER_EMAIL,
+    pass: process.env.MAILER_PASS || sails.config.mail.MAILER_PASS
   }
 }
 

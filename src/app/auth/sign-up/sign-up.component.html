@@ -1,37 +1,38 @@
-<!-- Заполнение данных для авторизации: фамилия, имя, логин, пароль, почта.
- -->
+<!-- Регистрация пользователя -->
 <form [formGroup]="form" (ngSubmit)="signUp($event)">
   <div class="form-group">
     <label for="firstName">First Name</label>
     <input type="text" class="form-control" id="firstName"
       formControlName="firstName" placeholder="John">
   </div>
+
   <div class="form-group">
     <label for="secondName">Second Name</label>
     <input type="text" class="form-control" id="secondName"
       formControlName="secondName" placeholder="Doe">
   </div>
+
   <div class="form-group">
     <label for="login">Login</label>
     <input type="text" class="form-control" id="login"
       formControlName="login" placeholder="johndoe_42">
   </div>
+
   <div class="form-group">
     <label for="email">E-mail</label>
     <input type="email" class="form-control" id="email"
       formControlName="email" placeholder="johndoe_42@gmail.com">
   </div>
+
   <div class="form-group">
     <label for="password">Password</label>
     <input type="password" class="form-control" id="password"
       formControlName="password" placeholder="Password">
   </div>
+
   <button type="submit" class="btn btn-primary btn-block" [ngClass]="{disabled: loading}">
     Sign Up
-    <span class="fa fa-cog fa-spin fa-2x" *ngIf="loading"></span>
+    <!-- Индикатор загрузки -->
+    <na-loader-inbtn *ngIf="loading"></na-loader-inbtn>
   </button>
 </form>
-<!--
-  Подтверждение регистрации. происходит переходом по ссылке, высланной на почту.
-  После подтверждения почты, пользователь попадает на страницу личного кабинета.
--->

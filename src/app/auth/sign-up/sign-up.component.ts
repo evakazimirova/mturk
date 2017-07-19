@@ -5,14 +5,15 @@ import { HttpService } from '../../http.service';
 
 @Component({
   selector: 'na-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  templateUrl: './sign-up.component.html'
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent {
   form: FormGroup;
   loading = false;
 
-  constructor(public common: CommonService, private http: HttpService, private formBuilder: FormBuilder) {
+  constructor(public common: CommonService,
+              private http: HttpService,
+              private formBuilder: FormBuilder) {
     this.form = formBuilder.group({
       'firstName': ['', [
         Validators.required
@@ -34,12 +35,10 @@ export class SignUpComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
-
   signUp(event) {
-    event.preventDefault();
+    event.preventDefault(); // отменяем стандартное действие
 
+    // собираем информацию с полей
     const userData = {
       firstName: this.form.value.firstName,
       secondName: this.form.value.secondName,
@@ -48,25 +47,30 @@ export class SignUpComponent implements OnInit {
       password: this.form.value.password
     };
 
+    // отправляем запрос на сервер
     this.loading = true;
     this.http.post(userData, '/annotators/register').subscribe(
       user => {
-        console.log(`We have sent an e-mail to the "${user.email}". Please check it out!`);
         this.loading = false;
+
+        // выводим сообщение об успехе
+        console.log(`We have sent an e-mail to the "${user.email}". Please check it out!`);
       },
       error => {
+        this.loading = false;
+
+        // обработка ошибок
         const status = error._body;
         switch (status) {
           case 'user exists':
             // если такой пользователь уже есть, то предлагается восстановить пароль
-            console.log('Annotator with this email is already exists in the system.');
+            console.error('Annotator with this email is already exists in the system.');
             break;
 
           default:
-            console.log(status);
+            console.error(status);
             break;
         }
-        this.loading = false;
       }
     );
   }

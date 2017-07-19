@@ -4,29 +4,29 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ng-app',
-  templateUrl: './site.component.html',
-  styleUrls: ['./site.component.scss']
+  templateUrl: './site.component.html'
 })
 export class SiteComponent implements OnInit {
-
-  constructor(private common: CommonService, private http: HttpService) {}
+  constructor(
+    private common: CommonService,
+    private http: HttpService
+  ) {}
 
   ngOnInit() {
-    // читаем файл конфигурации
-    // ДОП 2. в конфигурационном файле указывается список шкал для разметки и диапазон разметки. Диапазон может быть либо от 1 до 5 либо от -2 до +2.
-
-    // авторизуем пользователя
+    // определяем, какую страницу показывать при заходе на сайт
     this.http.get('/annotators/authorized').subscribe(
       user => {
+        // авторизован ли пользователь
         if (user) {
+          // меняет ли пользователь пароль
           if (user.chPass) {
-            this.common.mode = "changePassword";
+            this.common.mode = 'changePassword';
           } else {
+            this.common.mode = 'profile';
             this.common.user = user;
-            this.common.mode = "profile";
           }
         } else {
-          this.common.mode = "auth";
+          this.common.mode = 'auth';
         }
       },
       error => console.log(error)

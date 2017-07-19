@@ -5,6 +5,8 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+let uniq = a => [...new Set(a)];
+
 module.exports = {
 	annoTasks: (req, res, next) => {
     AnnoTasks.find({
@@ -15,66 +17,57 @@ module.exports = {
         tasksInfo = [];
 
         for (task of tasks) {
-          let tasksCount;
-          if (task.TID.task.length > 0) {
-            tasksCount = task.TID.task.split(',').length;
+          const tasksCount = Object.keys(JSON.parse(task.TID.FID)).length;
 
-            const part = +(task.done / tasksCount).toFixed(0);
-            const earned = +(part * task.price).toFixed(0);
+          const part = +(task.done / tasksCount).toFixed(0);
+          const earned = +(part * task.price).toFixed(0);
 
-            let activity;
+          let activity;
 
-            switch (task.status) {
-              case 1:
-                activity = "Active";
-                break;
+          switch (task.status) {
+            case 1:
+              activity = "Active";
+              break;
 
-              default:
-                activity = "Inactive";
-                break;
-            }
+            default:
+              activity = "Inactive";
+              break;
+          }
 
-            const taskInfo = {
-              activity: activity,
-              percentage: part * 100,
-              earned: earned,
-              price: task.price,
-              task: {
-                PID: task.TID.PID,
-                ATID: task.ATID,
-                TID: task.TID.TID,
-                HID: task.TID.HID,
-                task: task.TID.task
-              }
-            }
-
-            if (task.TID.PID === 1) {
-              tasksInfo[0] = taskInfo
-            }
-
-            if (task.TID.PID === 2) {
-              tasksInfo[1] = taskInfo
+          const taskInfo = {
+            activity: activity,
+            percentage: part * 100,
+            earned: earned,
+            price: task.price,
+            task: {
+              PID: task.TID.PID,
+              ATID: task.ATID,
+              TID: task.TID.TID,
+              HID: task.TID.HID,
+              task: task.TID.task
             }
           }
+
+          tasksInfo[task.TID.PID - 1] = taskInfo;
         }
 
-        for (let i = 0; i < 2; i++) {
-          if (tasksInfo[i] === undefined) {
-            tasksInfo[i] = {
-              activity: "Inactive",
-              percentage: 0,
-              earned: 0,
-              price: 0,
-              task: {
-                PID: i + 1,
-                ATID: 0,
-                TID: 0,
-                HID: 0,
-                task: 0
-              }
-            }
-          }
-        }
+        // for (let i = 0; i < 2; i++) {
+        //   if (tasksInfo[i] === undefined) {
+        //     tasksInfo[i] = {
+        //       activity: "Inactive",
+        //       percentage: 0,
+        //       earned: 0,
+        //       price: 0,
+        //       task: {
+        //         PID: i + 1,
+        //         ATID: 0,
+        //         TID: 0,
+        //         HID: 0,
+        //         task: 0
+        //       }
+        //     }
+        //   }
+        // }
 
         res.json(tasksInfo);
       }
@@ -180,14 +173,6 @@ module.exports = {
     Tasks.findOne({
       TID: ids.TID
     }).populateAll().exec((err, task) => {
-      let TasksInfo;
-
-      if (ids.PID === 1) {
-        TasksInfo = EmotionsInfo;
-      } else if (ids.PID === 2) {
-        TasksInfo = EventsInfo;
-      }
-
       // оставляем только те задачи, которые нужно делать
       let tasks = [];
       for (let e of ids.task.split(',')) {
@@ -198,34 +183,61 @@ module.exports = {
 
       let all = {};
 
-      TasksInfo.find({
-        or: tasks
-      }).exec((err, tasks) => {
-        all.tasks = tasks;
+      // Парсим задачу
+      all.FIDs = JSON.parse(task.FID);
+      const FIDsKeys = Object.keys(all.FIDs);
 
-        tryToResponse();
-      });
-
-      Fragments.findOne({
-        FID: task.FID.FID
-      }).populateAll().exec((err, fragment) => {
-        all.ATID = ids.ATID;
-        all.video = fragment.VID.URL;
-        all.person = {
-          name: fragment.HID.personName,
-          image: fragment.HID.personImage
+      let allEmotions = [];
+      let allFIDs = [];
+      for (const fid in all.FIDs) {
+        allFIDs.push({FID: fid});
+        let emotions = all.FIDs[fid].split(',');
+        const emoType = emotions.shift();
+        all.FIDs[fid] = {
+          emoType: emoType,
+          emotions: emotions
         };
-        all.result = fragment.csv === null ? '' : fragment.csv; // для того, чтобы загрузить сохранённые данные, нужно ещё обратиться к таблице AnnoTask
+        // allEmotions = allEmotions.concat(FIDs[t].split(','));
+      }
 
-        tryToResponse();
+
+      // all.fragments = [];
+      // for (const fid of task.FID.split(',')) {
+      //   all.fragments.push({
+      //     FID: fid
+      //   });
+      // }
+
+      // all.currentFragment = 0;
+
+      // EmotionsInfo.find({
+      //   or: allEmotions
+      // }).exec((err, emotions) => {
+      //   all.emotions = emotions;
+      //   console.log(all.emotions);
+
+      //   tryToResponse();
+      // });
+
+      Fragments.find({
+        or: allFIDs
+      }).populateAll().exec((err, fragments) => {
+        all.ATID = ids.ATID;
+
+        for (const f of fragments) {
+          all.FIDs[f.FID].video = f.VID.URL,
+          all.FIDs[f.FID].result = f.csv === null ? '' : f.csv; // для того, чтобы загрузить сохранённые данные, нужно ещё обратиться к таблице AnnoTask
+        }
+
+        res.json(all);
       });
 
-      function tryToResponse() {
-        // если все данные собраны, то отправляем ответ
-        if (all.tasks && all.ATID) {
-          res.json(all);
-        }
-      }
+      // function tryToResponse() {
+      //   // если все данные собраны, то отправляем ответ
+      //   if (all.emotions && all.ATID) {
+
+      //   }
+      // }
     });
   },
 
@@ -242,8 +254,8 @@ module.exports = {
         },
         {
           result: JSON.stringify(input.result),
-          done: input.done,
-          status: 3
+          done: input.done
+          // status: 3
         }
       ).exec((err, updated) => {
         const newAmount = task.AID.moneyAvailable + task.price;

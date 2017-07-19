@@ -1,0 +1,12 @@
+<!-- Выбор эмоции -->
+<na-annotating-fragments-ranges></na-annotating-fragments-ranges>
+
+<!-- Список фрагментов -->
+<na-annotating-fragments-table></na-annotating-fragments-table>
+
+<!-- Сохранение -->
+<button class="btn btn-primary btn-block" (click)="saveRating()" [ngClass]="{disabled: loading}">
+  Save
+  <!-- Индикатор загрузки -->
+  <na-loader-inbtn *ngIf="loading"></na-loader-inbtn>
+</button>
