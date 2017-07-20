@@ -8,13 +8,13 @@ import { AnnotatingService } from '../../../annotating/annotating.service';
   styleUrls: ['./annotating-player-ratebar.component.scss']
 })
 export class AnnotatingPlayerRateBarComponent implements OnInit {
-  emoType = this.annot.task.FIDs[this.annot.FID].emoType;
+  boxType = this.annot.task.FIDs[this.annot.FID].boxType;
 
   constructor(public annot: AnnotatingService) {}
 
   ngOnInit() {
     this.annot.videoChanged.subscribe(
-      () => this.emoType = this.annot.task.FIDs[this.annot.FID].emoType
+      () => this.boxType = this.annot.task.FIDs[this.annot.FID].boxType
     );
   }
 }

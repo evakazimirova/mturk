@@ -4,7 +4,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 export class AnnotatingService {
   csv = [[1, 0, 0, -1]];
   rating = [[]];
-  fragmentsWip = {};
+  fragmentsWip = [];
   cf = -1;
   emotions = [];
   emotion = 0;
@@ -37,7 +37,11 @@ export class AnnotatingService {
   }
 
   updateCSV(newCSV) {
-    this.csv = newCSV;
+    if (this.task.FIDs[this.FID].done) {
+      // выкидываем первую строку с заголовками
+      newCSV.shift();
+    }
+
     this.rating = [];
 
     const totalEmotions = this.task.FIDs[this.FID].emotions.length;
@@ -52,6 +56,19 @@ export class AnnotatingService {
         this.rating[i].push(-1);
       }
     }
+
+    if (this.task.FIDs[this.FID].done) {
+      for (const row in newCSV) {
+        for (let i = 0; i < totalEmotions; i++) {
+          this.rating[i][row] = +newCSV[row][i + 2];
+          // delete newCSV[row][i + 2];
+        }
+        newCSV[row] = newCSV[row].splice(0, 2);
+      }
+      console.log(newCSV);
+    }
+
+    this.csv = newCSV;
   }
 
   // оценивание фрагмента

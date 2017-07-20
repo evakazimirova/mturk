@@ -22,8 +22,12 @@ export class AnnotatingVideosComponent implements OnInit {
       this.videos.push(this.annot.task.FIDs[v]);
     }
 
-    for (const f of this.videos) {
-      this.annot.fragmentsWip[f.FID] = f.result;
+    for (const f in this.videos) {
+      if (this.annot.task.FIDs[f].done) {
+        this.annot.fragmentsWip[f] = this.annot.task.FIDs[f].result;
+      } else {
+        this.annot.fragmentsWip[f] = null;
+      }
     }
   }
 
