@@ -65,7 +65,6 @@ export class AnnotatingService {
         }
         newCSV[row] = newCSV[row].splice(0, 2);
       }
-      console.log(newCSV);
     }
 
     this.csv = newCSV;

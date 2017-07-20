@@ -18,7 +18,7 @@ export class AnnotatingVideosComponent implements OnInit {
   ngOnInit() {
     // обновляем список видео
     for (const v in this.annot.task.FIDs) {
-      this.annot.task.FIDs[v].FID = v;
+      // this.annot.task.FIDs[v].i = v;
       this.videos.push(this.annot.task.FIDs[v]);
     }
 

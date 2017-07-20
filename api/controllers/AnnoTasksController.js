@@ -238,7 +238,7 @@ module.exports = {
             }
           }
 
-          // console.log(all);
+          // console.log(all.FIDs);
           res.json(all);
         });
       });
