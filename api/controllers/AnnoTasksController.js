@@ -185,39 +185,13 @@ module.exports = {
 
       // Парсим задачу
       all.FIDs = JSON.parse(task.FID);
-      const FIDsKeys = Object.keys(all.FIDs);
 
       let allEmotions = [];
       let allFIDs = [];
-      for (const fid in all.FIDs) {
-        allFIDs.push({FID: fid});
-        let emotions = all.FIDs[fid].split(',');
-        const emoType = emotions.shift();
-        all.FIDs[fid] = {
-          emoType: emoType,
-          emotions: emotions
-        };
-        // allEmotions = allEmotions.concat(FIDs[t].split(','));
+      for (const fid of all.FIDs) {
+        allFIDs.push({FID: fid.FID});
+        fid.emotions = fid.emotions.split(',').map((E) => {return +E.slice(-1);});
       }
-
-
-      // all.fragments = [];
-      // for (const fid of task.FID.split(',')) {
-      //   all.fragments.push({
-      //     FID: fid
-      //   });
-      // }
-
-      // all.currentFragment = 0;
-
-      // EmotionsInfo.find({
-      //   or: allEmotions
-      // }).exec((err, emotions) => {
-      //   all.emotions = emotions;
-      //   console.log(all.emotions);
-
-      //   tryToResponse();
-      // });
 
       Fragments.find({
         or: allFIDs
@@ -225,19 +199,18 @@ module.exports = {
         all.ATID = ids.ATID;
 
         for (const f of fragments) {
-          all.FIDs[f.FID].video = f.VID.URL,
-          all.FIDs[f.FID].result = f.csv === null ? '' : f.csv; // для того, чтобы загрузить сохранённые данные, нужно ещё обратиться к таблице AnnoTask
+          for (const fid of all.FIDs) {
+            if (fid.FID === f.FID) {
+              fid.video = f.VID.URL;
+              fid.result = f.csv === null ? '' : f.csv;
+              // для того, чтобы загрузить сохранённые данные, нужно ещё обратиться к таблице AnnoTask
+            }
+          }
         }
 
+        console.log(all);
         res.json(all);
       });
-
-      // function tryToResponse() {
-      //   // если все данные собраны, то отправляем ответ
-      //   if (all.emotions && all.ATID) {
-
-      //   }
-      // }
     });
   },
 
