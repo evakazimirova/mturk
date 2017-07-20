@@ -65,6 +65,10 @@ module.exports = {
     tasks: {
       collection: 'AnnoTasks',
       via: 'AID'
+    },
+
+    lastlogin: {
+      type: 'datetime'
     }
   }
 };

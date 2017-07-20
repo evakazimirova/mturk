@@ -5,6 +5,18 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+// сообщаем, когда пользователь в последний раз заходил на сайт
+const updateLastLogin = (AID) => {
+  Annotators.update(
+    {
+      AID: AID
+    },
+    {
+      lastlogin: new Date()
+    }
+  ).exec(() => {});
+};
+
 module.exports = {
   // отвечаем авторизован ли пользователь
   authorized: (req, res, next) => {
@@ -21,6 +33,10 @@ module.exports = {
           AID: req.session.userId
         }).exec((error, annotator) => {
           if (!annotator.banned) {
+            // сообщаем, когда пользователь в последний раз заходил на сайт
+            updateLastLogin(req.session.userId);
+
+            // передаём данные пользователя
             const user = {
               nickname: annotator.login,
               rating: annotator.rating,
@@ -230,6 +246,9 @@ module.exports = {
               req.session.isAuth = true;
               req.session.userId = annotator.AID;
 
+              // сообщаем, когда пользователь в последний раз заходил на сайт
+              updateLastLogin(req.session.userId);
+
               const user = {
                 nickname: annotator.login,
                 rating: annotator.rating,
@@ -376,6 +395,9 @@ module.exports = {
           // редактируем сессию
           req.session.isAuth = true;
           req.session.userId = annotator.AID;
+
+          // сообщаем, когда пользователь в последний раз заходил на сайт
+          updateLastLogin(req.session.userId);
 
           // отправляем данные пользователя
           res.json(annotator);
