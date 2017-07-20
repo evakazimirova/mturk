@@ -29,7 +29,7 @@ export class SiteComponent implements OnInit {
           this.common.mode = 'auth';
         }
       },
-      error => console.log(error)
+      error => console.error(error)
     );
   }
 }

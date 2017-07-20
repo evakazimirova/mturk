@@ -47,13 +47,25 @@ export class AnnotatingFragmentsComponent {
 
       // переводим разметку в нужный формат
       const FID = this.annot.FID;
-      this.annot.fragmentsWip[FID] = outputCSV;
+      this.annot.fragmentsWip[FID] = {
+        FID: this.annot.task.FIDs[FID].FID,
+        csv: outputCSV
+      };
+
+      this.annot.task.FIDs[FID].done = true;
+      let tasksDone = 0;
+      for (const fid of this.annot.task.FIDs) {
+        if (fid.done) {
+          tasksDone++;
+        }
+      }
 
       // формируем данные для запроса на сервер
       const output = {
         result: this.annot.fragmentsWip,
         ATID: this.annot.task.ATID,
-        done: this.annot.task.FIDs[this.annot.FID].emotions.length // число проработанных эмоций
+        done: tasksDone
+        // totalEmotions: this.annot.task.FIDs[this.annot.FID].emotions.length // число проработанных эмоций
       };
 
       // сохраняем резульат в БД

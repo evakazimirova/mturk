@@ -169,75 +169,79 @@ module.exports = {
   start:  (req, res, next) => {
     let ids = req.params.all();
 
-    // вынимаем эмоции для разметки
-    Tasks.findOne({
-      TID: ids.TID
-    }).populateAll().exec((err, task) => {
-      // оставляем только те задачи, которые нужно делать
-      let tasks = [];
-      for (let e of ids.task.split(',')) {
-        tasks.push({
-          EID: e,
-        });
-      }
-
-      let all = {};
-
-      // Парсим задачу
-      all.FIDs = JSON.parse(task.FID);
-      const FIDsKeys = Object.keys(all.FIDs);
-
-      let allEmotions = [];
-      let allFIDs = [];
-      for (const fid in all.FIDs) {
-        allFIDs.push({FID: fid});
-        let emotions = all.FIDs[fid].split(',');
-        const emoType = emotions.shift();
-        all.FIDs[fid] = {
-          emoType: emoType,
-          emotions: emotions
-        };
-        // allEmotions = allEmotions.concat(FIDs[t].split(','));
-      }
-
-
-      // all.fragments = [];
-      // for (const fid of task.FID.split(',')) {
-      //   all.fragments.push({
-      //     FID: fid
-      //   });
-      // }
-
-      // all.currentFragment = 0;
-
-      // EmotionsInfo.find({
-      //   or: allEmotions
-      // }).exec((err, emotions) => {
-      //   all.emotions = emotions;
-      //   console.log(all.emotions);
-
-      //   tryToResponse();
-      // });
-
-      Fragments.find({
-        or: allFIDs
-      }).populateAll().exec((err, fragments) => {
-        all.ATID = ids.ATID;
-
-        for (const f of fragments) {
-          all.FIDs[f.FID].video = f.VID.URL,
-          all.FIDs[f.FID].result = f.csv === null ? '' : f.csv; // для того, чтобы загрузить сохранённые данные, нужно ещё обратиться к таблице AnnoTask
+    // вынимаем сохранённую работу аннотатора
+    AnnoTasks.findOne({
+      ATID: ids.ATID
+    }).populateAll().exec((err, annoTask) => {
+      // вынимаем эмоции для разметки
+      Tasks.findOne({
+        TID: ids.TID
+      }).populateAll().exec((err, task) => {
+        // оставляем только те задачи, которые нужно делать
+        let tasks = [];
+        for (let e of ids.task.split(',')) {
+          tasks.push({
+            EID: e,
+          });
         }
 
-        res.json(all);
+        let all = {};
+
+        // Парсим задачу
+        all.FIDs = JSON.parse(task.FID);
+
+        let allEmotions = [];
+        let allFIDs = [];
+        for (const fid of all.FIDs) {
+          allFIDs.push({FID: fid.FID});
+          fid.emotions = fid.emotions.split(',').map((E) => {return +E.slice(-1);});
+        }
+
+        // можно упростить запрос в БД
+        // console.log(uniq(allFIDs));
+
+        Fragments.find({
+          or: allFIDs
+        }).populateAll().exec((err, fragments) => {
+          all.ATID = ids.ATID;
+
+          let savesExist = false;
+          let result = [];
+          if (annoTask.result !== null) {
+            savesExist = true;
+            result = JSON.parse(annoTask.result);
+          }
+
+          for (const f of fragments) {
+            for (const fid in all.FIDs) {
+              if (all.FIDs[fid].FID === f.FID) {
+                all.FIDs[fid].video = f.VID.URL;
+                if (savesExist) {
+                  if (result[fid] !== null) {
+                    all.FIDs[fid].result = result[fid];
+                    all.FIDs[fid].done = true;
+                  } else {
+                    all.FIDs[fid].result = {
+                      FID: f.FID,
+                      csv: f.csv
+                    };
+                    all.FIDs[fid].done = false;
+                  }
+                } else {
+                  all.FIDs[fid].result = {
+                    FID: f.FID,
+                    csv: f.csv
+                  };
+                  all.FIDs[fid].done = false;
+                }
+              }
+            }
+          }
+
+          // console.log(all.FIDs);
+          res.json(all);
+        });
       });
-
-      // function tryToResponse() {
-      //   // если все данные собраны, то отправляем ответ
-      //   if (all.emotions && all.ATID) {
-
-      //   }
-      // }
     });
   },
 
