@@ -136,4 +136,17 @@ export class ProfileProjectsComponent implements OnInit {
       }
     );
   }
+
+  startDemoTask() {
+    this.http.get(`annotators/demoFinnished`).subscribe(
+      demo => {
+        // this.loadingTask = -1;
+        this.common.user.demo = demo;
+      },
+      err => {
+        // this.loadingTask = -1;
+        console.error(err);
+      }
+    );
+  }
 }

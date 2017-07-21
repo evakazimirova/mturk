@@ -6,6 +6,10 @@
  */
 
 module.exports = {
-	
+  all: (req, res, next) => {
+    AnnotatorInfo.find().exec((error, projects) => {
+      res.json(projects);
+    });
+  }
 };
 

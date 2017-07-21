@@ -31,24 +31,29 @@ module.exports = {
         // отдаём данные пользователя
         Annotators.findOne({
           AID: req.session.userId
-        }).populateAll().exec((error, annotator) => {
+        }).populate('otherInfo').exec((error, annotator) => {
           if (!annotator.banned) {
             // сообщаем, когда пользователь в последний раз заходил на сайт
             updateLastLogin(req.session.userId);
 
-            console.log(annotator)
+            AnnotatorInfo.findOne({ // лучше использовать populate. но не выходить (нужно чтобы sails сам создал таблицу)
+              AID: req.session.userId
+            }).exec((error, otherInfo) => {
+              // передаём данные пользователя
+              const user = {
+                nickname: annotator.login,
+                rating: annotator.rating,
+                money: {
+                  available: annotator.moneyAvailable,
+                  reserved: 0,
+                },
+                profile: otherInfo.profile,
+                englishTest: otherInfo.englishTest,
+                demo: otherInfo.demo
+              };
 
-            // передаём данные пользователя
-            const user = {
-              nickname: annotator.login,
-              rating: annotator.rating,
-              money: {
-                available: annotator.moneyAvailable,
-                reserved: 0,
-              }
-            };
-
-            res.json(user);
+              res.json(user);
+            });
           } else {
             res.send('false');
           }
@@ -251,17 +256,24 @@ module.exports = {
               // сообщаем, когда пользователь в последний раз заходил на сайт
               updateLastLogin(req.session.userId);
 
-              const user = {
-                nickname: annotator.login,
-                rating: annotator.rating,
-                money: {
-                  available: annotator.moneyAvailable,
-                  reserved: 0,
-                }
-              };
+              AnnotatorInfo.findOne({ // лучше использовать populate. но не выходить (нужно чтобы sails сам создал таблицу)
+                AID: req.session.userId
+              }).exec((error, otherInfo) => {
+                // передаём данные пользователя
+                const user = {
+                  nickname: annotator.login,
+                  rating: annotator.rating,
+                  money: {
+                    available: annotator.moneyAvailable,
+                    reserved: 0,
+                  },
+                  profile: otherInfo.profile,
+                  englishTest: otherInfo.englishTest,
+                  demo: otherInfo.demo
+                };
 
-              // возвращаем все данные текущего пользователя
-              res.json(user);
+                res.json(user);
+              });
             } else {
               res
                 .status(400)
@@ -423,6 +435,22 @@ module.exports = {
         res.json({
           banned: banned
         });
+      }
+    });
+  },
+
+  demoFinnished: (req, res, next) => {
+    AnnotatorInfo.update(
+      {
+        AID: req.session.userId
+      },
+      {
+        demo: 1
+      }
+    ).exec((error, annotator) => {
+      if (annotator) {
+        // отправляем данные пользователя
+        res.json(true);
       }
     });
   },
