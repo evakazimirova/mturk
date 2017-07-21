@@ -5,6 +5,18 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+// сообщаем, когда пользователь в последний раз заходил на сайт
+const updateLastLogin = (AID) => {
+  Annotators.update(
+    {
+      AID: AID
+    },
+    {
+      lastlogin: new Date()
+    }
+  ).exec(() => {});
+};
+
 module.exports = {
   // отвечаем авторизован ли пользователь
   authorized: (req, res, next) => {
@@ -19,18 +31,29 @@ module.exports = {
         // отдаём данные пользователя
         Annotators.findOne({
           AID: req.session.userId
-        }).exec((error, annotator) => {
+        }).populate('otherInfo').exec((error, annotator) => {
           if (!annotator.banned) {
-            const user = {
-              nickname: annotator.login,
-              rating: annotator.rating,
-              money: {
-                available: annotator.moneyAvailable,
-                reserved: 0,
-              }
-            };
+            // сообщаем, когда пользователь в последний раз заходил на сайт
+            updateLastLogin(req.session.userId);
 
-            res.json(user);
+            AnnotatorInfo.findOne({ // лучше использовать populate. но не выходить (нужно чтобы sails сам создал таблицу)
+              AID: req.session.userId
+            }).exec((error, otherInfo) => {
+              // передаём данные пользователя
+              const user = {
+                nickname: annotator.login,
+                rating: annotator.rating,
+                money: {
+                  available: annotator.moneyAvailable,
+                  reserved: 0,
+                },
+                profile: otherInfo.profile,
+                englishTest: otherInfo.englishTest,
+                demo: otherInfo.demo
+              };
+
+              res.json(user);
+            });
           } else {
             res.send('false');
           }
@@ -187,6 +210,11 @@ module.exports = {
               registered: 1     // изменяем статус пользователя
             }
           ).exec((error, updated) => {
+            // создаём таблицу с дополнительной информцией
+            AnnotatorInfo.create({
+              AID: annotator.AID
+            }).exec((error, updated) => {});
+
             // авторизируем пользователя
             req.session.userId = annotator.AID;
             req.session.isAuth = true;
@@ -230,17 +258,27 @@ module.exports = {
               req.session.isAuth = true;
               req.session.userId = annotator.AID;
 
-              const user = {
-                nickname: annotator.login,
-                rating: annotator.rating,
-                money: {
-                  available: annotator.moneyAvailable,
-                  reserved: 0,
-                }
-              };
+              // сообщаем, когда пользователь в последний раз заходил на сайт
+              updateLastLogin(req.session.userId);
 
-              // возвращаем все данные текущего пользователя
-              res.json(user);
+              AnnotatorInfo.findOne({ // лучше использовать populate. но не выходить (нужно чтобы sails сам создал таблицу)
+                AID: req.session.userId
+              }).exec((error, otherInfo) => {
+                // передаём данные пользователя
+                const user = {
+                  nickname: annotator.login,
+                  rating: annotator.rating,
+                  money: {
+                    available: annotator.moneyAvailable,
+                    reserved: 0,
+                  },
+                  profile: otherInfo.profile,
+                  englishTest: otherInfo.englishTest,
+                  demo: otherInfo.demo
+                };
+
+                res.json(user);
+              });
             } else {
               res
                 .status(400)
@@ -377,6 +415,9 @@ module.exports = {
           req.session.isAuth = true;
           req.session.userId = annotator.AID;
 
+          // сообщаем, когда пользователь в последний раз заходил на сайт
+          updateLastLogin(req.session.userId);
+
           // отправляем данные пользователя
           res.json(annotator);
         });
@@ -399,6 +440,22 @@ module.exports = {
         res.json({
           banned: banned
         });
+      }
+    });
+  },
+
+  demoFinnished: (req, res, next) => {
+    AnnotatorInfo.update(
+      {
+        AID: req.session.userId
+      },
+      {
+        demo: 1
+      }
+    ).exec((error, annotator) => {
+      if (annotator) {
+        // отправляем данные пользователя
+        res.json(true);
       }
     });
   },

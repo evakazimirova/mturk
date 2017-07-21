@@ -3,26 +3,48 @@
   [projectId]="projectId"
   (returned)="projectMode = false"></na-project>
 
-<!-- Список проектов -->
-<div *ngIf="!projectMode && isLoaded">
-  <div class="task" *ngFor="let project of common.projects; let i = index"
-    [ngClass]="{locked: i !== 0}"
-    (click)="taskSelected(project, i)">
-    {{ project.projectName }}
-    <!-- Индикатор загрузки -->
-    <span class="fa fa-cog fa-spin" *ngIf="loadingTask === i"></span>
+<div class="task" *ngIf="!this.common.user.demo"
+  (click)="startDemoTask()">
+  Demo Task
+  <!-- Индикатор загрузки -->
+  <!-- <span class="fa fa-cog fa-spin"></span> -->
 
-    <!-- Дополнительная информация -->
-    <div class="description" *ngIf="project.annoTask">
-      <span>Completed: {{ project.annoTask.percentage }}%</span>
-      <span>Earned: {{ project.annoTask.earned }}/{{ project.pricePerTask }}</span>
-    </div>
-
-    <!-- Замочек -->
-    <span class="fa fa-lock fa-5x"></span>
+  <!-- Дополнительная информация -->
+  <div class="description">
+    <span>Completed: 0%</span>
+    <span>Earned: 0/100</span>
   </div>
-  <!-- <span (click)="viewProjectDescription(i)"></span> -->
+
+  <!-- Замочек -->
+  <span class="fa fa-lock fa-5x"></span>
 </div>
 
-<!-- Индикатор загрузки страницы -->
-<na-loader-big *ngIf="!isLoaded"></na-loader-big>
+<!-- Список проектов -->
+<div *ngIf="this.common.user.demo">
+  <div *ngIf="!projectMode && isLoaded">
+    <div *ngFor="let project of common.projects">
+      <h1>{{ project.projectName }}</h1>
+      <div class="task" *ngFor="let task of project.taskTypes; let i = index"
+        [ngClass]="{locked: i !== 0}"
+        (click)="taskSelected(project, i)">
+        {{ task.title }}
+        <!-- Индикатор загрузки -->
+        <span class="fa fa-cog fa-spin" *ngIf="loadingTask === i"></span>
+
+        <!-- Дополнительная информация -->
+        <div class="description">
+          <span>Tasks Amount: {{ task.tasksAmount }}</span>
+          <span>Completed: {{ 0 }}%</span>
+          <span>Earned: {{ 0 }}/{{ task.price }}</span>
+        </div>
+
+        <!-- Замочек -->
+        <span class="fa fa-lock fa-5x"></span>
+      </div>
+      <!-- <span (click)="viewProjectDescription(i)"></span> -->
+    </div>
+  </div>
+
+  <!-- Индикатор загрузки страницы -->
+  <na-loader-big *ngIf="!isLoaded"></na-loader-big>
+</div>

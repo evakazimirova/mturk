@@ -23,6 +23,16 @@ module.exports = {
       required: true
     },
 
+    pricePerTaskMedium: {
+      type: 'float',
+      required: true
+    },
+
+    pricePerTaskHard: {
+      type: 'float',
+      required: true
+    },
+
     annoPerTask: {
       type: 'integer',
       defaultsTo: 6
