@@ -31,10 +31,12 @@ module.exports = {
         // отдаём данные пользователя
         Annotators.findOne({
           AID: req.session.userId
-        }).exec((error, annotator) => {
+        }).populateAll().exec((error, annotator) => {
           if (!annotator.banned) {
             // сообщаем, когда пользователь в последний раз заходил на сайт
             updateLastLogin(req.session.userId);
+
+            console.log(annotator)
 
             // передаём данные пользователя
             const user = {

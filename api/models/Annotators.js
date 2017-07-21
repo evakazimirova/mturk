@@ -62,14 +62,19 @@ module.exports = {
       defaultsTo: 0
     },
 
+    lastlogin: {
+      type: 'datetime'
+    },
+
     tasks: {
       collection: 'AnnoTasks',
       via: 'AID'
     },
 
-    lastlogin: {
-      type: 'datetime'
-    }
+    otherInfo: {
+      collection: 'AnnotatorInfo',
+      via: 'AID'
+    },
   }
 };
 
