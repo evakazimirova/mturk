@@ -210,6 +210,11 @@ module.exports = {
               registered: 1     // изменяем статус пользователя
             }
           ).exec((error, updated) => {
+            // создаём таблицу с дополнительной информцией
+            AnnotatorInfo.create({
+              AID: annotator.AID
+            }).exec((error, updated) => {});
+
             // авторизируем пользователя
             req.session.userId = annotator.AID;
             req.session.isAuth = true;
