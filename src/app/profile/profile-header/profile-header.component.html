@@ -43,6 +43,15 @@
         </a>
       </li>
 
+      <!-- Rules -->
+      <li (click)="selectProfileMode('rules')"
+          [ngClass]="{active: profileMode === 'rules'}">
+        <a href="#">
+          <span class="fa fa-wd fa-exclamation-triangle"></span>
+          Rules
+        </a>
+      </li>
+
       <!-- FAQ -->
       <li (click)="selectProfileMode('faq')"
           [ngClass]="{active: profileMode === 'faq'}">
@@ -67,7 +76,7 @@
             <!-- Сумма вознаграждения доступная для вывода -->
             <li>
               <a href="#" (click)="selectProfileMode('withdrawal')">
-                <span class="fa fa-wd fa-money"></span>
+                <span class="fa fa-fw fa-money"></span>
                 Money available: {{ common.user.money.available }}
               </a>
             </li>
@@ -75,7 +84,7 @@
             <!-- Cумма вознаграждения доступная для вывода после выполнения задач на которые подписался аннотатор -->
             <li>
               <a href="#" (click)="selectProfileMode('withdrawal')">
-                <span class="fa fa-wd fa-money"></span>
+                <span class="fa fa-fw fa-money"></span>
                 Money reserved: {{ common.user.money.reserved }}
               </a>
             </li>
@@ -83,17 +92,25 @@
             <li role="separator" class="divider"></li><!-- Разделитель -->
 
             <!-- Редактировать профиль -->
-            <li (click)="selectProfileMode('editing')">
+            <li (click)="selectProfileMode('account')">
               <a href="#">
-                <span class="fa fa-wd fa-user"></span>
-                Edit profile
+                <span class="fa fa-fw fa-key"></span>
+                Account
+              </a>
+            </li>
+
+            <!-- Редактировать профиль -->
+            <li (click)="selectProfileMode('profile')">
+              <a href="#">
+                <span class="fa fa-fw fa-user"></span>
+                Profile
               </a>
             </li>
 
             <!-- Выиход из системы -->
             <li (click)="signOut()">
               <a href="#">
-                <span class="fa fa-wd fa-sign-out"></span>
+                <span class="fa fa-fw fa-sign-out"></span>
                 Sign out
               </a>
             </li>

@@ -19,11 +19,15 @@ import { ChangePasswordComponent } from './auth/pass-change/pass-change.componen
 
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileHeaderComponent } from './profile/profile-header/profile-header.component';
-import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
+import { ProfileProfileComponent } from './profile/profile-profile/profile-profile.component';
+import { ProfileAccountComponent } from './profile/profile-account/profile-account.component';
 import { ProfileProjectsComponent } from './profile/profile-projects/profile-projects.component';
 import { ProjectComponent } from './profile/profile-projects/project/project.component';
 import { ProfileRatingComponent } from './profile/profile-rating/profile-rating.component';
 import { ProfileWithdrawalComponent } from './profile/profile-withdrawal/profile-withdrawal.component';
+import { ProfileNetworkingComponent } from './profile/profile-networking/profile-networking.component';
+import { ProfileFaqComponent } from './profile/profile-faq/profile-faq.component';
+import { ProfileRulesComponent } from './profile/profile-rules/profile-rules.component';
 
 import { AnnotatingComponent } from './annotating/annotating.component';
 import { AnnotatingVideosComponent } from './annotating/annotating-videos/annotating-videos.component';
@@ -67,7 +71,7 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
     ProfileComponent,
     ProjectComponent,
     ProfileHeaderComponent,
-    ProfileEditComponent,
+    ProfileProfileComponent,
     ProfileProjectsComponent,
     ProfileRatingComponent,
     ProfileWithdrawalComponent,
@@ -76,7 +80,11 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
     AdminUsersComponent,
     AdminProjectsComponent,
     AdminMoneyRequestsComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ProfileNetworkingComponent,
+    ProfileFaqComponent,
+    ProfileRulesComponent,
+    ProfileAccountComponent
   ],
   imports: [
     BrowserModule,

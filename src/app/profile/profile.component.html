@@ -6,8 +6,12 @@
 <!-- Основные части приложения -->
 <div class="container">
   <na-profile-projects *ngIf="profileMode === 'taskList'"></na-profile-projects>
-  <na-profile-edit *ngIf="profileMode === 'editing'"
-     (profileModeSelected)="profileMode = $event"></na-profile-edit>
+  <na-profile-account *ngIf="profileMode === 'account'"></na-profile-account>
+  <na-profile-profile *ngIf="profileMode === 'profile'"
+     (profileModeSelected)="profileMode = $event"></na-profile-profile>
   <na-profile-rating *ngIf="profileMode === 'rating'"></na-profile-rating>
   <na-profile-withdrawal *ngIf="profileMode === 'withdrawal'"></na-profile-withdrawal>
+  <na-profile-networking *ngIf="profileMode === 'networking'"></na-profile-networking>
+  <na-profile-faq *ngIf="profileMode === 'faq'"></na-profile-faq>
+  <na-profile-rules *ngIf="profileMode === 'rules'"></na-profile-rules>
 </div>

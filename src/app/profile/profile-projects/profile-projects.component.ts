@@ -17,6 +17,33 @@ export class ProfileProjectsComponent implements OnInit {
   isLoaded = true;
   loadingTask = -1;
 
+  progressBar = [
+    {
+      action: 'Registraition and Confirm e-mail',
+      done: true
+    },
+    {
+      action: 'Demo Task and Get your 10$',
+      done: this.common.user.demo === 1
+    },
+    {
+      action: 'Fill the Profile',
+      done: this.common.user.profile === 1
+    },
+    {
+      action: 'Short English Test',
+      done: this.common.user.englishTest === 'YES'
+    },
+    {
+      action: 'Learn Skills and Pass the Test in Totorial',
+      done: false
+    },
+    {
+      action: 'Finish Tasks and Get Money!',
+      done: false
+    }
+  ];
+
   constructor(public common: CommonService,
               private http: HttpService,
               public annot: AnnotatingService) { }
@@ -67,7 +94,9 @@ export class ProfileProjectsComponent implements OnInit {
 
   // решаем, что делать с выбранной задачей
   taskSelected(project, i) {
-    if (this.common.user.taskTaken !== null && i !== this.common.user.taskTaken - 1) {
+    if (this.common.user.profile === 0) {
+      alert('Before you will continue you should fill all the required information about you in your profile.');
+    } else if (this.common.user.taskTaken !== null && i !== this.common.user.taskTaken - 1) {
       alert('Sorry, but you have already taken a task. Please finnish it first and you will be able take one more.');
     } else if (i >= this.common.user.level) {
       alert('Sorry, but you are not ready to do this type of tasks. Please finnish the previous type of task first.');

@@ -37,3 +37,52 @@
     }
   }
 }
+
+.p-bar {
+  height: 140px;
+  margin-bottom: 20px;
+
+  > div {
+    float: left;
+
+    > div {
+      display: inline-block;
+      padding: 0 10px;
+      height: 140px;
+      vertical-align: bottom;
+
+      &.box {
+        border-radius: 10px;
+        width: 140px;
+        line-height: 140px;
+        color: #fff;
+        background-color: #00b3ff;
+        font-size: 2rem;
+        text-align: center;
+        vertical-align: middle;
+
+        span {
+          display: inline-block;
+          line-height: 1.42857143;
+          vertical-align: middle;
+        }
+
+        &.done {
+          background-color: #33d800;
+        }
+      }
+
+
+      &.fa {
+        padding-top: 47px;
+        width: auto;
+        background-color: inherit;
+        color: #00b3ff;
+
+        &.done {
+          color: #33d800;
+        }
+      }
+    }
+  }
+}

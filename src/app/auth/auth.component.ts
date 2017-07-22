@@ -7,7 +7,7 @@ import { CommonService } from '../common.service';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent {
-  formType = 'reg';
+  formType = 'login';
   constructor(public common: CommonService) {}
 
   secret() {
