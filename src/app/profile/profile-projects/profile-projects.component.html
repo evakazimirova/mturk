@@ -25,7 +25,7 @@
     <div *ngFor="let project of common.projects">
       <h1>{{ project.projectName }}</h1>
       <div class="task" *ngFor="let task of project.taskTypes; let i = index"
-        [ngClass]="{locked: i >= common.user.level || (common.user.taskTaken !== null && i !== common.user.taskTaken - 1)}"
+        [ngClass]="{locked: common.user.profile === 0 || i >= common.user.level || (common.user.taskTaken !== null && i !== common.user.taskTaken - 1)}"
         (click)="taskSelected(project, i)">
         {{ task.title }}
         <!-- Индикатор загрузки -->
