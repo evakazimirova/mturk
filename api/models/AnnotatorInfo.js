@@ -35,6 +35,11 @@ module.exports = {
 
     taskTaken: {
       type: 'integer'
+    },
+
+    firstTime: {
+      type: 'boolean',
+      defaultsTo: true
     }
   }
 };

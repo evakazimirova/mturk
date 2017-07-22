@@ -23,7 +23,7 @@ export class ProfileProjectsComponent implements OnInit {
       done: true
     },
     {
-      action: 'Demo Task and Get your 10$',
+      action: 'Demo Task and Get your 1$',
       done: this.common.user.demo === 1
     },
     {
@@ -181,6 +181,10 @@ export class ProfileProjectsComponent implements OnInit {
       demo => {
         // this.loadingTask = -1;
         this.common.user.demo = demo;
+        this.common.user.money.available = 1;
+        this.progressBar[1].done = true;
+
+        alert('Congrats! You just finished first task on Emotion Miner! Your account balanced with appropriate sum. You can withdraw your money, when balance exceed 10$. When you are ready - start a new task on a Task Board. To start with serious tasks, you should fulfill form in your Account.');
       },
       err => {
         // this.loadingTask = -1;

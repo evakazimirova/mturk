@@ -51,7 +51,8 @@ module.exports = {
                 englishTest: otherInfo.englishTest,
                 demo: otherInfo.demo,
                 level: otherInfo.level,
-                taskTaken: otherInfo.taskTaken
+                taskTaken: otherInfo.taskTaken,
+                firstTime: otherInfo.firstTime
               };
 
               res.json(user);
@@ -71,6 +72,21 @@ module.exports = {
   withTasks: (req, res, next) => {
     Annotators.find().populateAll().exec((error, annotators) => {
       res.json(annotators);
+    });
+  },
+
+
+  // первичный заход на сайт
+  firstTime: (req, res, next) => {
+    AnnotatorInfo.update(
+      {
+        AID: req.session.userId
+      },
+      {
+        firstTime: 0
+      }
+    ).exec((error, annotators) => {
+      res.send();
     });
   },
 
@@ -278,7 +294,8 @@ module.exports = {
                   englishTest: otherInfo.englishTest,
                   demo: otherInfo.demo,
                   level: otherInfo.level,
-                  taskTaken: otherInfo.taskTaken
+                  taskTaken: otherInfo.taskTaken,
+                  firstTime: otherInfo.firstTime
                 };
 
                 res.json(user);
@@ -449,19 +466,30 @@ module.exports = {
   },
 
   demoFinnished: (req, res, next) => {
-    AnnotatorInfo.update(
+    Annotators.update(
       {
         AID: req.session.userId
       },
       {
-        demo: 1
+        moneyAvailable: 1
       }
     ).exec((error, annotator) => {
-      if (annotator) {
-        // отправляем данные пользователя
-        res.json(true);
-      }
+      AnnotatorInfo.update(
+        {
+          AID: req.session.userId
+        },
+        {
+          demo: 1
+        }
+      ).exec((error, annotatorInfo) => {
+        if (annotatorInfo) {
+          // отправляем данные пользователя
+          res.json(true);
+        }
+      });
     });
+
+
   },
 
   // login: (req, res, next) => {},

@@ -3,6 +3,16 @@
   [projectId]="projectId"
   (returned)="projectMode = false"></na-project>
 
+<!-- Прогресс-бар -->
+<div class="p-bar">
+  <div *ngFor="let task of progressBar; let i = index">
+    <div [ngClass]="{done: task.done}" class="fa fa-3x fa-fw fa-arrow-right" *ngIf="i > 0"></div>
+    <div [ngClass]="{done: task.done}" class="box">
+      <span>{{ task.action }}</span>
+    </div>
+  </div>
+</div>
+
 <div class="task" *ngIf="!this.common.user.demo"
   (click)="startDemoTask()">
   Demo Task
@@ -12,7 +22,7 @@
   <!-- Дополнительная информация -->
   <div class="description">
     <span>Completed: 0%</span>
-    <span>Earned: 0<span class="fa fa-fw"></span>/100<span class="fa fa-fw"></span></span>
+    <span>Earned: $0/$100</span>
   </div>
 
   <!-- Замочек -->
@@ -20,18 +30,8 @@
 </div>
 
 <!-- Основная страница -->
-<div *ngIf="common.user.demo">
+<div>
   <div *ngIf="!projectMode && isLoaded">
-    <!-- Прогресс-бар -->
-    <div class="p-bar">
-      <div *ngFor="let task of progressBar; let i = index">
-        <div [ngClass]="{done: task.done}" class="fa fa-3x fa-fw fa-arrow-right" *ngIf="i > 0"></div>
-        <div [ngClass]="{done: task.done}" class="box">
-          <span>{{ task.action }}</span>
-        </div>
-      </div>
-    </div>
-
     <!-- Список проектов -->
     <div *ngFor="let project of common.projects">
       <h1>{{ project.projectName }}</h1>
@@ -47,10 +47,10 @@
           <span>Tasks Amount: {{ task.tasksAmount }}</span>
           <span *ngIf="common.user.taskTaken !== null && i === common.user.taskTaken - 1">Completed: {{ project.annoTask.percentage }}%</span>
           <span *ngIf="common.user.taskTaken !== null && i === common.user.taskTaken - 1">
-            Earned: {{ project.annoTask.earned }}/{{ project.annoTask.price }}<span class="fa fa-rub"></span>
+            Earned: ${{ project.annoTask.earned }}/${{ project.annoTask.price }}
           </span>
           <span *ngIf="common.user.taskTaken === null || i !== common.user.taskTaken - 1">
-            Price: {{ task.price * task.tasksAmount }}<span class="fa fa-rub"></span>
+            Price: ${{ task.price * task.tasksAmount }}
           </span>
           <span *ngIf="common.user.taskTaken === null || i !== common.user.taskTaken - 1">Estimated work time: {{ task.EWT }} min</span>
         </div>
