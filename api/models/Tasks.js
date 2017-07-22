@@ -23,11 +23,6 @@ module.exports = {
       required: true
     },
 
-    task: {
-      type: 'string',
-      required: true
-    },
-
     annoCount: {
       type: 'integer',
       defaultsTo: 0

@@ -67,7 +67,7 @@ export class ProfileProjectsComponent implements OnInit {
 
   // решаем, что делать с выбранной задачей
   taskSelected(project, i) {
-    if (i !== this.common.user.taskTaken - 1) {
+    if (this.common.user.taskTaken !== null && i !== this.common.user.taskTaken - 1) {
       alert('Sorry, but you have already taken a task. Please finnish it first and you will be able take one more.');
     } else if (i >= this.common.user.level) {
       alert('Sorry, but you are not ready to do this type of tasks. Please finnish the previous type of task first.');
@@ -131,13 +131,13 @@ export class ProfileProjectsComponent implements OnInit {
 
   // взять задачу
   takeTask(PID, i) {
-    this.http.get(`AnnoTasks/take?PID=${PID}`).subscribe(
+    this.http.get(`AnnoTasks/take?PID=${PID}&index=${i}`).subscribe(
       task => {
-        this.loadingTask = -1;
-
         if (task !== 'no free tasks') {
           // отдаём задачу аннотатору
           this.common.projects[i].annoTask = task;
+          this.common.user.taskTaken = task.task.taken;
+          this.startTask(this.common.projects[i].annoTask.task);
         }
       },
       err => {

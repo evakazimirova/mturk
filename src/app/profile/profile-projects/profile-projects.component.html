@@ -25,7 +25,7 @@
     <div *ngFor="let project of common.projects">
       <h1>{{ project.projectName }}</h1>
       <div class="task" *ngFor="let task of project.taskTypes; let i = index"
-        [ngClass]="{locked: i >= common.user.level || i !== common.user.taskTaken - 1}"
+        [ngClass]="{locked: i >= common.user.level || (common.user.taskTaken !== null && i !== common.user.taskTaken - 1)}"
         (click)="taskSelected(project, i)">
         {{ task.title }}
         <!-- Индикатор загрузки -->
@@ -34,8 +34,9 @@
         <!-- Дополнительная информация -->
         <div class="description">
           <span>Tasks Amount: {{ task.tasksAmount }}</span>
-          <span>Completed: {{ 0 }}%</span>
-          <span>Earned: {{ 0 }}/{{ task.price }}</span>
+          <span *ngIf="common.user.taskTaken !== null && i === common.user.taskTaken - 1">Completed: {{ project.annoTask.percentage }}%</span>
+          <span *ngIf="common.user.taskTaken !== null && i === common.user.taskTaken - 1">Earned: {{ project.annoTask.earned }}/{{ project.annoTask.price }}</span>
+          <span *ngIf="common.user.taskTaken === null || i !== common.user.taskTaken - 1">Price: {{ task.price * task.tasksAmount }}</span>
         </div>
 
         <!-- Замочек -->

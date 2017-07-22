@@ -19,7 +19,7 @@ module.exports = {
         for (task of tasks) {
           const tasksCount = Object.keys(JSON.parse(task.TID.FID)).length;
 
-          const part = +(task.done / tasksCount).toFixed(0);
+          const part = +(task.done / tasksCount).toFixed(2);
           const earned = +(part * task.price).toFixed(0);
 
           let activity;
@@ -43,8 +43,7 @@ module.exports = {
               PID: task.TID.PID,
               ATID: task.ATID,
               TID: task.TID.TID,
-              HID: task.TID.HID,
-              task: task.TID.task
+              HID: task.TID.HID
             }
           }
 
@@ -76,7 +75,7 @@ module.exports = {
 
 
 	take: (req, res, next) => {
-    Tasks.find(req.params.all())
+    Tasks.find({PID: req.param('PID')})
       .populateAll()
       .sort('annoCount ASC')
       .exec((error, tasks) => {
@@ -118,6 +117,7 @@ module.exports = {
             if (err) {
               return next(err);
             } else {
+              console.log(annoTask)
               let taskInfo = {
                 activity: "Active",
                 percentage: 0,
@@ -125,12 +125,26 @@ module.exports = {
                 price: task.PID.pricePerTask,
                 task: {
                   PID: task.PID.PID,
-                  ATID: annoTask.id,
+                  ATID: annoTask.ATID,
                   TID: task.TID,
                   HID: task.FID.HID,
-                  task: task.task
+                  taken: +req.param('index') + 1
                 }
               };
+
+              // назначаем пользователю задачу
+              AnnotatorInfo.update(
+                {
+                  AID: req.session.userId
+                },
+                {
+                  taskTaken: +req.param('index') + 1
+                }
+              ).exec((err, updated) => {
+                if (err) {
+                  console.log(err);
+                }
+              });
 
               // увеличиваем число аннотаторов задачи
               Tasks.findOne({
@@ -178,14 +192,6 @@ module.exports = {
       Tasks.findOne({
         TID: ids.TID
       }).populateAll().exec((err, task) => {
-        // оставляем только те задачи, которые нужно делать
-        let tasks = [];
-        for (let e of ids.task.split(',')) {
-          tasks.push({
-            EID: e,
-          });
-        }
-
         let all = {};
 
         // Парсим задачу
