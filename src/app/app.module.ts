@@ -26,6 +26,7 @@ import { ProfileRatingComponent } from './profile/profile-rating/profile-rating.
 import { ProfileWithdrawalComponent } from './profile/profile-withdrawal/profile-withdrawal.component';
 import { ProfileNetworkingComponent } from './profile/profile-networking/profile-networking.component';
 import { ProfileFaqComponent } from './profile/profile-faq/profile-faq.component';
+import { ProfileRulesComponent } from './profile/profile-rules/profile-rules.component';
 
 import { AnnotatingComponent } from './annotating/annotating.component';
 import { AnnotatingVideosComponent } from './annotating/annotating-videos/annotating-videos.component';
@@ -80,7 +81,8 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
     AdminMoneyRequestsComponent,
     ChangePasswordComponent,
     ProfileNetworkingComponent,
-    ProfileFaqComponent
+    ProfileFaqComponent,
+    ProfileRulesComponent
   ],
   imports: [
     BrowserModule,

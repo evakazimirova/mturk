@@ -43,6 +43,15 @@
         </a>
       </li>
 
+      <!-- Rules -->
+      <li (click)="selectProfileMode('rules')"
+          [ngClass]="{active: profileMode === 'rules'}">
+        <a href="#">
+          <span class="fa fa-wd fa-exclamation-triangle"></span>
+          Rules
+        </a>
+      </li>
+
       <!-- FAQ -->
       <li (click)="selectProfileMode('faq')"
           [ngClass]="{active: profileMode === 'faq'}">
