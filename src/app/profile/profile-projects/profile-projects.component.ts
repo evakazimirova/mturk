@@ -67,19 +67,29 @@ export class ProfileProjectsComponent implements OnInit {
 
   // решаем, что делать с выбранной задачей
   taskSelected(project, i) {
-    // пока обрабатывается одна задача, другую брать нельзя
-    if (this.loadingTask === -1) {
-      // сообщаем, что обрабатываем эту задачу
-      this.loadingTask = i;
+    if (i !== this.common.user.taskTaken - 1) {
+      alert('Sorry, but you have already taken a task. Please finnish it first and you will be able take one more.');
+    } else if (i >= this.common.user.level) {
+      alert('Sorry, but you are not ready to do this type of tasks. Please finnish the previous type of task first.');
+    } else {
+      // пока обрабатывается одна задача, другую брать нельзя
+      if (this.loadingTask === -1) {
+        // сообщаем, что обрабатываем эту задачу
+        this.loadingTask = i;
 
-      if (project.annoTask) {
-        // Продолжить выполнение
-        this.startTask(project.annoTask.task);
-      } else {
-        // Дать задачу или запретить
-        this.takeTask(project.PID, i);
+        if (project.annoTask) {
+          // Продолжить выполнение
+          this.startTask(project.annoTask.task);
+        } else {
+          // Дать задачу или запретить
+          this.takeTask(project.PID, i);
+        }
       }
     }
+
+
+
+
   }
 
   // начать выполнение задачи

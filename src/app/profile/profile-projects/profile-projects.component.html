@@ -20,12 +20,12 @@
 </div>
 
 <!-- Список проектов -->
-<div *ngIf="this.common.user.demo">
+<div *ngIf="common.user.demo">
   <div *ngIf="!projectMode && isLoaded">
     <div *ngFor="let project of common.projects">
       <h1>{{ project.projectName }}</h1>
       <div class="task" *ngFor="let task of project.taskTypes; let i = index"
-        [ngClass]="{locked: i !== 0}"
+        [ngClass]="{locked: i >= common.user.level || i !== common.user.taskTaken - 1}"
         (click)="taskSelected(project, i)">
         {{ task.title }}
         <!-- Индикатор загрузки -->

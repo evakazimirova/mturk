@@ -26,6 +26,15 @@ module.exports = {
     demo: {
       type: 'integer',
       defaultsTo: 0
+    },
+
+    level: {
+      type: 'integer',
+      defaultsTo: 1
+    },
+
+    taskTaken: {
+      type: 'integer'
     }
   }
 };
