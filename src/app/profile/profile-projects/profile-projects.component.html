@@ -19,9 +19,20 @@
   <span class="fa fa-lock fa-5x"></span>
 </div>
 
-<!-- Список проектов -->
+<!-- Основная страница -->
 <div *ngIf="common.user.demo">
   <div *ngIf="!projectMode && isLoaded">
+    <!-- Прогресс-бар -->
+    <div class="p-bar">
+      <div *ngFor="let task of progressBar; let i = index">
+        <div [ngClass]="{done: task.done}" class="fa fa-3x fa-fw fa-arrow-right" *ngIf="i > 0"></div>
+        <div [ngClass]="{done: task.done}" class="box">
+          <span>{{ task.action }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Список проектов -->
     <div *ngFor="let project of common.projects">
       <h1>{{ project.projectName }}</h1>
       <div class="task" *ngFor="let task of project.taskTypes; let i = index"

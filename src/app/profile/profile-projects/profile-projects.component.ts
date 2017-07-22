@@ -17,6 +17,33 @@ export class ProfileProjectsComponent implements OnInit {
   isLoaded = true;
   loadingTask = -1;
 
+  progressBar = [
+    {
+      action: 'Registraition and Confirm e-mail',
+      done: true
+    },
+    {
+      action: 'Demo Task and Get your 10$',
+      done: this.common.user.demo === 1
+    },
+    {
+      action: 'Fill the Profile',
+      done: this.common.user.profile === 1
+    },
+    {
+      action: 'Short English Test',
+      done: this.common.user.englishTest === 'YES'
+    },
+    {
+      action: 'Learn Skills and Pass the Test in Totorial',
+      done: false
+    },
+    {
+      action: 'Finish Tasks and Get Money!',
+      done: false
+    }
+  ];
+
   constructor(public common: CommonService,
               private http: HttpService,
               public annot: AnnotatingService) { }
