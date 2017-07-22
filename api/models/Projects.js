@@ -41,6 +41,11 @@ module.exports = {
     projectType: {
       type: 'integer',
       defaultsTo: 1
+    },
+
+    EWT: {
+      type: 'float',
+      required: true
     }
   }
 };

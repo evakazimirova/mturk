@@ -37,6 +37,7 @@
           <span *ngIf="common.user.taskTaken !== null && i === common.user.taskTaken - 1">Completed: {{ project.annoTask.percentage }}%</span>
           <span *ngIf="common.user.taskTaken !== null && i === common.user.taskTaken - 1">Earned: {{ project.annoTask.earned }}/{{ project.annoTask.price }}</span>
           <span *ngIf="common.user.taskTaken === null || i !== common.user.taskTaken - 1">Price: {{ task.price * task.tasksAmount }}</span>
+          <span *ngIf="common.user.taskTaken === null || i !== common.user.taskTaken - 1">Estimated work time: {{ task.EWT }} min</span>
         </div>
 
         <!-- Замочек -->
