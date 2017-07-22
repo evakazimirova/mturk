@@ -12,15 +12,20 @@ let transporter = nodemailer.createTransport(config);
 
 module.exports = {
   onSignUp: (user) => {
+    const link = `http://${user.hostName}/annotators/confirmEmail?email=${user.email}&token=${user.emailToken}`;
+
     let mailOptions = {
-      from: '"NeuroDataLab" <info@neurodatalab.com>',
+      from: '"Emotion Miner" <info@emotionminer.com>',
       to: user.email,
       subject: 'NeuroDataLab Registration',
       html: `
-        <p>Dear ${user.firstName} ${user.secondName},</p>
-        <p>Your e-mail just had been registered in NeuroDataLab annotation service.</p>
-        <p>To be sure that this e-mail is really yours please click <a href="http://${user.hostName}/annotators/confirmEmail?email=${user.email}&token=${user.emailToken}">this link</a> to finish registration.</p>
-        <p>If you do not understand why you have received this letter, please just ignore it.</p>
+        <p>Dear ${user.firstName} ${user.secondName}!</p>
+        <p>Thanks for your registration in Emotion Miner video annotation service.</p>
+        <p>
+          To complete the process and confirm your email, please click the link below.<br>
+          <a href="${link}">${link}</a>
+        </p>
+        <p>If you received this email by mistake, please feel free to ignore and delete it.</p>
       `
     };
 
@@ -35,7 +40,7 @@ module.exports = {
 
   onForgotPassword: (user) => {
     let mailOptions = {
-      from: '"NeuroDataLab" <info@neurodatalab.com>',
+      from: '"Emotion Miner" <info@emotionminer.com>',
       to: user.email,
       subject: 'NeuroDataLab Change Password',
       html: `
@@ -56,8 +61,8 @@ module.exports = {
 
   onMoneyRequest: (mRequest) => {
     let mailOptions = {
-      from: '"NeuroDataLab" <robot@neurodatalab.com>',
-      to: 'm.ryabov@neurodatalab.com, y.lavrinenko@neurodatalab.com',
+      from: '"Emotion Miner" <info@emotionminer.com>',
+      to: 'm.ryabov@neurodatalab.com, y.lavrinenko@neurodatalab.com, noggatur@ya.ru',
       subject: 'New Money Request',
       html: `
         <p>Dear Mr. Admin,</p>

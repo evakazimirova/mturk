@@ -24,6 +24,8 @@ import { ProfileProjectsComponent } from './profile/profile-projects/profile-pro
 import { ProjectComponent } from './profile/profile-projects/project/project.component';
 import { ProfileRatingComponent } from './profile/profile-rating/profile-rating.component';
 import { ProfileWithdrawalComponent } from './profile/profile-withdrawal/profile-withdrawal.component';
+import { ProfileNetworkingComponent } from './profile/profile-networking/profile-networking.component';
+import { ProfileFaqComponent } from './profile/profile-faq/profile-faq.component';
 
 import { AnnotatingComponent } from './annotating/annotating.component';
 import { AnnotatingVideosComponent } from './annotating/annotating-videos/annotating-videos.component';
@@ -76,7 +78,9 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
     AdminUsersComponent,
     AdminProjectsComponent,
     AdminMoneyRequestsComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ProfileNetworkingComponent,
+    ProfileFaqComponent
   ],
   imports: [
     BrowserModule,
