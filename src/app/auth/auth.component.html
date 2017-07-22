@@ -1,21 +1,100 @@
-<div class="container">
-  <div class="row">
-    <div class="col col-md-4 col-md-push-4 col-sm-6 col-sm-push-2">
-      <!-- Логотип -->
-      <div class="text-center">
-        <img class="img-responsive" src="assets/logo.png" alt="logo" (dblclick)="secret()">
+<div class="background"></div>
+
+<div class="container-fluid">
+  <!-- Логотип -->
+  <div class="text-center">
+    <img class="img-responsive" src="assets/logo_white.png" alt="logo" (dblclick)="secret()">
+  </div>
+
+  <div class="usp">
+    <div>
+      <div>
+        Neurodata Lab LLC presents:<br>
+        Emotion Miner Initiative (EMI) — emotion recognition and video annotation service for everybody.
+        Global platform for Research as Entertainment.
+        Distance work in your spare time: you can do it when and where you want with your web-connected PC or Smartphone.
       </div>
 
-      <!-- Формы авторизации -->
-      <na-pass-forgot *ngIf="formType === 'forgot'"></na-pass-forgot>
-      <na-sign-in *ngIf="formType === 'login'"></na-sign-in>
-      <na-sign-up *ngIf="formType === 'reg'"></na-sign-up>
+      <div>
+        <b>The easiest way to make money quickly</b> and pump up your emotion recognition skills!
+        See our T&amp;C, FAQ and let’s start our adventure!
+      </div>
 
-      <!-- Кнопки переключения форм -->
-      <div class="text-right">
-        <button class="btn btn-link" (click)="formType = 'forgot'" *ngIf="formType !== 'forgot'">Forgot password</button>
-        <button class="btn btn-link" (click)="formType = 'login'" *ngIf="formType !== 'login'">Sign in</button>
-        <button class="btn btn-link" (click)="formType = 'reg'" *ngIf="formType !== 'reg'">Sign up</button>
+      <div>Annotate, earn, enjoy!</div>
+    </div>
+  </div>
+
+  <div class="form">
+    <!-- <div class="bg"></div> -->
+
+    <!-- Формы авторизации -->
+    <na-pass-forgot *ngIf="formType === 'forgot'"></na-pass-forgot>
+    <na-sign-in *ngIf="formType === 'login'"></na-sign-in>
+    <na-sign-up *ngIf="formType === 'reg'"></na-sign-up>
+
+    <!-- Кнопки переключения форм -->
+    <div class="text-right">
+      <button class="btn btn-link" (click)="formType = 'forgot'" *ngIf="formType !== 'forgot'">Forgot password</button>
+      <button class="btn btn-link" (click)="formType = 'login'" *ngIf="formType !== 'login'">Sign in</button>
+      <button class="btn btn-link" (click)="formType = 'reg'" *ngIf="formType !== 'reg'">Sign up</button>
+    </div>
+  </div>
+</div>
+
+<footer class="navbar navbar-default navbar-fixed-bottom">
+  <nav class="container">
+    <div class="row">
+      <div class="col col-xs-3">
+        <h4>Terms</h4>
+        <a href="#" data-toggle="modal" data-target=".terms-modal">Here</a> you can find general terms and conditions of participation.
+      </div>
+      <div class="col col-xs-5">
+        <h4>Company</h4>
+        Neurodata Lab LLC, R&D Lab&Project company focused on AI, affective neuroscience and cognitive technologies, emotion&behavior detection and recognition systems.
+        Want to know more about us?
+        Please visit our company’s website: <a href="http://neurodatalab.com/en">neurodatalab.com</a>.
+        “Emotion Miner” is our first global video annotation initiative! You are welcome!
+      </div>
+      <div class="col col-xs-4">
+        <h4>Contacts</h4>
+        If you have any questions, problems o suggestions on how we can improve our collaboration, please feel free to contact us:
+        <ul class="fa-ul">
+          <li>
+            <a href="mailto:info@emotionminer.com">
+              <span class="fa fa-li fa-fw fa-lg fa-envelope"></span>
+              info@emotionminer.com
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="fa fa-li fa-fw fa-lg fa-facebook-official"></span>
+              /emotionminer
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="fa fa-li fa-fw fa-lg fa-skype"></span>
+              emotionminer
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</footer>
+
+<div class="modal fade terms-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Terms</h4>
+      </div>
+      <div class="modal-body">
+        <p>Here you can find general terms and conditions of participation.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
