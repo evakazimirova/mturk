@@ -24,6 +24,14 @@ export class SiteComponent implements OnInit {
           } else {
             this.common.mode = 'profile';
             this.common.user = user;
+
+            if (this.common.user.firstTime) {
+              alert('Welcome on Emotion miner! Now you can find out how it works! Just start Demo task, and get your first reward, it will take couple of minutes.');
+
+              this.http.getRough('/annotators/firstTime').subscribe(
+                ok => this.common.user.firstTime = false
+              );
+            }
           }
         } else {
           this.common.mode = 'auth';
