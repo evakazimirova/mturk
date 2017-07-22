@@ -49,7 +49,9 @@ module.exports = {
                 },
                 profile: otherInfo.profile,
                 englishTest: otherInfo.englishTest,
-                demo: otherInfo.demo
+                demo: otherInfo.demo,
+                level: otherInfo.level,
+                taskTaken: otherInfo.taskTaken
               };
 
               res.json(user);
@@ -274,7 +276,9 @@ module.exports = {
                   },
                   profile: otherInfo.profile,
                   englishTest: otherInfo.englishTest,
-                  demo: otherInfo.demo
+                  demo: otherInfo.demo,
+                  level: otherInfo.level,
+                  taskTaken: otherInfo.taskTaken
                 };
 
                 res.json(user);

@@ -40,6 +40,10 @@ module.exports = {
 
     result: {
       type: 'text'
+    },
+
+    deadline: {
+      type: 'datetime'
     }
   }
 };
