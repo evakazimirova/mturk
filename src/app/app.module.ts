@@ -19,7 +19,8 @@ import { ChangePasswordComponent } from './auth/pass-change/pass-change.componen
 
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileHeaderComponent } from './profile/profile-header/profile-header.component';
-import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
+import { ProfileProfileComponent } from './profile/profile-profile/profile-profile.component';
+import { ProfileAccountComponent } from './profile/profile-account/profile-account.component';
 import { ProfileProjectsComponent } from './profile/profile-projects/profile-projects.component';
 import { ProjectComponent } from './profile/profile-projects/project/project.component';
 import { ProfileRatingComponent } from './profile/profile-rating/profile-rating.component';
@@ -70,7 +71,7 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
     ProfileComponent,
     ProjectComponent,
     ProfileHeaderComponent,
-    ProfileEditComponent,
+    ProfileProfileComponent,
     ProfileProjectsComponent,
     ProfileRatingComponent,
     ProfileWithdrawalComponent,
@@ -82,7 +83,8 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
     ChangePasswordComponent,
     ProfileNetworkingComponent,
     ProfileFaqComponent,
-    ProfileRulesComponent
+    ProfileRulesComponent,
+    ProfileAccountComponent
   ],
   imports: [
     BrowserModule,

@@ -1,11 +1,11 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'na-profile-edit',
-  templateUrl: './profile-edit.component.html',
-  styleUrls: ['./profile-edit.component.scss']
+  selector: 'na-profile-profile',
+  templateUrl: './profile-profile.component.html',
+  styleUrls: ['./profile-profile.component.scss']
 })
-export class ProfileEditComponent implements OnInit {
+export class ProfileProfileComponent implements OnInit {
   @Output() profileModeSelected = new EventEmitter();
 
   constructor() { }
