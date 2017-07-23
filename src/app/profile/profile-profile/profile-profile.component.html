@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col col-md-4 col-md-push-4 col-sm-6 col-sm-push-3">
-    <form [formGroup]="form" (ngSubmit)="signUp($event)">
+    <form [formGroup]="form" (ngSubmit)="updateAnnotatorProfile($event)">
       <div class="form-group">
         <label for="name">Name</label>
         <input formControlName="name" type="text" class="form-control" id="name" placeholder="Doe, John">
@@ -119,8 +119,8 @@
       </div>
 
       <div class="form-group">
-        <label for="specialty">Specialty</label>
-        <input formControlName="specialty" type="text" class="form-control" id="specialty" placeholder="Engineer">
+        <label for="speciality">Speciality</label>
+        <input formControlName="speciality" type="text" class="form-control" id="speciality" placeholder="Engineer">
       </div>
 
       <div class="form-group">
@@ -131,7 +131,7 @@
       <!-- теги на выбор по темам -->
       <div class="form-group">
         <label for="hobby">Hobbies</label>
-        <textarea formControlName="hobby" class="form-control" id="hobby" rows="3">спорт, искусство, tech</textarea>
+        <textarea formControlName="hobby" class="form-control" id="hobby" rows="3">sport, art, tech</textarea>
       </div>
 
       <div class="checkbox">
