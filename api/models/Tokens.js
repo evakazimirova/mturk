@@ -8,14 +8,9 @@
 module.exports = {
 
   attributes: {
-    id: {
-      type: 'integer',
-      required: true,
-      primaryKey: true
-    },
-
     AID: {
       model: 'Annotators',
+      primaryKey: true,
       required: true
     },
 

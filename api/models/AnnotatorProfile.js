@@ -14,22 +14,7 @@ module.exports = {
       primaryKey: true
     },
 
-    birthdate: {
-      type: 'date',
-      required: true
-    },
-
-    city: {
-      type: 'string',
-      required: true
-    },
-
-    country: {
-      type: 'string',
-      required: true
-    },
-
-    education: {
+    name: {
       type: 'string',
       required: true
     },
@@ -39,44 +24,48 @@ module.exports = {
       defaultsTo: 'NO'
     },
 
+    birthdate: {
+      type: 'date'
+    },
+
+    city: {
+      type: 'string'
+    },
+
+    country: {
+      type: 'string'
+    },
+
+    education: {
+      type: 'string'
+    },
+
     family: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
 
     gender: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
 
     hobby: {
-      type: 'text',
-      required: true
+      type: 'text'
     },
 
     language: {
-      type: 'string',
-      required: true
-    },
-
-    name: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
 
     profession: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
 
     speciality: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
 
     university: {
-      type: 'string',
-      required: true
+      type: 'string'
     }
   }
 };

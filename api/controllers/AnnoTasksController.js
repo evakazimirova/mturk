@@ -252,36 +252,40 @@ module.exports = {
     // вынимаем данные задачи
     AnnoTasks.findOne({
       ATID: input.ATID
-    }).populate('AID').exec((err, task) => {
-      // сохраняем результат в БД
-      AnnoTasks.update(
-        {
-          ATID: input.ATID
-        },
-        {
-          result: JSON.stringify(input.result),
-          done: input.done
-          // status: 3 // заканчиваем выполнение задачи
-        }
-      ).exec((err, updated) => {
-        // формируем новые баланс и рейтинг пользователя
-        const newAmount = task.AID.moneyAvailable + task.price;
-        const newRating = task.AID.rating + 1;
-
-        // обновляем баланс и рейтинг пользователя
-        AnnotatorInfo.update(
+    }).exec((err, task) => {
+      AnnotatorInfo.findOne({
+        AID: task.AID
+      }).exec((err, annotatorInfo) => {
+        // сохраняем результат в БД
+        AnnoTasks.update(
           {
-            AID: req.session.userId
+            ATID: input.ATID
           },
           {
-            moneyAvailable: newAmount,
-            rating: newRating
+            result: JSON.stringify(input.result),
+            done: input.done
+            // status: 3 // заканчиваем выполнение задачи
           }
         ).exec((err, updated) => {
-          // отдаём текущий баланс и рейтинг
-          res.json({
-            money: newAmount,
-            rating: newRating
+          // формируем новые баланс и рейтинг пользователя
+          const newAmount = annotatorInfo.moneyAvailable + task.price;
+          const newRating = annotatorInfo.rating + 1;
+
+          // обновляем баланс и рейтинг пользователя
+          AnnotatorInfo.update(
+            {
+              AID: req.session.userId
+            },
+            {
+              moneyAvailable: newAmount,
+              rating: newRating
+            }
+          ).exec((err, updated) => {
+            // отдаём текущий баланс и рейтинг
+            res.json({
+              money: newAmount,
+              rating: newRating
+            });
           });
         });
       });

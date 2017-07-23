@@ -42,7 +42,7 @@ module.exports = {
     profile: {
       collection: 'AnnotatorProfile',
       via: 'AID'
-    },
+    }
   }
 };
 
