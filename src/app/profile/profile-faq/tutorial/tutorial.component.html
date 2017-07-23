@@ -1,0 +1,6 @@
+<div class="video" (click)="playVideo()">
+  <video id="tutorialVideo" preload="auto">
+    <source src="https://storage.googleapis.com/video_tutorial/({{ tutorial.video }}).mp4" type='video/mp4'>
+  </video>
+  <div class="fa fa-5x fa-play" *ngIf="tutorialVideo.paused"></div>
+</div>

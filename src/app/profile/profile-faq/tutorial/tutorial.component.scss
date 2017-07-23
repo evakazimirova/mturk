@@ -1,0 +1,14 @@
+.video {
+  position: relative;
+  text-align: center;
+
+  .fa {
+    position: absolute;
+    left: 47%;
+    top: 166px;
+    font-size: 13rem;
+    text-shadow: 0px 0px 10px grey;
+    color: white;
+    opacity: 0.8;
+  }
+}
