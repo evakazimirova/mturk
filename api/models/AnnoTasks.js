@@ -19,7 +19,7 @@ module.exports = {
     },
 
     AID: {
-      model: 'Annotators',
+      model: 'AnnotatorInfo',
       required: true
     },
 

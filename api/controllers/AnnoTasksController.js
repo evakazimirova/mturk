@@ -8,7 +8,9 @@
 let uniq = a => [...new Set(a)];
 
 module.exports = {
+  // вынимаем задачи аннотатора
 	annoTasks: (req, res, next) => {
+    // вынимаем все активные задачи аннотатора
     AnnoTasks.find({
       AID: req.session.userId,
       status: 1 // активные задачи
@@ -17,8 +19,10 @@ module.exports = {
         tasksInfo = [];
 
         for (task of tasks) {
+          // количество взятых задач
           const tasksCount = Object.keys(JSON.parse(task.TID.FID)).length;
 
+          // прогресс
           const part = +(task.done / tasksCount).toFixed(2);
           const earned = +(part * task.price).toFixed(0);
 
@@ -34,6 +38,7 @@ module.exports = {
               break;
           }
 
+          // собираем всю инфу
           const taskInfo = {
             activity: activity,
             percentage: part * 100,
@@ -47,34 +52,20 @@ module.exports = {
             }
           }
 
+          // засовываем данные в массив всех задач
           tasksInfo[task.TID.PID - 1] = taskInfo;
         }
 
-        // for (let i = 0; i < 2; i++) {
-        //   if (tasksInfo[i] === undefined) {
-        //     tasksInfo[i] = {
-        //       activity: "Inactive",
-        //       percentage: 0,
-        //       earned: 0,
-        //       price: 0,
-        //       task: {
-        //         PID: i + 1,
-        //         ATID: 0,
-        //         TID: 0,
-        //         HID: 0,
-        //         task: 0
-        //       }
-        //     }
-        //   }
-        // }
-
+        // отправляем результат
         res.json(tasksInfo);
       }
     });
   },
 
 
+  // взять задачу
 	take: (req, res, next) => {
+    // достаём все доступные задачи и сортируем по приоритету
     Tasks.find({PID: req.param('PID')})
       .populateAll()
       .sort('annoCount ASC')
@@ -107,7 +98,7 @@ module.exports = {
           newTask = {
             TID: task.TID, // это то самое значение должно выбираться неслучайно
             AID: req.session.userId,
-            price: task.PID.pricePerTask, // Если аннотатор подписался на задачу, то стоимость для него фиксируется, и отображается в личном кабинете именно в том размере на который он подписался, даже если администратор для новых аннотаторов увеличил или уменьшил размер выплаты.
+            price: task.PID.pricePerTask, // фиксируем стоимость задачи для аннотатора
             result: task.FID.csv, // определяем разметку аннотируемых кусков
             deadline: new Date(+new Date + 12096e5) // дедлайн — через 2 недели
           };
@@ -117,7 +108,6 @@ module.exports = {
             if (err) {
               return next(err);
             } else {
-              console.log(annoTask)
               let taskInfo = {
                 activity: "Active",
                 percentage: 0,
@@ -147,33 +137,28 @@ module.exports = {
               });
 
               // увеличиваем число аннотаторов задачи
-              Tasks.findOne({
-                TID: task.TID
-              }).exec((error, thisTask) => {
-                const newCount = thisTask.annoCount == null ? 1 : thisTask.annoCount + 1;
-
-                Tasks.update(
-                  {
-                    TID: task.TID
-                  },
-                  {
-                    annoCount: newCount
-                  }
-                ).exec((err, updated) => {
-                  if (err) {
-                    console.log(err);
-                  }
-                });
+              Tasks.update(
+                {
+                  TID: task.TID
+                },
+                {
+                  annoCount: task.annoCount == null ? 1 : task.annoCount + 1
+                }
+              ).exec((err, updated) => {
+                if (err) {
+                  console.log(err);
+                }
               });
 
+              // отправляем результат
               res.json(taskInfo);
             }
           });
-
           break;
         }
       }
 
+      // сообщаем, что нет доступны задач для аннотатора
       if (!foundFreeTask) {
         res.json('no free tasks');
       }
@@ -181,7 +166,9 @@ module.exports = {
   },
 
 
+  // начать выполнять задачу
   start:  (req, res, next) => {
+    // запоминаем данные запроса
     let ids = req.params.all();
 
     // вынимаем сохранённую работу аннотатора
@@ -197,6 +184,7 @@ module.exports = {
         // Парсим задачу
         all.FIDs = JSON.parse(task.FID);
 
+        // формируем задание по эмоциям
         let allEmotions = [];
         let allFIDs = [];
         for (const fid of all.FIDs) {
@@ -207,11 +195,13 @@ module.exports = {
         // можно упростить запрос в БД
         // console.log(uniq(allFIDs));
 
+        // достаём фрагменты для задачи из БД
         Fragments.find({
           or: allFIDs
         }).populateAll().exec((err, fragments) => {
           all.ATID = ids.ATID;
 
+          // если есть сохранения, достаём
           let savesExist = false;
           let result = [];
           if (annoTask.result !== null) {
@@ -219,6 +209,7 @@ module.exports = {
             result = JSON.parse(annoTask.result);
           }
 
+          // формируем ответ из сохранений или без
           for (const f of fragments) {
             for (const fid in all.FIDs) {
               if (all.FIDs[fid].FID === f.FID) {
@@ -245,7 +236,7 @@ module.exports = {
             }
           }
 
-          // console.log(all.FIDs);
+          // отправляем результат
           res.json(all);
         });
       });
@@ -253,12 +244,16 @@ module.exports = {
   },
 
 
+  // сохраняем разметку
   save: (req, res, next) => {
+    // запоминаем данные запроса
     let input = req.params.all();
 
+    // вынимаем данные задачи
     AnnoTasks.findOne({
       ATID: input.ATID
     }).populate('AID').exec((err, task) => {
+      // сохраняем результат в БД
       AnnoTasks.update(
         {
           ATID: input.ATID
@@ -266,13 +261,15 @@ module.exports = {
         {
           result: JSON.stringify(input.result),
           done: input.done
-          // status: 3
+          // status: 3 // заканчиваем выполнение задачи
         }
       ).exec((err, updated) => {
+        // формируем новые баланс и рейтинг пользователя
         const newAmount = task.AID.moneyAvailable + task.price;
         const newRating = task.AID.rating + 1;
 
-        Annotators.update(
+        // обновляем баланс и рейтинг пользователя
+        AnnotatorInfo.update(
           {
             AID: req.session.userId
           },
@@ -281,6 +278,7 @@ module.exports = {
             rating: newRating
           }
         ).exec((err, updated) => {
+          // отдаём текущий баланс и рейтинг
           res.json({
             money: newAmount,
             rating: newRating
@@ -290,19 +288,3 @@ module.exports = {
     });
   }
 };
-
-
-
-// проекты, доступные аннотатору
-//   // вынимаем все проекты, доступные для аннотатора, кроме тех, которые он уже выполнял и тех, которую сделали 10 раз (для каждой задачи своё значение)
-//   // порядок задач: чем меньше людей её делали, тем на более высоком месте она стоит
-
-
-// взять задачу
-//   // если задача не была ранее выполнена аннотатором
-//     // проект присваивается пользователю
-//     // фиксируется стоимость проекта для этого пользователя
-//     // Когда аннотатор в личном кабинете нажимает «нажмите для начала» ему выдается задача по порядку, не случайным образом. То-есть если для задачи 1 установлено количество аннотаторов 10, то задача 2 не выдается пока не будет выдано половина от лимита 5 раз. Таким образом задача 1 будет выдана в 6 ой раз после того как Задача i (последняя) будет выдана 5 раз.
-
-
-//   // обновляем проект
