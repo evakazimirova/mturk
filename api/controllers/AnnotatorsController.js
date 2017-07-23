@@ -536,5 +536,32 @@ module.exports = {
         res.json(true);
       }
     });
+  },
+
+  getData: (req, res, next) => {
+    // обновляем личные данные аннотатора
+    Annotators.findOne({
+      AID: req.session.userId
+    }).exec((error, annotator) => {
+      res.json({
+        login: annotator.login,
+        email: annotator.email
+      });
+    });
+  },
+
+  updateAccount: (req, res, next) => {
+    // // обновляем личные данные аннотатора
+    // Annotators.findOne({
+    //   AID: req.session.userId
+    // }).exec((error, annotator) => {
+    //   res.json({
+    //     login: annotator.login,
+    //     email: annotator.email
+    //   });
+    // });
+
+    res.send('ok');
   }
+
 };
