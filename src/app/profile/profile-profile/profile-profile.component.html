@@ -1,109 +1,136 @@
-<form>
-  <div class="form-group">
-    <label for="firstName">Name</label>
-    <input type="text" class="form-control" id="firstName" placeholder="Doe, John">
-  </div>
+<div class="row">
+  <div class="col col-md-4 col-md-push-4 col-sm-6 col-sm-push-3">
+    <form>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input formControlName="name" type="text" class="form-control" id="name" placeholder="Doe, John">
+      </div>
 
-  <div class="form-group">
-    <label for="secondName">Gender</label>
-    <div class="radio">
-      <label>
-        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-        female
-      </label>
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <div>
+          <div class="radio-inline">
+            <label>
+              <input formControlName="gender" type="radio" name="gender" value="male">
+              male
+            </label>
+          </div>
+          <div class="radio-inline">
+            <label>
+              <input formControlName="gender" type="radio" name="gender" value="female">
+              female
+            </label>
+          </div>
+          <div class="radio-inline">
+            <label>
+              <input formControlName="gender" type="radio" name="gender" value="other">
+              other
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Календарик -->
+      <div class="form-group">
+        <label for="birthdate">Birthdate</label>
+        <input formControlName="birthdate" type="text" class="form-control" id="birthdate" placeholder="12.12.2012">
+      </div>
+
+      <!-- из БД -->
+      <div class="form-group">
+        <label for="country">Country</label>
+        <input formControlName="country" type="text" class="form-control" id="country" placeholder="Russian Federation">
+      </div>
+
+      <!-- из БД -->
+      <!-- http://www.geodatasource.com/world-cities-database/free -->
+      <div class="form-group">
+        <label for="city">City/Town</label>
+        <input formControlName="city" type="text" class="form-control" id="city" placeholder="Moscow">
+      </div>
+
+      <!-- из БД -->
+      <div class="form-group">
+        <label for="language">Native language</label>
+        <input formControlName="language" type="text" class="form-control" id="language" placeholder="Русский">
+      </div>
+
+      <!-- Пройти тест и отобразить результат рядом -->
+      <div class="form-group">
+        <label for="english">English level</label>
+        <span class="fa fa-check"></span>
+        <span class="fa fa-times"></span><br>
+        <input formControlName="english" type="hidden">
+        <button class="btn btn-primary" data-toggle="modal" data-target=".english-test-modal">Pass the test</button>
+      </div>
+
+      <div class="form-group">
+        <label for="family">Family status</label>
+        <select formControlName="family" class="form-control">
+          <option>married</option>
+          <option selected>single</option>
+          <option>divorced</option>
+          <option>widowed</option>
+          <option>other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="education">Education</label>
+        <select formControlName="education" class="form-control">
+          <option>Primary education</option>
+          <option>Secondary school</option>
+          <option selected>Higher education</option>
+        </select>
+      </div>
+
+      <!-- из БД, если выбрано "Higher education" -->
+      <div class="form-group">
+        <label for="university">University</label>
+        <input formControlName="university" type="text" class="form-control" id="university" placeholder="MIT">
+      </div>
+
+      <div class="form-group">
+        <label for="specialty">Specialty</label>
+        <input formControlName="specialty" type="text" class="form-control" id="specialty" placeholder="Engineer">
+      </div>
+
+      <div class="form-group">
+        <label for="profession">Profession</label>
+        <input formControlName="profession" type="text" class="form-control" id="profession" placeholder="Professor">
+      </div>
+
+      <!-- теги на выбор по темам -->
+      <div class="form-group">
+        <label for="hobby">Hobby</label>
+        <textarea formControlName="hobby" class="form-control" id="hobby" rows="3">спорт, искусство, tech</textarea>
+      </div>
+
+      <div class="checkbox">
+        <label>
+          <input formControlName="personalDataAgreement" type="checkbox"> I agree to the processing of my personal data.
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block disabled">Save changes</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade english-test-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">English test</h4>
+      </div>
+      <div class="modal-body">
+        <p>Here is your english test.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Submit results</button>
+      </div>
     </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-        male
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
-        other
-      </label>
-    </div>
   </div>
-
-  <!-- Календарик -->
-  <div class="form-group">
-    <label for="secondName">Дата рождения (возраст)</label>
-    <input type="text" class="form-control" id="secondName" placeholder="12.12.2012">
-  </div>
-
-  <!-- из БД -->
-  <div class="form-group">
-    <label for="secondName">Страна проживания</label>
-    <input type="text" class="form-control" id="secondName" placeholder="Russian Federation">
-  </div>
-
-  <!-- из БД -->
-  <!-- http://www.geodatasource.com/world-cities-database/free -->
-  <div class="form-group">
-    <label for="secondName">Город проживания</label>
-    <input type="text" class="form-control" id="secondName" placeholder="Moscow">
-  </div>
-
-  <!-- из БД -->
-  <div class="form-group">
-    <label for="secondName">Родной язык</label>
-    <input type="text" class="form-control" id="secondName" placeholder="Русский, English, Deutsch, Français, Español,
-Հայերեն">
-  </div>
-
-  <!-- Пройти тест и отобразить результат рядом -->
-  <div class="form-group">
-    <label for="secondName">Уровень владения английским</label>
-    <button class="btn btn-primary">Пройти тест</button>
-  </div>
-
-  <div class="form-group">
-    <label for="secondName">Семейное положение</label>
-    <select class="form-control">
-      <option>married</option>
-      <option selected>single</option>
-      <option>divorced</option>
-      <option>widowed</option>
-      <option>other</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <select class="form-control">
-      <option>Primary education</option>
-      <option>Secondary school</option>
-      <option selected>Higher education</option>
-    </select>
-  </div>
-
-  <!-- из БД, если выбрано "Higher education" -->
-  <div class="form-group">
-    <label for="secondName">Университет</label>
-    <input type="text" class="form-control" id="secondName" placeholder="MIT">
-  </div>
-
-  <div class="form-group">
-    <label for="secondName">Специальность</label>
-    <input type="text" class="form-control" id="secondName" placeholder="Engineer">
-  </div>
-
-  <div class="form-group">
-    <label for="secondName">Профессия</label>
-    <input type="text" class="form-control" id="secondName" placeholder="Professor">
-  </div>
-
-  <!-- теги на выбор по темам -->
-  <div class="form-group">
-    <label for="secondName">Увлечения</label>
-    <textarea class="form-control" rows="3">спорт, искусство, tech</textarea>
-  </div>
-
-  <div class="checkbox">
-    <label>
-      <input type="checkbox"> Я согласен на обработку моих персональных данных.
-    </label>
-  </div>
-
-  <button type="submit" class="btn btn-primary btn-block disabled" (click)="selectProfileMode('taskList')">Сохранить изменения</button>
-</form>
+</div>
