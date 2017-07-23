@@ -36,19 +36,19 @@ export class ProfileProfileComponent implements OnInit {
       'language': ['', [
         Validators.required
       ]],
-      'english': ['', [
+      'english': ['NO', [
         Validators.required
       ]],
-      'family': ['', [
+      'family': ['single', [
         Validators.required
       ]],
-      'education': ['', [
+      'education': ['Higher education', [
         Validators.required
       ]],
       'university': ['', [
         Validators.required
       ]],
-      'specialty': ['', [
+      'speciality': ['', [
         Validators.required
       ]],
       'profession': ['', [
@@ -65,6 +65,19 @@ export class ProfileProfileComponent implements OnInit {
 
   ngOnInit() {
     $(document).ready(() => {
+      // const containerCountry = $('#country');
+      // const containerCity = $('#city');
+      // const containerLanguage = $('#language');
+      // const containerUniversity = $('#university');
+
+      this.http.get('AnnotatorProfile/getData').subscribe(
+        profile => {
+          console.log(profile)
+          this.form.patchValue(profile);
+        },
+        error => console.error(error)
+      );
+
       this.http.get('extra/countries').subscribe(
         countries => {
           $.typeahead({
@@ -76,6 +89,8 @@ export class ProfileProfileComponent implements OnInit {
             },
             callback: {
               onHideLayout: (countryNode, country) => {
+                this.form.patchValue({country: country});
+
                 if (country.length > 0) {
                   this.countrySelected = true;
                   this.http.get(`extra/cities?country=${country}`).subscribe(
@@ -89,6 +104,7 @@ export class ProfileProfileComponent implements OnInit {
                         },
                         callback: {
                           onHideLayout: (cityNode, city) => {
+                            this.form.patchValue({city: city});
                           }
                         }
                       });
@@ -110,8 +126,6 @@ export class ProfileProfileComponent implements OnInit {
 
       this.http.get('extra/languages').subscribe(
         languages => {
-          // console.log(languages);
-
           $.typeahead({
             input: '#language',
             order: 'desc',
@@ -121,7 +135,7 @@ export class ProfileProfileComponent implements OnInit {
             },
             callback: {
               onHideLayout: (languageNode, language) => {
-
+                this.form.patchValue({language: language});
               }
             }
           });
@@ -131,8 +145,6 @@ export class ProfileProfileComponent implements OnInit {
 
       this.http.get('extra/universities').subscribe(
         universities => {
-          // console.log(universities);
-
           $.typeahead({
             input: '#university',
             order: 'desc',
@@ -142,7 +154,7 @@ export class ProfileProfileComponent implements OnInit {
             },
             callback: {
               onHideLayout: (languageNode, university) => {
-
+                this.form.patchValue({university: university});
               }
             }
           });
@@ -156,44 +168,89 @@ export class ProfileProfileComponent implements OnInit {
     this.profileModeSelected.emit(page);
   }
 
-
-  signUp(event) {
+  updateAnnotatorProfile(event) {
     event.preventDefault(); // отменяем стандартное действие
 
-    // собираем информацию с полей
-    const userData = {
-      firstName: this.form.value.firstName,
-      secondName: this.form.value.secondName,
-      login: this.form.value.login,
-      email: this.form.value.email.toLowerCase(),
-      password: this.form.value.password
-    };
+    // 'name': ['', [
+    //     Validators.required
+    //   ]],
+    //   'gender': ['', [
+    //     Validators.required
+    //   ]],
+    //   'birthdate': ['', [
+    //     Validators.required
+    //   ]],
+    //   'country': ['', [
+    //     Validators.required
+    //   ]],
+    //   'city': ['', [
+    //     Validators.required
+    //   ]],
+    //   'language': ['', [
+    //     Validators.required
+    //   ]],
+    //   'english': ['', [
+    //     Validators.required
+    //   ]],
+    //   'family': ['', [
+    //     Validators.required
+    //   ]],
+    //   'education': ['', [
+    //     Validators.required
+    //   ]],
+    //   'university': ['', [
+    //     Validators.required
+    //   ]],
+    //   'specialty': ['', [
+    //     Validators.required
+    //   ]],
+    //   'profession': ['', [
+    //     Validators.required
+    //   ]],
+    //   'hobby': ['', [
+    //     Validators.required
+    //   ]],
+    //   'personalDataAgreement': ['', [
+    //     Validators.required
+    //   ]]
 
-    // отправляем запрос на сервер
-    this.loading = true;
-    this.http.post(userData, '/annotators/register').subscribe(
-      user => {
-        this.loading = false;
+    this.form.patchValue({english: 'NO'});
+    console.log(this.form.value);
 
-        // выводим сообщение об успехе
-        console.log(`We have sent an e-mail to the "${user.email}". Please check it out!`);
-      },
-      error => {
-        this.loading = false;
 
-        // обработка ошибок
-        const status = error._body;
-        switch (status) {
-          case 'user exists':
-            // если такой пользователь уже есть, то предлагается восстановить пароль
-            console.error('Annotator with this email is already exists in the system.');
-            break;
+    // // собираем информацию с полей
+    // const userData = {
+    //   firstName: this.form.value.firstName,
+    //   secondName: this.form.value.secondName,
+    //   login: this.form.value.login,
+    //   email: this.form.value.email.toLowerCase(),
+    //   password: this.form.value.password
+    // };
 
-          default:
-            console.error(status);
-            break;
+    if (this.form.valid) {
+      if (this.form.value.personalDataAgreement) {
+        if (!this.loading) {
+          // отправляем запрос на сервер
+          this.loading = true;
+          this.http.post(this.form.value, '/annotatorProfile/update').subscribe(
+            res => {
+              this.loading = false;
+
+              // выводим сообщение об успехе
+              console.log(res);
+              this.common.user.profile = 1;
+            },
+            error => {
+              this.loading = false;
+              console.error(error);
+            }
+          );
         }
+      } else {
+        console.log('Надо согласиться на обработку персональных данных!');
       }
-    );
+    } else {
+      console.log('Заполнены не все поля!');
+    }
   }
 }

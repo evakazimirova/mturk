@@ -5,7 +5,16 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'na-pass-change',
-  templateUrl: './pass-change.component.html'
+  templateUrl: './pass-change.component.html',
+  styles: [`
+    .img-responsive {
+      margin: 50px 0 20px 0;
+    }
+
+    label {
+      color: #000;
+    }
+  `]
 })
 export class ChangePasswordComponent implements OnInit {
   form: FormGroup;

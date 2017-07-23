@@ -6,8 +6,10 @@
  */
 
 module.exports = {
+  // достаём все запросы на выдачу денежных средств
   getAll: (req, res, next) => {
     MoneyRequests.find().populate('AID').exec((error, mRequests) => {
+      // формируем ответ
       requests = [];
       for (let r of mRequests) {
         requests.push({
@@ -28,15 +30,19 @@ module.exports = {
         });
       }
 
+      // отправляем результат
       res.json(requests);
     });
   },
 
 
+  // отправка запроса на вывод средств
   send: (req, res, next) => {
+    // запоминаем данные запроса
     const params = req.params.all();
-    params.money = +params.money;
+    params.money = +params.money; // переводим текст в число
 
+    // создаём новую запись в БД
     MoneyRequests.create({
       AID: req.session.userId,
       price: params.money,
@@ -44,17 +50,20 @@ module.exports = {
       system: params.system
     }).exec((error, mReq) => {
       if (mReq) {
-        Annotators.findOne({
+        // достаём данные аннотатора
+        AnnotatorInfo.findOne({
           AID: req.session.userId
         }).exec((error, annotator) => {
+          // отправляем письмо администраторам
           mReq.AID = annotator;
           mReq.hostName = req.headers.host;
           EmailService.onMoneyRequest(mReq);
 
+          // следим за тем, чтобы сумма запроса не превышала доступный баланс
           if (params.money <= annotator.moneyAvailable) {
+            // обновляем баланс аннотатора
             const moneyAvailable = annotator.moneyAvailable - params.money;
-
-            Annotators.update(
+            AnnotatorInfo.update(
               {
                 AID: req.session.userId
               },
@@ -63,6 +72,7 @@ module.exports = {
               }
             ).exec((error, annotator) => {});
 
+            // отправляем новый баланс аннотатора
             res.json({
               available: moneyAvailable
             });
@@ -77,10 +87,13 @@ module.exports = {
   },
 
 
+  // подтверждение оплаты работы аннотатора
   defray: (req, res, next) => {
+    // запоминаем данные запроса
     const params = req.params.all();
-    params.defrayed = params.defrayed == 'true';
+    params.defrayed = params.defrayed == 'true'; // преобразуем текст в булево значение
 
+    // обновляем статус запроса на деньги
     MoneyRequests.update(
       {
         RID: params.RID
@@ -89,9 +102,8 @@ module.exports = {
         defrayed: params.defrayed
       }
     ).exec((error, mReq) => {
+      // отправляем результат
       res.json({defrayed: params.defrayed});
     });
-  },
-
-  // send: (req, res, next) => {},
+  }
 };

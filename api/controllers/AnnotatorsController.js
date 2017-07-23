@@ -7,7 +7,7 @@
 
 // сообщаем, когда пользователь в последний раз заходил на сайт
 const updateLastLogin = (AID) => {
-  Annotators.update(
+  AnnotatorInfo.update(
     {
       AID: AID
     },
@@ -20,6 +20,7 @@ const updateLastLogin = (AID) => {
 module.exports = {
   // отвечаем авторизован ли пользователь
   authorized: (req, res, next) => {
+    // выясняем, в каком режиме находимся
     if (req.session.changesPassword) {
       // смена пароля
       res.json({
@@ -27,36 +28,34 @@ module.exports = {
         email: req.session.changesPassword
       });
     } else {
+      // выясняем авторизован ли пользователь
       if (req.session.isAuth) {
         // отдаём данные пользователя
-        Annotators.findOne({
+        AnnotatorInfo.findOne({
           AID: req.session.userId
-        }).populate('otherInfo').exec((error, annotator) => {
+        }).populate('AID').exec((error, annotator) => {
           if (!annotator.banned) {
             // сообщаем, когда пользователь в последний раз заходил на сайт
             updateLastLogin(req.session.userId);
 
-            AnnotatorInfo.findOne({ // лучше использовать populate. но не выходить (нужно чтобы sails сам создал таблицу)
-              AID: req.session.userId
-            }).exec((error, otherInfo) => {
-              // передаём данные пользователя
-              const user = {
-                nickname: annotator.login,
-                rating: annotator.rating,
-                money: {
-                  available: annotator.moneyAvailable,
-                  reserved: 0,
-                },
-                profile: otherInfo.profile,
-                englishTest: otherInfo.englishTest,
-                demo: otherInfo.demo,
-                level: otherInfo.level,
-                taskTaken: otherInfo.taskTaken,
-                firstTime: otherInfo.firstTime
-              };
+            // передаём данные пользователя
+            const user = {
+              nickname: annotator.AID.login,
+              rating: annotator.rating,
+              money: {
+                available: annotator.moneyAvailable,
+                reserved: 0,
+              },
+              profile: annotator.profile,
+              englishTest: annotator.englishTest,
+              demo: annotator.demo,
+              level: annotator.level,
+              taskTaken: annotator.taskTaken,
+              firstTime: annotator.firstTime
+            };
 
-              res.json(user);
-            });
+            // отправляем результат
+            res.json(user);
           } else {
             res.send('false');
           }
@@ -91,22 +90,23 @@ module.exports = {
   },
 
 
-  // вынимаем всех аннотаторов, сортируя по рейтингу (по убыванию)
+  // вынимаем всех аннотаторов, сортируя по убыванию рейтинга
   rating: (req, res, next) => {
-    Annotators.find({
+    // достаеём данные аннотаторов
+    AnnotatorInfo.find({
       registered: 1,
     }).populateAll().sort('rating DESC').exec((error, annotators) => {
-      let annoList = [];
-
       // собираем информацию по проектам
+      let annoList = [];
       for (annotator of annotators) {
         annoList.push({
-          name: `${annotator.firstName} ${annotator.secondName}`,
-          completed: annotator.tasks.length,
-          rating: annotator.rating
+          name: `${annotator.AID.login}`,
+          completed: 0,
+          rating: annotator.rating || 0
         });
       }
 
+      // отправляем результат
       res.json(annoList);
     });
   },
@@ -114,40 +114,38 @@ module.exports = {
 
   // вынимаем всех аннотаторов, подтвердивших email
   registered: (req, res, next) => {
-    Annotators.find({
+    AnnotatorInfo.find({
       registered: 1
     }).populateAll().sort('rating DESC').exec((error, annotators) => {
-      let annoList = [];
-
       // собираем информацию по проектам
+      let annoList = [];
       for (annotator of annotators) {
-        let cp = 0,
-            np = 0,
-            pp = 0;
+        // let cp = 0,
+        //     np = 0,
+        //     pp = 0;
 
-        for (let a of annotator.tasks) {
-          if (a.status === 3) {
-            cp++;
-          }
-          if (a.status === 1) {
-            np++;
-            // total = task.TID.emotions.split(',').length;
-            // pp = a.;
-          }
-        }
+        // for (let a of annotator.tasks) {
+        //   if (a.status === 3) {
+        //     cp++;
+        //   }
+        //   if (a.status === 1) {
+        //     np++;
+        //   }
+        // }
 
         annoList.push({
           AID: annotator.AID,
-          name: `${annotator.firstName} ${annotator.secondName}`,
-          email: annotator.email,
-          active: np,
-          completed: cp,
+          name: `${annotator.AID.login}`,
+          email: annotator.AID.email,
+          active: np || 0,
+          completed: cp || 0,
           rating: annotator.rating,
-          progress: pp,
+          progress: pp || 0,
           banned: annotator.banned
         });
       }
 
+      // отправляем результат
       res.json(annoList);
     });
   },
@@ -155,14 +153,16 @@ module.exports = {
 
   // регистрация нового аннотатора
   register: (req, res, next) => {
+    // запоминаем данные запроса
     let user = req.params.all();
 
-    // проверяем, есть ли такой пользователь
+    // проверяем корректность введённых данных
     if (user.email === "") {
       res
         .status(400)
         .send('no email');
     } else {
+      // проверяем, есть ли такой пользователь
       Annotators.findOne({
         or: [
           {email: user.email},
@@ -174,20 +174,32 @@ module.exports = {
           // шифруем пароль
           user.password = CryptoService.encryptPassword(user.password);
 
-          // генерируем токен
-          const emailToken = CryptoService.generateTokenFromJSON(user);
-          user.emailToken = emailToken;
-
           // регистрируем аннотатора
           Annotators.create(user, (err, annotator) => {
             if (err) {
               return next(err);
             } else {
-              // отправляем оповещение на почту новому аннотатору
-              user.hostName = req.headers.host;
-              EmailService.onSignUp(user);
+              // создаём таблицу с личными данными пользвоателя
+              AnnotatorProfile.create({
+                AID: annotator.AID,
+                name: `${user.secondName}, ${user.firstName}`,
+              }).exec((error, updated) => {
+              });
 
-              res.json({email: user.email}); // отправляем данные
+              // генерируем токен
+              const emailToken = CryptoService.generateTokenFromJSON(user);
+              user.emailToken = emailToken;
+              Tokens.create({
+                AID: annotator.AID,
+                token: emailToken
+              }).exec((err, token) => {
+                // отправляем оповещение на почту новому аннотатору
+                user.hostName = req.headers.host;
+                EmailService.onSignUp(user);
+
+                // отправляем почту
+                res.json({email: user.email});
+              });
             }
           });
         } else {
@@ -214,27 +226,23 @@ module.exports = {
     let user = req.params.all();
 
     // проверяем токен при подтверждении регистрации
-    Annotators.findOne({
-      email: user.email
-    }).exec((error, annotator) => {
-      if (annotator) {
-        if (annotator.emailToken === user.token) {
-          Annotators.update(
-            {
-              email: user.email
-            },
-            {
-              emailToken: null, // удаляем токен
-              registered: 1     // изменяем статус пользователя
-            }
-          ).exec((error, updated) => {
-            // создаём таблицу с дополнительной информцией
+    Tokens.findOne({
+      token: user.token
+    }).populateAll().exec((error, token) => {
+      if (token) {
+        if (token.AID.email === user.email) {
+          // удаляем токен
+          Tokens.destroy({
+            token: user.token
+          }).exec((error, updated) => {
+            // создаём таблицу с дополнительной информацией
             AnnotatorInfo.create({
-              AID: annotator.AID
+              AID: token.AID.AID,
+              registered: 1
             }).exec((error, updated) => {});
 
             // авторизируем пользователя
-            req.session.userId = annotator.AID;
+            req.session.userId = token.AID.AID;
             req.session.isAuth = true;
 
             // переходим на сайт
@@ -256,6 +264,7 @@ module.exports = {
 
   // вход в систему
   login: (req, res, next) => {
+    // запоминаем данные запроса
     let user = req.params.all();
 
     // шифруем пароль
@@ -268,26 +277,28 @@ module.exports = {
         {login: user.login}
       ]
     }).exec((error, annotator) => {
+      // обрабатываем ошибки
       if (annotator) {
         if (user.password === annotator.password) {
-          if (annotator.registered) {
-            if (!annotator.banned) {
-              // авторизируем пользователя
-              req.session.isAuth = true;
-              req.session.userId = annotator.AID;
+          // вынимаем дополнительную инфу
+          AnnotatorInfo.findOne({ // лучше использовать populate. но не выходить (нужно чтобы sails сам создал таблицу)
+            AID: annotator.AID
+          }).exec((error, otherInfo) => {
+            if (otherInfo.registered) {
+              if (!otherInfo.banned) {
+                // авторизируем пользователя
+                req.session.isAuth = true;
+                req.session.userId = annotator.AID;
 
-              // сообщаем, когда пользователь в последний раз заходил на сайт
-              updateLastLogin(req.session.userId);
+                // сообщаем, когда пользователь в последний раз заходил на сайт
+                updateLastLogin(req.session.userId);
 
-              AnnotatorInfo.findOne({ // лучше использовать populate. но не выходить (нужно чтобы sails сам создал таблицу)
-                AID: req.session.userId
-              }).exec((error, otherInfo) => {
                 // передаём данные пользователя
                 const user = {
                   nickname: annotator.login,
-                  rating: annotator.rating,
+                  rating: otherInfo.rating,
                   money: {
-                    available: annotator.moneyAvailable,
+                    available: otherInfo.moneyAvailable,
                     reserved: 0,
                   },
                   profile: otherInfo.profile,
@@ -298,18 +309,19 @@ module.exports = {
                   firstTime: otherInfo.firstTime
                 };
 
+                // отправляем результат
                 res.json(user);
-              });
+              } else {
+                res
+                  .status(400)
+                  .send('you are banned');
+              }
             } else {
               res
                 .status(400)
-                .send('you are banned');
+                .send('email is not validated');
             }
-          } else {
-            res
-              .status(400)
-              .send('email is not validated');
-          }
+          });
         } else {
           res
             .status(400)
@@ -334,32 +346,59 @@ module.exports = {
     // выходим из режима восстановления пароля
     delete req.session.changesPassword;
 
+    // сообщаем об успехе
     res.send('true');
   },
 
 
   // напоминание пароля
   forgot: (req, res, next) => {
+    // запоминаем данные запроса
     let user = req.params.all();
+
+    // ищем пользователя по email
     Annotators.findOne({
       email: user.email
     }).exec((error, annotator) => {
       if (annotator) {
+        // генерируем токен и записываем в базу
         annotator.emailToken = CryptoService.generateTokenFromJSON(annotator);
 
-        // генерируем токен и записываем в базу
-        Annotators.update(
-          {
-            AID: annotator.AID
-          },
-          {
-            emailToken: annotator.emailToken
-          }
-        ).exec((error, updated) => {
+        const doAfterCheckToken = () => {
           // высылаем письмо со ссылкой на страницу смены пароля
           annotator.hostName = req.headers.host;
           EmailService.onForgotPassword(annotator);
+
+          // сообщаем об успехе
           res.send('true');
+        };
+
+        Tokens.findOne({
+          AID: annotator.AID
+        }).exec((error, token) => {
+          if (token) {
+            // токен уже есть — обновляем
+            Tokens.update(
+              {
+                AID: annotator.AID
+              },
+              {
+                token: annotator.emailToken
+              }
+            ).exec((error, updated) => {
+              doAfterCheckToken();
+            });
+          } else {
+            // токена ещё нет — создаём
+            Tokens.create(
+              {
+                AID: annotator.AID,
+                token: annotator.emailToken
+              }
+            ).exec((error, updated) => {
+              doAfterCheckToken();
+            });
+          }
         });
       } else {
         console.log("There is no any account matching this email.");
@@ -373,23 +412,19 @@ module.exports = {
 
   // переход на страницу изменения пароля
   forgotPassword: (req, res, next) => {
+    // запоминаем данные запроса
     let user = req.params.all();
 
     // проверяем токен
-    Annotators.findOne({
-      email: user.email
-    }).exec((error, annotator) => {
-      if (annotator) {
-        if (annotator.emailToken === user.token) {
-          Annotators.update(
-            {
-              email: user.email
-            },
-            {
-              emailToken: null, // удаляем токен
-              registered: 1     // изменяем статус пользователя
-            }
-          ).exec((error, updated) => {
+    Tokens.findOne({
+      token: user.token
+    }).populateAll().exec((error, token) => {
+      if (token) {
+        if (token.AID.email === user.email) {
+          // удаляем токен
+          Tokens.destroy({
+            token: user.token
+          }).exec((error, updated) => {
             // авторизируем пользователя
             req.session.changesPassword = user.email;
 
@@ -413,8 +448,8 @@ module.exports = {
   // изменение пароля
   changePass: (req, res, next) => {
     // принимаем данные
-    const newPass = CryptoService.encryptPassword(req.param('password'));
     const email = req.session.changesPassword;
+    const newPass = CryptoService.encryptPassword(req.param('password'));
 
     // запускаем пользователя на сервер
     Annotators.findOne({
@@ -424,31 +459,49 @@ module.exports = {
         // обновляем пароль
         Annotators.update(
           {
-            email: email
+            AID: annotator.AID
           },
           {
-            password: newPass,
-            emailToken: null,
-            registered: 1
+            password: newPass
           }
         ).exec((error, updated) => {
-          // редактируем сессию
-          req.session.isAuth = true;
-          req.session.userId = annotator.AID;
+          // проверяем, регистрировался ли пользователь
+          AnnotatorInfo.findOne({
+            AID: annotator.AID
+          }).exec((error, annotatorInfo) => {
+            // если ещё не регистрировался
+            if (!annotatorInfo) {
+              // регистрируем и создаём таблицу с дополнительной информцией
+              AnnotatorInfo.create({
+                AID: annotator.AID,
+                registered: 1
+              }).exec((error, updated) => {});
+            }
 
-          // сообщаем, когда пользователь в последний раз заходил на сайт
-          updateLastLogin(req.session.userId);
+            // редактируем сессию
+            req.session.isAuth = true;
+            req.session.userId = annotator.AID;
+            delete req.session.changesPassword
 
-          // отправляем данные пользователя
-          res.json(annotator);
+            // // сообщаем, когда пользователь в последний раз заходил на сайт
+            // updateLastLogin(req.session.userId);
+
+            // // отправляем данные пользователя
+            // res.json(annotator);
+
+            // перезапускаем сайт
+            res.redirect('/');
+          });
         });
       }
     });
   },
 
   ban: (req, res, next) => {
-    const banned = req.param('banned') == 'true';
-    Annotators.update(
+    const banned = req.param('banned') == 'true'; // преобразуем строку в булево значение
+
+    // обновляем бан-статус аннотатора
+    AnnotatorInfo.update(
       {
         AID: req.param('AID')
       },
@@ -457,7 +510,7 @@ module.exports = {
       }
     ).exec((error, annotator) => {
       if (annotator) {
-        // отправляем данные пользователя
+        // отправляем результат
         res.json({
           banned: banned
         });
@@ -465,41 +518,23 @@ module.exports = {
     });
   },
 
+
+  // окончание демонстрационной задачи
   demoFinnished: (req, res, next) => {
-    Annotators.update(
+    // обновляем данные пользователя
+    AnnotatorInfo.update(
       {
         AID: req.session.userId
       },
       {
-        moneyAvailable: 1
+        moneyAvailable: 1,
+        demo: 1
       }
-    ).exec((error, annotator) => {
-      AnnotatorInfo.update(
-        {
-          AID: req.session.userId
-        },
-        {
-          demo: 1
-        }
-      ).exec((error, annotatorInfo) => {
-        if (annotatorInfo) {
-          // отправляем данные пользователя
-          res.json(true);
-        }
-      });
+    ).exec((error, annotatorInfo) => {
+      if (annotatorInfo) {
+        // сообщаем об успехе
+        res.json(true);
+      }
     });
-
-
-  },
-
-  // login: (req, res, next) => {},
+  }
 };
-
-
-// Редактирование пользователя
-//   // находим пользователя по id
-//   // обновляем все поля, указанные в объекте
-//     // если получается, то
-//       // возвращаем пользователя с новыми данными
-//     // если не получается, то
-//       // выводим ошибку

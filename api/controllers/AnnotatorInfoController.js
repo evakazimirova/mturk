@@ -7,8 +7,8 @@
 
 module.exports = {
   all: (req, res, next) => {
-    AnnotatorInfo.find().exec((error, projects) => {
-      res.json(projects);
+    AnnotatorInfo.find().exec((error, aInfo) => {
+      res.json(aInfo);
     });
   }
 };
