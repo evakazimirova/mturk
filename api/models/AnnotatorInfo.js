@@ -40,6 +40,30 @@ module.exports = {
     firstTime: {
       type: 'boolean',
       defaultsTo: true
+    },
+
+    registered: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
+    banned: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
+    moneyAvailable: {
+      type: 'float',
+      defaultsTo: 0
+    },
+
+    rating: {
+      type: 'integer',
+      defaultsTo: 0
+    },
+
+    lastlogin: {
+      type: 'datetime'
     }
   }
 };

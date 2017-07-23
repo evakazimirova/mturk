@@ -28,43 +28,6 @@ module.exports = {
       required: true
     },
 
-    emailToken: {
-      type: 'string' // в зашифрованном (SHA1) виде
-    },
-
-    registered: {
-      type: 'boolean',
-      defaultsTo: false
-    },
-
-    banned: {
-      type: 'boolean',
-      defaultsTo: false
-    },
-
-    firstName: {
-      type: 'string',
-      required: true
-    },
-
-    secondName: {
-      type: 'string',
-      required: true
-    },
-
-    moneyAvailable: {
-      type: 'float',
-      defaultsTo: 0
-    },
-
-    rating: {
-      type: 'integer',
-      defaultsTo: 0
-    },
-
-    lastlogin: {
-      type: 'datetime'
-    },
 
     tasks: {
       collection: 'AnnoTasks',
@@ -73,6 +36,11 @@ module.exports = {
 
     otherInfo: {
       collection: 'AnnotatorInfo',
+      via: 'AID'
+    },
+
+    profile: {
+      collection: 'AnnotatorProfile',
       via: 'AID'
     },
   }
