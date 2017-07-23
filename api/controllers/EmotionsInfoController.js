@@ -6,8 +6,10 @@
  */
 
 module.exports = {
+  // достаём все эмоции
 	getAll: (req, res, next) => {
     EmotionsInfo.find().exec((error, emotions) => {
+      // формируем ответ
       newEmotions = {};
       for (const e of emotions) {
         const EID = e.EID;
@@ -16,6 +18,8 @@ module.exports = {
         delete e.updatedAt;
         newEmotions[EID] = e;
       }
+
+      // отсылаем ответ
       res.json(newEmotions);
     });
   }

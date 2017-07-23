@@ -6,9 +6,11 @@
  */
 
 module.exports = {
+  // достаём все проекты
   getAll: (req, res, next) => {
     Projects.find().exec((error, projects) => {
       for (let project of projects) {
+        // формируем для каждого проекта 3 сущности, содержащие задачи
         project.taskTypes = [
           {
             title: 'Standard Task (Piece of Cake)',
@@ -30,11 +32,13 @@ module.exports = {
           }
         ];
 
+        // избавляемся от лишней информации
         delete project.pricePerTask;
         delete project.pricePerTaskMedium;
         delete project.pricePerTaskHard;
       }
 
+      // отправляем результат
       res.json(projects);
     });
   }

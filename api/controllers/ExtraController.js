@@ -12,22 +12,24 @@ const languages = require('languages-list');
 const universities = require('../../assets/world-universities.json');
 
 module.exports = {
+  // достаём страны
 	countries: (req, res, next) => {
     res.json(countriesCities.getCountries());
   },
 
+  // достаём города страны
 	cities: (req, res, next) => {
     res.json(countriesCities.getCities(req.param('country')));
   },
 
+  // достаём языки
 	languages: (req, res, next) => {
     res.json(languages);
   },
 
+  // достаём университеты
 	universities: (req, res, next) => {
-    // fs.readFile(__dirname + '/../../assets/world-universities.json', "utf-8", function(err, universities) {
-      res.json(universities);
-    // });
+    res.json(universities);
   }
 };
 

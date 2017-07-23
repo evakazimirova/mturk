@@ -6,12 +6,13 @@
  */
 
 module.exports = {
+  // достаём фрагмент по FID
 	getFragment: (req, res, next) => {
     let FID = req.param('FID');
-
     Fragments.findOne({
       FID: FID
     }).populateAll().exec((err, fragment) => {
+      // отправляем результат
       res.json({
         FID: FID,
         video: fragment.VID.URL,
