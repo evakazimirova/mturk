@@ -18,10 +18,12 @@
       "prefix": "na",
       "styles": [
         "../node_modules/font-awesome/css/font-awesome.min.css",
+        "../node_modules/jquery-typeahead/dist/jquery.typeahead.min.css",
         "styles/styles.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/jquery-typeahead/dist/jquery.typeahead.min.js",
         "../node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js"
       ],
       "environmentSource": "environments/environment.ts",

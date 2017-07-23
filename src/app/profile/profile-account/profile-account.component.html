@@ -1,26 +1,30 @@
-<form>
-  <div class="form-group">
-    <label for="Login">Nickname</label>
-    <input type="text" class="form-control" id="Login" placeholder="johndoe_42">
+<div class="row">
+  <div class="col col-md-4 col-md-push-4 col-sm-6 col-sm-push-3">
+    <form [formGroup]="form" (ngSubmit)="signUp($event)">
+      <div class="form-group">
+        <label for="login">Nickname</label>
+        <input formControlName="login" type="text" class="form-control" id="login" placeholder="johndoe_42">
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input formControlName="email" type="email" class="form-control" id="email" placeholder="johndoe_42@gmail.com">
+      </div>
+
+      <!-- (если залогонился через фейсбук, то отображать здесь сразу) Если нет, просить указать обязательно ссылку на профиль -->
+      <div class="form-group">
+        <label for="socials">Social networks</label>
+        <input formControlName="socials" type="text" class="form-control" id="socials" placeholder="https://www.facebook.com/my.account">
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone number</label>
+        <input formControlName="phone" type="text" class="form-control" id="phone" placeholder="+79261234567">
+      </div>
+
+      <button class="btn btn-default btn-block">Change password</button><br>
+
+      <button type="submit" class="btn btn-primary btn-block disabled">Save changes</button>
+    </form>
   </div>
-
-  <div class="form-group">
-    <label for="email">E-mail</label>
-    <input type="email" class="form-control" id="email" placeholder="johndoe_42@gmail.com">
-  </div>
-
-  <!-- (если залогонился через фейсбук, то отображать здесь сразу) Если нет, просить указать обязательно ссылку на профиль  -->
-  <div class="form-group">
-    <label for="email">Соцсети</label>
-    <input type="email" class="form-control" id="email" placeholder="vk, fb, ok">
-  </div>
-
-  <div class="form-group">
-    <label for="email">Телефон</label>
-    <input type="email" class="form-control" id="email" placeholder="+79261234567">
-  </div>
-
-  <button class="btn btn-default btn-block">Сменить пароль</button><br>
-
-  <button type="submit" class="btn btn-primary btn-block disabled" (click)="selectProfileMode('taskList')">Save</button>
-</form>
+</div>
