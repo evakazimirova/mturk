@@ -88,7 +88,7 @@
         <label for="family">Family status</label>
         <select formControlName="family" class="form-control">
           <option>married</option>
-          <option selected>single</option>
+          <option>single</option>
           <option>divorced</option>
           <option>widowed</option>
           <option>other</option>
@@ -100,7 +100,7 @@
         <select formControlName="education" class="form-control">
           <option>Primary education</option>
           <option>Secondary school</option>
-          <option selected>Higher education</option>
+          <option>Higher education</option>
         </select>
       </div>
 
@@ -140,7 +140,11 @@
         </label>
       </div>
 
-      <button type="submit" class="btn btn-primary btn-block disabled">Save changes</button>
+      <button type="submit" class="btn btn-primary btn-block" [ngClass]="{disabled: loading || !form.valid || !form.value.personalDataAgreement}">
+        Save changes
+        <!-- Индикатор загрузки -->
+        <na-loader-inbtn *ngIf="loading"></na-loader-inbtn>
+      </button>
     </form>
   </div>
 </div>
