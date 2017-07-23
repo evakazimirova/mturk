@@ -1,6 +1,6 @@
 <div class="row">
-  <div class="col col-md-4 col-md-push-4 col-sm-6 col-sm-push-3">
-    <form [formGroup]="form" (ngSubmit)="signUp($event)">
+  <div class="col col-md-4 col-md-push-1 col-sm-6">
+    <form [formGroup]="form" (ngSubmit)="updateAnnotatorAccount($event)">
       <div class="form-group">
         <label for="login">Nickname</label>
         <input formControlName="login" type="text" class="form-control" id="login" placeholder="johndoe_42">
@@ -22,9 +22,15 @@
         <input formControlName="phone" type="text" class="form-control" id="phone" placeholder="+79261234567">
       </div>
 
-      <button class="btn btn-default btn-block">Change password</button><br>
-
-      <button type="submit" class="btn btn-primary btn-block disabled">Save changes</button>
+      <button type="submit" class="btn btn-primary btn-block" [ngClass]="{disabled: loading || !form.valid}">
+        Save changes
+        <!-- Индикатор загрузки -->
+        <na-loader-inbtn *ngIf="loading"></na-loader-inbtn>
+      </button>
     </form>
+  </div>
+
+  <div class="col col-md-4 col-md-push-3 col-sm-6">
+    <button class="btn btn-default btn-block">Change password</button><br>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Output, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpService } from '../../http.service';
 import { CommonService } from '../../common.service';
@@ -9,7 +9,6 @@ import { CommonService } from '../../common.service';
   styleUrls: ['./profile-profile.component.scss']
 })
 export class ProfileProfileComponent implements OnInit {
-  @Output() profileModeSelected = new EventEmitter();
   form: FormGroup;
   loading = false;
   countrySelected = false;
@@ -65,19 +64,16 @@ export class ProfileProfileComponent implements OnInit {
 
   ngOnInit() {
     $(document).ready(() => {
-      // const containerCountry = $('#country');
-      // const containerCity = $('#city');
-      // const containerLanguage = $('#language');
-      // const containerUniversity = $('#university');
-
+      // подгружаем сохранённые данные
       this.http.get('AnnotatorProfile/getData').subscribe(
         profile => {
-          console.log(profile)
+          profile.birthdate = profile.birthdate.slice(0, 10); // корректируем формат даты рождения
           this.form.patchValue(profile);
         },
         error => console.error(error)
       );
 
+      // подгружаем страны
       this.http.get('extra/countries').subscribe(
         countries => {
           $.typeahead({
@@ -91,6 +87,7 @@ export class ProfileProfileComponent implements OnInit {
               onHideLayout: (countryNode, country) => {
                 this.form.patchValue({country: country});
 
+                // подгружаем города страны
                 if (country.length > 0) {
                   this.countrySelected = true;
                   this.http.get(`extra/cities?country=${country}`).subscribe(
@@ -124,6 +121,7 @@ export class ProfileProfileComponent implements OnInit {
         error => console.error(error)
       );
 
+      // подгружаем языки
       this.http.get('extra/languages').subscribe(
         languages => {
           $.typeahead({
@@ -143,6 +141,7 @@ export class ProfileProfileComponent implements OnInit {
         error => console.error(error)
       );
 
+      // подгружаем университеты
       this.http.get('extra/universities').subscribe(
         universities => {
           $.typeahead({
@@ -164,68 +163,9 @@ export class ProfileProfileComponent implements OnInit {
     });
   }
 
-  selectProfileMode(page) {
-    this.profileModeSelected.emit(page);
-  }
-
+  // обновляем профиль аннотатора
   updateAnnotatorProfile(event) {
     event.preventDefault(); // отменяем стандартное действие
-
-    // 'name': ['', [
-    //     Validators.required
-    //   ]],
-    //   'gender': ['', [
-    //     Validators.required
-    //   ]],
-    //   'birthdate': ['', [
-    //     Validators.required
-    //   ]],
-    //   'country': ['', [
-    //     Validators.required
-    //   ]],
-    //   'city': ['', [
-    //     Validators.required
-    //   ]],
-    //   'language': ['', [
-    //     Validators.required
-    //   ]],
-    //   'english': ['', [
-    //     Validators.required
-    //   ]],
-    //   'family': ['', [
-    //     Validators.required
-    //   ]],
-    //   'education': ['', [
-    //     Validators.required
-    //   ]],
-    //   'university': ['', [
-    //     Validators.required
-    //   ]],
-    //   'specialty': ['', [
-    //     Validators.required
-    //   ]],
-    //   'profession': ['', [
-    //     Validators.required
-    //   ]],
-    //   'hobby': ['', [
-    //     Validators.required
-    //   ]],
-    //   'personalDataAgreement': ['', [
-    //     Validators.required
-    //   ]]
-
-    this.form.patchValue({english: 'NO'});
-    console.log(this.form.value);
-
-
-    // // собираем информацию с полей
-    // const userData = {
-    //   firstName: this.form.value.firstName,
-    //   secondName: this.form.value.secondName,
-    //   login: this.form.value.login,
-    //   email: this.form.value.email.toLowerCase(),
-    //   password: this.form.value.password
-    // };
 
     if (this.form.valid) {
       if (this.form.value.personalDataAgreement) {
@@ -236,8 +176,7 @@ export class ProfileProfileComponent implements OnInit {
             res => {
               this.loading = false;
 
-              // выводим сообщение об успехе
-              console.log(res);
+              // обновляем прогресс-бар
               this.common.user.profile = 1;
             },
             error => {
