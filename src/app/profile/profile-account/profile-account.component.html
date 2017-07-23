@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col col-md-4 col-md-push-4 col-sm-6 col-sm-push-3">
-    <form>
+    <form [formGroup]="form" (ngSubmit)="signUp($event)">
       <div class="form-group">
         <label for="login">Nickname</label>
         <input formControlName="login" type="text" class="form-control" id="login" placeholder="johndoe_42">

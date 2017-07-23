@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col col-md-4 col-md-push-4 col-sm-6 col-sm-push-3">
-    <form>
+    <form [formGroup]="form" (ngSubmit)="signUp($event)">
       <div class="form-group">
         <label for="name">Name</label>
         <input formControlName="name" type="text" class="form-control" id="name" placeholder="Doe, John">
@@ -33,26 +33,46 @@
       <!-- Календарик -->
       <div class="form-group">
         <label for="birthdate">Birthdate</label>
-        <input formControlName="birthdate" type="text" class="form-control" id="birthdate" placeholder="12.12.2012">
+        <input formControlName="birthdate" type="date" class="form-control" id="birthdate" placeholder="12.12.2012">
       </div>
 
-      <!-- из БД -->
       <div class="form-group">
         <label for="country">Country</label>
-        <input formControlName="country" type="text" class="form-control" id="country" placeholder="Russian Federation">
+        <div class="typeahead__container">
+          <div class="typeahead__field">
+            <span class="typeahead__query">
+              <input formControlName="country" class="form-control" id="country"
+                type="search"
+                autocomplete="off">
+            </span>
+          </div>
+        </div>
       </div>
 
-      <!-- из БД -->
-      <!-- http://www.geodatasource.com/world-cities-database/free -->
-      <div class="form-group">
+      <div class="form-group" *ngIf="countrySelected">
         <label for="city">City/Town</label>
-        <input formControlName="city" type="text" class="form-control" id="city" placeholder="Moscow">
+        <div class="typeahead__container">
+          <div class="typeahead__field">
+            <span class="typeahead__query">
+              <input formControlName="city" class="form-control" id="city"
+                type="search"
+                autocomplete="off">
+            </span>
+          </div>
+        </div>
       </div>
 
-      <!-- из БД -->
       <div class="form-group">
         <label for="language">Native language</label>
-        <input formControlName="language" type="text" class="form-control" id="language" placeholder="Русский">
+        <div class="typeahead__container">
+          <div class="typeahead__field">
+            <span class="typeahead__query">
+              <input formControlName="language" class="form-control" id="language"
+                type="search"
+                autocomplete="off">
+            </span>
+          </div>
+        </div>
       </div>
 
       <!-- Пройти тест и отобразить результат рядом -->
@@ -84,10 +104,18 @@
         </select>
       </div>
 
-      <!-- из БД, если выбрано "Higher education" -->
+      <!-- если выбрано "Higher education" -->
       <div class="form-group">
         <label for="university">University</label>
-        <input formControlName="university" type="text" class="form-control" id="university" placeholder="MIT">
+        <div class="typeahead__container">
+          <div class="typeahead__field">
+            <span class="typeahead__query">
+              <input formControlName="university" class="form-control" id="university"
+                type="search"
+                autocomplete="off">
+            </span>
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
@@ -102,7 +130,7 @@
 
       <!-- теги на выбор по темам -->
       <div class="form-group">
-        <label for="hobby">Hobby</label>
+        <label for="hobby">Hobbies</label>
         <textarea formControlName="hobby" class="form-control" id="hobby" rows="3">спорт, искусство, tech</textarea>
       </div>
 

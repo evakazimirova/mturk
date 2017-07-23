@@ -12,32 +12,144 @@ export class ProfileProfileComponent implements OnInit {
   @Output() profileModeSelected = new EventEmitter();
   form: FormGroup;
   loading = false;
+  countrySelected = false;
 
   constructor(public common: CommonService,
               private http: HttpService,
               private formBuilder: FormBuilder) {
     this.form = formBuilder.group({
-      'firstName': ['', [
+      'name': ['', [
         Validators.required
       ]],
-      'secondName': ['', [
+      'gender': ['', [
         Validators.required
       ]],
-      'login': ['', [
+      'birthdate': ['', [
         Validators.required
       ]],
-      'email': ['', [
-        Validators.required,
-        Validators.pattern('[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})')
+      'country': ['', [
+        Validators.required
       ]],
-      'password': ['', [
-        Validators.required,
-        Validators.pattern('.{5,}')
+      'city': ['', [
+        Validators.required
+      ]],
+      'language': ['', [
+        Validators.required
+      ]],
+      'english': ['', [
+        Validators.required
+      ]],
+      'family': ['', [
+        Validators.required
+      ]],
+      'education': ['', [
+        Validators.required
+      ]],
+      'university': ['', [
+        Validators.required
+      ]],
+      'specialty': ['', [
+        Validators.required
+      ]],
+      'profession': ['', [
+        Validators.required
+      ]],
+      'hobby': ['', [
+        Validators.required
+      ]],
+      'personalDataAgreement': ['', [
+        Validators.required
       ]]
     });
   }
 
   ngOnInit() {
+    $(document).ready(() => {
+      this.http.get('extra/countries').subscribe(
+        countries => {
+          $.typeahead({
+            input: '#country',
+            order: 'desc',
+            hint: true,
+            source: {
+              data: countries
+            },
+            callback: {
+              onHideLayout: (countryNode, country) => {
+                if (country.length > 0) {
+                  this.countrySelected = true;
+                  this.http.get(`extra/cities?country=${country}`).subscribe(
+                    cities => {
+                      $.typeahead({
+                        input: '#city',
+                        order: 'desc',
+                        hint: true,
+                        source: {
+                          data: cities
+                        },
+                        callback: {
+                          onHideLayout: (cityNode, city) => {
+                          }
+                        }
+                      });
+                    },
+                    error => {
+                      this.countrySelected = false;
+                      console.error(error);
+                    }
+                  );
+                } else {
+                  this.countrySelected = false;
+                }
+              }
+            }
+          });
+        },
+        error => console.error(error)
+      );
+
+      this.http.get('extra/languages').subscribe(
+        languages => {
+          // console.log(languages);
+
+          $.typeahead({
+            input: '#language',
+            order: 'desc',
+            hint: true,
+            source: {
+              data: languages
+            },
+            callback: {
+              onHideLayout: (languageNode, language) => {
+
+              }
+            }
+          });
+        },
+        error => console.error(error)
+      );
+
+      this.http.get('extra/universities').subscribe(
+        universities => {
+          // console.log(universities);
+
+          $.typeahead({
+            input: '#university',
+            order: 'desc',
+            hint: true,
+            source: {
+              data: universities
+            },
+            callback: {
+              onHideLayout: (languageNode, university) => {
+
+              }
+            }
+          });
+        },
+        error => console.error(error)
+      );
+    });
   }
 
   selectProfileMode(page) {
