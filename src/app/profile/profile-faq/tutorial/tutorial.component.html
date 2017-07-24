@@ -1,6 +1,14 @@
+<h2>Video Example</h2>
 <div class="video" (click)="playVideo()">
   <video id="tutorialVideo" preload="auto">
     <source src="https://storage.googleapis.com/video_tutorial/({{ tutorial.video }}).mp4" type='video/mp4'>
   </video>
   <div class="fa fa-5x fa-play" *ngIf="tutorialVideo.paused"></div>
 </div>
+
+<h2>All the Tutorial Videos</h2>
+<ul>
+  <li *ngFor="let tutorial of tutorials">
+    <a href="https://storage.googleapis.com/video_tutorial/({{ tutorial.video }}).mp4">https://storage.googleapis.com/video_tutorial/({{ tutorial.video }}).mp4</a>
+  </li>
+</ul>
