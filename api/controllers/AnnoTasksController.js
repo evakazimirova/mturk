@@ -256,7 +256,6 @@ module.exports = {
       AnnotatorInfo.findOne({
         AID: task.AID
       }).exec((err, annotatorInfo) => {
-        console.log(input);
         // сохраняем результат в БД
         AnnoTasks.update(
           {
