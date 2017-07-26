@@ -59,7 +59,7 @@ export class ProfileAccountComponent implements OnInit {
         );
       }
     } else {
-      console.log('Заполнены не все поля!');
+      alert('Заполнены не все поля!');
     }
   }
 }
