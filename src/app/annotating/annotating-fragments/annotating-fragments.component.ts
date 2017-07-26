@@ -64,8 +64,8 @@ export class AnnotatingFragmentsComponent {
       const output = {
         result: this.annot.fragmentsWip,
         ATID: this.annot.task.ATID,
-        done: tasksDone
-        // totalEmotions: this.annot.task.FIDs[this.annot.FID].emotions.length // число проработанных эмоций
+        done: tasksDone,
+        total: this.annot.task.FIDs.length // общее число задач
       };
 
       // сохраняем резульат в БД
@@ -77,15 +77,21 @@ export class AnnotatingFragmentsComponent {
           // обновляем баланс пользователя и рейтинг
           this.common.user.money.available = res.money;
           this.common.user.rating = res.rating;
+
+          // разрешаем переходить к другому видео или закрывать сайт
+          this.annot.allFragmentsRated = true;
+
+          // если закончили разметку, возвращаемся на главную
+          if (output.total === output.done) {
+            this.common.user.taskTaken = null;
+            this.common.mode = 'profile';
+          }
         },
         err => {
           this.loading = false;
           console.error(err);
         }
       );
-
-      // разрешаем переходить к другому видео или закрывать сайт
-      this.annot.allFragmentsRated = true;
     }
   }
 

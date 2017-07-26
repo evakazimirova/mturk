@@ -50,7 +50,7 @@ export class ProfileProjectsComponent implements OnInit {
 
   ngOnInit() {
     // загружаем данные только один раз при входе
-    if (!this.common.projects) {
+    if (this.common.projects.length === 0) {
       this.isLoaded = false;
       this.http.get('Projects/getAll').subscribe(
         projects => {
@@ -61,15 +61,17 @@ export class ProfileProjectsComponent implements OnInit {
             tasks => {
               this.isLoaded = true;
 
-              // обновляем проекты, которые делал пользователь
-              for (const p in this.common.projects) {
-                this.common.projects[p].annoTask = tasks[p];
-              }
+              if (tasks.length > 0) {
+                // обновляем проекты, которые делал пользователь
+                for (const p in this.common.projects) {
+                  this.common.projects[p].annoTask = tasks[p];
+                }
 
-              // Считаем зарезервиродванную сумму
-              this.common.user.money.reserved = 0;
-              for (const task of tasks) {
-                this.common.user.money.reserved = +task.price;
+                // Считаем зарезервиродванную сумму
+                this.common.user.money.reserved = 0;
+                for (const task of tasks) {
+                  this.common.user.money.reserved = +task.price;
+                }
               }
             },
             err => {

@@ -16,11 +16,6 @@ module.exports = {
     title: {
       type: 'string',
       required: true
-    },
-
-    scale: {
-      type: 'integer',
-      defaultsTo: 1
     }
   }
 };

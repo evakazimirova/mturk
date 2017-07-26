@@ -31,7 +31,7 @@
 
 <!-- Основная страница -->
 <div>
-  <div *ngIf="!projectMode && isLoaded">
+  <div *ngIf="!projectMode && isLoaded && common.projects.length > 0">
     <!-- Список проектов -->
     <div *ngFor="let project of common.projects">
       <h1>{{ project.projectName }}</h1>

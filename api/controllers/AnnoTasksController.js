@@ -189,7 +189,7 @@ module.exports = {
         let allFIDs = [];
         for (const fid of all.FIDs) {
           allFIDs.push({FID: fid.FID});
-          fid.emotions = fid.emotions.split(',').map((E) => {return +E.slice(-1);});
+          fid.emotions = fid.emotions.split(',').map((E) => {return +E.slice(1);});
         }
 
         // можно упростить запрос в БД
@@ -263,8 +263,8 @@ module.exports = {
           },
           {
             result: JSON.stringify(input.result),
-            done: input.done
-            // status: 3 // заканчиваем выполнение задачи
+            done: input.done,
+            status: input.done === input.total ? 3 : 1 // заканчиваем выполнение задачи, если всё сделано
           }
         ).exec((err, updated) => {
           // формируем новые баланс и рейтинг пользователя
@@ -288,6 +288,18 @@ module.exports = {
             });
           });
         });
+
+        // снимаем задачу с пользователя
+        if (input.done === input.total) {
+          AnnotatorInfo.update(
+            {
+              AID: task.AID
+            },
+            {
+              taskTaken: null
+            }
+          ).exec((err, updated) => {});
+        }
       });
     });
   }
