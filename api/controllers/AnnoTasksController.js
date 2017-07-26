@@ -65,36 +65,52 @@ module.exports = {
 
   // взять задачу
 	take: (req, res, next) => {
+    let tasksAmount = 1;
+
+    // назначаем нужное количество задач
+    switch (+req.param('index')) {
+      case 0:
+        tasksAmount = 1;
+        break;
+      case 1:
+        tasksAmount = 3;
+        break;
+      case 2:
+        tasksAmount = 10;
+        break;
+    }
+
     // достаём все доступные задачи и сортируем по приоритету
     Tasks.find({PID: req.param('PID')})
       .populateAll()
       .sort('annoCount ASC')
       .exec((error, tasks) => {
-      // не даём аннотатору брать одну и ту же задачу
-      let foundFreeTask = false;
-
-      for (let task of tasks) {
-        // выбираем только те задачи, для которых ещё не набрано максимальное количество аннотаторов
-        if (task.annoCount <= task.PID.annoPerTask) {
-          if (task.annoTasks.length === 0) {
-            // берём это задание (никто его ещё не брал)
-            foundFreeTask = true;
-          } else {
-            for (let i in task.annoTasks) {
-              if (task.annoTasks[i].AID === req.session.userId) {
-                // это задание аннотатор уже делал
+      // фильтруем задачи
+      for (let t in tasks) {
+        if (tasks[t].annoCount < tasks[t].PID.annoPerTask) {
+          // убираем те задачи, которые аннотатор уже делал
+          if (tasks[t].annoTasks.length !== 0) {
+            for (let i in tasks[t].annoTasks) {
+              if (tasks[t].annoTasks[i].AID === req.session.userId) {
+                tasks.splice(t, 1); // убираем из списка доступных
                 break;
-              } else if (Number(i) === Number(task.annoTasks.length - 1)) {
-                // берём это задание
-                foundFreeTask = true;
               }
             }
           }
+        } else {
+          // убираем задачи, которые разметило достаточное количество аннотаторов
+          tasks.splice(t)
+          break;
         }
+      }
 
-        if (foundFreeTask) {
-          // нашли то, что надо. заканчиваем шерстить
+      if (tasksAmount <= tasks.length) {
+        // отдаём только эти задачи
+        tasks.splice(tasksAmount);
 
+        let sendRequest = true;
+        for (let task of tasks) {
+          // формируем задачу
           newTask = {
             TID: task.TID, // это то самое значение должно выбираться неслучайно
             AID: req.session.userId,
@@ -103,39 +119,11 @@ module.exports = {
             deadline: new Date(+new Date + 12096e5) // дедлайн — через 2 недели
           };
 
-          // берём задачу
+          // берём задачи
           AnnoTasks.create(newTask, (err, annoTask) => {
             if (err) {
               return next(err);
             } else {
-              let taskInfo = {
-                activity: "Active",
-                percentage: 0,
-                earned: 0,
-                price: task.PID.pricePerTask,
-                task: {
-                  PID: task.PID.PID,
-                  ATID: annoTask.ATID,
-                  TID: task.TID,
-                  HID: task.FID.HID,
-                  taken: +req.param('index') + 1
-                }
-              };
-
-              // назначаем пользователю задачу
-              AnnotatorInfo.update(
-                {
-                  AID: req.session.userId
-                },
-                {
-                  taskTaken: +req.param('index') + 1
-                }
-              ).exec((err, updated) => {
-                if (err) {
-                  console.log(err);
-                }
-              });
-
               // увеличиваем число аннотаторов задачи
               Tasks.update(
                 {
@@ -150,16 +138,47 @@ module.exports = {
                 }
               });
 
-              // отправляем результат
-              res.json(taskInfo);
+              // отправляем запрос по первой задаче
+              if (sendRequest) {
+                sendRequest = false;
+
+                // назначаем пользователю задачу
+                AnnotatorInfo.update(
+                  {
+                    AID: req.session.userId
+                  },
+                  {
+                    taskTaken: +req.param('index') + 1
+                  }
+                ).exec((err, updated) => {
+                  if (err) {
+                    console.log(err);
+                  }
+                });
+
+                // формируем ответ
+                let taskInfo = {
+                  activity: "Active",
+                  percentage: 0,
+                  earned: 0,
+                  price: task.PID.pricePerTask,
+                  task: {
+                    PID: task.PID.PID,
+                    ATID: annoTask.ATID,
+                    TID: task.TID,
+                    HID: task.FID.HID,
+                    taken: +req.param('index') + 1
+                  }
+                };
+
+                // отправляем результат
+                res.json(taskInfo);
+              }
             }
           });
-          break;
         }
-      }
-
-      // сообщаем, что нет доступны задач для аннотатора
-      if (!foundFreeTask) {
+      } else {
+        // сообщаем, что нет доступных задач для аннотатора
         res.json('no free tasks');
       }
     });
@@ -167,7 +186,7 @@ module.exports = {
 
 
   // начать выполнять задачу
-  start:  (req, res, next) => {
+  start: (req, res, next) => {
     // запоминаем данные запроса
     let ids = req.params.all();
 
@@ -281,25 +300,53 @@ module.exports = {
               rating: newRating
             }
           ).exec((err, updated) => {
-            // отдаём текущий баланс и рейтинг
-            res.json({
-              money: newAmount,
-              rating: newRating
-            });
+            if (input.done === input.total) {
+              // выясняем, есть ли ещё неоконченные задачи
+              AnnoTasks.find({
+                AID: req.session.userId,
+                status: 1
+              }).exec((err, tasks) => {
+                if (tasks.length === 0) {
+                  // повышаем уровень аннотатора, если достиг его
+                  levelUp = annotatorInfo.level === annotatorInfo.taskTaken ? annotatorInfo.level + 1 : annotatorInfo.level
+
+                  // снимаем задачу с пользователя
+                  AnnotatorInfo.update(
+                    {
+                      AID: task.AID
+                    },
+                    {
+                      taskTaken: null,
+                      level: levelUp
+                    }
+                  ).exec((err, updated) => {});
+
+                  // отдаём текущий баланс и рейтинг
+                  res.json({
+                    money: newAmount,
+                    rating: newRating,
+                    taskTaken: undefined,
+                    level: levelUp
+                  });
+                } else {
+                  // отдаём текущий баланс и рейтинг
+                  res.json({
+                    money: newAmount,
+                    rating: newRating,
+                    taskTaken: 2
+                  });
+                }
+              });
+            } else {
+              // отдаём текущий баланс и рейтинг
+              res.json({
+                money: newAmount,
+                rating: newRating,
+                taskTaken: 2
+              });
+            }
           });
         });
-
-        // снимаем задачу с пользователя
-        if (input.done === input.total) {
-          AnnotatorInfo.update(
-            {
-              AID: task.AID
-            },
-            {
-              taskTaken: null
-            }
-          ).exec((err, updated) => {});
-        }
       });
     });
   }
