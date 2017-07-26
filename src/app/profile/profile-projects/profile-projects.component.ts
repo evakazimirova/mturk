@@ -117,10 +117,6 @@ export class ProfileProjectsComponent implements OnInit {
         }
       }
     }
-
-
-
-
   }
 
   // начать выполнение задачи
@@ -166,9 +162,12 @@ export class ProfileProjectsComponent implements OnInit {
       task => {
         if (task !== 'no free tasks') {
           // отдаём задачу аннотатору
-          this.common.projects[i].annoTask = task;
+          this.common.projects[0].annoTask = task;
           this.common.user.taskTaken = task.task.taken;
-          this.startTask(this.common.projects[i].annoTask.task);
+          this.startTask(this.common.projects[0].annoTask.task);
+        } else {
+          this.loadingTask = -1;
+          alert('no free tasks');
         }
       },
       err => {

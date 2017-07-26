@@ -83,8 +83,23 @@ export class AnnotatingFragmentsComponent {
 
           // если закончили разметку, возвращаемся на главную
           if (output.total === output.done) {
-            this.common.user.taskTaken = null;
+            if (!res.taskTaken) {
+              this.common.user.taskTaken = null;
+              for (let project of this.common.projects) {
+                project.annoTask = undefined;
+              }
+
+              // обновляем уровень
+              this.common.user.level = res.level;
+              alert(`поздравляем !! вы разблокировали уровень «${res.level}»`);
+            }
             this.common.mode = 'profile';
+
+            // чистим кэш
+            this.annot.rating = [[]];
+            this.annot.fragmentsWip = [];
+            this.annot.cf = -1;
+            this.annot.emotion = 0;
           }
         },
         err => {

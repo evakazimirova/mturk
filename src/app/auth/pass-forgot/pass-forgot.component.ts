@@ -37,7 +37,7 @@ export class ForgotPassComponent {
         this.loading = false;
 
         // выводим сообщение об успехе
-        console.log(`The instructions have been sent to ${this.form.value.login}.`);
+        alert(`The instructions have been sent to ${this.form.value.login}.`);
       },
       err => {
         this.loading = false;

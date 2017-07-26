@@ -54,7 +54,7 @@ export class SignUpComponent {
         this.loading = false;
 
         // выводим сообщение об успехе
-        console.log(`We have sent an e-mail to the "${user.email}". Please check it out!`);
+        alert(`We have sent an e-mail to the "${user.email}". Please check it out!`);
       },
       error => {
         this.loading = false;
