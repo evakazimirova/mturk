@@ -189,7 +189,7 @@ module.exports = {
         let allFIDs = [];
         for (const fid of all.FIDs) {
           allFIDs.push({FID: fid.FID});
-          fid.emotions = fid.emotions.split(',').map((E) => {return +E.slice(-1);});
+          fid.emotions = fid.emotions.split(',').map((E) => {return +E.slice(1);});
         }
 
         // можно упростить запрос в БД

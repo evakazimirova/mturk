@@ -13,5 +13,5 @@ export class CommonService {
     }
   };
 
-  projects; // список проектов
+  projects = []; // список проектов
 }

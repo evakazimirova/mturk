@@ -15,7 +15,7 @@
   </div>
 
   <!-- И -->
-  <div *ngIf="boxType === 'AND'">
+  <div *ngIf="boxType === 'OR'">
     <!-- Первая пара -->
     <div class="btn-group">
       <button class="btn btn-lg btn-default" (click)="annot.uncheckEmos(1); annot.checkEmo(0)"
@@ -49,7 +49,7 @@
   </div>
 
   <!-- Или -->
-  <div class="btn-group" *ngIf="boxType === 'OR'">
+  <div class="btn-group" *ngIf="boxType === 'AND'">
     <button class="btn btn-lg btn-default" (click)="annot.uncheckEmos('all')"
       [ngClass]="{active: annot.rating[0][annot.cf] === 0 && annot.rating[1][annot.cf] === 0 && annot.rating[2][annot.cf] === 0 && annot.rating[3][annot.cf] === 0}">
       None
