@@ -91,6 +91,7 @@ export class AnnotatingFragmentsComponent {
 
               // обновляем уровень
               this.common.user.level = res.level;
+              alert(`поздравляем !! вы разблокировали уровень «${res.level}»`);
             }
             this.common.mode = 'profile';
 
