@@ -1,3 +1,13 @@
 .btn-group {
   margin: 0 0 20px 0;
 }
+
+.or {
+  button {
+    width: 270px;
+
+    &:nth-child(2) {
+      width: 90px;
+    }
+  }
+}
