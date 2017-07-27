@@ -22,21 +22,31 @@ export class AnnotatingService {
   fragmentChanged = new EventEmitter();
   fragmentRated = new EventEmitter();
 
-  setFragment(number) {
-    if (this.isYouTube) {
-      this.ytPlayer.removeEventListener('onStateChange', () => {
-        // останавливаем воспроизведение
-        this.unwatchVideo('stop');
-        // не выходим за пределы таблицы
-        if (number >= -1 && number < this.csv.length) {
-          this.cf = number;
-          if (number === -1) {
-            this.fragmentChanged.emit(0);
-          } else {
-            this.fragmentChanged.emit(this.csv[number][0]);
-          }
+  setFragment(number, loadingVideo = false) {
+    console.log(this.videoLength);
+    const setFragment = (number) => {
+      // не выходим за пределы таблицы
+      if (number >= -1 && number < this.csv.length) {
+        this.cf = number;
+        if (number === -1) {
+          this.fragmentChanged.emit(0);
+        } else {
+          this.fragmentChanged.emit(this.csv[number][0]);
         }
-      });
+      }
+    }
+
+    if (loadingVideo) {
+      if (this.isYouTube) {
+        this.ytPlayer.removeEventListener('onStateChange', () => {
+          setFragment(number);
+        });
+      }
+    } else {
+      // останавливаем воспроизведение
+      this.unwatchVideo('pause');
+
+      setFragment(number);
     }
   }
 
