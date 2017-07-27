@@ -5,10 +5,11 @@
 
 <!-- Основные части приложения -->
 <div class="container">
-  <na-profile-projects *ngIf="profileMode === 'taskList'"></na-profile-projects>
+  <na-profile-projects *ngIf="profileMode === 'taskList'"
+    (startAnnotating)="profileMode = 'annotating'"></na-profile-projects>
+  <na-annotating *ngIf="profileMode === 'annotating'"></na-annotating>
   <na-profile-account *ngIf="profileMode === 'account'"></na-profile-account>
-  <na-profile-profile *ngIf="profileMode === 'profile'"
-     (profileModeSelected)="profileMode = $event"></na-profile-profile>
+  <na-profile-profile *ngIf="profileMode === 'profile'"></na-profile-profile>
   <na-profile-rating *ngIf="profileMode === 'rating'"></na-profile-rating>
   <na-profile-withdrawal *ngIf="profileMode === 'withdrawal'"></na-profile-withdrawal>
   <na-profile-networking *ngIf="profileMode === 'networking'"></na-profile-networking>

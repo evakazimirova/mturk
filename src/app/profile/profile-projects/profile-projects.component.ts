@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { HttpService } from '../../http.service';
 import { CommonService } from '../../common.service';
 import { AnnotatingService } from '../../annotating/annotating.service';
@@ -9,6 +9,8 @@ import { AnnotatingService } from '../../annotating/annotating.service';
   styleUrls: ['./profile-projects.component.scss']
 })
 export class ProfileProjectsComponent implements OnInit {
+  @Output() startAnnotating = new EventEmitter();
+
   // режим описания проекта
   projectMode = false;
   projectId = 0;
@@ -132,7 +134,7 @@ export class ProfileProjectsComponent implements OnInit {
           this.annot.FID = this.annot.task.FIDsList[0];
 
           // запускаем режим аннотирования и включаем видео
-          this.common.mode = 'fragmentsRating';
+          this.startAnnotating.emit();
           this.annot.setVideo();
         },
         err => {

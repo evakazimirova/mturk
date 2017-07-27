@@ -1,3 +1,4 @@
+import { AnnotatingService } from '../../annotating/annotating.service';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { HttpService } from '../../http.service';
 import { CommonService } from '../../common.service';
@@ -12,10 +13,24 @@ export class ProfileHeaderComponent {
   @Output() profileModeSelected = new EventEmitter();
 
   constructor(public common: CommonService,
+              private annot: AnnotatingService,
               private http: HttpService) {}
 
   selectProfileMode(page) {
-    this.profileModeSelected.emit(page);
+    let allowed = true;
+
+    if (this.profileMode === 'annotating') {
+      allowed = confirm('Are you sure you want to leave the annotating task without saving progress?');
+
+      if (allowed) {
+        // чтобы плеер не ругался при повторном запуске
+        this.annot.allFragmentsRated = true;
+      }
+    }
+
+    if (allowed) {
+      this.profileModeSelected.emit(page);
+    }
   }
 
   signOut() {
