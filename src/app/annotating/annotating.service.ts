@@ -23,7 +23,6 @@ export class AnnotatingService {
   fragmentRated = new EventEmitter();
 
   setFragment(number, loadingVideo = false) {
-    console.log(this.videoLength);
     const setFragment = (number) => {
       // не выходим за пределы таблицы
       if (number >= -1 && number < this.csv.length) {
