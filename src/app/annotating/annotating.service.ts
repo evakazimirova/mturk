@@ -22,17 +22,30 @@ export class AnnotatingService {
   fragmentChanged = new EventEmitter();
   fragmentRated = new EventEmitter();
 
-  setFragment(number) {
-    // останавливаем воспроизведение
-    this.unwatchVideo('pause');
-    // не выходим за пределы таблицы
-    if (number >= -1 && number < this.csv.length) {
-      this.cf = number;
-      if (number === -1) {
-        this.fragmentChanged.emit(0);
-      } else {
-        this.fragmentChanged.emit(this.csv[number][0]);
+  setFragment(number, loadingVideo = false) {
+    const setFragment = (number) => {
+      // не выходим за пределы таблицы
+      if (number >= -1 && number < this.csv.length) {
+        this.cf = number;
+        if (number === -1) {
+          this.fragmentChanged.emit(0);
+        } else {
+          this.fragmentChanged.emit(this.csv[number][0]);
+        }
       }
+    }
+
+    if (loadingVideo) {
+      if (this.isYouTube) {
+        this.ytPlayer.removeEventListener('onStateChange', () => {
+          setFragment(number);
+        });
+      }
+    } else {
+      // останавливаем воспроизведение
+      this.unwatchVideo('pause');
+
+      setFragment(number);
     }
   }
 
@@ -76,7 +89,26 @@ export class AnnotatingService {
   }
 
   checkEmo(e) {
-    this.rating[e][this.cf] = 1;
+    if (this.task.FIDs[this.FID].boxType === 'OR') {
+      // взаимоисключающие варианты
+      this.rating[e][this.cf] = 1;
+      if (e === 0) {
+        this.rating[1][this.cf] = 0;
+      } else if (e === 1) {
+        this.rating[0][this.cf] = 0;
+      } else if (e === 2) {
+        this.rating[3][this.cf] = 0;
+      } else if (e === 3) {
+        this.rating[2][this.cf] = 0;
+      }
+    } else if (this.task.FIDs[this.FID].boxType === 'AND') {
+      if (this.rating[e][this.cf] === -1) {
+        this.rating[e][this.cf] = 1;
+      } else {
+        // можно отжимать
+        this.rating[e][this.cf] = 1 - this.rating[e][this.cf];
+      }
+    }
   }
 
   uncheckEmos(e1, e2?) {
@@ -121,7 +153,9 @@ export class AnnotatingService {
   watchVideo() {
     // выбираем нужное действие для соответствующего плеера
     if (this.isYouTube) {
-      this.ytPlayer.playVideo();
+      if (this.ytPlayer.getPlayerState() !== 1) {
+        this.ytPlayer.playVideo();
+      }
     } else {
       if (this.videoContainer.paused) {
         this.videoContainer.play();
@@ -137,7 +171,9 @@ export class AnnotatingService {
     // ставим видео на паузу
     // выбираем нужное действие для соответствующего плеера
     if (this.isYouTube) {
-      this.ytPlayer.pauseVideo();
+      // if (this.ytPlayer.getPlayerState() === 1) {
+        this.ytPlayer.pauseVideo();
+      // }
     } else {
       if (!this.videoContainer.paused) {
         this.videoContainer.pause();

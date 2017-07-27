@@ -31,7 +31,7 @@ export class AnnotatingPlayerProgressComponent implements OnInit {
         this.stopWatching();
 
         // при остановке обнуляем прогресс
-        if (event === "stop") {
+        if (event === 'stop') {
           this.percentage = 0;
         }
       },
