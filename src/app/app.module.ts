@@ -39,7 +39,6 @@ import { AnnotatingPlayerVideoComponent } from './annotating/annotating-player/a
 import { AnnotatingPlayerProgressComponent } from './annotating/annotating-player/annotating-player-progress/annotating-player-progress.component';
 import { AnnotatingPlayerControlsComponent } from './annotating/annotating-player/annotating-player-controls/annotating-player-controls.component';
 import { AnnotatingPlayerRateBarComponent } from './annotating/annotating-player/annotating-player-ratebar/annotating-player-ratebar.component';
-import { AnnotatingPlayerTipsComponent } from './annotating/annotating-player/annotating-player-tips/annotating-player-tips.component';
 
 import { AdminComponent } from './admin/admin.component';
 import { AdminHeaderComponent } from './admin/admin-header/admin-header.component';
@@ -62,7 +61,6 @@ import { TutorialComponent } from './profile/profile-faq/tutorial/tutorial.compo
     AnnotatingPlayerProgressComponent,
     AnnotatingPlayerControlsComponent,
     AnnotatingPlayerRateBarComponent,
-    AnnotatingPlayerTipsComponent,
     AnnotatingVideosComponent,
     AnnotatingComponent,
     AuthComponent,
