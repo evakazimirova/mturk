@@ -23,16 +23,20 @@ export class AnnotatingService {
   fragmentRated = new EventEmitter();
 
   setFragment(number) {
-    // останавливаем воспроизведение
-    this.unwatchVideo('pause');
-    // не выходим за пределы таблицы
-    if (number >= -1 && number < this.csv.length) {
-      this.cf = number;
-      if (number === -1) {
-        this.fragmentChanged.emit(0);
-      } else {
-        this.fragmentChanged.emit(this.csv[number][0]);
-      }
+    if (this.isYouTube) {
+      this.ytPlayer.removeEventListener('onStateChange', () => {
+        // останавливаем воспроизведение
+        this.unwatchVideo('stop');
+        // не выходим за пределы таблицы
+        if (number >= -1 && number < this.csv.length) {
+          this.cf = number;
+          if (number === -1) {
+            this.fragmentChanged.emit(0);
+          } else {
+            this.fragmentChanged.emit(this.csv[number][0]);
+          }
+        }
+      });
     }
   }
 
@@ -140,7 +144,9 @@ export class AnnotatingService {
   watchVideo() {
     // выбираем нужное действие для соответствующего плеера
     if (this.isYouTube) {
-      this.ytPlayer.playVideo();
+      if (this.ytPlayer.getPlayerState() !== 1) {
+        this.ytPlayer.playVideo();
+      }
     } else {
       if (this.videoContainer.paused) {
         this.videoContainer.play();
@@ -156,7 +162,9 @@ export class AnnotatingService {
     // ставим видео на паузу
     // выбираем нужное действие для соответствующего плеера
     if (this.isYouTube) {
-      this.ytPlayer.pauseVideo();
+      // if (this.ytPlayer.getPlayerState() === 1) {
+        this.ytPlayer.pauseVideo();
+      // }
     } else {
       if (!this.videoContainer.paused) {
         this.videoContainer.pause();

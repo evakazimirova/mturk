@@ -20,8 +20,14 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
       const shield = $('.shield');
       this.annot.videoContainer = document.getElementById('currentVideo');
 
+      // вычисляем размеры плеера
+      const YTw = videoContainer.innerWidth();
+      const YTh = YTw * 0.5625; // 9:16
+
       // настраиваем YouTube-плеер
       this.annot.ytPlayer = YouTubePlayer('youtube', {
+        width: YTw,
+        height: YTh,
         playerVars: {
           controls: 0,
           disablekb: 1,
@@ -30,14 +36,13 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
           modestbranding: 1,
           rel: 0,
           showinfo: 0
-        },
+        }
       });
 
       // задём размеры плеера
       const setSize = () => {
         // вычисляем размеры плеера
         const w = videoContainer.innerWidth();
-        // h = videoContainer.innerHeight();
         const h = w * 0.5625; // 9:16
 
         this.annot.ytPlayer.setSize(w, h);
@@ -80,12 +85,21 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
 
       // указываем видео с YouTube
       const vid = this.annot.task.FIDs[this.annot.FID].video.slice(-11);
-      player.loadVideoById(vid, () => {
-        player.getDuration().then((time) => {
-          // задаём длительность видео
-          this.annot.videoLength = time;
-          // запускаем видео целиком
-          this.annot.setFragment(-1);
+      player.loadVideoById({
+        'videoId': vid,
+        'startSeconds': 0,
+        'suggestedQuality': 'large'
+      }).then(() => {
+        player.addEventListener('onStateChange', (event) => {
+          if (event.data === 1) {
+            player.getDuration().then((time) => {
+              // задаём длительность видео
+              this.annot.videoLength = time;
+              console.log(time);
+              // запускаем видео целиком
+              this.annot.setFragment(-1);
+            });
+          }
         });
       });
     } else {

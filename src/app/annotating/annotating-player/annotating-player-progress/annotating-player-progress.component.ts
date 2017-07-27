@@ -31,7 +31,7 @@ export class AnnotatingPlayerProgressComponent implements OnInit {
         this.stopWatching();
 
         // при остановке обнуляем прогресс
-        if (event === "stop") {
+        if (event === 'stop') {
           this.percentage = 0;
         }
       },
@@ -81,6 +81,7 @@ export class AnnotatingPlayerProgressComponent implements OnInit {
       // узнаём текущее время воспроизведения и подсчитываем процент для каждого плеера соответственно
       if (this.annot.isYouTube) {
         this.annot.ytPlayer.getCurrentTime().then((time) => {
+          console.log(time);
           currentTime = time;
           countPercentage();
         });

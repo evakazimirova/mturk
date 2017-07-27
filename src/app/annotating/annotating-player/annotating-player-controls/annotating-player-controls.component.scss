@@ -1,8 +1,18 @@
 .video-navigation {
   margin: 0 0 20px 0;
 
-  img {
+  span {
     margin: 0 10px;
     cursor: pointer;
+    font-size: 3.3rem;
+    color: #555;
+
+    &:hover {
+      color: #333;
+    }
+
+    &:active {
+      color: #000;
+    }
   }
 }
