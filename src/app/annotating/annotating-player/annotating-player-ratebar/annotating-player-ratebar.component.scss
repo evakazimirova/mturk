@@ -11,3 +11,23 @@
     }
   }
 }
+
+.and {
+  button {
+    width: 220px;
+
+    &:first-child {
+      width: 90px;
+    }
+  }
+}
+
+.btn-default:focus {
+  color: #333;
+  background: none;
+  border-color: #ccc;
+
+  &.active {
+    background-color: #e6e5e5
+  }
+}

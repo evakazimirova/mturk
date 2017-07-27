@@ -76,7 +76,26 @@ export class AnnotatingService {
   }
 
   checkEmo(e) {
-    this.rating[e][this.cf] = 1;
+    if (this.task.FIDs[this.FID].boxType === 'OR') {
+      // взаимоисключающие варианты
+      this.rating[e][this.cf] = 1;
+      if (e === 0) {
+        this.rating[1][this.cf] = 0;
+      } else if (e === 1) {
+        this.rating[0][this.cf] = 0;
+      } else if (e === 2) {
+        this.rating[3][this.cf] = 0;
+      } else if (e === 3) {
+        this.rating[2][this.cf] = 0;
+      }
+    } else if (this.task.FIDs[this.FID].boxType === 'AND') {
+      if (this.rating[e][this.cf] === -1) {
+        this.rating[e][this.cf] = 1;
+      } else {
+        // можно отжимать
+        this.rating[e][this.cf] = 1 - this.rating[e][this.cf];
+      }
+    }
   }
 
   uncheckEmos(e1, e2?) {
