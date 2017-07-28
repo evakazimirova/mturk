@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { HttpService } from '../../http.service';
 import { CommonService } from '../../common.service';
-import { AnnotatingService } from '../../annotating/annotating.service';
+import { AnnotatingService } from '../annotating/annotating.service';
 
 @Component({
   selector: 'na-profile-projects',
@@ -10,10 +10,6 @@ import { AnnotatingService } from '../../annotating/annotating.service';
 })
 export class ProfileProjectsComponent implements OnInit {
   @Output() startAnnotating = new EventEmitter();
-
-  // режим описания проекта
-  projectMode = false;
-  projectId = 0;
 
   // для индикаторов загрузки
   isLoaded = true;
@@ -88,12 +84,6 @@ export class ProfileProjectsComponent implements OnInit {
         }
       );
     }
-  }
-
-  // переход в режим описания проекта
-  viewProjectDescription(id) {
-    this.projectMode = true;
-    this.projectId = id;
   }
 
   // решаем, что делать с выбранной задачей

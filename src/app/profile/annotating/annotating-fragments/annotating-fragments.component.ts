@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpService } from '../../http.service';
-import { CommonService } from '../../common.service';
+import { HttpService } from '../../../http.service';
+import { CommonService } from '../../../common.service';
 import { AnnotatingService } from '../../annotating/annotating.service';
 
 @Component({

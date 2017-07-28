@@ -1,7 +1,7 @@
-import { AnnotatingService } from '../../annotating/annotating.service';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { HttpService } from '../../http.service';
 import { CommonService } from '../../common.service';
+import { AnnotatingService } from '../annotating/annotating.service';
 
 @Component({
   selector: 'na-profile-header',

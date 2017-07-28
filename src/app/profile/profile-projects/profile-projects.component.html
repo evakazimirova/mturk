@@ -1,8 +1,3 @@
-<!-- Описание проекта -->
-<na-project *ngIf="projectMode"
-  [projectId]="projectId"
-  (returned)="projectMode = false"></na-project>
-
 <!-- Прогресс-бар -->
 <div class="p-bar">
   <div *ngFor="let task of progressBar; let i = index">
@@ -58,7 +53,6 @@
         <!-- Замочек -->
         <span class="fa fa-lock fa-5x"></span>
       </div>
-      <!-- <span (click)="viewProjectDescription(i)"></span> -->
     </div>
   </div>
 

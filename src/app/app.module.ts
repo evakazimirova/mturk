@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpService } from './http.service';
 import { CommonService } from './common.service';
-import { AnnotatingService } from './annotating/annotating.service';
+import { AnnotatingService } from './profile/annotating/annotating.service';
 
 import { SiteComponent } from './site.component';
 import { TimePipe } from './time.pipe';
@@ -22,23 +22,21 @@ import { ProfileHeaderComponent } from './profile/profile-header/profile-header.
 import { ProfileProfileComponent } from './profile/profile-profile/profile-profile.component';
 import { ProfileAccountComponent } from './profile/profile-account/profile-account.component';
 import { ProfileProjectsComponent } from './profile/profile-projects/profile-projects.component';
-import { ProjectComponent } from './profile/profile-projects/project/project.component';
 import { ProfileRatingComponent } from './profile/profile-rating/profile-rating.component';
 import { ProfileWithdrawalComponent } from './profile/profile-withdrawal/profile-withdrawal.component';
 import { ProfileNetworkingComponent } from './profile/profile-networking/profile-networking.component';
 import { ProfileFaqComponent } from './profile/profile-faq/profile-faq.component';
 import { ProfileRulesComponent } from './profile/profile-rules/profile-rules.component';
-
-import { AnnotatingComponent } from './annotating/annotating.component';
-import { AnnotatingVideosComponent } from './annotating/annotating-videos/annotating-videos.component';
-import { AnnotatingFragmentsComponent } from './annotating/annotating-fragments/annotating-fragments.component';
-import { AnnotatingFragmentsRangesComponent } from './annotating/annotating-fragments/annotating-fragments-ranges/annotating-fragments-ranges.component';
-import { AnnotatingFragmentsTableComponent } from './annotating/annotating-fragments/annotating-fragments-table/annotating-fragments-table.component';
-import { AnnotatingPlayerComponent } from './annotating/annotating-player/annotating-player.component';
-import { AnnotatingPlayerVideoComponent } from './annotating/annotating-player/annotating-player-video/annotating-player-video.component';
-import { AnnotatingPlayerProgressComponent } from './annotating/annotating-player/annotating-player-progress/annotating-player-progress.component';
-import { AnnotatingPlayerControlsComponent } from './annotating/annotating-player/annotating-player-controls/annotating-player-controls.component';
-import { AnnotatingPlayerRateBarComponent } from './annotating/annotating-player/annotating-player-ratebar/annotating-player-ratebar.component';
+import { AnnotatingComponent } from './profile/annotating/annotating.component';
+import { AnnotatingVideosComponent } from './profile/annotating/annotating-videos/annotating-videos.component';
+import { AnnotatingFragmentsComponent } from './profile/annotating/annotating-fragments/annotating-fragments.component';
+import { AnnotatingFragmentsRangesComponent } from './profile/annotating/annotating-fragments/annotating-fragments-ranges/annotating-fragments-ranges.component';
+import { AnnotatingFragmentsTableComponent } from './profile/annotating/annotating-fragments/annotating-fragments-table/annotating-fragments-table.component';
+import { AnnotatingPlayerComponent } from './profile/annotating/annotating-player/annotating-player.component';
+import { AnnotatingPlayerVideoComponent } from './profile/annotating/annotating-player/annotating-player-video/annotating-player-video.component';
+import { AnnotatingPlayerProgressComponent } from './profile/annotating/annotating-player/annotating-player-progress/annotating-player-progress.component';
+import { AnnotatingPlayerControlsComponent } from './profile/annotating/annotating-player/annotating-player-controls/annotating-player-controls.component';
+import { AnnotatingPlayerRateBarComponent } from './profile/annotating/annotating-player/annotating-player-ratebar/annotating-player-ratebar.component';
 
 import { AdminComponent } from './admin/admin.component';
 import { AdminHeaderComponent } from './admin/admin-header/admin-header.component';
@@ -68,7 +66,6 @@ import { TutorialComponent } from './profile/profile-faq/tutorial/tutorial.compo
     SignUpComponent,
     ForgotPassComponent,
     ProfileComponent,
-    ProjectComponent,
     ProfileHeaderComponent,
     ProfileProfileComponent,
     ProfileProjectsComponent,
