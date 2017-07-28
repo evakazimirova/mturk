@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import YouTubePlayer from 'youtube-player';
-import { CommonService } from '../../../common.service';
+import { CommonService } from '../../../../common.service';
 import { AnnotatingService } from '../../../annotating/annotating.service';
 
 @Component({
