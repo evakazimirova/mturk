@@ -29,7 +29,7 @@
   <div *ngIf="!projectMode && isLoaded && common.projects.length > 0">
     <!-- Список проектов -->
     <div *ngFor="let project of common.projects">
-      <h1>{{ project.projectName }}</h1>
+      <!-- <h1>{{ project.projectName }}</h1> -->
       <div class="task" *ngFor="let task of project.taskTypes; let i = index"
         [ngClass]="{locked: common.user.profile === 0 || i >= common.user.level || (common.user.taskTaken !== null && i !== common.user.taskTaken - 1)}"
         (click)="taskSelected(project, i)">
