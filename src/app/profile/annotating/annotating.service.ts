@@ -4,6 +4,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 export class AnnotatingService {
   csv = [[1, 0, 0, -1]];
   rating = [[]];
+  rated = [];
   fragmentsWip = [];
   cf = -1;
   emotions = [];
@@ -56,6 +57,7 @@ export class AnnotatingService {
     }
 
     this.rating = [];
+    this.rated = [];
 
     const totalEmotions = this.task.FIDs[this.FID].emotions.length;
     const totalFragments = newCSV.length;
@@ -63,6 +65,7 @@ export class AnnotatingService {
     // перебираем все эмоции
     for (let i = 0; i < totalEmotions; i++) {
       this.rating.push([]);
+      this.rated.push(false);
 
       // заполняем неоценненые фрагменты
       for (let j = 0; j < totalFragments; j++) {
@@ -83,8 +86,15 @@ export class AnnotatingService {
     this.csv = newCSV;
   }
 
-  // оценивание фрагмента
   rateFragment(value) {
+    // оценивание фрагмента
+    this.rating[this.emotion][this.cf] = value;
+
+    // перескакиваем на следуюущий фрагмент
+    if (this.cf < this.csv.length - 1) {
+      this.setFragment(this.cf + 1);
+    }
+
     this.fragmentRated.emit(value);
   }
 
@@ -109,6 +119,8 @@ export class AnnotatingService {
         this.rating[e][this.cf] = 1 - this.rating[e][this.cf];
       }
     }
+
+    this.updateRating();
   }
 
   uncheckEmos(e1, e2?) {
@@ -122,6 +134,19 @@ export class AnnotatingService {
         }
       } else {
         this.rating[e1][this.cf] = 0;
+      }
+    }
+
+    this.updateRating();
+  }
+
+  updateRating() {
+    if (this.task.FIDs[this.FID].boxType === 'AND') {
+      this.rated[this.cf] = true;
+    } else if (this.task.FIDs[this.FID].boxType === 'OR') {
+      // должны быть оценены обе шкалы
+      if ((this.rating[0][this.cf] === 0 || this.rating[1][this.cf] === 0) && (this.rating[2][this.cf] === 0 || this.rating[3][this.cf] === 0)) {
+        this.rated[this.cf] = true;
       }
     }
   }

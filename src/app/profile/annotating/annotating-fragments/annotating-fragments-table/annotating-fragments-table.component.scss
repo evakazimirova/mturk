@@ -2,10 +2,11 @@
   margin-bottom: 0;
 
   tbody tr td, thead tr th {
-    width: 28%;
+    text-align: center;
 
     &:first-child {
-      width: 16%;
+      width: 40px;
+      text-align: right;
     }
   }
 }
