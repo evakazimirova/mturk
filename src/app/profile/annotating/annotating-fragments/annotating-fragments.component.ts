@@ -25,6 +25,15 @@ export class AnnotatingFragmentsComponent {
     const isUnrated = this.checkIfUnrated();
 
     if (!isUnrated) {
+      // обнуляем те эмоции, по которым не кликали
+      for (let i = 0; i < this.totalEmotions; i++) {
+        for (let j = 0; j < this.totalFragments; j++) {
+          if (this.annot.rating[i][j] === -1) {
+            this.annot.rating[i][j] = 0;
+          }
+        }
+      }
+
       // добавляем результаты аннотирования к фрагментам
       const ratedCSV = JSON.parse(JSON.stringify(this.annot.csv)); // клонируем массив, а не ссылку на него
       for (let i = 0; i < this.totalFragments; i++) {
@@ -113,27 +122,24 @@ export class AnnotatingFragmentsComponent {
   // проверка, все ли фрагменты видео оценены во всех доступных шкалах
   checkIfUnrated() {
     let isUnrated = false;
-    for (let i = 0; i < this.totalEmotions; i++) {
+
+    // проверяем
+    for (let i = 0; i < this.totalFragments; i++) {
       // уже нашли неоценнённый фрагмент
       if (isUnrated) {
         break;
       }
 
-      // проверяем
-      for (let j = 0; j < this.totalFragments; j++) {
-        if (this.annot.rating[i][j] === -1) {
-          // обнуляем те эмоции, по которым не кликали
-          this.annot.rating[i][j] = 0;
+      if (!this.annot.rated[i]) {
+        // не все => переходим к неоцененному фрагменту
+        this.annot.cf = i;
 
-          // // не все => переходим к неоцененному фрагменту
-          // this.annot.emotion = i;
-          // this.annot.cf = j;
+        // сообщаем о находке
+        alert(`Фрагмент ${i + 1} не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
 
-          // // сообщаем о находке и не даём сохраняться
-          // alert(`Фрагмент ${j + 1} в шкале "${this.annot.task.FIDs[this.annot.FID].emotions[i].title}" не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
-          // isUnrated = true;
-          // break;
-        }
+        // не даём сохраняться
+        isUnrated = true;
+        break;
       }
     }
 

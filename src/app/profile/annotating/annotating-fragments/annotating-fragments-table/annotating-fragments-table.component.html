@@ -3,9 +3,7 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Начало</th>
-      <th>Конец</th>
-      <th>Оценка</th>
+      <th>Annotated</th>
     </tr>
   </thead>
 </table>
@@ -15,22 +13,15 @@
   <table class="table table-hover table-bordered">
     <tbody>
       <tr *ngFor="let row of annot.csv; let i = index" [ngClass]="{
-        success: annot.rating[annot.emotion][i] !== -1,
+        success: annot.rated[i],
         warning: annot.cf === i,
-        danger: annot.cf > i && annot.rating[annot.emotion][i] === -1
+        danger: annot.cf > i && !annot.rated[i]
       }" (click)="annot.setFragment(i)">
         <td>{{ i + 1 }}</td>
-        <td>{{ row[0] }}</td>
-        <td>{{ row[1] }}</td>
-        <td>{{
-          annot.rating[annot.emotion][i] === -1 ?
-            "—" :
-            (annot.task.FIDs[annot.FID].boxType === "OR" || annot.task.FIDs[annot.FID].boxType === "AND") ?
-              "+" :
-              annot.task.FIDs[annot.FID].emotions[annot.emotion].scale === 2 ?
-                annot.rating[annot.emotion][i] - 3 :
-                annot.rating[annot.emotion][i]
-        }}</td>
+        <td>
+          <span class="fa fa-times" *ngIf="!annot.rated[i]"></span>
+          <span class="fa fa-check" *ngIf="annot.rated[i]"></span>
+        </td>
       </tr>
     </tbody>
   </table>

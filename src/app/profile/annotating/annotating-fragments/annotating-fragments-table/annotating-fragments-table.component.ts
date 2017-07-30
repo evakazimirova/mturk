@@ -13,17 +13,6 @@ export class AnnotatingFragmentsTableComponent implements OnInit {
               public annot: AnnotatingService) {}
 
   ngOnInit() {
-    // при оценке фрагмента
-    this.annot.fragmentRated.subscribe(
-      rating => {
-        // перескакиваем на следуюущий фрагмент
-        this.annot.rating[this.annot.emotion][this.annot.cf] = rating;
-        if (this.annot.cf < this.annot.csv.length - 1) {
-          this.annot.setFragment(this.annot.cf + 1);
-        }
-      }
-    );
-
     // обновляем таблицу при заходе на страницу и при смене FID
     this.updateCSV();
     this.annot.videoChanged.subscribe(
