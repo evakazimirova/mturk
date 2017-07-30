@@ -100,7 +100,7 @@ export class AnnotatingFragmentsComponent {
 
               // обновляем уровень
               this.common.user.level = res.level;
-              alert(`поздравляем !! вы разблокировали уровень «${res.level}»`);
+              this.common.alert(`Congratulations! You have unlocked «${res.level}» level!`);
             }
             this.common.mode = 'profile';
 
@@ -135,7 +135,7 @@ export class AnnotatingFragmentsComponent {
         this.annot.cf = i;
 
         // сообщаем о находке
-        alert(`Фрагмент ${i + 1} не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
+        this.common.alert(`Фрагмент ${i + 1} не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
 
         // не даём сохраняться
         isUnrated = true;

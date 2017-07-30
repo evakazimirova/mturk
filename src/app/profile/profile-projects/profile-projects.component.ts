@@ -89,11 +89,11 @@ export class ProfileProjectsComponent implements OnInit {
   // решаем, что делать с выбранной задачей
   taskSelected(project, i) {
     if (this.common.user.profile === 0) {
-      alert('Before you will continue you should fill all the required information about you in your profile.');
+      this.common.alert('Before you will continue you should fill all the required information about you in your profile.');
     } else if (this.common.user.taskTaken !== null && i !== this.common.user.taskTaken - 1) {
-      alert('Sorry, but you have already taken a task. Please finnish it first and you will be able take one more.');
+      this.common.alert('Sorry, but you have already taken a task. Please finnish it first and you will be able take one more.');
     } else if (i >= this.common.user.level) {
-      alert('Sorry, but you are not ready to do this type of tasks. Please finnish the previous type of task first.');
+      this.common.alert('Sorry, but you are not ready to do this type of tasks. Please finnish the previous type of task first.');
     } else {
       // пока обрабатывается одна задача, другую брать нельзя
       if (this.loadingTask === -1) {
@@ -159,7 +159,7 @@ export class ProfileProjectsComponent implements OnInit {
           this.startTask(this.common.projects[0].annoTask.task);
         } else {
           this.loadingTask = -1;
-          alert('no free tasks');
+          this.common.alert('no free tasks');
         }
       },
       err => {
@@ -177,7 +177,7 @@ export class ProfileProjectsComponent implements OnInit {
         this.common.user.money.available = 1;
         this.progressBar[1].done = true;
 
-        alert('Congrats! You just finished first task on Emotion Miner! Your account balanced with appropriate sum. You can withdraw your money, when balance exceed 10$. When you are ready - start a new task on a Task Board. To start with serious tasks, you should fulfill form in your Account.');
+        this.common.alert('Congrats! You just finished first task on Emotion Miner! Your account balanced with appropriate sum. You can withdraw your money, when balance exceed 10$. When you are ready - start a new task on a Task Board. To start with serious tasks, you should fulfill form in your Account.');
       },
       err => {
         // this.loadingTask = -1;

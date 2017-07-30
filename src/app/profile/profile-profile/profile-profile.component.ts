@@ -186,10 +186,10 @@ export class ProfileProfileComponent implements OnInit {
           );
         }
       } else {
-        alert('Надо согласиться на обработку персональных данных!');
+        this.common.alert('Надо согласиться на обработку персональных данных!');
       }
     } else {
-      alert('Заполнены не все поля!');
+      this.common.alert('Заполнены не все поля!');
     }
   }
 }

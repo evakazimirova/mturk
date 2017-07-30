@@ -14,4 +14,11 @@ export class CommonService {
   };
 
   projects = []; // список проектов
+
+  commonAlert;
+
+  alert(message) {
+    this.commonAlert.find('.modal-body').text(message);
+    this.commonAlert.modal('show');
+  }
 }
