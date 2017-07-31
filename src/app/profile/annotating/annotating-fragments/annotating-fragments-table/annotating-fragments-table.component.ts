@@ -23,6 +23,10 @@ export class AnnotatingFragmentsTableComponent implements OnInit {
         console.error(error);
       }
     );
+
+    $(document).ready(() => {
+      console.log($('.right-col tbody').scrollTop);
+    });
   }
 
   // обновление таблицы
