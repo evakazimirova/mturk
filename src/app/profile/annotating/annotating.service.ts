@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { CommonService } from '../../common.service';
 
 @Injectable()
 export class AnnotatingService {
@@ -22,6 +23,18 @@ export class AnnotatingService {
   videoChanged = new EventEmitter();
   fragmentChanged = new EventEmitter();
   fragmentRated = new EventEmitter();
+  percentageUpdated = new EventEmitter();
+
+  constructor(private common: CommonService) {}
+
+  updatePercentage(tasksDone) {
+    const newPart = +(tasksDone / this.task.FIDs.length).toFixed(2);
+    const newPercentage = newPart * 100;
+    this.common.projects[this.common.user.taskTaken - 1].annoTask.percentage = newPercentage;
+    this.common.projects[this.common.user.taskTaken - 1].annoTask.earned = +(newPart * this.common.projects[this.common.user.taskTaken - 1].annoTask.price).toFixed(0);
+
+    this.percentageUpdated.emit(newPercentage);
+  }
 
   setFragment(number, loadingVideo = false) {
     const setFragment = (number) => {
@@ -62,10 +75,14 @@ export class AnnotatingService {
     const totalEmotions = this.task.FIDs[this.FID].emotions.length;
     const totalFragments = newCSV.length;
 
+    // проставляем рейтинг
+    for (let j = 0; j < totalFragments; j++) {
+      this.rated.push(this.task.FIDs[this.FID].result.csv[0] === 'S');
+    }
+
     // перебираем все эмоции
     for (let i = 0; i < totalEmotions; i++) {
       this.rating.push([]);
-      this.rated.push(false);
 
       // заполняем неоценненые фрагменты
       for (let j = 0; j < totalFragments; j++) {

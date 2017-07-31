@@ -16,7 +16,7 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
     $(document).keyup((e) => {
       const isBucketEmotionsMode = this.annot.task.FIDs[this.annot.FID].boxType === 'OR' || this.annot.task.FIDs[this.annot.FID].boxType === 'AND';
 
-      if (this.common.mode === 'fragmentsRating') {
+      if (this.common.profileMode === 'annotating') {
         if (e.keyCode >= 49 && e.keyCode <= 53 || e.keyCode === 81 || e.keyCode === 87 || e.keyCode === 69) { // 1, 2, 3, 4, 5, q, w, e
           // не оцениваем видео целиком
           if (this.annot.cf !== -1) {

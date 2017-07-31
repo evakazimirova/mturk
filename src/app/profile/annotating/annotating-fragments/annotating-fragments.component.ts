@@ -77,6 +77,8 @@ export class AnnotatingFragmentsComponent {
         total: this.annot.task.FIDs.length // общее число задач
       };
 
+      this.annot.updatePercentage(tasksDone);
+
       // сохраняем резульат в БД
       this.loading = true;
       this.http.post(output, 'AnnoTasks/save').subscribe(
