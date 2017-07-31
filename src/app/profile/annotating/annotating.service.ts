@@ -25,6 +25,9 @@ export class AnnotatingService {
   fragmentRated = new EventEmitter();
   percentageUpdated = new EventEmitter();
 
+  rightCol;
+  rightColTable;
+
   constructor(private common: CommonService) {}
 
   updatePercentage(tasksDone) {
@@ -51,6 +54,7 @@ export class AnnotatingService {
 
     this.unwatchVideo('pause');
     setFragment(number);
+    this.rightCol.scrollTop(35.56 * number);
   }
 
   updateCSV(newCSV) {

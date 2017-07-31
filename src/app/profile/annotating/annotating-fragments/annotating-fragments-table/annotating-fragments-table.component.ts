@@ -9,6 +9,9 @@ import { AnnotatingService } from '../../../annotating/annotating.service';
   styleUrls: ['./annotating-fragments-table.component.scss']
 })
 export class AnnotatingFragmentsTableComponent implements OnInit {
+  tooltip: boolean;
+  tooltipY: number;
+
   constructor(private http: HttpService,
               public annot: AnnotatingService) {}
 
@@ -23,6 +26,20 @@ export class AnnotatingFragmentsTableComponent implements OnInit {
         console.error(error);
       }
     );
+
+    $(document).ready(() => {
+      this.annot.rightCol = $('.right-col');
+      this.annot.rightColTable = this.annot.rightCol.find('table');
+    });
+  }
+
+  setFragment(i) {
+    this.annot.setFragment(i);
+  }
+
+  showTooltip(i) {
+    this.tooltip = true;
+    this.tooltipY = i * 35.56 - 77 - 11 + this.annot.rightColTable.position().top
   }
 
   // обновление таблицы

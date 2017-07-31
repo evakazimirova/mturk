@@ -203,17 +203,25 @@ module.exports = {
             }
           });
         } else {
-          if (annotator.login === user.login) {
-            console.log("Annotator with this login is already exists in the system.");
-            res
-              .status(400)
-              .send('login exists');
-          }
           if (annotator.email === user.email) {
-            console.log("Annotator with this email is already exists in the system.");
-            res
-              .status(400)
-              .send('user exists');
+            Tokens.findOne({
+              AID: annotator.AID
+            }).exec((err, token) => {
+              // проверяем, было ли подтверждение
+              if (token) {
+                // не было — отправляем повторное письмо
+                user.hostName = req.headers.host;
+                user.emailToken = token.token;
+                EmailService.onSignUp(user);
+
+                res.status(400).send('email exists resend');
+              } else {
+                // было — пусть восстанваливает пароль
+                res.status(400).send('email exists');
+              }
+            });
+          } else if (annotator.login === user.login) {
+            res.status(400).send('login exists');
           }
         }
       });

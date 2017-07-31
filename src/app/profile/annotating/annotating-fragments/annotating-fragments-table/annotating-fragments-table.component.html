@@ -16,7 +16,9 @@
         success: annot.rated[i],
         warning: annot.cf === i,
         danger: annot.cf > i && !annot.rated[i]
-      }" (click)="annot.setFragment(i)">
+      }" (click)="setFragment(i)"
+         (mouseover)="showTooltip(i)"
+         (mouseleave)="tooltip = false">
         <td>{{ i + 1 }}</td>
         <td>
           <span class="fa fa-times" *ngIf="!annot.rated[i]"></span>
@@ -25,4 +27,7 @@
       </tr>
     </tbody>
   </table>
+  <div class="tooltip-notice" *ngIf="tooltip" [ngStyle]="{top: tooltipY + 'px'}">
+    You can change your choice by selecting the fragment.
+  </div>
 </div>
