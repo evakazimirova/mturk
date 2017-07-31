@@ -30,13 +30,13 @@ export class AnnotatingService {
   updatePercentage(tasksDone) {
     const newPart = +(tasksDone / this.task.FIDs.length).toFixed(2);
     const newPercentage = newPart * 100;
-    this.common.projects[this.common.user.taskTaken - 1].annoTask.percentage = newPercentage;
-    this.common.projects[this.common.user.taskTaken - 1].annoTask.earned = +(newPart * this.common.projects[this.common.user.taskTaken - 1].annoTask.price).toFixed(0);
+    this.common.projects[0].annoTask.percentage = newPercentage;
+    this.common.projects[0].annoTask.earned = +(newPart * this.common.projects[0].annoTask.price).toFixed(0);
 
     this.percentageUpdated.emit(newPercentage);
   }
 
-  setFragment(number, loadingVideo = false) {
+  setFragment(number) {
     const setFragment = (number) => {
       // не выходим за пределы таблицы
       if (number >= -1 && number < this.csv.length) {
@@ -49,18 +49,8 @@ export class AnnotatingService {
       }
     }
 
-    if (loadingVideo) {
-      if (this.isYouTube) {
-        this.ytPlayer.removeEventListener('onStateChange', () => {
-          setFragment(number);
-        });
-      }
-    } else {
-      // останавливаем воспроизведение
-      this.unwatchVideo('pause');
-
-      setFragment(number);
-    }
+    this.unwatchVideo('pause');
+    setFragment(number);
   }
 
   updateCSV(newCSV) {
@@ -76,8 +66,9 @@ export class AnnotatingService {
     const totalFragments = newCSV.length;
 
     // проставляем рейтинг
+    const rated = this.task.FIDs[this.FID].result.csv[0] === 'S'
     for (let j = 0; j < totalFragments; j++) {
-      this.rated.push(this.task.FIDs[this.FID].result.csv[0] === 'S');
+      this.rated.push(rated);
     }
 
     // перебираем все эмоции

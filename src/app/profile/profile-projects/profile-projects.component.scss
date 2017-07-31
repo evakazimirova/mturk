@@ -26,7 +26,12 @@
   }
 
   &.locked {
-    filter: grayscale(100%);
+    background-color: #aaa;
+
+    &:hover {
+      cursor: default;
+      background-color: #aaa;
+    }
 
     .fa-lock {
       display: block;

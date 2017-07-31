@@ -8,7 +8,7 @@ import { AnnotatingService } from './annotating.service';
   styleUrls: ['./annotating.component.scss']
 })
 export class AnnotatingComponent implements OnInit {
-  percentage = this.common.projects[this.common.user.taskTaken - 1].annoTask.percentage;
+  percentage = this.common.projects[0].annoTask.percentage;
   constructor(public common: CommonService,
               public annot: AnnotatingService) {}
 

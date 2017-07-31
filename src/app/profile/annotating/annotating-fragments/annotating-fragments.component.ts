@@ -101,10 +101,12 @@ export class AnnotatingFragmentsComponent {
               }
 
               // обновляем уровень
-              this.common.user.level = res.level;
-              this.common.alert(`Congratulations! You have unlocked «${res.level}» level!`);
+              if (this.common.user.level < res.level) {
+                this.common.user.level = res.level;
+                this.common.alert(`Congratulations! You have unlocked level ${res.level}!`);
+              };
             }
-            this.common.mode = 'profile';
+            this.common.profileMode = 'taskList';
 
             // чистим кэш
             this.annot.rating = [[]];

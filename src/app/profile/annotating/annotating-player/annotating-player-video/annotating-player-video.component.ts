@@ -29,13 +29,15 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
         width: YTw,
         height: YTh,
         playerVars: {
+          autoplay: 0,
           controls: 0,
           disablekb: 1,
           fs: 0,
           iv_load_policy: 3,
           modestbranding: 1,
           rel: 0,
-          showinfo: 0
+          showinfo: 0,
+          start: 0
         }
       });
 
@@ -90,16 +92,27 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
         'startSeconds': 0,
         'suggestedQuality': 'large'
       }).then(() => {
-        player.addEventListener('onStateChange', (event) => {
+        let loaded = false;
+        const listener = (event) => {
           if (event.data === 1) {
-            player.getDuration().then((time) => {
-              // задаём длительность видео
-              this.annot.videoLength = time;
-              // запускаем видео целиком
-              this.annot.setFragment(-1, true);
-            });
+            if (!loaded) {
+              loaded = true;
+              player.getDuration().then((time) => {
+                event.target.removeEventListener('onStateChange', listener); // не работает, почему-то
+
+                player.pauseVideo().then(() => {
+                  // задаём длительность видео
+                  this.annot.videoLength = time;
+
+                  // запускаем видео целиком
+                  this.annot.setFragment(-1);
+                });
+              });
+            }
           }
-        });
+        };
+
+        player.addEventListener('onStateChange', listener);
       });
     } else {
       // Стандартный HTML5
