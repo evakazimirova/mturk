@@ -422,11 +422,15 @@ module.exports = {
         if (token.AID.email === user.email) {
           // удаляем токен
           Tokens.query(`DELETE FROM tokens WHERE token = '${user.token}'`, [], (error, result) => {
-            // авторизируем пользователя
-            req.session.changesPassword = user.email;
+            if (error) {
+              sails.log(error);
+            } else {
+              // авторизируем пользователя
+              req.session.changesPassword = user.email;
 
-            // переходим на сайт
-            res.redirect('/');
+              // переходим на сайт
+              res.redirect('/');
+            }
           });
         } else {
           // пользователь уже зарегистрирован. нужно восстановить пароль
@@ -483,11 +487,11 @@ module.exports = {
             // // сообщаем, когда пользователь в последний раз заходил на сайт
             // updateLastLogin(req.session.userId);
 
-            // // отправляем данные пользователя
-            // res.json(annotator);
+            // отправляем данные пользователя
+            res.json(annotator);
 
-            // перезапускаем сайт
-            res.redirect('/');
+            // // перезапускаем сайт
+            // res.redirect('/');
           });
         });
       }

@@ -36,16 +36,13 @@ export class ChangePasswordComponent implements OnInit {
     event.preventDefault();
 
     if (!this.loading && this.form.valid) {
-      const req = {
-        password: this.form.value.password
-      };
-
       this.loading = true;
-      this.http.post(req, '/annotators/changePass').subscribe(
+      this.http.getRough(`/annotators/changePass?password=${this.form.value.password}`).subscribe(
         user => {
-          this.common.user = user;
-          this.common.mode = 'profile';
-          this.loading = false;
+          // this.common.user = user;
+          // this.common.mode = 'profile';
+          // this.loading = false;
+          window.location.href = '/'; // просто перезагружаем страницу, чтобы не морочиться с кэшкм (но лучше поморочиться)
         },
         err => {
           console.error(err);

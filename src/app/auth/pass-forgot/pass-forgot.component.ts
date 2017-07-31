@@ -5,8 +5,7 @@ import { CommonService } from '../../common.service';
 
 @Component({
   selector: 'na-pass-forgot',
-  templateUrl: './pass-forgot.component.html',
-  styleUrls: ['./pass-forgot.component.scss']
+  templateUrl: './pass-forgot.component.html'
 })
 export class ForgotPassComponent {
   form: FormGroup;

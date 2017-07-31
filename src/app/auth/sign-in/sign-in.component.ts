@@ -5,8 +5,7 @@ import { CommonService } from '../../common.service';
 
 @Component({
   selector: 'na-sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss']
+  templateUrl: './sign-in.component.html'
 })
 export class SignInComponent {
   form: FormGroup;
