@@ -16,8 +16,8 @@
         success: annot.rated[i],
         warning: annot.cf === i,
         danger: annot.cf > i && !annot.rated[i]
-      }" (click)="annot.setFragment(i)"
-         (mouseover)="tooltip = true; tooltipY = (1 + i) * 36 - 77 - 11"
+      }" (click)="setFragment(i)"
+         (mouseover)="showTooltip(i)"
          (mouseleave)="tooltip = false">
         <td>{{ i + 1 }}</td>
         <td>
