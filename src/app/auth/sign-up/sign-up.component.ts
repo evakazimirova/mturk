@@ -62,9 +62,19 @@ export class SignUpComponent {
         // обработка ошибок
         const status = error._body;
         switch (status) {
-          case 'user exists':
+          case 'email exists':
             // если такой пользователь уже есть, то предлагается восстановить пароль
-            console.error('Annotator with this email is already exists in the system.');
+            this.common.alert('Annotator with this email is already exists in the system. Please sign in or request a new password.');
+            break;
+
+            case 'email exists resend':
+            // если такой пользователь уже есть, то предлагается восстановить пароль
+            this.common.alert('Annotator with this email is already exists in the system, but the email has not been confirmed. We have sent you a new letter for confirmation.');
+            break;
+
+          case 'login exists':
+            // если такой пользователь уже есть, то предлагается восстановить пароль
+            this.common.alert('Annotator with this login is already exists in the system.');
             break;
 
           default:

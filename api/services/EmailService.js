@@ -1,9 +1,7 @@
 const nodemailer = require('nodemailer');
 
 const config = {
-  host: 'outlook.office365.com',
-  port: 587,
-  secure: false,
+  service: 'Outlook365',
   auth: {
     user: process.env.MAILER_EMAIL || sails.config.mail.MAILER_EMAIL,
     pass: process.env.MAILER_PASS || sails.config.mail.MAILER_PASS
