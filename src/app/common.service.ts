@@ -19,7 +19,7 @@ export class CommonService {
   commonAlert;
 
   alert(message) {
-    this.commonAlert.find('.modal-body').text(message);
+    this.commonAlert.find('.message').html(message);
     this.commonAlert.modal('show');
   }
 }

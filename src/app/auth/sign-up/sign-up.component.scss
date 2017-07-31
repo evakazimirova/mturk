@@ -1,0 +1,21 @@
+@import '../../../styles/variables';
+
+input.ng-dirty { //.ng-touched
+  &.ng-valid {
+    border-color: $green;
+    background-color: lighten($green, 40);
+
+    & ~ .fa-check {
+      display: inline-block;
+    }
+  }
+
+  &.ng-invalid {
+    border-color: $red;
+    background-color: lighten($red, 40);
+
+    & ~ .fa-times {
+      display: inline-block;
+    }
+  }
+}

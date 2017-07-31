@@ -24,7 +24,7 @@ export class ChangePasswordComponent implements OnInit {
     this.form = formBuilder.group({
       'password': ['', [
         Validators.required,
-        Validators.pattern('.{5,}')
+        Validators.pattern('.{8,}')
       ]]
     });
   }
@@ -35,21 +35,23 @@ export class ChangePasswordComponent implements OnInit {
   changePassword(event) {
     event.preventDefault();
 
-    const req = {
-      password: this.form.value.password
-    };
+    if (!this.loading && this.form.valid) {
+      const req = {
+        password: this.form.value.password
+      };
 
-    this.loading = true;
-    this.http.post(req, '/annotators/changePass').subscribe(
-      user => {
-        this.common.user = user;
-        this.common.mode = 'profile';
-        this.loading = false;
-      },
-      err => {
-        console.error(err);
-        this.loading = false;
-      }
-    );
+      this.loading = true;
+      this.http.post(req, '/annotators/changePass').subscribe(
+        user => {
+          this.common.user = user;
+          this.common.mode = 'profile';
+          this.loading = false;
+        },
+        err => {
+          console.error(err);
+          this.loading = false;
+        }
+      );
+    }
   }
 }

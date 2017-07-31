@@ -1,7 +1,7 @@
 <!-- Восстановление пароля -->
 <form [formGroup]="form" (ngSubmit)="forgotPass($event)">
   <div class="form-group">
-    <label for="login">Login or e-mail</label>
+    <label for="login">E-mail</label>
     <input type="text" class="form-control" id="login"
       formControlName="login" placeholder="johndoe_42"
       [ngClass]="{
@@ -10,7 +10,7 @@
       }">
   </div>
 
-  <button type="submit" class="btn btn-success btn-block" [ngClass]="{disabled: loading}">
+  <button type="submit" class="btn btn-success btn-block" [ngClass]="{disabled: loading || !form.valid}">
     Restore password
     <!-- Индикатор загрузки -->
     <na-loader-inbtn *ngIf="loading"></na-loader-inbtn>
