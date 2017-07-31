@@ -46,7 +46,7 @@ export class ProfileWithdrawalComponent {
         );
       } else {
         // сообщаем пользователю, что у него не так много денег для вывода
-        alert('You haven\'t earned this amount of money yet. Please, work harder!');
+        this.common.alert('You haven\'t earned this amount of money yet. Please, work harder!');
         this.money = this.common.user.money.available;
       }
     }

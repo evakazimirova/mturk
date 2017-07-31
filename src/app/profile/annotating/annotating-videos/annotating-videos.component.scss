@@ -2,14 +2,11 @@
   li {
     padding: 5px;
     margin-bottom: 5px;
-    cursor: pointer;
+    background-color: lighten(#00b3ff, 30);
+    color: white;
 
     &.current {
-      background-color: lighten(blue, 45);
-    }
-
-    &:hover {
-      background-color: lighten(blue, 40);
+      background-color: #00b3ff;
     }
   }
 }

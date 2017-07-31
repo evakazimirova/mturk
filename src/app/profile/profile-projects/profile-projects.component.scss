@@ -3,21 +3,22 @@
   padding: 38px;
   width: 100%;
   height: 150px;
-  background-color: lighten(blue, 45);
+  background-color: #00b3ff;
   position: relative;
   font-size: 3rem;
+  color: white;
 
   .description {
     font-size: 2rem;
     span {
       margin-right: 10px;
-      color: gray;
+      color: #ddd;
     }
   }
 
   &:hover {
     cursor: pointer;
-    background-color: lighten(blue, 40);
+    background-color: lighten(#00b3ff, 10);
   }
 
   .fa-lock {
@@ -25,7 +26,12 @@
   }
 
   &.locked {
-    filter: grayscale(100%);
+    background-color: #aaa;
+
+    &:hover {
+      cursor: default;
+      background-color: #aaa;
+    }
 
     .fa-lock {
       display: block;
@@ -33,7 +39,7 @@
       top: 5px;
       right: 15px;
       opacity: 0.7;
-      color: gray;
+      color: white;
     }
   }
 }
@@ -52,7 +58,6 @@
       vertical-align: bottom;
 
       &.box {
-        border-radius: 10px;
         width: 140px;
         line-height: 140px;
         color: #fff;
@@ -85,4 +90,8 @@
       }
     }
   }
+}
+
+.breadcrumb {
+  background: none;
 }

@@ -1,18 +1,18 @@
 <!-- Хедер -->
 <na-profile-header
-  [profileMode]="profileMode"
-  (profileModeSelected)="profileMode = $event"></na-profile-header>
+  [profileMode]="common.profileMode"
+  (profileModeSelected)="common.profileMode = $event"></na-profile-header>
 
 <!-- Основные части приложения -->
 <div class="container">
-  <na-profile-projects *ngIf="profileMode === 'taskList'"
-    (startAnnotating)="profileMode = 'annotating'"></na-profile-projects>
-  <na-annotating *ngIf="profileMode === 'annotating'"></na-annotating>
-  <na-profile-account *ngIf="profileMode === 'account'"></na-profile-account>
-  <na-profile-profile *ngIf="profileMode === 'profile'"></na-profile-profile>
-  <na-profile-rating *ngIf="profileMode === 'rating'"></na-profile-rating>
-  <na-profile-withdrawal *ngIf="profileMode === 'withdrawal'"></na-profile-withdrawal>
-  <na-profile-networking *ngIf="profileMode === 'networking'"></na-profile-networking>
-  <na-profile-faq *ngIf="profileMode === 'faq'"></na-profile-faq>
-  <na-profile-rules *ngIf="profileMode === 'rules'"></na-profile-rules>
+  <na-profile-projects *ngIf="common.profileMode === 'taskList'"
+    (startAnnotating)="common.profileMode = 'annotating'"></na-profile-projects>
+  <na-annotating *ngIf="common.profileMode === 'annotating'"></na-annotating>
+  <na-profile-account *ngIf="common.profileMode === 'account'"></na-profile-account>
+  <na-profile-profile *ngIf="common.profileMode === 'profile'"></na-profile-profile>
+  <na-profile-rating *ngIf="common.profileMode === 'rating'"></na-profile-rating>
+  <na-profile-withdrawal *ngIf="common.profileMode === 'withdrawal'"></na-profile-withdrawal>
+  <na-profile-networking *ngIf="common.profileMode === 'networking'"></na-profile-networking>
+  <na-profile-faq *ngIf="common.profileMode === 'faq'"></na-profile-faq>
+  <na-profile-rules *ngIf="common.profileMode === 'rules'"></na-profile-rules>
 </div>

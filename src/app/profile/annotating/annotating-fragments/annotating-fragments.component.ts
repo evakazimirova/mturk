@@ -77,6 +77,8 @@ export class AnnotatingFragmentsComponent {
         total: this.annot.task.FIDs.length // общее число задач
       };
 
+      this.annot.updatePercentage(tasksDone);
+
       // сохраняем резульат в БД
       this.loading = true;
       this.http.post(output, 'AnnoTasks/save').subscribe(
@@ -99,16 +101,22 @@ export class AnnotatingFragmentsComponent {
               }
 
               // обновляем уровень
-              this.common.user.level = res.level;
-              alert(`поздравляем !! вы разблокировали уровень «${res.level}»`);
+              if (this.common.user.level < res.level) {
+                this.common.user.level = res.level;
+                this.common.alert(`Congratulations! You have unlocked level ${res.level}!`);
+              };
             }
-            this.common.mode = 'profile';
+            this.common.profileMode = 'taskList';
 
             // чистим кэш
             this.annot.rating = [[]];
             this.annot.fragmentsWip = [];
             this.annot.cf = -1;
             this.annot.emotion = 0;
+          } else {
+            // если не закончили, то переходим к следующему видео
+            this.annot.FID++;
+            this.annot.setVideo();
           }
         },
         err => {
@@ -135,7 +143,7 @@ export class AnnotatingFragmentsComponent {
         this.annot.cf = i;
 
         // сообщаем о находке
-        alert(`Фрагмент ${i + 1} не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
+        this.common.alert(`Фрагмент ${i + 1} не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
 
         // не даём сохраняться
         isUnrated = true;
