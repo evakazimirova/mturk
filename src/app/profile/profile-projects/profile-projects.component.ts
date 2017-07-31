@@ -121,7 +121,7 @@ export class ProfileProjectsComponent implements OnInit {
           // обновляем данные задачи
           this.annot.task = task;
           this.annot.task.FIDsList = Object.keys(task.FIDs);
-          this.annot.FID = this.annot.task.FIDsList[0];
+          this.annot.FID = this.annot.task.FIDsList[task.done];
 
           // запускаем режим аннотирования и включаем видео
           this.startAnnotating.emit();

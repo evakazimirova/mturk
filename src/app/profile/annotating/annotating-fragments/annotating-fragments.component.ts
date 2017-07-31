@@ -111,6 +111,10 @@ export class AnnotatingFragmentsComponent {
             this.annot.fragmentsWip = [];
             this.annot.cf = -1;
             this.annot.emotion = 0;
+          } else {
+            // если не закончили, то переходим к следующему видео
+            this.annot.FID++;
+            this.annot.setVideo();
           }
         },
         err => {

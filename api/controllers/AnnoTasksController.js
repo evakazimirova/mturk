@@ -198,7 +198,9 @@ module.exports = {
       Tasks.findOne({
         TID: ids.TID
       }).populateAll().exec((err, task) => {
-        let all = {};
+        let all = {
+          done: annoTask.done
+        };
 
         // Парсим задачу
         all.FIDs = JSON.parse(task.FID);

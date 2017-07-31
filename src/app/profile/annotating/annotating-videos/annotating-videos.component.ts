@@ -18,7 +18,6 @@ export class AnnotatingVideosComponent implements OnInit {
   ngOnInit() {
     // обновляем список видео
     for (const v in this.annot.task.FIDs) {
-      // this.annot.task.FIDs[v].i = v;
       this.videos.push(this.annot.task.FIDs[v]);
     }
 
@@ -28,35 +27,6 @@ export class AnnotatingVideosComponent implements OnInit {
       } else {
         this.annot.fragmentsWip[f] = null;
       }
-    }
-  }
-
-  // смена видео
-  videoChanged(FID) {
-    if (this.annot.FID !== FID) {
-      // функция смены видео
-      const setVideo = () => {
-        this.annot.FID = FID;
-        this.annot.setVideo();
-      };
-
-      // // есть ли ссылка на видос
-      // if (this.videos[vi].video) {
-        setVideo();
-      // } else {
-      //   // вынимаем информацию по видео из БД
-      //   const FID = this.videos[vi].FID;
-      //   this.http.get(`Fragments/getFragment?FID=${FID}`).subscribe(
-      //     fragment => {
-      //       // кэшируем данные по видео
-      //       this.annot.task.fragments[vi] = fragment;
-      //       setVideo();
-      //     },
-      //     err => {
-      //       console.error(err);
-      //     }
-      //   );
-      // }
     }
   }
 }
