@@ -75,15 +75,6 @@
         </div>
       </div>
 
-      <!-- Пройти тест и отобразить результат рядом -->
-      <div class="form-group">
-        <label for="english">English level</label>
-        <span class="fa fa-check"></span>
-        <span class="fa fa-times"></span><br>
-        <input formControlName="english" type="hidden">
-        <button class="btn btn-primary" data-toggle="modal" data-target=".english-test-modal">Pass the test</button>
-      </div>
-
       <div class="form-group">
         <label for="family">Family status</label>
         <select formControlName="family" class="form-control">
@@ -134,6 +125,15 @@
         <textarea formControlName="hobby" class="form-control" id="hobby" rows="3">sport, art, tech</textarea>
       </div>
 
+      <!-- Пройти тест и отобразить результат рядом -->
+      <div class="form-group">
+        <label for="english">English level</label>
+        <span class="fa fa-check"></span>
+        <span class="fa fa-times"></span><br>
+        <input formControlName="english" type="hidden">
+        <button class="btn btn-primary" data-toggle="modal" data-target=".english-test-modal">Pass the test</button>
+      </div>
+
       <div class="checkbox">
         <label>
           <input formControlName="personalDataAgreement" type="checkbox"> I agree to the processing of my personal data.
@@ -148,6 +148,7 @@
     </form>
   </div>
 </div>
+<footer class="freespace"></footer>
 
 <div class="modal fade english-test-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg" role="document">
