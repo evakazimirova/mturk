@@ -22,6 +22,7 @@ export class SiteComponent implements OnInit {
   ngOnInit() {
     $(document).ready(() => {
       this.common.commonAlert = $('#commonAlert');
+      this.common.commonConfirm = $('#commonConfirm');
     });
 
     // определяем, какую страницу показывать при заходе на сайт

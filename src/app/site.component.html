@@ -26,3 +26,32 @@
     </div>
   </div>
 </div>
+
+<!-- Окно для подтверждений -->
+<div class="modal fade" id="commonConfirm" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="text-center">
+          <span class="fa fa-question-circle fa-5x text-info"></span>
+        </div>
+        <div class="question"></div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col col-xs-6">
+            <button type="button" class="btn btn-block btn-default" data-dismiss="modal"  (click)="common.confirmModal(false)">
+              No
+            </button>
+          </div>
+          <div class="col col-xs-6">
+            <button type="button" class="btn btn-block btn-primary" data-dismiss="modal"
+             (click)="common.confirmModal(true)">
+              Yes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

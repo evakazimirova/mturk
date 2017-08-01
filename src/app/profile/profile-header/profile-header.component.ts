@@ -17,33 +17,39 @@ export class ProfileHeaderComponent {
               private http: HttpService) {}
 
   selectProfileMode(page) {
-    let allowed = true;
-
     if (this.profileMode === 'annotating') {
-      allowed = confirm('Are you sure you want to leave the annotating task without saving progress?');
+      const subscription = this.common.confirm('Are you sure you want to leave the annotating task without saving progress?').subscribe(
+        allowed => {
+          subscription.unsubscribe();
 
-      if (allowed) {
-        // чтобы плеер не ругался при повторном запуске
-        this.annot.allFragmentsRated = true;
-      }
-    }
-
-    if (allowed) {
+          if (allowed) {
+            // чтобы плеер не ругался при повторном запуске
+            this.annot.allFragmentsRated = true;
+            this.profileModeSelected.emit(page);
+          }
+        }
+      );
+    } else {
       this.profileModeSelected.emit(page);
     }
   }
 
   signOut() {
     // подтверждение выхода из системы
-    const confirmed = confirm('Do you really want to sign out?');
-    if (confirmed) {
-      this.http.getRough('/annotators/logout').subscribe(
-        res => {
-          // выходим из системы
-          this.common.mode = 'auth';
-        },
-        err => console.error(err)
-      );
-    }
+    const subscription = this.common.confirm('Do you really want to sign out?').subscribe(
+      answer => {
+        subscription.unsubscribe();
+
+        if (answer) {
+          this.http.getRough('/annotators/logout').subscribe(
+            res => {
+              // выходим из системы
+              this.common.mode = 'auth';
+            },
+            err => console.error(err)
+          );
+        }
+      }
+    );
   }
 }

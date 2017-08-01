@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CommonService {
@@ -17,9 +18,22 @@ export class CommonService {
   projects = []; // список проектов
 
   commonAlert;
+  commonConfirm;
 
   alert(message) {
     this.commonAlert.find('.message').html(message);
     this.commonAlert.modal('show');
+  }
+
+  confirm(question) {
+    this.commonConfirm.find('.question').html(question);
+    this.commonConfirm.modal('show');
+
+    return this.confirmed;
+  }
+
+  confirmed = new EventEmitter();
+  confirmModal(answer) {
+    this.confirmed.emit(answer);
   }
 }
