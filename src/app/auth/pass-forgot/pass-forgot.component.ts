@@ -25,24 +25,37 @@ export class ForgotPassComponent {
   forgotPass(event) {
     event.preventDefault(); // отменяем стандартное действие
 
-    // собираем информацию с полей
-    const req = {
-      email: this.form.value.login
-    };
+    if (!this.loading && this.form.valid) {
+      // собираем информацию с полей
+      const req = {
+        email: this.form.value.login
+      };
 
-    // отправляем запрос на сервер
-    this.loading = true;
-    this.http.post(req, '/annotators/forgot').subscribe(
-      res => {
-        this.loading = false;
+      // отправляем запрос на сервер
+      this.loading = true;
+      this.http.post(req, '/annotators/forgot').subscribe(
+        res => {
+          this.loading = false;
 
-        // выводим сообщение об успехе
-        this.common.alert(`The instructions have been sent to ${this.form.value.login}.`);
-      },
-      err => {
-        this.loading = false;
-        console.error(err);
-      }
-    );
+          // выводим сообщение об успехе
+          this.common.alert(`The instructions have been sent to ${this.form.value.login}.`);
+        },
+        error => {
+          this.loading = false;
+
+          // обработка ошибок
+          const status = error._body;
+          switch (status) {
+            case 'no email':
+              this.common.alert('There is no any account matching this email.');
+              break;
+
+            default:
+              console.error(status);
+              break;
+          }
+        }
+      );
+    }
   }
 }

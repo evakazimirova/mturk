@@ -239,22 +239,25 @@ module.exports = {
     }).populateAll().exec((error, token) => {
       if (token) {
         if (token.AID.email === user.email) {
+
           // удаляем токен
-          Tokens.destroy({
-            token: user.token
-          }).exec((error, updated) => {
-            // создаём таблицу с дополнительной информацией
-            AnnotatorInfo.create({
-              AID: token.AID.AID,
-              registered: 1
-            }).exec((error, updated) => {});
+          Tokens.query(`DELETE FROM tokens WHERE token = '${token.token}'`, [], (error, result) => {
+            if (error) {
+              sails.log(error);
+            } else {
+              // создаём таблицу с дополнительной информацией
+              AnnotatorInfo.create({
+                AID: token.AID.AID,
+                registered: 1
+              }).exec((error, updated) => {});
 
-            // авторизируем пользователя
-            req.session.userId = token.AID.AID;
-            req.session.isAuth = true;
+              // авторизируем пользователя
+              req.session.userId = token.AID.AID;
+              req.session.isAuth = true;
 
-            // переходим на сайт
-            res.redirect('/');
+              // переходим на сайт
+              res.redirect('/');
+            }
           });
         } else {
           // пользователь уже зарегистрирован. нужно восстановить пароль
@@ -320,26 +323,17 @@ module.exports = {
                 // отправляем результат
                 res.json(user);
               } else {
-                res
-                  .status(400)
-                  .send('you are banned');
+                res.status(400).send('banned');
               }
             } else {
-              res
-                .status(400)
-                .send('email is not validated');
+              res.status(400).send('email is not validated');
             }
           });
         } else {
-          res
-            .status(400)
-            .send('incorrect password');
+          res.status(400).send('incorrect password');
         }
       } else {
-        console.log("There is no any account matching this email.");
-        res
-          .status(400)
-          .send('no email');
+        res.status(400).send('no email');
       }
     });
   },
@@ -409,10 +403,7 @@ module.exports = {
           }
         });
       } else {
-        console.log("There is no any account matching this email.");
-        res
-          .status(400)
-          .send('no email');
+        res.status(400).send('no email');
       }
     });
   },
@@ -430,14 +421,16 @@ module.exports = {
       if (token) {
         if (token.AID.email === user.email) {
           // удаляем токен
-          Tokens.destroy({
-            token: user.token
-          }).exec((error, updated) => {
-            // авторизируем пользователя
-            req.session.changesPassword = user.email;
+          Tokens.query(`DELETE FROM tokens WHERE token = '${user.token}'`, [], (error, result) => {
+            if (error) {
+              sails.log(error);
+            } else {
+              // авторизируем пользователя
+              req.session.changesPassword = user.email;
 
-            // переходим на сайт
-            res.redirect('/');
+              // переходим на сайт
+              res.redirect('/');
+            }
           });
         } else {
           // пользователь уже зарегистрирован. нужно восстановить пароль
@@ -494,11 +487,11 @@ module.exports = {
             // // сообщаем, когда пользователь в последний раз заходил на сайт
             // updateLastLogin(req.session.userId);
 
-            // // отправляем данные пользователя
-            // res.json(annotator);
+            // отправляем данные пользователя
+            res.json(annotator);
 
-            // перезапускаем сайт
-            res.redirect('/');
+            // // перезапускаем сайт
+            // res.redirect('/');
           });
         });
       }

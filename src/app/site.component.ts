@@ -4,7 +4,14 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ng-app',
-  templateUrl: './site.component.html'
+  templateUrl: './site.component.html',
+  styles: [`
+    .fa {
+      margin: 10px 0 20px 0;
+      font-size: 15rem;
+      opacity: 0.8;
+    }
+  `]
 })
 export class SiteComponent implements OnInit {
   constructor(
@@ -15,6 +22,7 @@ export class SiteComponent implements OnInit {
   ngOnInit() {
     $(document).ready(() => {
       this.common.commonAlert = $('#commonAlert');
+      this.common.commonConfirm = $('#commonConfirm');
     });
 
     // определяем, какую страницу показывать при заходе на сайт

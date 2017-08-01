@@ -14,7 +14,7 @@
             formControlName="password" placeholder="Password">
         </div>
 
-        <button type="submit" class="btn btn-success btn-block" [ngClass]="{disabled: loading}">
+        <button type="submit" class="btn btn-success btn-block" [ngClass]="{disabled: loading || !form.valid}">
           Change password and sign in
           <!-- Индикатор загрузки -->
           <na-loader-inbtn *ngIf="loading"></na-loader-inbtn>

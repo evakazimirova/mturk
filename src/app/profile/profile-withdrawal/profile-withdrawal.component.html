@@ -7,17 +7,17 @@
 
   <!-- Форма для вывода средств -->
   <div class="col col-lg-5 col-md-6 col-xs-12">
-    <form>
+    <form [formGroup]="form" (ngSubmit)="sendRequest($event)">
       <!-- Сумма вывода -->
       <div class="form-group">
         <label for="amount">Amount</label>
-        <input type="text" class="form-control" name="amount" placeholder="1000" [(ngModel)]="money">
+        <input type="text" formControlName="money" class="form-control" placeholder="10">
       </div>
 
       <!-- Номер счёта -->
       <div class="form-group">
         <label for="account">Account</label>
-        <input type="text" class="form-control" name="account" placeholder="1234567890" [(ngModel)]="account">
+        <input type="text" formControlName="account" class="form-control" placeholder="1234567890">
       </div>
 
       <!-- Платёжная система -->
@@ -44,8 +44,7 @@
         </div>
       </div>
 
-      <button class="btn btn-primary btn-block"
-        (click)=sendRequest() [ngClass]="{disabled: isRequesting}">
+      <button class="btn btn-primary btn-block" [ngClass]="{disabled: isRequesting || !this.form.valid}">
         Send a request
         <!-- Индикатор загрузки -->
         <na-loader-inbtn *ngIf="isRequesting"></na-loader-inbtn>

@@ -24,7 +24,7 @@ export class ChangePasswordComponent implements OnInit {
     this.form = formBuilder.group({
       'password': ['', [
         Validators.required,
-        Validators.pattern('.{5,}')
+        Validators.pattern('.{8,}')
       ]]
     });
   }
@@ -35,21 +35,20 @@ export class ChangePasswordComponent implements OnInit {
   changePassword(event) {
     event.preventDefault();
 
-    const req = {
-      password: this.form.value.password
-    };
-
-    this.loading = true;
-    this.http.post(req, '/annotators/changePass').subscribe(
-      user => {
-        this.common.user = user;
-        this.common.mode = 'profile';
-        this.loading = false;
-      },
-      err => {
-        console.error(err);
-        this.loading = false;
-      }
-    );
+    if (!this.loading && this.form.valid) {
+      this.loading = true;
+      this.http.getRough(`/annotators/changePass?password=${this.form.value.password}`).subscribe(
+        user => {
+          // this.common.user = user;
+          // this.common.mode = 'profile';
+          // this.loading = false;
+          window.location.href = '/'; // просто перезагружаем страницу, чтобы не морочиться с кэшкм (но лучше поморочиться)
+        },
+        err => {
+          console.error(err);
+          this.loading = false;
+        }
+      );
+    }
   }
 }
