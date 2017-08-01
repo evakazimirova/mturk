@@ -1,0 +1,53 @@
+<div class="screen" *ngIf="screen === 1">
+  <div class="start-text">
+    Please pass the English language audio test.
+    Please press “Play”, listen to a phrase, then choose the correct answer below.
+    You can play the audio a few times if you need.
+    There are three questions with 30-seconds response options.
+    To know more <a href="#" (click)="goToFaq()" data-dismiss="modal">learn FAQ</a>.
+  </div>
+
+  <div class="text-center">
+    <button class="btn btn-success btn-lg" (click)="nextPage()">Start</button>
+  </div>
+</div>
+
+<div *ngFor="let test of tests[testIndex]; let j = index">
+  <div class="screen" *ngIf="screen === j + 2">
+    <div class="row">
+      <div class="col col-xs-10">
+        <audio id="audioForTest" src="https://storage.cloud.google.com/english_test/{{ test.audioTitle }}.wav" controls></audio>
+      </div>
+      <div class="col col-xs-2">
+        <div class="time" [ngClass]="{'text-danger': secondsLeft < 6}">
+          00:{{ secondsLeft > 9 ? secondsLeft : '0' + secondsLeft }}
+        </div>
+      </div>
+    </div>
+
+    <div class="radio" *ngFor="let answer of test.answers; let i = index"
+      [ngClass]="{
+         'bg-success': i === test.right && answered === i,
+         'text-success': i === test.right && answered === i,
+         'bg-danger': i !== test.right && answered === i,
+         'text-danger': i !== test.right && answered === i,
+         'disabled': answered !== -1
+      }">
+      <label>
+        <input type="radio" name="optionsRadios" value="option_{{ i }}" (click)="chooseAnswer(i, i === test.right)">
+        {{ answer }}
+      </label>
+    </div>
+  </div>
+</div>
+
+<div class="screen" *ngIf="screen === 5">
+  <div class="congrats" *ngIf="rightTotal > 1">
+    Congrats!
+    Welcome aboard!
+    We are glad to see you on Emotion Miner.
+  </div>
+  <div class="text-center">
+    <button class="btn btn-success btn-lg" data-dismiss="modal" (click)="goToTasks()">Forward</button>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+[
+  [
+    {
+      "audioTitle": "8_2",
+      "answers": [
+        "Stovepipe hats have been selling quickly.",
+        "Stovepipe hats have been selling slowly.",
+        "Stovepipe hats have been selling at an average pace.",
+        "Stovepipe hats have not been selling at all."
+      ],
+      "right": 0
+    },
+    {
+      "audioTitle": "4_2",
+      "answers": [
+        "She wanted to catch the councilman in the act.",
+        "She wanted to take the time to properly prepare her case.",
+        "She had other business to take care of before going after the councilman.",
+        "She had to finish eating lunch before she went back to work."
+      ],
+      "right": 1
+    },
+    {
+      "audioTitle": "7_2",
+      "answers": [
+        "Alvin should try hard to get on Catherine's good side.",
+        "Alvin should be worried that Catherine is not treating him kindly.",
+        "Alvin should go and get lunch and reflect on Catherine's attitude.",
+        "Alvin should not be concerned about how Catherine is treating him."
+      ],
+      "right": 3
+    }
+  ],
+  [
+    {
+      "audioTitle": "5_1",
+      "answers": [
+        "Candace didn’t want to ruin her positive relationship with her old employer.",
+        "Candace wasn’t ready to start her new job.",
+        "Candace was really going to miss her old job.",
+        "Candace was waiting until her last day to rub it in everyone’s face that she was leaving."
+      ],
+      "right": 0
+    },
+    {
+      "audioTitle": "15_1",
+      "answers": [
+        "You wouldn’t want your shoes to get as dirty as Billy’s when he’s doing his chores.",
+        "If you have to do as many chores as Billy, you’ll want a pair of comfortable shoes.",
+        "Billy shoes are so uncomfortable that doing his chores is really unpleasant.",
+        "Billy has so many chores to do that it is unpleasant to imagine doing them all."
+      ],
+      "right": 3
+    },
+    {
+      "audioTitle": "11_2",
+      "answers": [
+        "These researchers have long followed behind others in the field.",
+        "These researchers have long led efforts in the field.",
+        "These researchers have kept up with trends in the field.",
+        "These researchers have long attempted to do away with paper record keeping."
+      ],
+      "right": 1
+    }
+  ],
+  [
+    {
+      "audioTitle": "10_1",
+      "answers": [
+        "Jose can hardly tell the difference between the two phones because they are so similar.",
+        "Jose believes that the phones are so different from one another that they cannot be compared.",
+        "Jose doesn’t know anything about phones so he may as well be thinking about fruits.",
+        "Jose is too hungry to think about phones at this time."
+      ],
+      "right": 1
+    },
+    {
+      "audioTitle": "13_1",
+      "answers": [
+        "Brad thinks that his phone will be safer if he hides it under the rug.",
+        "Brad wants to do something to make up for his mistake.",
+        "Brad is trying to locate a signal for his phone so that he can use it.",
+        "Brad wants to pretend that the incident never happened."
+      ],
+      "right": 3
+    },
+    {
+      "audioTitle": "12_2",
+      "answers": [
+        "Kristie's pecan pie is not visually pleasing.",
+        "Kristie's pecan pie is very hot when it comes out of the oven.",
+        "Kristie's pecan pie is better than all others.",
+        "Kristie's pecan pie is in serious need of improvements."
+      ],
+      "right": 2
+    }
+  ]
+]

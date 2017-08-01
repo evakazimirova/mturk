@@ -23,6 +23,10 @@ module.exports = {
       defaultsTo: 'NO'
     },
 
+    englishTestMark: {
+      type: 'integer'
+    },
+
     demo: {
       type: 'integer',
       defaultsTo: 0

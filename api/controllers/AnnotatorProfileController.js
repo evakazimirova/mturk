@@ -11,13 +11,18 @@ module.exports = {
     AnnotatorProfile.findOne({
       AID: req.session.userId
     }).exec((error, annotator) => {
-      for (const key in annotator) {
-        if (annotator[key] == null) {
-          delete annotator[key];
+      AnnotatorInfo.findOne({
+        AID: req.session.userId
+      }).exec((error, annotatorInfo) => {
+        for (const key in annotator) {
+          if (annotator[key] == null) {
+            delete annotator[key];
+          }
         }
-      }
 
-      res.json(annotator);
+        annotator.englishTest = annotatorInfo.englishTest;
+        res.json(annotator);
+      });
     });
   },
 
