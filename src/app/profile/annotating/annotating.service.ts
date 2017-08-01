@@ -53,8 +53,14 @@ export class AnnotatingService {
     }
 
     this.unwatchVideo('pause');
-    setFragment(number);
     this.rightCol.scrollTop(35.56 * number);
+
+    if (number === 1) {
+      this.common.commonAlert('Первый фрагмент!');
+      setFragment(number);
+    } else {
+      setFragment(number);
+    }
   }
 
   updateCSV(newCSV) {
