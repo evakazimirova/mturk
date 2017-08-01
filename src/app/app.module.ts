@@ -44,6 +44,7 @@ import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { AdminProjectsComponent } from './admin/admin-projects/admin-projects.component';
 import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-money-requests.component';
 import { TutorialComponent } from './profile/profile-faq/tutorial/tutorial.component';
+import { ProfileProfileEnglishComponent } from './profile/profile-profile/profile-profile-english/profile-profile-english.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { TutorialComponent } from './profile/profile-faq/tutorial/tutorial.compo
     ProfileFaqComponent,
     ProfileRulesComponent,
     ProfileAccountComponent,
-    TutorialComponent
+    TutorialComponent,
+    ProfileProfileEnglishComponent
   ],
   imports: [
     BrowserModule,

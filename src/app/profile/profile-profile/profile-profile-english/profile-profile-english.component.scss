@@ -1,0 +1,45 @@
+.screen {
+  position: relative;
+  top: 0;
+  height: 500px;
+  max-height: 500px;
+  font-size: 2rem;
+
+  audio {
+    width: 100%;
+    margin-top: 14px;
+  }
+
+  .time {
+    text-align: center;
+    font-size: 4rem;
+  }
+
+  .start-text {
+    padding: 90px 30px;
+    line-height: 2;
+  }
+
+  .congrats {
+    text-align: center;
+    font-size: 2rem;
+    padding: 170px 0;
+  }
+
+  .radio {
+    margin-top: 40px;
+    padding: 0 50px;
+    font-size: 2.5rem;
+
+    input {
+      margin-left: -40px;
+      top: -3px;
+      height: 100%;
+      width: 3rem;
+    }
+
+    & + .radio {
+      margin-top: 30px;
+    }
+  }
+}

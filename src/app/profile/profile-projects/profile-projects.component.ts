@@ -30,7 +30,7 @@ export class ProfileProjectsComponent implements OnInit {
     },
     {
       action: 'Short English Test',
-      done: this.common.user.englishTest === 'YES'
+      done: this.common.user.englishTest !== 'NO'
     },
     {
       action: 'Learn Skills and Pass the Test in Totorial',

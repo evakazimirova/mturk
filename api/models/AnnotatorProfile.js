@@ -19,11 +19,6 @@ module.exports = {
       required: true
     },
 
-    english: {
-      type: 'string',
-      defaultsTo: 'NO'
-    },
-
     birthdate: {
       type: 'date'
     },
