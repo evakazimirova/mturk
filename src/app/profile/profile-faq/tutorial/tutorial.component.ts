@@ -16,6 +16,10 @@ export class TutorialComponent implements OnInit {
   test = 0;
   manual = true;
 
+  progress = 0;
+  progressPercentage = 0;
+  progressTotal = 0;
+
   tutorial: any = {};
 
   tuts = [];
@@ -36,6 +40,7 @@ export class TutorialComponent implements OnInit {
       tutorials => {
         this.tuts = tutorials;
         this.tutorial = this.tuts[0];
+        this.progressTotal = 5 + this.tutorial.emotions.length + this.tutorial.tests.length;
       },
       error => console.error(error)
     );
@@ -64,6 +69,7 @@ export class TutorialComponent implements OnInit {
             this.emotion++;
           }
         } else {
+
           this.emotion++;
         }
       } else {
@@ -75,9 +81,12 @@ export class TutorialComponent implements OnInit {
       this.manual = false;
       this.screen++;
     } else if (this.screen === 5) {
-      if (this.test < this.tutorial.emotions.length - 2) {
+      if (this.test < this.tutorial.tests.length - 1) {
         this.test++;
       } else {
+        // this.progress = this.progressTotal;
+        this.progress = 0;
+
         // выходим из туториала
         this.screen = 0;
         $('.tutorial-modal').modal('hide');
@@ -85,5 +94,8 @@ export class TutorialComponent implements OnInit {
     } else {
       this.screen++;
     }
+
+    this.progress++;
+    this.progressPercentage = +(this.progress / this.progressTotal).toFixed(2) * 100;
   }
 }
