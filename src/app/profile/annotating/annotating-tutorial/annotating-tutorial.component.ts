@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../../http.service';
 
 @Component({
-  selector: 'na-tutorial',
-  templateUrl: './tutorial.component.html',
-  styleUrls: ['./tutorial.component.scss']
+  selector: 'na-annotating-tutorial',
+  templateUrl: './annotating-tutorial.component.html',
+  styleUrls: ['./annotating-tutorial.component.scss']
 })
-export class TutorialComponent implements OnInit {
+export class AnnotatingTutorialComponent implements OnInit {
   tutorialVideo: any;
   tutorials = [];
   screen = 1;
@@ -15,6 +15,7 @@ export class TutorialComponent implements OnInit {
   more = 0;
   test = 0;
   manual = true;
+  loading = true;
 
   progress = 0;
   progressPercentage = 0;
@@ -38,11 +39,17 @@ export class TutorialComponent implements OnInit {
 
     this.http.get('assets/tutorials.json').subscribe(
       tutorials => {
+        this.loading = false;
+
         this.tuts = tutorials;
         this.tutorial = this.tuts[0];
+
         this.progressTotal = 5 + this.tutorial.emotions.length + this.tutorial.tests.length;
       },
-      error => console.error(error)
+      error => {
+        this.loading = false;
+        console.error(error);
+      }
     );
   }
 
@@ -96,6 +103,6 @@ export class TutorialComponent implements OnInit {
     }
 
     this.progress++;
-    this.progressPercentage = +(this.progress / this.progressTotal).toFixed(2) * 100;
+    this.progressPercentage = +(this.progress / this.progressTotal * 100).toFixed(0);
   }
 }

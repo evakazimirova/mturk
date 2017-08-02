@@ -59,21 +59,6 @@
   <!-- Индикатор загрузки страницы -->
   <na-loader-big *ngIf="!isLoaded"></na-loader-big>
 
-  <span class="btn btn-primary" data-toggle="modal" data-target=".tutorial-modal" *ngIf="common.user.englishTest === 'NO'">Show tutorial</span>
-
-  <div class="modal fade tutorial-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title text-center" id="myModalLabel">Tutorial</h4>
-        </div>
-        <div class="modal-body">
-          <na-tutorial></na-tutorial>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Футер -->
   <footer class="navbar navbar-fixed-bottom">
     <nav class="container">
