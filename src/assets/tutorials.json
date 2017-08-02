@@ -1,0 +1,701 @@
+[
+  {
+    "skill": "Basic Emotions: part 1",
+    "pictures": [
+      "sadness",
+      "happy"
+    ],
+    "emotions": [
+      {
+        "title": "Sadness",
+        "definition": "a negative emotion associated with disappointment or dissatisfaction.",
+        "types": [
+          "Despair",
+          "Melancholy",
+          "Grief",
+          "Sorrow"
+        ],
+        "examples": [
+          "1142",
+          "1797"
+        ]
+      },
+      {
+        "title": "Happiness",
+        "definition": "one of the core positive emotions, a sense of well-being, joy, or contentment.",
+        "types": [
+          "Euphoria",
+          "Exaltation",
+          "Joy",
+          "Amusement",
+          "Pleasure/Delight"
+        ],
+        "examples": [
+          "561",
+          "2159"
+        ]
+      },
+      {
+        "title": "Anxiety",
+        "definition": "a negative emotion, nervousness or worry about something that is happening or might happen in the future.",
+        "types": [
+          "Anxiety",
+          "Worry",
+          "Unrest",
+          "Nervousness"
+        ]
+      },
+      {
+        "title": "Fear",
+        "definition": "an emotion resulting from a real or visionary danger.",
+        "more": "Danger can threaten life, personality, or values defended by a person (ideals, goals, principles, etc.).",
+        "types": [
+          "Fear",
+          "Terror",
+          "Panic",
+          "Dismay",
+          "Awe"
+        ],
+        "examples": [
+          "2269",
+          "1193"
+        ]
+      }
+    ],
+    "tests": [
+      [
+        {
+          "video": "2541",
+          "label": "Sadness"
+        },
+        {
+          "video": "2532",
+          "label": "Happiness"
+        },
+        {
+          "video": "4231",
+          "label": "Anxiety"
+        }
+      ],
+      [
+        {
+          "video": "2102",
+          "label": "Sadness"
+        },
+        {
+          "video": "2677",
+          "label": "Happiness"
+        },
+        {
+          "video": "794",
+          "label": "Anxiety"
+        },
+        {
+          "video": "390",
+          "label": "Sadness"
+        },
+        {
+          "video": "2711",
+          "label": "Happiness"
+        },
+        {
+          "video": "5101",
+          "label": "Anxiety"
+        }
+      ],
+      [
+        {
+          "video": "2856",
+          "label": "Sadness"
+        },
+        {
+          "video": "3840",
+          "label": "Happiness"
+        },
+        {
+          "video": "1436",
+          "label": "Anxiety"
+        },
+        {
+          "video": "623",
+          "label": "Sadness"
+        },
+        {
+          "video": "2969",
+          "label": "Happiness"
+        },
+        {
+          "video": "3381",
+          "label": "Anxiety"
+        }
+      ]
+    ]
+  },
+
+  {
+    "skill": "Basic Emotions: part 2",
+    "pictures": [
+      "disgust",
+      "surprise",
+      "angry"
+    ],
+    "emotions": [
+      {
+        "title": "Disgust",
+        "definition": "a negative emotion emerged when trying to avoid something unpleasant, unacceptable, or abominable, that often poses a danger to health.",
+        "types": [
+          "Aversion",
+          "Repulsion",
+          "Detestation",
+          "Rejection",
+          "Squeamishness"
+        ],
+        "examples": [
+          "4727",
+          "4916_sp"
+        ]
+      },
+      {
+        "title": "Surprise",
+        "definition": "an emotion aroused by an unexpected, strange, or unusual situation. Surprise is an adequate response to deviance.",
+        "types": [
+          "Surprise",
+          "Amazement",
+          "Astonishment",
+          "Marvel",
+          "Awe"
+        ],
+        "examples": [
+          "1096",
+          "1629_sp"
+        ]
+      },
+      {
+        "title": "Anger",
+        "definition": "a negative emotion aroused by something unjust with a demand for retribution.",
+        "types": [
+          "Anger",
+          "Wrath",
+          "Rage",
+          "Indignation",
+          "Annoyance",
+          "Frustration",
+          "Discontent",
+          "Aggression"
+        ],
+        "examples": [
+          "3542",
+          "612"
+        ]
+      }
+    ],
+    "tests": [
+      [
+        {
+          "video": "454",
+          "label": "Disgust"
+        },
+        {
+          "video": "3085_sp",
+          "label": "Surprise"
+        },
+        {
+          "video": "3754",
+          "label": "Anger"
+        }
+      ],
+      [
+        {
+          "video": "4404",
+          "label": "Disgust"
+        },
+        {
+          "video": "3839_sp",
+          "label": "Surprise"
+        },
+        {
+          "video": "4452",
+          "label": "Anger"
+        },
+        {
+          "video": "5086",
+          "label": "Disgust"
+        },
+        {
+          "video": "1642_sp",
+          "label": "Surprise"
+        },
+        {
+          "video": "1036",
+          "label": "Anger"
+        }
+      ]
+    ]
+  },
+
+  {
+    "skill": "Social Emotions",
+    "pictures": [
+      "shame",
+      "proud",
+      "contempt",
+      "admiration"
+    ],
+    "emotions": [
+      {
+        "title": "Shame",
+        "definition": "a feeling that a person is not matching with the self's standards or is losing (sometimes allegedly) his or her social status.",
+        "more": "The so-called self’s standards are heavily influenced by the social ones and often include aspects of morality, knowledge, and aesthetics. There’s such a phenomenon as “vicarious shame”, which is embarrassment experienced on behalf of another person (for example, your friend got drunk and stole a refrigerator – you feel embarrassed when you tell this story). Shame often implies perceiving yourself as a bad person (“I’m a fool”, “I was stupid”, “I’m ugly”), and guilt results from the recognition that your behavior is inappropriate (“I did something bad”, “I screwed up”, etc.).",
+        "types": [
+          "Shame",
+          "Guilt",
+          "Awkwardness",
+          "Discomfort",
+          "Embarrassment"
+        ],
+        "examples": [
+          "3978",
+          "5153"
+        ]
+      },
+      {
+        "title": "Pride",
+        "definition": "a feeling that a person is matching with the self's standards.",
+        "more": "The so-called self’s standards are heavily influenced by the social ones and often include aspects of morality, knowledge, and aesthetics. You can feel pride not only for your achievements, but also for someone else: your son, fellow countryman who got a prize, or your dog that saved a neighbor. Pride can result from deeds (“We made a super project!”, “I made an original thing”) or from self-perception (“I’m tough!”, “That’s how good I am!”, “I’m a cutie”).",
+        "examples": [
+          "1696",
+          "135"
+        ]
+      },
+      {
+        "title": "Contempt",
+        "definition": "a feeling that a person or thing is worthless or deserves no respect, also implies considering oneself supreme over a person or social group in any aspect.",
+        "more": "Contempt can be expressed not only for someone present, but also for a person mentioned during a talk.",
+        "examples": [
+          "1989",
+          "4079"
+        ]
+      },
+      {
+        "title": "Admiration",
+        "definition": "a feeling of respect towards a person or social group that often implies astonishment at or appreciation of somebody’s qualities, skills, or achievements.",
+        "examples": [
+          "4154",
+          "1684"
+        ]
+      }
+    ],
+    "tests": [
+      [
+        {
+          "video": "1444",
+          "label": "Shame"
+        },
+        {
+          "video": "275",
+          "label": "Pride"
+        },
+        {
+          "video": "5076",
+          "label": "Contempt"
+        },
+        {
+          "video": "5560",
+          "label": "Admiration"
+        }
+      ],
+      [
+        {
+          "video": "5672",
+          "label": "Shame"
+        },
+        {
+          "video": "5120",
+          "label": "Pride"
+        },
+        {
+          "video": "4781",
+          "label": "Contempt"
+        },
+        {
+          "video": "2",
+          "label": "Admiration"
+        }
+      ],
+      [
+        {
+          "video": "1544",
+          "label": "Shame"
+        },
+        {
+          "video": "498",
+          "label": "Pride"
+        },
+        {
+          "video": "2654",
+          "label": "Contempt"
+        },
+        {
+          "video": "3207",
+          "label": "Admiration"
+        }
+      ],
+      [
+        {
+          "video": "3929",
+          "label": "Shame"
+        },
+        {
+          "video": "1615",
+          "label": "Pride"
+        },
+        {
+          "video": "54",
+          "label": "Contempt"
+        },
+        {
+          "video": "1244_sp",
+          "label": "Admiration"
+        }
+      ]
+    ]
+  },
+
+  {
+    "skill": "Person and Situation",
+    "pictures": [
+      "low_pleasure",
+      "high_pleasure",
+      "low_self-confidence"
+    ],
+    "emotions": [
+      {
+        "title": "Pleasure",
+        "definition": "a degree of emotional comfort in the current situation, being up one’s alley."
+      },
+      {
+        "title": "Low pleasure",
+        "definition": "— The person is not comfortable with the situation feeling ill at ease.",
+        "more": "Low pleasure can be expressed in different ways, such as great anxiety, lack of self-confidence, fear, sadness, shame, boredom, anger, etc.",
+        "examples": [
+          "3672",
+          "723"
+        ]
+      },
+      {
+        "title": "High pleasure",
+        "definition": " – The current situation is completely comfortable for the person.",
+        "more": "At high pleasure, the context can be either emotionally calm or tense (as in an argument). The person can have a high or low level of arousal.",
+        "examples": [
+          "4145",
+          "232"
+        ]
+      },
+      {
+        "title": "Low self-confidence",
+        "definition": "a low estimation of one’s strengths, skills, abilities, resources, arguments, and chances to achieve desired goals.",
+        "examples": [
+          "2285",
+          "3486"
+        ]
+      },
+      {
+        "title": "High self-confidence",
+        "definition": "a high estimation of one’s strengths, skills, abilities, resources, arguments, and chances to achieve desired goals.",
+        "more": "A self-confident person may not always be relaxed – for instance, one can be anxious or exited if the event discussed matters much for him or her. The person may estimate his or her strengths and resources not only against the topic of the conversation, but also when aiming to earn the sympathy of the audience or bring the interlocutor around.",
+        "examples": [
+          "575",
+          "1286"
+        ]
+      }
+    ],
+    "tests": [
+      [
+        {
+          "video": "2073",
+          "label": "Low Pleasure"
+        },
+        {
+          "video": "29",
+          "label": "High Pleasure"
+        },
+        {
+          "video": "121",
+          "label": "Low Self-confidence"
+        },
+        {
+          "video": "530",
+          "label": "High Self-confidence"
+        }
+      ],
+      [
+        {
+          "video": "5617",
+          "label": "Low Pleasure"
+        },
+        {
+          "video": "544",
+          "label": "High Pleasure"
+        },
+        {
+          "video": "1424",
+          "label": "Low Self-confidence"
+        },
+        {
+          "video": "3882",
+          "label": "High Self-confidence"
+        }
+      ],
+      [
+        {
+          "video": "34",
+          "label": "Low Pleasure"
+        },
+        {
+          "video": "5317",
+          "label": "High Pleasure"
+        },
+        {
+          "video": "1203",
+          "label": "Low Self-confidence"
+        },
+        {
+          "video": "3035",
+          "label": "High Self-confidence"
+        }
+      ]
+    ]
+  },
+
+  {
+    "skill": "Social Relation",
+    "pictures": [
+      "hostile",
+      "Friendly",
+      "close",
+      "open"
+    ],
+    "emotions": [
+      {
+        "title": "Hostility",
+        "definition": "an antagonistic behavior, rudeness, sabotage, impolite behavior.",
+        "examples": [
+          "5294",
+          "4428"
+        ]
+      },
+      {
+        "title": "Friendliness",
+        "definition": "warmth, affiliation. Tension release, agreeable, cooperative, courteous, helpful.",
+        "examples": [
+          "749",
+          "1656"
+        ]
+      },
+      {
+        "title": "Self-disclosure",
+        "definition": "a scale measuring one’s willingness or reluctance to answer a question or discuss a certain topic."
+      },
+      {
+        "title": "Low Self-disclosure",
+        "definition": "— The person refuses to answer a question or changes the subject of the discussion, tries to respond generally or evasively, without details.",
+        "more": "<u>Closed</u> – the person refuses to answer a question or changes the subject of the discussion.<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– That’s confidential information. I’m not answering this question.<br><u>Relatively closed</u> – the person tries to respond generally or evasively, without details.<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– Well, the final cast hasn’t been decided for this movie yet, but that’s possible. You should better ask John.",
+        "examples": [
+          "2302",
+          "3681"
+        ]
+      },
+      {
+        "title": "High Self-disclosure",
+        "definition": "— The person answers the question and keeps the conversation going.",
+        "more": "<u>Moderately open</u> – the person replies without (informal) details.<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– Yes, probably. I think this movie will be an interesting experience for every member of the cast.<br><u>Fairly open</u> – the person answers the question and keeps the conversation going.<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– Yes, most likely. I think that’ll be very interesting, given that Kevin Spooner and Peter Dogman are among the guest stars.<br><u>Completely open</u> – the person takes an active part in the discussion, goes into detail (including informal information).<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– Yes, there’s a high probability that we will actually star in the same film. I hope that’s true. We went recently to a pub, discussed the movie and remembered the times when we acted Shakespeare in the school theatre club (and so on).",
+        "examples": [
+          "3009",
+          "5203"
+        ]
+      }
+    ],
+    "tests": [
+      [
+        {
+          "video": "3157",
+          "label": "Hostility"
+        },
+        {
+          "video": "4149",
+          "label": "Friendliness"
+        },
+        {
+          "video": "4686",
+          "label": "Low Self-disclosure"
+        },
+        {
+          "video": "4",
+          "label": "High Self-disclosure"
+        }
+      ],
+      [
+        {
+          "video": "3758",
+          "label": "Hostility"
+        },
+        {
+          "video": "1937",
+          "label": "Friendliness"
+        },
+        {
+          "video": "123",
+          "label": "Low Self-disclosure"
+        },
+        {
+          "video": "157",
+          "label": "High Self-disclosure"
+        }
+      ],
+      [
+        {
+          "video": "hostility_2",
+          "label": "Hostility"
+        },
+        {
+          "video": "865",
+          "label": "Friendliness"
+        },
+        {
+          "video": "1",
+          "label": "Low Self-disclosure"
+        },
+        {
+          "video": "3897",
+          "label": "High Self-disclosure"
+        }
+      ],
+      [
+        {
+          "video": "hostility_1",
+          "label": "Hostility"
+        },
+        {
+          "video": "3342",
+          "label": "Friendliness"
+        },
+        {
+          "video": "4969",
+          "label": "Low Self-disclosure"
+        },
+        {
+          "video": "1145",
+          "label": "High Self-disclosure"
+        }
+      ]
+    ]
+  },
+
+  {
+    "skill": "Conversation",
+    "pictures": [
+      "disengagement",
+      "engagement",
+      "self-presentation",
+      "mental_effort"
+    ],
+    "emotions": [
+      {
+        "title": "Disengagement",
+        "definition": "— (No interest) The person is not following the flow of discussion, is paying attention to something else (e.g. own materials, staring at the window, looking to the side, etc.). He or she can’t respond correctly if addressed by other interlocutors and does not exhibit interest in the communication.",
+        "examples": [
+          "91",
+          "477"
+        ]
+      },
+      {
+        "title": "Engagement",
+        "definition": "one’s degree of participation, involvement, or interest in action.",
+        "more": "Engagement can be physical, cognitive, or emotional.<br>Levels of engagement:<ol><li>Following – the person is paying attention to the discussion, but does not affect the discussion verbally (i.e. listening, but not making any remarks).</li><li>Responding – the person follows the discussion and is responding when appropriate (answering a question, or when it’s his or her turn to speak), but is not asking back. It is a passive participation, in the sense of influencing the turns and discourse. Back-channeling belongs here too (for example, “Do you agree, John?” – “Sure”, or even simply nodding in response).</li><li>Conversing – active conversation is ongoing, the person is active in turn taking.</li><li>Influencing – same as conversing, but the person is actively creating new directions in discussion. At times he or she may be interrupting others during their turns and/or be providing instructions.</li></ol>",
+        "examples": [
+          "5467",
+          "184"
+        ]
+      },
+      {
+        "title": "Self-presentation",
+        "definition": "a distinct behaviour aimed at making a good showing, maintaining self-image and character, or gaining the love of the audience (a specific one or on the whole).",
+        "more": "Self-presentation includes:<ul><li>verbal devices (increasing significance of an event; describing one’s positive qualities; describing a situation in a way to present oneself as an example to follow; describing past events in a manner that they are the reason why the speaker is so marvelous now; flattering towards the host or the audience – both directly and indirectly);</li><li>non-verbal devices (exaggerated gestures, melodramatic behaviour, including change in voice tone or intonation when telling a story; sometimes also: parody, humor, histrionics, and reaction that doesn’t go on par with the context).</li></ul>Important! Self-presentation can involve using obscene words or gestures.",
+        "types": [
+          "Self-presentation",
+          "Grandstanding",
+          "Ostentation"
+        ],
+        "examples": [
+          "999",
+          "1601"
+        ]
+      },
+      {
+        "title": "Mental Effort",
+        "definition": "a degree of focus on the conversation or interlocutor, can be defined as a level of attention.",
+        "more": "The level of concentration is also tightly connected with the mental effort, cogitation, word choice, and analyzing the reactions of the interlocutor or the audience.",
+        "examples": [
+          "2187",
+          "1434"
+        ]
+      }
+    ],
+    "tests": [
+      [
+        {
+          "video": "1504",
+          "label": "Disengagement"
+        },
+        {
+          "video": "1613",
+          "label": "Engagement"
+        },
+        {
+          "video": "3905",
+          "label": "Self-presentation"
+        },
+        {
+          "video": "39",
+          "label": "Mental Effort"
+        }
+      ],
+      [
+        {
+          "video": "2357",
+          "label": "Hostility"
+        },
+        {
+          "video": "1814",
+          "label": "Friendliness"
+        },
+        {
+          "video": "2646",
+          "label": "Low Self-disclosure"
+        },
+        {
+          "video": "2334",
+          "label": "High Self-disclosure"
+        }
+      ],
+      [
+        {
+          "video": "818",
+          "label": "Hostility"
+        },
+        {
+          "video": "3152",
+          "label": "Friendliness"
+        },
+        {
+          "video": "3857",
+          "label": "Low Self-disclosure"
+        },
+        {
+          "video": "2387",
+          "label": "High Self-disclosure"
+        }
+      ]
+    ]
+  }
+]

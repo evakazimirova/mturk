@@ -1,14 +1,73 @@
-<h2>Video Example</h2>
-<div class="video" (click)="playVideo()">
-  <video id="tutorialVideo" preload="auto">
-    <source src="https://storage.googleapis.com/video_tutorial/({{ tutorial.video }}).mp4" type='video/mp4'>
-  </video>
-  <div class="fa fa-5x fa-play" *ngIf="tutorialVideo.paused"></div>
+<div class="screen screen-first" *ngIf="screen === 1">
+  <h2>Tutorial</h2>
+  <ul class="fa-ul">
+    <li class="text-info"><span class="fa-li fa fa-graduation-cap"></span>Learn new skills</li>
+    <li class="text-success"><span class="fa-li fa fa-smile-o"></span>Study emotions</li>
+    <li class="text-warning"><span class="fa-li fa fa-money"></span>Earn money</li>
+  </ul>
 </div>
 
-<h2>All the Tutorial Videos</h2>
-<ul>
-  <li *ngFor="let tutorial of tutorials">
-    <a href="https://storage.googleapis.com/video_tutorial/({{ tutorial.video }}).mp4">https://storage.googleapis.com/video_tutorial/({{ tutorial.video }}).mp4</a>
-  </li>
-</ul>
+<div class="screen" *ngIf="screen === 2">
+  <!-- {{tutorial|json}} -->
+  <h3>Skill: {{ tutorial.skill }}</h3>
+  <p>
+    <i><span *ngFor="let e of tutorial.emotions; let i = index">{{ i > 0 ? ' — ' : '' }}{{ e.title }}</span></i>
+  </p>
+  <div *ngIf="tutorial.pictures">
+    <img *ngFor="let pic of tutorial.pictures" src="https://storage.cloud.google.com/emo_pic/{{ pic }}.jpg" alt="{{ pic }}">
+  </div>
+</div>
+
+<div class="screen" *ngIf="screen === 3 && example === 0">
+  <h4>{{ tutorial.emotions[emotion].title }}: definition</h4>
+  <p>
+    <strong>{{ tutorial.emotions[emotion].title }}</strong> is {{ tutorial.emotions[emotion].definition }}
+  </p>
+  <p *ngIf="tutorial.emotions[emotion].types">
+    <i><span *ngFor="let type of tutorial.emotions[emotion].types; let j = index">{{ j > 0 ? ' — ' : '' }}{{ type }}</span></i>
+  </p>
+  <button class="btn btn-link" *ngIf="tutorial.emotions[emotion].more" (click)="more = 1 - more">More</button>
+  <p *ngIf="tutorial.emotions[emotion].more && more === 1">
+    {{ tutorial.emotions[emotion].more }}
+  </p>
+</div>
+
+<div class="screen" *ngIf="tutorial.emotions[emotion].examples && screen === 3 && example > 0">
+  <h4>{{ tutorial.emotions[emotion].title }}: examples</h4>
+  <div class="video" (click)="playVideo()">
+    <video id="tutorialVideo" preload="auto">
+      <source src="https://storage.googleapis.com/video_tutorial/({{ tutorial.emotions[emotion].examples[example - 1] }}).mp4" type='video/mp4'>
+    </video>
+    <!-- <div class="fa fa-5x fa-play" *ngIf="tutorialVideo.paused"></div> -->
+  </div>
+</div>
+
+<div class="screen" *ngIf="screen === 4">
+  <h4>Test: {{ tutorial.skill }}</h4>
+  <p>
+    <i><span *ngFor="let em of tutorial.emotions; let i = index">{{ i > 0 ? ' — ' : '' }}{{ em.title }}</span></i>
+  </p>
+  <p *ngIf="manual">Now you have a set of video clips and different emotion labels. Please identify an emotion you’ve seen, fill the gaps below with associated emotion labels. There is a second chance to correct yourself if the chosen label is wrong.</p>
+</div>
+
+<div class="screen" *ngIf="screen === 5">
+
+  <!-- <div *ngFor="let test of tutorial.tests"> -->
+    <div class="row" class="test">
+      <div class="col col-xs-4" *ngFor="let pair of tutorial.tests[test]">
+        <div class="video" (click)="playVideo()">
+          <video id="tutorialVideo" preload="auto">
+            <source src="https://storage.googleapis.com/video_tutorial/({{ pair.video }}).mp4" type='video/mp4'>
+          </video>
+          <!-- <div class="fa fa-5x fa-play" *ngIf="tutorialVideo.paused"></div> -->
+        </div>
+        <div class="lbl">
+          <span>{{ pair.label }}</span>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+<!-- </div> -->
+</div>
+
+<span class="next fa fa-arrow-circle-right" (click)="nextScreen()"></span>

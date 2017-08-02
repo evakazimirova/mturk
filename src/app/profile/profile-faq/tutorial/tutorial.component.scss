@@ -1,14 +1,73 @@
-.video {
-  position: relative;
-  text-align: center;
+.screen {
+  min-height: 700px;
+  font-size: 3rem;
 
-  .fa {
-    position: absolute;
-    left: 47%;
-    top: 166px;
-    font-size: 13rem;
-    text-shadow: 0px 0px 10px grey;
-    color: white;
-    opacity: 0.8;
+  img {
+    width: 430px;
   }
+
+  .btn-link {
+    font-size: 3rem;
+  }
+
+  h3, h4 {
+    font-size: 4rem;
+  }
+
+  &.screen-first {
+    h2 {
+      text-align: center;
+      font-size: 14rem;
+      text-transform: uppercase;
+      padding-top: 110px;
+    }
+
+    .fa-ul {
+      font-size: 5rem;
+      padding: 20px 190px;
+    }
+  }
+
+  .video {
+    text-align: center;
+
+    video {
+      width: 100%;
+    }
+
+    .fa {
+      position: absolute;
+      left: 47%;
+      top: 166px;
+      font-size: 13rem;
+      text-shadow: 0px 0px 10px grey;
+      color: white;
+      opacity: 0.8;
+    }
+  }
+
+  .test {
+    height: 300px;
+
+    .lbl {
+      text-align: center;
+
+      span {
+        display: inline-block;
+        background-color: orange;
+        color: white;
+        padding: 5px;
+        width: 250px;
+      }
+    }
+  }
+}
+
+.next {
+  cursor: pointer;
+  color: lighten(#00b3ff, 20);
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  font-size: 6rem;
 }
