@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col col-md-4 col-md-push-4 col-sm-6 col-sm-push-3">
+  <div class="col col-md-4 col-md-push-1 col-sm-6 col-sm-push-3">
     <form [formGroup]="form" (ngSubmit)="updateAnnotatorProfile($event)">
       <div class="form-group">
         <label for="name">Name</label>
@@ -125,14 +125,6 @@
         <textarea formControlName="hobby" class="form-control" id="hobby" rows="3">sport, art, tech</textarea>
       </div>
 
-      <!-- Пройти тест и отобразить результат рядом -->
-      <div class="form-group">
-        <label for="english">English level</label>
-        <span class="fa fa-check fa-lg text-success" *ngIf="common.user.englishTest === 'YES'"></span>
-        <span class="fa fa-times fa-lg text-danger" *ngIf="common.user.englishTest === 'BAD'"></span>
-        <span class="btn btn-primary" data-toggle="modal" data-target=".english-test-modal" *ngIf="common.user.englishTest === 'NO'">Pass the test</span>
-      </div>
-
       <div class="checkbox">
         <label>
           <input formControlName="personalDataAgreement" type="checkbox">
@@ -146,6 +138,28 @@
         <na-loader-inbtn *ngIf="loading"></na-loader-inbtn>
       </button>
     </form>
+  </div>
+  <div class="col col-md-5 col-md-push-2">
+    <!-- Пройти тест и отобразить результат рядом -->
+    <div class="form-group">
+      <label for="english">English level</label>
+      <span class="fa fa-check fa-lg text-success" *ngIf="common.user.englishTest === 'YES'"></span>
+      <span class="fa fa-times fa-lg text-danger" *ngIf="common.user.englishTest === 'BAD'"></span>
+      <span class="btn btn-primary" data-toggle="modal" data-target=".english-test-modal" *ngIf="common.user.englishTest === 'NO'">Pass the test</span>
+    </div>
+
+    <label>Tutorials completion</label>
+    <table class="table">
+      <tr *ngFor="let tutorial of tutorials">
+        <td class="tutorial">{{ tutorial.title }}</td>
+        <td>
+          <div class="star" *ngFor="let t of tutorial.tests; let i = index">
+            <span class="fa fa-star fa-2x" [ngClass]="{'text-warning': t}"></span>
+            <span class="lbl">Test #{{ i + 1 }}</span>
+          </div>
+        </td>
+      </tr>
+    </table>
   </div>
 </div>
 <footer class="freespace"></footer>

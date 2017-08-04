@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../../http.service';
+import { AnnotatingService } from '../annotating.service';
 
 @Component({
   selector: 'na-annotating-tutorial',
@@ -7,42 +8,32 @@ import { HttpService } from '../../../http.service';
   styleUrls: ['./annotating-tutorial.component.scss']
 })
 export class AnnotatingTutorialComponent implements OnInit {
-  tutorialVideo: any;
-  tutorials = [];
+  loading = true;
   screen = 1;
+
+  tutorials = [];
+  tutorial: any = {};
+  tutorialVideo: any;
+
   emotion = 0;
   example = 0;
   more = 0;
   test = 0;
-  manual = true;
-  loading = true;
-
   progress = 0;
   progressPercentage = 0;
   progressTotal = 0;
+  manual = true;
 
-  tutorial: any = {};
-
-  tuts = [];
-
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpService,
+              private annot: AnnotatingService) { }
 
   ngOnInit() {
-    // this.tutorialVideo = document.getElementById('tutorialVideo');
-
-    // this.http.get('extra/tutorialVideos').subscribe(
-    //   tutorials => {
-    //     this.tutorials = tutorials;
-    //   },
-    //   error => console.error(error)
-    // );
-
     this.http.get('assets/tutorials.json').subscribe(
       tutorials => {
         this.loading = false;
 
-        this.tuts = tutorials;
-        this.tutorial = this.tuts[0];
+        this.tutorials = tutorials;
+        this.tutorial = this.tutorials[this.annot.tutorial];
 
         this.progressTotal = 5 + this.tutorial.emotions.length + this.tutorial.tests.length;
       },
@@ -53,7 +44,7 @@ export class AnnotatingTutorialComponent implements OnInit {
     );
   }
 
-  playVideo() {
+  playVideo(event) {
     if (this.tutorialVideo.paused) {
       this.tutorialVideo.play();
     } else {

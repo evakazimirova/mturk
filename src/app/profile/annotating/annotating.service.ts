@@ -15,6 +15,8 @@ export class AnnotatingService {
   allFragmentsRated = true;
   task: any;
   FID;
+  tutorialDone = false;
+  tutorial = 0;
 
   isYouTube: boolean;
   ytPlayer;

@@ -14,3 +14,24 @@
 .freespace {
   min-height: 50px;
 }
+
+.table {
+  .tutorial {
+    line-height: 3.2;
+  }
+
+  .star {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    width: 60px;
+
+    .lbl {
+      position: absolute;
+      bottom: -18px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+    }
+  }
+}
