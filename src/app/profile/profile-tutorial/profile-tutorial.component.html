@@ -57,7 +57,7 @@
   </div>
 
   <div class="screen" *ngIf="screen === 5">
-    <div class="row" class="test">
+    <div class="row" class="test" *ngIf="test !== undefined">
       <div class="col col-xs-4" *ngFor="let pair of tutorial.tests[test]">
         <div class="video" (click)="playVideo($event)">
           <video class="tutorialVideo" preload="auto">

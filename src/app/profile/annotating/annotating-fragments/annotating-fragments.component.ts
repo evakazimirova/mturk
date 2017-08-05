@@ -25,7 +25,7 @@ export class AnnotatingFragmentsComponent {
     const isUnrated = this.checkIfUnrated();
 
     if (!isUnrated) {
-      if (this.annot.tutorialDone) {
+      if (this.common.tutorialDone) {
         // обнуляем те эмоции, по которым не кликали
         for (let i = 0; i < this.totalEmotions; i++) {
           for (let j = 0; j < this.totalFragments; j++) {
@@ -126,6 +126,7 @@ export class AnnotatingFragmentsComponent {
           }
         );
       } else {
+        this.common.tutorial = 0;
         this.common.alert(`
           Sorry but you can't save the result until you've
           <a href="#" data-dismiss="modal" data-toggle="modal" data-target=".tutorial-modal">complete the tutorial</a>.

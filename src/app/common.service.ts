@@ -16,8 +16,10 @@ export class CommonService {
     tutorials: []
   };
 
-
   projects = []; // список проектов
+
+  tutorialDone = false;
+  tutorial;
 
   commonAlert;
   commonConfirm;

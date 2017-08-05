@@ -13,6 +13,7 @@ export class AnnotatingComponent implements OnInit {
               public annot: AnnotatingService) {}
 
   ngOnInit() {
+    this.common.tutorial = 0;
     this.common.alert(`
       Attention, please!
       The present task contains new emotion scale.

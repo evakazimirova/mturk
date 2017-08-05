@@ -38,7 +38,7 @@ import { AnnotatingPlayerVideoComponent } from './profile/annotating/annotating-
 import { AnnotatingPlayerProgressComponent } from './profile/annotating/annotating-player/annotating-player-progress/annotating-player-progress.component';
 import { AnnotatingPlayerControlsComponent } from './profile/annotating/annotating-player/annotating-player-controls/annotating-player-controls.component';
 import { AnnotatingPlayerRateBarComponent } from './profile/annotating/annotating-player/annotating-player-ratebar/annotating-player-ratebar.component';
-import { AnnotatingTutorialComponent } from './profile/annotating/annotating-tutorial/annotating-tutorial.component';
+import { ProfileTutorialComponent } from './profile/profile-tutorial/profile-tutorial.component';
 
 import { AdminComponent } from './admin/admin.component';
 import { AdminHeaderComponent } from './admin/admin-header/admin-header.component';
@@ -62,7 +62,6 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
     AnnotatingPlayerControlsComponent,
     AnnotatingPlayerRateBarComponent,
     AnnotatingVideosComponent,
-    AnnotatingTutorialComponent,
     AuthComponent,
     SignInComponent,
     SignUpComponent,
@@ -73,6 +72,7 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
     ProfileProjectsComponent,
     ProfileRatingComponent,
     ProfileWithdrawalComponent,
+    ProfileTutorialComponent,
     AdminComponent,
     AdminHeaderComponent,
     AdminUsersComponent,

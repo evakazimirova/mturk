@@ -151,7 +151,7 @@
     <label>Tutorials completion</label>
     <table class="table">
       <tr *ngFor="let tutorial of tutorials; let j = index">
-        <td class="tutorial">{{ tutorial }}</td>
+        <td class="tutorial"><a href="#" data-toggle="modal" data-target=".tutorial-modal" (click)="goToTutorial($event, j)">{{ tutorial }}</a></td>
         <td>
           <div class="star" *ngFor="let t of tutorialsTests[j]; let i = index">
             <span class="fa fa-star fa-2x" [ngClass]="{done: t}"></span>

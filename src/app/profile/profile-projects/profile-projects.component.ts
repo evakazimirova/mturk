@@ -94,6 +94,8 @@ export class ProfileProjectsComponent implements OnInit {
       this.common.alert('Sorry, but you have already taken a task. Please finnish it first and you will be able take one more.');
     } else if (i >= this.common.user.level) {
       this.common.alert('Sorry, but you are not ready to do this type of tasks. Please finnish the previous type of task first.');
+    } else if (i !== 0 && !this.checkTutorials()) {
+      this.common.alert('Before taking this task you shuold pass all the tutorials.');
     } else {
       // пока обрабатывается одна задача, другую брать нельзя
       if (this.loadingTask === -1) {
@@ -109,6 +111,24 @@ export class ProfileProjectsComponent implements OnInit {
         }
       }
     }
+  }
+
+  checkTutorials() {
+    const sum = (array) => {
+      let sum = 0;
+      for (var i of array) {
+        sum += i;
+      }
+      return sum;
+    };
+
+    for (let test of this.common.user.tutorials) {
+      if (sum(test) === 0) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   // начать выполнение задачи

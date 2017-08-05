@@ -202,4 +202,9 @@ export class ProfileProfileComponent implements OnInit {
       this.common.alert('Заполнены не все поля!');
     }
   }
+
+  goToTutorial(event, i) {
+    event.preventDefault(); // отменяем стандартное действие
+    this.common.tutorial = i;
+  }
 }
