@@ -150,10 +150,10 @@
 
     <label>Tutorials completion</label>
     <table class="table">
-      <tr *ngFor="let tutorial of tutorials">
-        <td class="tutorial">{{ tutorial.title }}</td>
+      <tr *ngFor="let tutorial of tutorials; let j = index">
+        <td class="tutorial">{{ tutorial }}</td>
         <td>
-          <div class="star" *ngFor="let t of tutorial.tests; let i = index">
+          <div class="star" *ngFor="let t of tutorialsTests[j]; let i = index">
             <span class="fa fa-star fa-2x" [ngClass]="{done: t}"></span>
             <span class="lbl">Test #{{ i + 1 }}</span>
           </div>

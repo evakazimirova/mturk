@@ -157,7 +157,7 @@ export class AnnotatingTutorialComponent implements OnInit {
               // поздравляем аннотатора с успехом
               this.common.alert(`Congrats! You've just passed one more test!`);
               // запоминаем результат
-              this.common.user.tutorials[this.annot.tutorial].tests[this.test] = mistake + 1;
+              this.common.user.tutorials[this.annot.tutorial][this.test] = mistake + 1;
               this.http.post({tutorials: this.common.user.tutorials}, 'AnnotatorInfo/saveTutorial').subscribe(
                 () => {},
                 error => console.error(error)

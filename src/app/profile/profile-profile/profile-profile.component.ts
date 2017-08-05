@@ -12,7 +12,15 @@ export class ProfileProfileComponent implements OnInit {
   form: FormGroup;
   loading = false;
   countrySelected = false;
-  tutorials = this.common.user.tutorials;
+  tutorialsTests = this.common.user.tutorials;
+  tutorials = [
+    "Basic Emotions: part 1",
+    "Basic Emotions: part 2",
+    "Social Emotions",
+    "Person and Situation",
+    "Social Relation",
+    "Conversation"
+  ];
 
   constructor(public common: CommonService,
               private http: HttpService,

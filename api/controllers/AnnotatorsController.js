@@ -39,31 +39,13 @@ module.exports = {
             updateLastLogin(req.session.userId);
             if (annotator.tutorials === null) {
               annotator.tutorials = [
-                {
-                  title: "Basic Emotions: part 1",
-                  tests: [0, 0]
-                },
-                {
-                  title: "Basic Emotions: part 2",
-                  tests: [0, 0]
-                },
-                {
-                  title: "Social Emotions",
-                  tests: [0, 0, 0, 0]
-                },
-                {
-                  title: "Person and Situation",
-                  tests: [0, 0, 0]
-                },
-                {
-                  title: "Social Relation",
-                  tests: [0, 0, 0]
-                },
-                {
-                  title: "Conversation",
-                  tests: [0, 0, 0, 0]
-                }
-              ]
+                [0, 0],
+                [0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0, 0]
+              ];
             } else {
               annotator.tutorials = JSON.parse(annotator.tutorials);
             }
@@ -337,31 +319,13 @@ module.exports = {
 
                 if (otherInfo.tutorials === null) {
                   otherInfo.tutorials = [
-                    {
-                      title: "Basic Emotions: part 1",
-                      tests: [0, 0]
-                    },
-                    {
-                      title: "Basic Emotions: part 2",
-                      tests: [0, 0]
-                    },
-                    {
-                      title: "Social Emotions",
-                      tests: [0, 0, 0, 0]
-                    },
-                    {
-                      title: "Person and Situation",
-                      tests: [0, 0, 0]
-                    },
-                    {
-                      title: "Social Relation",
-                      tests: [0, 0, 0]
-                    },
-                    {
-                      title: "Conversation",
-                      tests: [0, 0, 0, 0]
-                    }
-                  ]
+                    [0, 0],
+                    [0, 0],
+                    [0, 0, 0, 0],
+                    [0, 0, 0],
+                    [0, 0, 0],
+                    [0, 0, 0, 0]
+                  ];
                 } else {
                   otherInfo.tutorials = JSON.parse(otherInfo.tutorials);
                 }
