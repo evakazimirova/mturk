@@ -123,6 +123,7 @@ export class AnnotatingTutorialComponent implements OnInit {
       const slots = $(".slot");
       const numOfSlots = slots.length;
       let guessed = 0;
+      let mistake = 0;
 
       answers.draggable({
         cursor: "move",
@@ -165,9 +166,28 @@ export class AnnotatingTutorialComponent implements OnInit {
             answer.animate({
               top: 0,
               left: 0
-            })
+            });
 
-            this.common.alert(`Sorry but you are wrong. Please try again.`);
+            mistake++;
+            if (mistake < 2) {
+              this.common.alert(`Sorry but you are wrong. Please try again.`);
+            } else {
+              slots.each((i) => {
+                $(slots[i])
+                  .removeClass('empty')
+                  .removeClass('slot')
+                  .addClass('answer')
+                  .text($(slots[i]).data().label)
+                  .css({opacity: 0})
+                  .animate({opacity: 1});
+              });
+              answers.animate({opacity: 0});
+
+              setTimeout(() => {
+                answers.css({opacity: 1});
+                this.nextScreen();
+              }, 3000);
+            }
           }
         }
       });
