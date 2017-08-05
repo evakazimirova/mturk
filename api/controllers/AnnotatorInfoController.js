@@ -26,6 +26,23 @@ module.exports = {
     ).exec((error, aInfo) => {
       res.json({englishTest: englishTest});
     });
+  },
+
+  saveTutorial: (req, res, next) => {
+    AnnotatorInfo.update(
+      {
+        AID: req.session.userId
+      },
+      {
+        tutorials: JSON.stringify(req.param('tutorials'))
+      }
+    ).exec((error, aInfo) => {
+      if (error) {
+        sails.log(error);
+      }
+
+      res.json(aInfo[0]);
+    });
   }
 };
 
