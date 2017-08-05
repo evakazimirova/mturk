@@ -26,6 +26,14 @@
     text-align: center;
     width: 60px;
 
+    .fa-star {
+      color: #aaa;
+
+      &.done {
+        color: #d5da2e;
+      }
+    }
+
     .lbl {
       position: absolute;
       bottom: -18px;

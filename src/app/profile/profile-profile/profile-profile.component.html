@@ -154,7 +154,7 @@
         <td class="tutorial">{{ tutorial.title }}</td>
         <td>
           <div class="star" *ngFor="let t of tutorial.tests; let i = index">
-            <span class="fa fa-star fa-2x" [ngClass]="{'text-warning': t}"></span>
+            <span class="fa fa-star fa-2x" [ngClass]="{done: t}"></span>
             <span class="lbl">Test #{{ i + 1 }}</span>
           </div>
         </td>
