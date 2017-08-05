@@ -61,7 +61,25 @@
         background-color: orange;
         color: white;
         padding: 5px;
+        margin: 0 10px 10px 10px;
         width: 250px;
+        height: 57px;
+        cursor: pointer;
+        border: 2px solid #fff;
+        // outline: 2px solid #fff;
+
+        &.ui-draggable-dragging {
+          z-index: 2;
+        }
+
+        &.empty {
+          background-color: #fff;
+          border: 2px solid orange;
+
+          &.ui-droppable-hover {
+            background-color: lighten(orange, 30);
+          }
+        }
       }
     }
   }
@@ -74,4 +92,8 @@
   bottom: 5px;
   right: 10px;
   font-size: 6rem;
+}
+
+.tutorialVideo {
+  cursor: pointer;
 }
