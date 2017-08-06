@@ -16,6 +16,7 @@ export class ProfileTutorialComponent implements OnInit {
   tutorial: any = {};
   tutorialVideo: any;
   labels = [];
+  to
 
   emotion = 0;
   example = 0;
@@ -107,15 +108,11 @@ export class ProfileTutorialComponent implements OnInit {
       // инструкция к тесту (появляется только 1 раз)
       this.manual = false;
       this.screen++;
-      this.initDragAndDrop();
+      this.initDragAndDrop(0);
     } else if (this.screen === 5) {
       if (this.test < this.tutorial.tests.length - 1) {
         const newTest = this.test + 1;
-        this.test = undefined;
-        setTimeout(() => {
-          this.test = newTest;
-          this.initDragAndDrop();
-        }, 100);
+        this.initDragAndDrop(newTest);
       } else {
         this.progress = 0;
         // this.progress = this.progressTotal;
@@ -134,8 +131,17 @@ export class ProfileTutorialComponent implements OnInit {
     this.progressPercentage = +(this.progress / this.progressTotal * 100).toFixed(0);
   }
 
-  initDragAndDrop() {
-      $(document).ready(() => {
+  initDragAndDrop(newTest) {
+    this.test = newTest;
+    $(document).ready(() => {
+      setTimeout(() => {
+        for (let t in this.tutorial.tests[this.test]) {
+          const tutorialVideo: any = document.getElementById('tutorialVideo_' + t);
+          console.log(tutorialVideo);
+
+          tutorialVideo.load();
+        }
+
         const answers = $(".answer");
         const slots = $(".slot");
         const numOfSlots = slots.length;
@@ -219,6 +225,7 @@ export class ProfileTutorialComponent implements OnInit {
             }
           }
         });
-      });
+      }, 100);
+    });
   }
 }
