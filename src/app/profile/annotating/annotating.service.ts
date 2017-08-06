@@ -15,6 +15,9 @@ export class AnnotatingService {
   allFragmentsRated = true;
   task: any;
   FID;
+  isPersonShown = false;
+  controlsAreSet = false;
+  isClickingFirstFragment = false;
 
   isYouTube: boolean;
   ytPlayer;
@@ -40,35 +43,45 @@ export class AnnotatingService {
   }
 
   setFragment(number) {
-    const setFragment = (number) => {
+    const getFragmentPosition = (number) => {
       // не выходим за пределы таблицы
       if (number >= -1 && number < this.csv.length) {
         this.cf = number;
-        if (number === -1) {
-          this.fragmentChanged.emit(0);
-        } else {
-          this.fragmentChanged.emit(this.csv[number][0]);
+        let fragmentPosition = 0;
+        if (number >= 0) {
+          fragmentPosition = this.csv[number][0]
         }
+
+        return fragmentPosition;
       }
     }
 
+
+
     this.unwatchVideo('pause');
     this.rightCol.scrollTop(35.56 * number);
+    const fragmentPosition = (getFragmentPosition(number));
+
+    // выбираем плеер
+    if (this.isYouTube) {
+      this.ytPlayer.seekTo(fragmentPosition, true);
+    } else {
+      this.videoContainer.currentTime = fragmentPosition;
+    }
 
     if (number === 0) {
-      this.common.alert('Первый фрагмент!', () => {
-        setFragment(number);
-      });
+      this.isPersonShown = true;
+      this.isClickingFirstFragment = true;
+      setTimeout(() => {
+        this.isClickingFirstFragment = false;
+      }, 100);
     } else {
-      setFragment(number);
+      this.fragmentChanged.emit(fragmentPosition);
     }
   }
 
   updateCSV(newCSV) {
-    if (this.task.FIDs[this.FID].done) {
-      // выкидываем первую строку с заголовками
-      newCSV.shift();
-    }
+    newCSV.shift();
 
     this.rating = [];
     this.rated = [];

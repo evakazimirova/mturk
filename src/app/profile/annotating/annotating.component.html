@@ -6,6 +6,11 @@
     </div>
   </div>
 </div>
+
+<div class="row alert alert-warning" *ngIf="annot.isPersonShown">
+  What does feel this person? Choose the states from the following.
+</div>
+
 <!-- Интерфейс разметки -->
 <div class="row">
   <!-- Список видео -->
@@ -16,6 +21,9 @@
   <!-- Видео-проигрыватель -->
   <div class="col col-xs-9 vidos">
     <na-annotating-player></na-annotating-player>
+    <div class="start" *ngIf="annot.isPersonShown">
+      START
+    </div>
   </div>
 
   <!-- Список фрагментов -->
