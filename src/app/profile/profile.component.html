@@ -15,7 +15,6 @@
   <na-profile-networking *ngIf="common.profileMode === 'networking'"></na-profile-networking>
   <na-profile-faq *ngIf="common.profileMode === 'faq'"></na-profile-faq>
   <na-profile-rules *ngIf="common.profileMode === 'rules'"></na-profile-rules>
-  <span class="btn btn-primary" data-toggle="modal" data-target=".tutorial-modal" (click)="common.tutorial = 0">Show tutorial</span>
 </div>
 
 <div *ngIf="common.tutorial !== undefined" class="modal fade tutorial-modal" tabindex="-1" role="dialog">
