@@ -69,7 +69,8 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
   // проверка источника видео и назначение плеера
   checkIfYouTube() {
     if (this.annot.task.FIDs[this.annot.FID].video.substr(0, 17) === 'https://youtu.be/' ||
-      this.annot.task.FIDs[this.annot.FID].video.substr(0, 32) === 'https://www.youtube.com/watch?v=') {
+      this.annot.task.FIDs[this.annot.FID].video.substr(0, 32) === 'https://www.youtube.com/watch?v=' ||
+      this.annot.task.FIDs[this.annot.FID].video.substr(0, 31) === 'http://www.youtube.com/watch?v=') {
       this.annot.isYouTube = true;
     } else {
       this.annot.isYouTube = false;

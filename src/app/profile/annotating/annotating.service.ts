@@ -55,8 +55,8 @@ export class AnnotatingService {
     this.unwatchVideo('pause');
     this.rightCol.scrollTop(35.56 * number);
 
-    if (number === 1) {
-      this.common.commonAlert('Первый фрагмент!');
+    if (number === 0) {
+      this.common.alert('Первый фрагмент!');
       setFragment(number);
     } else {
       setFragment(number);
