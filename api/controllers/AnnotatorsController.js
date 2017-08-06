@@ -39,12 +39,12 @@ module.exports = {
             updateLastLogin(req.session.userId);
             if (annotator.tutorials === null) {
               annotator.tutorials = [
-                [0, 0],
+                [0, 0, 0],
                 [0, 0],
                 [0, 0, 0, 0],
                 [0, 0, 0],
-                [0, 0, 0],
-                [0, 0, 0, 0]
+                [0, 0, 0, 0],
+                [0, 0, 0]
               ];
             } else {
               annotator.tutorials = JSON.parse(annotator.tutorials);
@@ -319,12 +319,12 @@ module.exports = {
 
                 if (otherInfo.tutorials === null) {
                   otherInfo.tutorials = [
-                    [0, 0],
+                    [0, 0, 0],
                     [0, 0],
                     [0, 0, 0, 0],
                     [0, 0, 0],
-                    [0, 0, 0],
-                    [0, 0, 0, 0]
+                    [0, 0, 0, 0],
+                    [0, 0, 0]
                   ];
                 } else {
                   otherInfo.tutorials = JSON.parse(otherInfo.tutorials);
