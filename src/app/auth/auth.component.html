@@ -46,7 +46,13 @@
     <div class="row">
       <div class="col col-xs-3">
         <h4>Terms</h4>
-        <a href="#" data-toggle="modal" data-target=".terms-modal">Here</a> you can find general terms and conditions of participation.
+        <p>
+          <a href="#" data-toggle="modal" data-target=".terms-modal">Here</a> you can find general terms and conditions of participation.
+        </p>
+        <h4>F.A.Q.</h4>
+        <p>
+          <a href="#" data-toggle="modal" data-target=".faq-modal">And here</a> are the answers to frequently asked questions.
+        </p>
       </div>
       <div class="col col-xs-5">
         <h4>Company</h4>
@@ -92,6 +98,23 @@
       </div>
       <div class="modal-body">
         <p>Here you can find general terms and conditions of participation.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade faq-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">F.A.Q.</h4>
+      </div>
+      <div class="modal-body">
+        <na-profile-faq></na-profile-faq>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
