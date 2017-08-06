@@ -24,14 +24,16 @@ export class CommonService {
   commonAlert;
   commonConfirm;
 
-  alert(message) {
+  alert(message, cb?) {
     this.commonAlert.find('.message').html(message);
     this.commonAlert.modal('show');
+    this.commonAlert.on('hidden.bs.modal', cb);
   }
 
-  confirm(question) {
+  confirm(question, cb?) {
     this.commonConfirm.find('.question').html(question);
     this.commonConfirm.modal('show');
+    this.commonConfirm.on('hidden.bs.modal', cb);
 
     return this.confirmed;
   }

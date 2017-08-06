@@ -95,7 +95,7 @@ export class ProfileProjectsComponent implements OnInit {
     } else if (i >= this.common.user.level) {
       this.common.alert('Sorry, but you are not ready to do this type of tasks. Please finnish the previous type of task first.');
     } else if (i !== 0 && !this.checkTutorials()) {
-      this.common.alert('Before taking this task you shuold pass all the tutorials.');
+      this.common.alert('Before taking this task you should pass all the tutorials.');
     } else {
       // пока обрабатывается одна задача, другую брать нельзя
       if (this.loadingTask === -1) {

@@ -23,9 +23,11 @@ export class AnnotatingComponent implements OnInit {
     `);
 
     const reminder = () => {
-      this.common.alert(`Hi! Just to remind you that your tutorial training is not completed yet. Please, do it asap for finishing the actual task.`);
+      this.common.alert(`Hi! Just to remind you that your tutorial training is not completed yet. Please, do it asap for finishing the actual task.`, () => {
+        setTimeout(reminder, 30 * 60 * 1000);
+      });
     }
-    setInterval(reminder, 30 * 60 * 1000);
+    setTimeout(reminder, 30 * 60 * 1000);
 
     this.annot.percentageUpdated.subscribe(
       (p) => {
