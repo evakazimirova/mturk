@@ -85,7 +85,7 @@ export class ProfileTutorialComponent implements OnInit {
   nextScreen() {
     if (this.screen === 3) {
       this.more = 0;
-      if (this.emotion < this.tutorial.emotions.length - 1) {
+      if (this.emotion < this.tutorial.emotions.length) {
         if (this.tutorial.emotions[this.emotion].examples) {
           if (this.example < this.tutorial.emotions[this.emotion].examples.length) {
             this.example++;
@@ -95,7 +95,12 @@ export class ProfileTutorialComponent implements OnInit {
             });
           } else {
             this.example = 0;
-            this.emotion++;
+            if (this.emotion < this.tutorial.emotions.length - 1) {
+              this.emotion++;
+            } else {
+              this.emotion = 0;
+              this.screen++;
+            }
           }
         } else {
           this.emotion++;
@@ -125,8 +130,6 @@ export class ProfileTutorialComponent implements OnInit {
       this.screen++;
     }
 
-    console.log(this.test, this.screen);
-
     this.progress++;
     this.progressPercentage = +(this.progress / this.progressTotal * 100).toFixed(0);
   }
@@ -137,8 +140,6 @@ export class ProfileTutorialComponent implements OnInit {
       setTimeout(() => {
         for (let t in this.tutorial.tests[this.test]) {
           const tutorialVideo: any = document.getElementById('tutorialVideo_' + t);
-          console.log(tutorialVideo);
-
           tutorialVideo.load();
         }
 
@@ -147,7 +148,6 @@ export class ProfileTutorialComponent implements OnInit {
         const numOfSlots = slots.length;
         let guessed = 0;
         let mistake = 0;
-        console.log(slots);
 
         answers.draggable({
           cursor: "move",
@@ -216,9 +216,7 @@ export class ProfileTutorialComponent implements OnInit {
 
                 const nextScreen = () => {
                   answers.css({opacity: 1});
-                  console.log(this.test);
                   this.nextScreen();
-                  console.log(this.test);
                 };
                 setTimeout(nextScreen, 3000);
               }
