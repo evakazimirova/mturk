@@ -2,7 +2,7 @@
   <!-- Инструкция по выводу средств -->
   <div class="col col-lg-7 col-md-6 col-xs-12">
     You can withdraw your money anytime you want, when your balance exceeds $10.
-    Please complete the standard form and provide us your ATM card information.
+    Please complete the standard form and provide us your Paypal account.
   </div>
 
   <!-- Форма для вывода средств -->
@@ -16,31 +16,15 @@
 
       <!-- Номер счёта -->
       <div class="form-group">
-        <label for="account">Account</label>
+        <label for="account">Paypal account</label>
         <input type="text" formControlName="account" class="form-control" placeholder="1234567890">
       </div>
 
       <!-- Платёжная система -->
       <div class="row logos">
         <!-- PayPal -->
-        <div class="col col-xs-4">
-          <div [ngClass]="{active: paymentSystem === 'paypal'}" (click)="paymentSystem = 'paypal'">
-            <img src="assets/paypal.png" alt="PayPal">
-          </div>
-        </div>
-
-        <!-- QIWI Wallet -->
-        <div class="col col-xs-4">
-          <div [ngClass]="{active: paymentSystem === 'qiwi'}" (click)="paymentSystem = 'qiwi'">
-            <img src="assets/qiwi.png" alt="QIWI Wallet">
-          </div>
-        </div>
-
-        <!-- Яндекс.Деньги -->
-        <div class="col col-xs-4">
-          <div [ngClass]="{active: paymentSystem === 'yandex'}" (click)="paymentSystem = 'yandex'">
-            <img src="assets/yandex.png" alt="Яндекс.Деньги">
-          </div>
+        <div [ngClass]="{active: paymentSystem === 'paypal'}" (click)="paymentSystem = 'paypal'">
+          <img src="assets/paypal.png" alt="PayPal">
         </div>
       </div>
 
