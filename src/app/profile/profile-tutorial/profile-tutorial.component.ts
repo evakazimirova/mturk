@@ -176,10 +176,8 @@ export class ProfileTutorialComponent implements OnInit {
                 answers.stop().css({
                   top: 0,
                   left: 0
-                })
+                });
 
-                // поздравляем аннотатора с успехом
-                this.common.alert(`Congrats! You've just passed one more test!`);
                 // запоминаем результат
                 this.common.user.tutorials[this.common.tutorial][this.test] = mistake + 1;
                 this.http.post({tutorials: this.common.user.tutorials}, 'AnnotatorInfo/saveTutorial').subscribe(
@@ -188,9 +186,13 @@ export class ProfileTutorialComponent implements OnInit {
                 );
 
                 this.common.tutorialDone;
-                // переходим к следующему тесту
-                mistake = 0;
-                this.nextScreen();
+
+                // поздравляем аннотатора с успехом
+                this.common.alert(`Congrats! You've just passed one more test!`, () => {
+                  // переходим к следующему тесту
+                  mistake = 0;
+                  this.nextScreen();
+                });
               }
             } else {
               // неверно
@@ -203,22 +205,24 @@ export class ProfileTutorialComponent implements OnInit {
               if (mistake < 2) {
                 this.common.alert(`Sorry but you are wrong. Please try again.`);
               } else {
-                slots.each((i) => {
-                  $(slots[i])
-                    .removeClass('empty')
-                    .removeClass('slot')
-                    .addClass('answer')
-                    .text($(slots[i]).data().label)
-                    .css({opacity: 0})
-                    .animate({opacity: 1});
-                });
-                answers.animate({opacity: 0});
+                this.common.alert(`Sorry but you are wrong again. You haven't passed the test. Here are the correct answer.`, () => {
+                  slots.each((i) => {
+                    $(slots[i])
+                      .removeClass('empty')
+                      .removeClass('slot')
+                      .addClass('answer')
+                      .text($(slots[i]).data().label)
+                      .css({opacity: 0})
+                      .animate({opacity: 1});
+                  });
+                  answers.animate({opacity: 0});
 
-                const nextScreen = () => {
-                  answers.css({opacity: 1});
-                  this.nextScreen();
-                };
-                setTimeout(nextScreen, 3000);
+                  const nextScreen = () => {
+                    answers.css({opacity: 1});
+                    this.nextScreen();
+                  };
+                  setTimeout(nextScreen, 2000);
+                });
               }
             }
           }

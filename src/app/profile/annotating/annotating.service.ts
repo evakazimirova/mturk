@@ -56,8 +56,9 @@ export class AnnotatingService {
     this.rightCol.scrollTop(35.56 * number);
 
     if (number === 0) {
-      this.common.alert('Первый фрагмент!');
-      setFragment(number);
+      this.common.alert('Первый фрагмент!', () => {
+        setFragment(number);
+      });
     } else {
       setFragment(number);
     }
