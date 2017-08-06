@@ -12,10 +12,14 @@ export class CommonService {
     money: {
       available: 0,
       reserved: 0,
-    }
+    },
+    tutorials: []
   };
 
   projects = []; // список проектов
+
+  tutorialDone = false;
+  tutorial;
 
   commonAlert;
   commonConfirm;

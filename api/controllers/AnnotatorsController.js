@@ -37,6 +37,18 @@ module.exports = {
           if (!annotator.banned) {
             // сообщаем, когда пользователь в последний раз заходил на сайт
             updateLastLogin(req.session.userId);
+            if (annotator.tutorials === null) {
+              annotator.tutorials = [
+                [0, 0, 0],
+                [0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0]
+              ];
+            } else {
+              annotator.tutorials = JSON.parse(annotator.tutorials);
+            }
 
             // передаём данные пользователя
             const user = {
@@ -51,7 +63,8 @@ module.exports = {
               demo: annotator.demo,
               level: annotator.level,
               taskTaken: annotator.taskTaken,
-              firstTime: annotator.firstTime
+              firstTime: annotator.firstTime,
+              tutorials: annotator.tutorials
             };
 
             // отправляем результат
@@ -304,6 +317,19 @@ module.exports = {
                 // сообщаем, когда пользователь в последний раз заходил на сайт
                 updateLastLogin(req.session.userId);
 
+                if (otherInfo.tutorials === null) {
+                  otherInfo.tutorials = [
+                    [0, 0, 0],
+                    [0, 0],
+                    [0, 0, 0, 0],
+                    [0, 0, 0],
+                    [0, 0, 0, 0],
+                    [0, 0, 0]
+                  ];
+                } else {
+                  otherInfo.tutorials = JSON.parse(otherInfo.tutorials);
+                }
+
                 // передаём данные пользователя
                 const user = {
                   nickname: annotator.login,
@@ -317,7 +343,8 @@ module.exports = {
                   demo: otherInfo.demo,
                   level: otherInfo.level,
                   taskTaken: otherInfo.taskTaken,
-                  firstTime: otherInfo.firstTime
+                  firstTime: otherInfo.firstTime,
+                  tutorials: otherInfo.tutorials
                 };
 
                 // отправляем результат

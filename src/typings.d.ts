@@ -5,3 +5,4 @@ interface NodeModule {
 }
 
 declare var $: any; // jQuery
+declare var _: any; // Underscore

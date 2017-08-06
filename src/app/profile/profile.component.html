@@ -16,3 +16,13 @@
   <na-profile-faq *ngIf="common.profileMode === 'faq'"></na-profile-faq>
   <na-profile-rules *ngIf="common.profileMode === 'rules'"></na-profile-rules>
 </div>
+
+<div *ngIf="common.tutorial !== undefined" class="modal fade tutorial-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <na-profile-tutorial></na-profile-tutorial>
+      </div>
+    </div>
+  </div>
+</div>

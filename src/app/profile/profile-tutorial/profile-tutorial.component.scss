@@ -1,0 +1,99 @@
+.screen {
+  min-height: 700px;
+  font-size: 3rem;
+
+  img {
+    width: 430px;
+  }
+
+  .btn-link {
+    font-size: 3rem;
+  }
+
+  h3, h4 {
+    font-size: 4rem;
+  }
+
+  .fa-question-circle {
+    cursor: pointer;
+  }
+
+  &.screen-first {
+    h2 {
+      text-align: center;
+      font-size: 14rem;
+      text-transform: uppercase;
+      padding-top: 110px;
+    }
+
+    .fa-ul {
+      font-size: 5rem;
+      padding: 20px 190px;
+    }
+  }
+
+  .video {
+    text-align: center;
+
+    video {
+      width: 100%;
+    }
+
+    .fa {
+      position: absolute;
+      left: 47%;
+      top: 166px;
+      font-size: 13rem;
+      text-shadow: 0px 0px 10px grey;
+      color: white;
+      opacity: 0.8;
+    }
+  }
+
+  .test {
+    height: 300px;
+
+    .lbl {
+      text-align: center;
+
+      span {
+        display: inline-block;
+        background-color: orange;
+        color: white;
+        padding: 5px;
+        margin: 0 10px 10px 10px;
+        width: 250px;
+        height: 57px;
+        cursor: pointer;
+        border: 2px solid #fff;
+        // outline: 2px solid #fff;
+
+        &.ui-draggable-dragging {
+          z-index: 2;
+        }
+
+        &.empty {
+          background-color: #fff;
+          border: 2px solid orange;
+
+          &.ui-droppable-hover {
+            background-color: lighten(orange, 30);
+          }
+        }
+      }
+    }
+  }
+}
+
+.next {
+  cursor: pointer;
+  color: lighten(#00b3ff, 20);
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  font-size: 6rem;
+}
+
+.tutorialVideo {
+  cursor: pointer;
+}

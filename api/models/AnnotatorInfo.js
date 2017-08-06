@@ -68,6 +68,10 @@ module.exports = {
 
     lastlogin: {
       type: 'datetime'
+    },
+
+    tutorials: {
+      type: 'string'
     }
   }
 };
