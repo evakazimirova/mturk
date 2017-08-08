@@ -15,33 +15,6 @@ export class ProfileProjectsComponent implements OnInit {
   isLoaded = true;
   loadingTask = -1;
 
-  progressBar = [
-    {
-      action: 'Registraition and Confirm e-mail',
-      done: true
-    },
-    {
-      action: 'Demo Task and Get your 1$',
-      done: this.common.user.demo === 1
-    },
-    {
-      action: 'Fill the Profile',
-      done: this.common.user.profile === 1
-    },
-    {
-      action: 'Short English Test',
-      done: this.common.user.englishTest !== 'NO'
-    },
-    {
-      action: 'Learn Skills and Pass the Test in Totorial',
-      done: false
-    },
-    {
-      action: 'Finish Tasks and Get Money!',
-      done: false
-    }
-  ];
-
   constructor(public common: CommonService,
               private http: HttpService,
               public annot: AnnotatingService) { }
@@ -190,19 +163,82 @@ export class ProfileProjectsComponent implements OnInit {
   }
 
   startDemoTask() {
-    this.http.get(`annotators/demoFinnished`).subscribe(
-      demo => {
-        // this.loadingTask = -1;
-        this.common.user.demo = demo;
-        this.common.user.money.available = 1;
-        this.progressBar[1].done = true;
+    const startTask = () => {
+      this.annot.demoMode = true;
+      // загружаем данные демо-таска
+      this.annot.FID = 0;
+      this.annot.task = {
+        "ATID": 0,
+        "done": 0,
+        "FIDs": [
+          {
+            "FID": 1,
+            "boxType": "AND",
+            "emotions": [ 37, 38, 39 ],
+            "video": "https://www.youtube.com/watch?v=wglgvziarPc",
+            "result": {
+              "FID": 1,
+              "csv": "start,end\r\n47,50\r\n50,56\r\n74,77"
+            },
+            "answers": [
+              [37],
+              [37],
+              []
+            ],
+            "done": false
+          },
+          {
+            "FID": 2,
+            "boxType": "AND",
+            "emotions": [ 37, 38, 39 ],
+            "video": "https://www.youtube.com/watch?v=JjhvaDqB2wc",
+            "result": {
+              "FID": 2,
+              "csv": "start,end\r\n43,45\r\n62,66"
+            },
+            "answers": [
+              [],
+              []
+            ],
+            "done": false
+          },
+          {
+            "FID": 3,
+            "boxType": "AND",
+            "emotions": [ 37, 38, 39 ],
+            "video": "https://www.youtube.com/watch?v=NyHCIhFsZoA",
+            "result": {
+              "FID": 3,
+              "csv": "start,end\r\n389,390\r\n390,393\r\n393,395\r\n413,416"
+            },
+            "answers": [
+              [38],
+              [38, 39],
+              [39],
+              [39]
+            ],
+            "done": false
+          }
+        ]
+      };
+      this.annot.task.FIDsList = Object.keys(this.annot.task.FIDs);
 
-        this.common.alert('Congrats! You just finished first task on Emotion Miner! Your account balanced with appropriate sum. You can withdraw your money, when balance exceed 10$. When you are ready - start a new task on a Task Board. To start with serious tasks, you should fulfill form in your Account.');
-      },
-      err => {
-        // this.loadingTask = -1;
-        console.error(err);
-      }
-    );
+      // запускаем режим аннотирования и включаем видео
+      this.startAnnotating.emit();
+      this.annot.setVideo();
+    };
+
+    // вынимаем все эмоции
+    if (this.annot.emotions.length === 0) {
+      this.http.get('EmotionsInfo/getAll').subscribe(
+        emotions => {
+          this.annot.emotions = emotions;
+          startTask();
+        },
+        error => console.error(error)
+      );
+    } else {
+      startTask();
+    }
   }
 }

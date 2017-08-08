@@ -69,6 +69,10 @@ export class AnnotatingPlayerProgressComponent implements OnInit {
         // проиграв фрагмент, ставим видео на паузу
         if (currentTime >= this.fragmentEnd) {
           this.annot.unwatchVideo('pause');
+
+          if (this.annot.demoMode && this.annot.demoHint === 2) {
+            this.annot.demoHint = 3;
+          }
         }
 
         // подсчёт прошедшего времени
