@@ -1,6 +1,6 @@
 <!-- Прогресс-бар -->
 <div class="p-bar">
-  <div *ngFor="let task of progressBar; let i = index">
+  <div *ngFor="let task of common.progressBar; let i = index">
     <div [ngClass]="{done: task.done}" class="fa fa-3x fa-fw fa-arrow-right" *ngIf="i > 0"></div>
     <div [ngClass]="{done: task.done}" class="box">
       <span>{{ task.action }}</span>

@@ -18,6 +18,22 @@ export class AnnotatingService {
   isPersonShown = false;
   controlsAreSet = false;
   isClickingFirstFragment = false;
+  demoMode = false;
+
+  demoHints = [
+    "Посмотрите на изображение. Ваша задача – выбирать те состояния (чувства, эмоции и т.д.), которые испытывает этот человек. Let’s start!",
+    "Нажмите кнопку плей (картинка с кнопкой?) чтобы посмотреть видео целиком. Это необходимо сделать перед разметкой для понимания контекста.",
+    "Просмотрите короткий фрагмент из видео. Под видео находятся кнопки с эмоциями. Посмотрите, испытывает ли в этом фрагменте человек какие-то из этих эмоций?",
+    "Нажми кнопку с нужной эмоцией. Ты можешь выбрать несколько эмоций! Если ты не увидел ничего из указанных состояний, нажми None.",
+    "Справа в таблице появилась ваша отметка (стрелка?). Вы можете ее изменить в любой момент, вернувшись к этому фрагменту, до сдачи таска. [кнопка ок?]",
+    "Теперь просмотрите следующий фрагмент и также отметьте эмоцию на нижней шкале",
+    "В данном фрагменте человек не испытывает ничего из перечисленного ниже. В таких случаях нужно ставить <strong>None.</strong>",
+    "В одном задании всегда будет несколько видео (ведь так интересней!). Теперь нужно отметить эмоции этого человека.",
+    "Когда ты видишь в кадре двоих людей, твоя задача отмечать эмоции именно того человека, который был указан в начале этого видео! Здесь это Eddie Redmayne, не перепутай! Кажется, он не испытывает ничего из указанного ниже, согласен? Тогда снова ставь <strong>None</strong>!",
+    "Здесь, как нам кажется, человек испытывает сразу две эмоции: <strong>Surprise</strong> and <strong>Angry</strong>. Согласен? Отметь обе!",
+    "Для того, чтобы сдать задачу и получить оплату, нажми кнопку 'Save & play next video'"
+  ];
+  demoHint = 0;
 
   isYouTube: boolean;
   ytPlayer;
@@ -43,6 +59,22 @@ export class AnnotatingService {
   }
 
   setFragment(number) {
+    if (this.demoMode) {
+      if (this.cf === -1 && this.demoHint === 1 && this.FID == 0) {
+        this.demoHint = 2;
+      } else if (this.demoHint === 4) {
+        this.demoHint = 5;
+      } else if (this.demoHint === 5) {
+        this.demoHint = 6;
+      } else if (this.FID == 1 && number === 1) {
+        this.demoHint = 8;
+      } else if (this.FID == 2 && number === 2) {
+        this.demoHint = 9;
+      } else if (this.demoHint === 9) {
+        this.demoHint = 10;
+      }
+    }
+
     const getFragmentPosition = (number) => {
       // не выходим за пределы таблицы
       if (number >= -1 && number < this.csv.length) {
@@ -56,8 +88,6 @@ export class AnnotatingService {
       }
     }
 
-
-
     this.unwatchVideo('pause');
     this.rightCol.scrollTop(35.56 * number);
     const fragmentPosition = (getFragmentPosition(number));
@@ -69,14 +99,16 @@ export class AnnotatingService {
       this.videoContainer.currentTime = fragmentPosition;
     }
 
-    if (number === 0) {
+    if (number === 0 && !(this.demoMode && (this.demoHint === 2 || (this.FID > 0 && this.demoHint === -1)))) {
       this.isPersonShown = true;
       this.isClickingFirstFragment = true;
       setTimeout(() => {
         this.isClickingFirstFragment = false;
       }, 100);
     } else {
-      this.fragmentChanged.emit(fragmentPosition);
+      if (!((this.demoMode && (this.demoHint === 1 || this.demoHint === 7)))) {
+        this.fragmentChanged.emit(fragmentPosition);
+      }
     }
   }
 
@@ -131,6 +163,12 @@ export class AnnotatingService {
   }
 
   checkEmo(e) {
+    if (this.demoMode) {
+      if (this.demoHint === 3) {
+        this.demoHint = 4;
+      }
+    }
+
     if (this.task.FIDs[this.FID].boxType === 'OR') {
       // взаимоисключающие варианты
       this.rating[e][this.cf] = 1;
@@ -156,6 +194,10 @@ export class AnnotatingService {
   }
 
   uncheckEmos(e1, e2?) {
+    if (this.demoMode && this.demoHint === 3) {
+      this.demoHint = 4;
+    }
+
     if (e2) {
       this.rating[e1][this.cf] = 0;
       this.rating[e2][this.cf] = 0;

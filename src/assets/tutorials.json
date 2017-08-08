@@ -3,7 +3,8 @@
     "skill": "Basic Emotions: part 1",
     "pictures": [
       "sadness",
-      "happy"
+      "happy",
+      "fear"
     ],
     "emotions": [
       {
@@ -135,7 +136,7 @@
   {
     "skill": "Basic Emotions: part 2",
     "pictures": [
-      "disgust",
+      "disgust2",
       "surprise",
       "angry"
     ],
@@ -238,7 +239,7 @@
     "pictures": [
       "shame",
       "proud",
-      "contempt",
+      "contempt2",
       "admiration"
     ],
     "emotions": [
@@ -366,7 +367,8 @@
     "pictures": [
       "low_pleasure",
       "high_pleasure",
-      "low_self-confidence"
+      "low_self-confidence",
+      "self-confidence"
     ],
     "emotions": [
       {
@@ -596,7 +598,7 @@
     "pictures": [
       "disengagement",
       "engagement",
-      "self-presentation",
+      "self-presentation(sultan)",
       "mental_effort"
     ],
     "emotions": [

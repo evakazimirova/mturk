@@ -105,8 +105,12 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
                   // задаём длительность видео
                   this.annot.videoLength = time;
 
-                  // запускаем видео целиком
-                  this.annot.setFragment(-1);
+                  if (this.annot.demoMode) {
+                    this.annot.setFragment(0);
+                  } else {
+                    // запускаем видео целиком
+                    this.annot.setFragment(-1);
+                  }
                 });
               });
             }

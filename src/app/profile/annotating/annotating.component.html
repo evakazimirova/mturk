@@ -7,8 +7,9 @@
   </div>
 </div>
 
-<div class="row alert alert-warning" *ngIf="annot.isPersonShown">
-  What does feel this person? Choose the states from the following.
+<div class="row alert alert-warning" *ngIf="annot.isPersonShown || (annot.demoMode && annot.demoHint !== -1)">
+  <span *ngIf="!annot.demoMode">What does feel this person? Choose the states from the following.</span>
+  <span *ngIf="annot.demoMode" [innerHTML]="annot.demoHints[annot.demoHint]"></span>
 </div>
 
 <!-- Интерфейс разметки -->
