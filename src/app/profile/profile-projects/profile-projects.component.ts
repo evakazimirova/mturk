@@ -20,6 +20,33 @@ export class ProfileProjectsComponent implements OnInit {
               public annot: AnnotatingService) { }
 
   ngOnInit() {
+    this.common.progressBar = [
+      {
+        action: 'Registraition and Confirm e-mail',
+        done: true
+      },
+      {
+        action: 'Demo Task and Get your 1$',
+        done: this.common.user.demo === 1
+      },
+      {
+        action: 'Fill the Profile',
+        done: this.common.user.profile === 1 && this.common.user.englishTest !== 'NO'
+      },
+      {
+        action: 'Short English Test',
+        done: this.common.user.englishTest !== 'NO'
+      },
+      {
+        action: 'Learn Skills and Pass the Test in Tutorial',
+        done: false
+      },
+      {
+        action: 'Finish Tasks and Get Money!',
+        done: false
+      }
+    ];
+
     // загружаем данные только один раз при входе
     if (this.common.projects.length === 0) {
       this.isLoaded = false;

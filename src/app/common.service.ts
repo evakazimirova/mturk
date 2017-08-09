@@ -16,32 +16,7 @@ export class CommonService {
     tutorials: []
   };
 
-  progressBar = [
-    {
-      action: 'Registraition and Confirm e-mail',
-      done: true
-    },
-    {
-      action: 'Demo Task and Get your 1$',
-      done: this.user.demo === 1
-    },
-    {
-      action: 'Fill the Profile',
-      done: this.user.profile === 1
-    },
-    {
-      action: 'Short English Test',
-      done: this.user.englishTest !== 'NO'
-    },
-    {
-      action: 'Learn Skills and Pass the Test in Totorial',
-      done: false
-    },
-    {
-      action: 'Finish Tasks and Get Money!',
-      done: false
-    }
-  ];
+  progressBar = [];
 
   projects = []; // список проектов
 
