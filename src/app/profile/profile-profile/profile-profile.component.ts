@@ -76,7 +76,9 @@ export class ProfileProfileComponent implements OnInit {
       // подгружаем сохранённые данные
       this.http.get('AnnotatorProfile/getData').subscribe(
         profile => {
-          profile.birthdate = profile.birthdate.slice(0, 10); // корректируем формат даты рождения
+          if (profile.birthdate) {
+            profile.birthdate = profile.birthdate.slice(0, 10); // корректируем формат даты рождения
+          }
           this.form.patchValue(profile);
           this.common.user.englishTest = profile.englishTest;
         },

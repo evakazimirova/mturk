@@ -31,14 +31,14 @@ export class ProfileProjectsComponent implements OnInit {
       },
       {
         action: 'Fill the Profile',
-        done: this.common.user.profile === 1
+        done: this.common.user.profile === 1 && this.common.user.englishTest !== 'NO'
       },
       {
         action: 'Short English Test',
         done: this.common.user.englishTest !== 'NO'
       },
       {
-        action: 'Learn Skills and Pass the Test in Totorial',
+        action: 'Learn Skills and Pass the Test in Tutorial',
         done: false
       },
       {

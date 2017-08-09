@@ -8,7 +8,7 @@ import { AnnotatingService } from './annotating.service';
   styleUrls: ['./annotating.component.scss']
 })
 export class AnnotatingComponent implements OnInit {
-  percentage = this.common.projects[0].annoTask.percentage;
+  percentage = 0;
   constructor(public common: CommonService,
               public annot: AnnotatingService) {}
 
@@ -16,6 +16,8 @@ export class AnnotatingComponent implements OnInit {
     this.common.tutorial = 0;
 
     if (!this.annot.demoMode) {
+      this.percentage = this.common.projects[0].annoTask.percentage;
+
       this.common.alert(`
         Attention, please!
         The present task contains new emotion scale.
