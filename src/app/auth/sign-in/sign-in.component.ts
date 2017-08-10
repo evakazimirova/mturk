@@ -31,7 +31,7 @@ export class SignInComponent implements OnInit {
       if (this.form.valid) {
         this.validForce = true;
       }
-    }, 500);
+    }, 2000);
   }
 
   signIn(event) {
