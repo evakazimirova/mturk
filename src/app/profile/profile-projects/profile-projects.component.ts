@@ -14,12 +14,27 @@ export class ProfileProjectsComponent implements OnInit {
   // для индикаторов загрузки
   isLoaded = true;
   loadingTask = -1;
+  areTutorialsFinished = false;
 
   constructor(public common: CommonService,
               private http: HttpService,
               public annot: AnnotatingService) { }
 
   ngOnInit() {
+    // this.areTutorialsFinished = true;
+    // for (let tutorial of this.common.user.tutorials) {
+    //   if (!this.areTutorialsFinished) {
+    //     break;
+    //   } else {
+    //     for (let t in tutorial) {
+    //       if (this.common.user.tutorials[this.common.tutorial][t] === 0) {
+    //         this.areTutorialsFinished = false;
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }
+
     this.common.progressBar = [
       {
         action: 'Registraition and Confirm e-mail',
@@ -39,7 +54,7 @@ export class ProfileProjectsComponent implements OnInit {
       },
       {
         action: 'Learn Skills and Pass the Test in Tutorial',
-        done: false
+        done: this.checkTutorials()
       },
       {
         action: 'Finish Tasks and Get Money!',
