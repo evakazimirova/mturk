@@ -7,9 +7,10 @@ import { CommonService } from '../../common.service';
   selector: 'na-sign-in',
   templateUrl: './sign-in.component.html'
 })
-export class SignInComponent {
+export class SignInComponent implements OnInit {
   form: FormGroup;
   loading = false;
+  validForce = false;
 
   constructor(private formBuilder: FormBuilder,
               public common: CommonService,
@@ -23,6 +24,14 @@ export class SignInComponent {
         Validators.pattern('.{8,}')
       ]]
     });
+  }
+
+  ngOnInit() {
+    setTimeout(() => {
+      if (this.form.valid) {
+        this.validForce = true;
+      }
+    }, 500);
   }
 
   signIn(event) {
