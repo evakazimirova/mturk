@@ -16,12 +16,12 @@ export class ProfileTutorialComponent implements OnInit {
   tutorial: any = {};
   tutorialVideo: any;
   labels = [];
-  to
 
   emotion = 0;
   example = 0;
   more = 0;
-  test = 0;
+  test = undefined;
+  testExists = false;
   progress = 0;
   progressPercentage = 0;
   progressTotal = 0;
@@ -33,42 +33,76 @@ export class ProfileTutorialComponent implements OnInit {
 
   ngOnInit() {
     $(document).ready(() => {
-      $('.tutorial-modal').on('hidden.bs.modal', (e) => {
-        this.common.tutorial = undefined;
-      })
+      this.common.tutorialModal = $('.tutorial-modal');
+      this.common.tutorialModal
+        .on('shown.bs.modal', (e) => {
+          this.updateTutorial();
+        })
+        .on('hidden.bs.modal', (e) => {
+          this.finishTutorial(false);
+        });
     });
 
     this.http.get('assets/tutorials.json').subscribe(
       tutorials => {
         this.loading = false;
-
         this.tutorials = tutorials;
-        this.tutorial = this.tutorials[this.common.tutorial];
-
-        this.labels = [];
-        let tests = [];
-        for (let test of this.tutorial.tests) {
-          let labels = [];
-          for (let v of test) {
-            labels.push(v.label);
-          }
-          this.labels.push(labels);
-          tests.push(_.shuffle(test));
-        }
-        this.tutorial.tests = tests;
-
-        this.progressTotal = 3 + this.tutorial.emotions.length + this.tutorial.tests.length;
-        for (let e of this.tutorial.emotions) {
-          if (e.examples) {
-            this.progressTotal += e.examples.length;
-          }
-        }
+        this.updateTutorial();
       },
       error => {
         this.loading = false;
         console.error(error);
       }
     );
+  }
+
+  updateTutorial() {
+    this.tutorial = this.tutorials[this.common.tutorial];
+
+    this.labels = [];
+    let tests = [];
+    for (let test of this.tutorial.tests) {
+      let labels = [];
+      for (let v of test) {
+        labels.push(v.label);
+      }
+      this.labels.push(labels);
+      tests.push(_.shuffle(test));
+    }
+    this.tutorial.tests = tests;
+
+    this.progressTotal = 3 + this.tutorial.emotions.length;
+    for (let e of this.tutorial.emotions) {
+      if (e.examples) {
+        this.progressTotal += e.examples.length;
+      }
+    }
+
+    for (let t in this.common.user.tutorials[this.common.tutorial]) {
+      if (this.common.user.tutorials[this.common.tutorial][t] === 0) {
+        this.test = +t;
+        this.testExists = true;
+        break;
+      }
+    }
+  }
+
+  finishTutorial(hideModal = true) {
+    // очищаем кэш
+    this.screen = 1;
+    this.emotion = 0;
+    this.example = 0;
+    this.more = 0;
+    this.test = undefined;
+    this.testExists = false;
+    this.progress = 0;
+    this.progressPercentage = 0;
+    this.progressTotal = 0;
+
+    // сворачиваем окно
+    if (hideModal) {
+      this.common.tutorialModal.modal('hide');
+    }
   }
 
   playVideo(event) {
@@ -112,19 +146,12 @@ export class ProfileTutorialComponent implements OnInit {
     } else if (this.screen === 4) {
       // инструкция к тесту (появляется только 1 раз)
       this.manual = false;
-      this.screen++;
-      this.initDragAndDrop(0);
-    } else if (this.screen === 5) {
-      if (this.test < this.tutorial.tests.length - 1) {
-        const newTest = this.test + 1;
-        this.initDragAndDrop(newTest);
-      } else {
-        this.progress = 0;
-        // this.progress = this.progressTotal;
 
-        // выходим из туториала
-        $('.tutorial-modal').modal('hide');
-        this.screen = 1;
+      if (this.testExists) {
+        this.screen++;
+        this.initDragAndDrop();
+      } else {
+        this.finishTutorial();
       }
     } else {
       this.screen++;
@@ -134,8 +161,7 @@ export class ProfileTutorialComponent implements OnInit {
     this.progressPercentage = +(this.progress / this.progressTotal * 100).toFixed(0);
   }
 
-  initDragAndDrop(newTest) {
-    this.test = newTest;
+  initDragAndDrop() {
     $(document).ready(() => {
       setTimeout(() => {
         for (let t in this.tutorial.tests[this.test]) {
@@ -189,9 +215,7 @@ export class ProfileTutorialComponent implements OnInit {
 
                 // поздравляем аннотатора с успехом
                 this.common.alert(`Congrats! You've just passed one more test!`, () => {
-                  // переходим к следующему тесту
-                  mistake = 0;
-                  this.nextScreen();
+                  this.finishTutorial();
                 });
               }
             } else {
@@ -219,7 +243,7 @@ export class ProfileTutorialComponent implements OnInit {
 
                   const nextScreen = () => {
                     answers.css({opacity: 1});
-                    this.nextScreen();
+                    this.finishTutorial();
                   };
                   setTimeout(nextScreen, 2000);
                 });

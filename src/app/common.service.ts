@@ -22,6 +22,7 @@ export class CommonService {
 
   tutorialDone = false;
   tutorial;
+  tutorialModal;
 
   commonAlert;
   commonConfirm;
