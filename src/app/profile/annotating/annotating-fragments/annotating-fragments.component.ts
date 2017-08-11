@@ -5,7 +5,8 @@ import { AnnotatingService } from '../../annotating/annotating.service';
 
 @Component({
   selector: 'na-annotating-fragments',
-  templateUrl: './annotating-fragments.component.html'
+  templateUrl: './annotating-fragments.component.html',
+  styleUrls: ['./annotating-fragments.component.scss']
 })
 export class AnnotatingFragmentsComponent {
   // индикатор загрузки
