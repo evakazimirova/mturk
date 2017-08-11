@@ -217,7 +217,7 @@ module.exports = {
         // console.log(uniq(allFIDs));
 
         // достаём фрагменты для задачи из БД
-        Fragments.find({
+        FragmentsModerate.find({
           or: allFIDs
         }).populateAll().exec((err, fragments) => {
           all.ATID = ids.ATID;
