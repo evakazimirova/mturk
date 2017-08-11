@@ -9,7 +9,7 @@ module.exports = {
   // достаём фрагмент по FID
 	getFragment: (req, res, next) => {
     let FID = req.param('FID');
-    Fragments.findOne({
+    FragmentsModerate.findOne({
       FID: FID
     }).populateAll().exec((err, fragment) => {
       // отправляем результат

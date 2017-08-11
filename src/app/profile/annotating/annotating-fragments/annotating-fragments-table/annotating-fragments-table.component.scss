@@ -51,3 +51,10 @@
     border-color: #ccc transparent transparent transparent;
   }
 }
+
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .right-col {
+    max-height: 360px;
+  }
+}
