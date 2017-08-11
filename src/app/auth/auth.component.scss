@@ -94,3 +94,42 @@ footer.navbar {
     }
   }
 }
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .img-responsive {
+    margin-top: 30px;
+  }
+
+  .form {
+    top: -10px;
+
+    .form-group {
+      margin-bottom: 10px !important; 
+    }
+  }
+
+  .usp {
+    top: 70px;
+    width: 500px;
+
+    > div {
+      font-size: 1.7rem;
+
+      div {
+        margin-top: 20px;
+      }
+    }
+  }
+
+  footer.navbar {
+    padding: 10px 0;
+
+    nav.container {
+      h4 {
+        font-size: 2.5rem;
+      }
+
+      font-size: 1.4rem;
+    }
+  }
+}

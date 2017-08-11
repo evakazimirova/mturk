@@ -5,7 +5,12 @@ import { HttpService } from '../../http.service';
 
 @Component({
   selector: 'na-sign-up',
-  templateUrl: './sign-up.component.html'
+  templateUrl: './sign-up.component.html',
+  styles: [`
+    .form-group {
+      margin-bottom: 10px; 
+    }
+  `]
 })
 export class SignUpComponent {
   form: FormGroup;
