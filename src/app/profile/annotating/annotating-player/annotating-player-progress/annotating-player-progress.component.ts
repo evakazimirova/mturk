@@ -12,6 +12,7 @@ export class AnnotatingPlayerProgressComponent implements OnInit {
   percentage: string | number = 0;
   fragmentStart = 0;
   fragmentEnd = 0;
+  currentTime = 0;
 
   // свойство для таймера
   watchingVideo;
@@ -66,6 +67,9 @@ export class AnnotatingPlayerProgressComponent implements OnInit {
 
       // функция подсчёта процента воспроизведёного фрагмента
       const countPercentage = () => {
+        // обновляем время в прогресс-баре
+        this.currentTime = currentTime;
+
         // проиграв фрагмент, ставим видео на паузу
         if (currentTime >= this.fragmentEnd) {
           this.annot.unwatchVideo('pause');
