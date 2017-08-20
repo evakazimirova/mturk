@@ -12,10 +12,10 @@ export class ProfileRulesComponent implements OnInit {
   constructor(private http: HttpService) { }
 
   ngOnInit() {
-    this.loadRerms();
+    this.loadRules();
   }
 
-  loadRerms() {
+  loadRules() {
     if (this.rules.length === 0) {
       this.http.getRough('/content/getRules').subscribe(
         rules => {

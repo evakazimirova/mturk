@@ -42,3 +42,20 @@
     background-color: rgba(51, 51, 51, 0.58);
   }
 }
+
+.main-panel {
+  position: relative;
+
+  .emotions-definitions {
+    position: absolute;
+    right: 65px;
+    top: 0;
+    font-size: 11.5rem;
+    color: gray;
+    cursor: pointer;
+
+    &:hover {
+      color: black;
+    }
+  }
+}

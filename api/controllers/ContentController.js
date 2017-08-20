@@ -25,5 +25,9 @@ module.exports = {
 
   getRules: (req, res, next) => {
     loadMD('Rules', res);
+  },
+
+  getEmotionsDefinitions: (req, res, next) => {
+    loadMD('Emotions Definitions', res);
   }
 };

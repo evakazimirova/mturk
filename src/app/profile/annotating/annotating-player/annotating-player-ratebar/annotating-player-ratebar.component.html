@@ -1,5 +1,5 @@
 <!-- Кнопки выставления оценки -->
-<div class="text-center" *ngIf="annot.cf !== -1">
+<div class="main-panel" *ngIf="annot.cf !== -1">
   <!-- 1–5 -->
   <div class="btn-group" *ngIf="boxType === '5'">
     <button class="btn btn-lg btn-default"
@@ -81,5 +81,24 @@
 
     <span class="fa fa-lg fa-info-circle"></span>
     Also use <kbd>&#x2193;</kbd> to repeat fragment and <kbd>&#x2190;</kbd>, <kbd>&#x2192;</kbd> to choose fragment.
+  </div>
+
+  <div class="fa fa-question-circle-o emotions-definitions" data-toggle="modal" data-target=".emotions-definitions-modal"></div>
+</div>
+
+<div class="modal fade emotions-definitions-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Emotions Definitions</h4>
+      </div>
+      <div class="modal-body">
+        <na-profile-emotions-definitions></na-profile-emotions-definitions>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
