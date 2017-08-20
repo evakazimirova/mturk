@@ -47,7 +47,7 @@
       <div class="col col-xs-3">
         <h4>Terms</h4>
         <p>
-          <a href="#" data-toggle="modal" data-target=".terms-modal">Here</a> you can find general terms and conditions of participation.
+          <a href="#" data-toggle="modal" data-target=".terms-modal" (click)="loadTerms()">Here</a> you can find general terms and conditions of participation.
         </p>
         <h4>F.A.Q.</h4>
         <p>
@@ -96,8 +96,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Terms</h4>
       </div>
-      <div class="modal-body">
-        <p>Here you can find general terms and conditions of participation.</p>
+      <div class="modal-body" [innerHTML]="terms">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
