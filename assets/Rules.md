@@ -1,5 +1,3 @@
-![Logo]()
-
 # Emotion Miner General Rules
 
 __All users are kindly requested to study the Emotion Miner rules before starting to work with the platform__

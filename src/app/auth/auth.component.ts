@@ -23,7 +23,6 @@ export class AuthComponent {
     if (this.terms.length === 0) {
       this.http.getRough('/content/getTerms').subscribe(
         terms => {
-          console.log(terms);
           this.terms = terms.text();
         },
         error => console.error(error)
