@@ -48,6 +48,7 @@
             Price: ${{ task.price * task.tasksAmount }}
           </span>
           <span *ngIf="common.user.taskTaken === null || i !== common.user.taskTaken - 1">Estimated work time: {{ task.EWT }} min</span>
+          <span *ngIf="common.user.taskTaken === null || i !== common.user.taskTaken - 1">Deadline: {{ i < 2 ? '1' : '2' }} week{{ i < 2 ? '' : 's' }}</span>
         </div>
 
         <!-- Замочек -->
