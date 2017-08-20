@@ -3,7 +3,10 @@
     Please pass the English language audio test.
     Please press “Play”, listen to a phrase, then choose the correct answer below.
     You can play the audio a few times if you need.
-    There are three questions with 30-seconds response options.
+    <div class="text-center attention">
+      <strong>Attention!</strong><br>
+      You will have 30 seconds only for each question!
+    </div>
     To know more <a href="#" (click)="goToFaq()" data-dismiss="modal">learn FAQ</a>.
   </div>
 
@@ -16,7 +19,7 @@
   <div class="screen" *ngIf="screen === j + 2">
     <div class="row">
       <div class="col col-xs-10">
-        <audio id="audioForTest" src="https://storage.cloud.google.com/english_test/{{ test.audioTitle }}.wav" controls></audio>
+        <audio id="audioForTest" src="https://storage.cloud.google.com/english_test/{{ test.audioTitle }}.mp3" controls></audio>
       </div>
       <div class="col col-xs-2">
         <div class="time" [ngClass]="{'text-danger': secondsLeft < 6}">
