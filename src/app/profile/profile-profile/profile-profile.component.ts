@@ -198,10 +198,10 @@ export class ProfileProfileComponent implements OnInit {
           );
         }
       } else {
-        this.common.alert('Надо согласиться на обработку персональных данных!');
+        this.common.alert('You should agree to the processing of my personal data!');
       }
     } else {
-      this.common.alert('Заполнены не все поля!');
+      this.common.alert('Not all required fields are filled!');
     }
   }
 

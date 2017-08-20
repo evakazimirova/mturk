@@ -50,7 +50,7 @@ export class ProfileProfileEnglishComponent implements OnInit {
       this.secondsLeft = 30;
 
       $(document).ready(() => {
-        var audio = document.getElementById("audioForTest");
+        const audio = document.getElementById('audioForTest');
 
         const countdown = () => {
           this.secondsLeft = this.secondsLeft - 1;

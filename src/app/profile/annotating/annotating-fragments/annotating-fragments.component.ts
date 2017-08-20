@@ -193,7 +193,7 @@ export class AnnotatingFragmentsComponent {
         this.annot.cf = i;
 
         // сообщаем о находке
-        this.common.alert(`Фрагмент ${i + 1} не оценён. Пожалуйста, оцените все фрагменты перед сохранением.`);
+        this.common.alert(`Video fragment ${i + 1} not evaluated yet.`);
 
         // не даём сохраняться
         isUnrated = true;
