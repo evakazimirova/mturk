@@ -13,6 +13,14 @@
         <label for="amount">Amount</label>
         <input type="text" formControlName="money" class="form-control" placeholder="10">
       </div>
+      <div class="text-right available">
+        <span>
+          Available: ${{ common.user.money.available }}
+        </span>
+        <span>
+          Reserved: ${{ common.user.money.reserved }}
+        </span>
+      </div>
 
       <!-- Номер счёта -->
       <div class="form-group">
