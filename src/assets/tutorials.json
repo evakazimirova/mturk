@@ -44,19 +44,17 @@
           "Worry",
           "Unrest",
           "Nervousness"
-        ]
-      },
-      {
-        "title": "Fear",
-        "definition": "an emotion resulting from a real or visionary danger.",
-        "more": "Danger can threaten life, personality, or values defended by a person (ideals, goals, principles, etc.).",
-        "types": [
+        ],
+        "title2": "Fear",
+        "definition2": "an emotion resulting from a real or visionary danger.",
+        "types2": [
           "Fear",
           "Terror",
           "Panic",
           "Dismay",
           "Awe"
         ],
+        "more": "Danger can threaten life, personality, or values defended by a person (ideals, goals, principles, etc.).",
         "examples": [
           "2269",
           "1193"
