@@ -75,5 +75,5 @@
   </div>
 
   <span class="next fa fa-arrow-circle-right" (click)="nextScreen()" *ngIf="screen !== 5"></span>
-  <span class="back fa fa-arrow-circle-left" (click)="previousScreen()" *ngIf="screen !== 1"></span>
+  <span class="back fa fa-arrow-circle-left" (click)="previousScreen()" *ngIf="screen !== 1 && !justTest"></span>
 </div>

@@ -27,6 +27,8 @@ export class ProfileTutorialComponent implements OnInit {
   progressTotal = 0;
   manual = true;
   stateHistory: any = [];
+  isInTutorial = false;
+  justTest = false;
 
   constructor(private http: HttpService,
               private common: CommonService,
@@ -38,10 +40,25 @@ export class ProfileTutorialComponent implements OnInit {
       this.common.tutorialModal
         .on('shown.bs.modal', (e) => {
           this.updateTutorial();
+          this.isInTutorial = true;
         })
         .on('hidden.bs.modal', (e) => {
           this.finishTutorial(false);
         });
+    });
+
+    $(document).keyup((e) => {
+      if (this.isInTutorial) {
+        if (e.keyCode === 37) { // стрелка влево
+          if (this.screen !== 1 && !this.justTest) {
+            this.previousScreen();
+          }
+        } else if (e.keyCode === 39) { // стрелка вправо
+          if (this.screen !== 5) {
+            this.nextScreen();
+          }
+        }
+      }
     });
 
     this.http.get('assets/tutorials.json').subscribe(
@@ -60,6 +77,7 @@ export class ProfileTutorialComponent implements OnInit {
       testIndex => {
         this.screen = 5;
         this.test = testIndex;
+        this.justTest = true;
       },
       error => console.error(error)
     );
@@ -107,6 +125,10 @@ export class ProfileTutorialComponent implements OnInit {
     this.progress = 0;
     this.progressPercentage = 0;
     this.progressTotal = 0;
+
+    this.stateHistory = [];
+    this.isInTutorial = false;
+    this.justTest = false;
 
     // сворачиваем окно
     if (hideModal) {
