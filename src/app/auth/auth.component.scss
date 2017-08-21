@@ -2,8 +2,13 @@
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: white; // lighten(lightcyan, 3);
+  background-color: #00b3ff;
   z-index: -2;
+}
+
+.container-fluid {
+  background-color: #fff;
+  min-height: 650px;
 }
 
 .img-responsive {
@@ -43,7 +48,7 @@
 
 .usp {
   position: absolute;
-  color: #00b3ff;
+  color: #0067b5;
   top: 150px;
   width: 650px;
   left: 135px;
@@ -97,22 +102,22 @@ footer.navbar {
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .img-responsive {
-    margin-top: 30px;
+    // margin-top: 30px;
   }
 
   .form {
-    top: -10px;
+    // top: -10px;
   }
 
   .usp {
-    top: 70px;
+    // top: 70px;
     width: 500px;
 
     > div {
       font-size: 1.7rem;
 
       div {
-        margin-top: 20px;
+        // margin-top: 20px;
       }
     }
   }

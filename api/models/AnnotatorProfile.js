@@ -51,7 +51,7 @@ module.exports = {
       type: 'string'
     },
 
-    profession: {
+    occupation: {
       type: 'string'
     },
 

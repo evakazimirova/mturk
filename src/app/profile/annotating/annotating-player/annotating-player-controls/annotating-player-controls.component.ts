@@ -142,7 +142,7 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
   // Видео целиком
   wholeVideo() {
     // Воспроизводим видел целиком, либо первый фрагмент
-    if(this.annot.cf === -1) {
+    if (this.annot.cf === -1) {
       this.annot.setFragment(0);
     } else {
       this.annot.setFragment(-1);

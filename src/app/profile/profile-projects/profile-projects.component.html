@@ -2,7 +2,7 @@
 <div class="p-bar" *ngIf="!(common.progressBar[1].done && common.progressBar[2].done && common.progressBar[4].done)">
   <div *ngFor="let task of common.progressBar; let i = index">
     <div [ngClass]="{done: task.done}" class="fa fa-3x fa-fw fa-arrow-right" *ngIf="i > 0"></div>
-    <div [ngClass]="{done: task.done}" class="box">
+    <div [ngClass]="{done: task.done}" class="box" (click)="task.go()">
       <span>{{ task.action }}</span>
     </div>
   </div>
@@ -48,6 +48,7 @@
             Price: ${{ task.price * task.tasksAmount }}
           </span>
           <span *ngIf="common.user.taskTaken === null || i !== common.user.taskTaken - 1">Estimated work time: {{ task.EWT }} min</span>
+          <span *ngIf="common.user.taskTaken === null || i !== common.user.taskTaken - 1">Deadline: {{ i < 2 ? '1' : '2' }} week{{ i < 2 ? '' : 's' }}</span>
         </div>
 
         <!-- Замочек -->
@@ -83,6 +84,19 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade english-test-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-center" id="myModalLabel">English test</h4>
+      </div>
+      <div class="modal-body">
+        <na-profile-profile-english></na-profile-profile-english>
       </div>
     </div>
   </div>

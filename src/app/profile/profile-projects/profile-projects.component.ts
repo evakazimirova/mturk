@@ -38,27 +38,45 @@ export class ProfileProjectsComponent implements OnInit {
     this.common.progressBar = [
       {
         action: 'Registraition and Confirm e-mail',
-        done: true
+        done: true,
+        go: () => {
+          // console.log('confirm');
+        }
       },
       {
         action: 'Demo Task and Get your 1$',
-        done: this.common.user.demo === 1
+        done: this.common.user.demo === 1,
+        go: () => {
+          this.startDemoTask();
+        }
       },
       {
         action: 'Fill the Profile',
-        done: this.common.user.profile === 1 && this.common.user.englishTest !== 'NO'
+        done: this.common.user.profile === 1 && this.common.user.englishTest !== 'NO',
+        go: () => {
+          this.common.profileMode = 'profile';
+        }
       },
       {
         action: 'Short English Test',
-        done: this.common.user.englishTest !== 'NO'
+        done: this.common.user.englishTest !== 'NO',
+        go: () => {
+          $('.english-test-modal').modal('show');
+        }
       },
       {
         action: 'Learn Skills and Pass the Test in Tutorial',
-        done: this.checkTutorials()
+        done: this.checkTutorials(),
+        go: () => {
+          // console.log('tutorials');
+        }
       },
       {
         action: 'Finish Tasks and Get Money!',
-        done: false
+        done: false,
+        go: () => {
+          this.common.profileMode = 'withdrawal';
+        }
       }
     ];
 
@@ -131,13 +149,13 @@ export class ProfileProjectsComponent implements OnInit {
   checkTutorials() {
     const sum = (array) => {
       let sum = 0;
-      for (var i of array) {
+      for (let i of array) {
         sum += i;
       }
       return sum;
     };
 
-    for (let test of this.common.user.tutorials) {
+    for (const test of this.common.user.tutorials) {
       if (sum(test) === 0) {
         return false;
       }
@@ -210,56 +228,56 @@ export class ProfileProjectsComponent implements OnInit {
       // загружаем данные демо-таска
       this.annot.FID = 0;
       this.annot.task = {
-        "ATID": 0,
-        "done": 0,
-        "FIDs": [
+        'ATID': 0,
+        'done': 0,
+        'FIDs': [
           {
-            "FID": 1,
-            "boxType": "AND",
-            "emotions": [ 37, 38, 39 ],
-            "video": "https://www.youtube.com/watch?v=wglgvziarPc",
-            "result": {
-              "FID": 1,
-              "csv": "start,end\r\n47,50\r\n50,56\r\n74,77"
+            'FID': 1,
+            'boxType': 'AND',
+            'emotions': [ 37, 38, 39 ],
+            'video': 'https://www.youtube.com/watch?v=wglgvziarPc',
+            'result': {
+              'FID': 1,
+              'csv': 'start,end\r\n47,50\r\n50,56\r\n74,77'
             },
-            "answers": [
+            'answers': [
               [37],
               [37],
               []
             ],
-            "done": false
+            'done': false
           },
           {
-            "FID": 2,
-            "boxType": "AND",
-            "emotions": [ 37, 38, 39 ],
-            "video": "https://www.youtube.com/watch?v=JjhvaDqB2wc",
-            "result": {
-              "FID": 2,
-              "csv": "start,end\r\n43,45\r\n62,66"
+            'FID': 2,
+            'boxType': 'AND',
+            'emotions': [ 37, 38, 39 ],
+            'video': 'https://www.youtube.com/watch?v=JjhvaDqB2wc',
+            'result': {
+              'FID': 2,
+              'csv': 'start,end\r\n43,45\r\n62,66'
             },
-            "answers": [
+            'answers': [
               [],
               []
             ],
-            "done": false
+            'done': false
           },
           {
-            "FID": 3,
-            "boxType": "AND",
-            "emotions": [ 37, 38, 39 ],
-            "video": "https://www.youtube.com/watch?v=NyHCIhFsZoA",
-            "result": {
-              "FID": 3,
-              "csv": "start,end\r\n389,390\r\n390,393\r\n393,395\r\n413,416"
+            'FID': 3,
+            'boxType': 'AND',
+            'emotions': [ 37, 38, 39 ],
+            'video': 'https://www.youtube.com/watch?v=NyHCIhFsZoA',
+            'result': {
+              'FID': 3,
+              'csv': 'start,end\r\n389,390\r\n390,393\r\n393,395\r\n413,416'
             },
-            "answers": [
+            'answers': [
               [38],
               [38, 39],
               [39],
               [39]
             ],
-            "done": false
+            'done': false
           }
         ]
       };

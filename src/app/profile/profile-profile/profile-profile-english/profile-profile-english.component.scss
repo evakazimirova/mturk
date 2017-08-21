@@ -16,8 +16,14 @@
   }
 
   .start-text {
-    padding: 90px 30px;
+    padding: 50px 30px;
     line-height: 2;
+
+    .attention {
+      font-size: 3.5rem;
+      line-height: 1.5;
+      margin: 30px 0;
+    }
   }
 
   .congrats {

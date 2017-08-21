@@ -28,6 +28,8 @@ import { ProfileWithdrawalComponent } from './profile/profile-withdrawal/profile
 import { ProfileNetworkingComponent } from './profile/profile-networking/profile-networking.component';
 import { ProfileFaqComponent } from './profile/profile-faq/profile-faq.component';
 import { ProfileRulesComponent } from './profile/profile-rules/profile-rules.component';
+import { ProfileTutorialComponent } from './profile/profile-tutorial/profile-tutorial.component';
+import { ProfileEmotionsDefinitionsComponent } from './profile/profile-emotions-definitions/profile-emotions-definitions.component';
 import { AnnotatingComponent } from './profile/annotating/annotating.component';
 import { AnnotatingVideosComponent } from './profile/annotating/annotating-videos/annotating-videos.component';
 import { AnnotatingFragmentsComponent } from './profile/annotating/annotating-fragments/annotating-fragments.component';
@@ -38,7 +40,6 @@ import { AnnotatingPlayerVideoComponent } from './profile/annotating/annotating-
 import { AnnotatingPlayerProgressComponent } from './profile/annotating/annotating-player/annotating-player-progress/annotating-player-progress.component';
 import { AnnotatingPlayerControlsComponent } from './profile/annotating/annotating-player/annotating-player-controls/annotating-player-controls.component';
 import { AnnotatingPlayerRateBarComponent } from './profile/annotating/annotating-player/annotating-player-ratebar/annotating-player-ratebar.component';
-import { ProfileTutorialComponent } from './profile/profile-tutorial/profile-tutorial.component';
 
 import { AdminComponent } from './admin/admin.component';
 import { AdminHeaderComponent } from './admin/admin-header/admin-header.component';
@@ -83,7 +84,8 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
     ProfileFaqComponent,
     ProfileRulesComponent,
     ProfileAccountComponent,
-    ProfileProfileEnglishComponent
+    ProfileProfileEnglishComponent,
+    ProfileEmotionsDefinitionsComponent
   ],
   imports: [
     BrowserModule,

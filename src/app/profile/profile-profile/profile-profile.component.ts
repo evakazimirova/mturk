@@ -59,7 +59,7 @@ export class ProfileProfileComponent implements OnInit {
       'speciality': ['', [
         Validators.required
       ]],
-      'profession': ['', [
+      'occupation': ['', [
         Validators.required
       ]],
       'hobby': ['', [
@@ -190,6 +190,10 @@ export class ProfileProfileComponent implements OnInit {
 
               // обновляем прогресс-бар
               this.common.user.profile = 1;
+
+              if (this.common.user.englishTest === 'NO') {
+                this.common.alert('Don\'t forget to pass the english test!');
+              }
             },
             error => {
               this.loading = false;
@@ -198,10 +202,10 @@ export class ProfileProfileComponent implements OnInit {
           );
         }
       } else {
-        this.common.alert('Надо согласиться на обработку персональных данных!');
+        this.common.alert('You should agree to the processing of my personal data!');
       }
     } else {
-      this.common.alert('Заполнены не все поля!');
+      this.common.alert('Not all required fields are filled!');
     }
   }
 

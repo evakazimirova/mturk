@@ -73,24 +73,6 @@
 
           <!-- Раскрывающийся список -->
           <ul class="dropdown-menu">
-            <!-- Сумма вознаграждения доступная для вывода -->
-            <li>
-              <a href="#" (click)="selectProfileMode('withdrawal')">
-                <span class="fa fa-fw fa-money"></span>
-                Money available: ${{ common.user.money.available }}
-              </a>
-            </li>
-
-            <!-- Cумма вознаграждения доступная для вывода после выполнения задач на которые подписался аннотатор -->
-            <li>
-              <a href="#" (click)="selectProfileMode('withdrawal')">
-                <span class="fa fa-fw fa-money"></span>
-                Money reserved: ${{ common.user.money.reserved }}
-              </a>
-            </li>
-
-            <li role="separator" class="divider"></li><!-- Разделитель -->
-
             <!-- Редактировать профиль -->
             <li (click)="selectProfileMode('account')">
               <a href="#">

@@ -4,7 +4,7 @@
   <div class="col col-xs-8 text-center">
     <div class="video-navigation">
       <!-- Воспроизведение -->
-      <span class="fa fa-fw fa-play" (click)="playVideo()"></span>
+      <span class="fa fa-fw fa-play" (click)="replayVideo()"></span>
 
       <!-- Остановка -->
       <span class="fa fa-fw fa-stop" (click)="stopVideo()"></span>
@@ -25,7 +25,8 @@
 
   <!-- Видео целиком -->
   <div class="col col-xs-4">
-    <button class="btn btn-block btn-default" (click)="wholeVideo()"
-      [ngClass]="{active: annot.cf === -1}">Whole video</button>
+    <button class="btn btn-block btn-default" (click)="wholeVideo()">
+      {{ annot.cf === -1 ? 'Fragments' : 'Whole video' }}
+    </button>
   </div>
 </div>

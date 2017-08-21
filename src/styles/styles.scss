@@ -50,6 +50,27 @@ button {
 //   }
 // }
 
+
+.terms-modal {
+  .modal-body {
+    p {
+      &:first-child {
+        text-align: center;
+      }
+    }
+
+    ul {
+      list-style: none;
+      margin-left: -10px;
+      text-indent: -27px;
+
+      ul {
+        margin-left: -2px;
+        text-indent: -39px;
+      }
+    }
+  }
+}
 // валидация форм
 input.ng-dirty { //.ng-touched
   &.ng-valid {
