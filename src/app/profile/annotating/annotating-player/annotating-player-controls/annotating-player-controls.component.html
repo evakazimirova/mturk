@@ -25,7 +25,8 @@
 
   <!-- Видео целиком -->
   <div class="col col-xs-4">
-    <button class="btn btn-block btn-default" (click)="wholeVideo()"
-      [ngClass]="{active: annot.cf === -1}">Whole video</button>
+    <button class="btn btn-block btn-default" (click)="wholeVideo()">
+      {{ annot.cf === -1 ? 'Fragments' : 'Whole video' }}
+    </button>
   </div>
 </div>
