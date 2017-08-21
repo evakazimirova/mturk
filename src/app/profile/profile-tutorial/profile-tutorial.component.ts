@@ -83,6 +83,7 @@ export class ProfileTutorialComponent implements OnInit {
         this.screen = 5;
         this.test = testIndex;
         this.justTest = true;
+        this.initDragAndDrop();
       },
       error => console.error(error)
     );
@@ -275,6 +276,7 @@ export class ProfileTutorialComponent implements OnInit {
                 );
 
                 this.common.tutorialDone = true;
+                // прекращаем напоминать о прохождении туториала
                 clearInterval(this.annot.reminder);
 
                 // поздравляем аннотатора с успехом

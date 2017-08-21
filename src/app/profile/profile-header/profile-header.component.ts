@@ -27,6 +27,7 @@ export class ProfileHeaderComponent {
             this.annot.allFragmentsRated = true;
             this.profileModeSelected.emit(page);
 
+            // прекращаем напоминать о прохождении туториала
             if (this.annot.reminder) {
               clearInterval(this.annot.reminder);
             }

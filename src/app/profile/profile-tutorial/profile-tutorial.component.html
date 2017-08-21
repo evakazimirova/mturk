@@ -62,18 +62,20 @@
   </div>
 
   <div class="screen" *ngIf="screen === 5">
-    <div class="row" class="test" *ngIf="test !== undefined">
-      <div class="col col-xs-4" *ngFor="let pair of tutorial.tests[test]; let i = index">
-        <div class="video" (click)="playVideo($event)">
-          <video class="tutorialVideo" id="tutorialVideo_{{ i }}" preload="auto">
-            <source src="https://storage.googleapis.com/video_tutorial/({{ pair.video }}).mp4" type='video/mp4' controls="controls">
-          </video>
-        </div>
-        <div class="lbl">
-          <span class="empty slot" [attr.data-label]="pair.label"></span>
+    <div class="test" *ngIf="test !== undefined">
+      <div class="row text-center">
+        <div class="col col-xs-4" *ngFor="let pair of tutorial.tests[test]; let i = index">
+          <div class="video" (click)="playVideo($event)">
+            <video class="tutorialVideo" id="tutorialVideo_{{ i }}" preload="auto">
+              <source src="https://storage.googleapis.com/video_tutorial/({{ pair.video }}).mp4" type='video/mp4' controls="controls">
+            </video>
+          </div>
+          <div class="lbl">
+            <span class="empty slot" [attr.data-label]="pair.label"></span>
+          </div>
         </div>
       </div>
-      <div class="lbl">
+      <div class="row lbl">
         <span class="answer" *ngFor="let label of labels[test]">{{ label }}</span>
       </div>
     </div>

@@ -63,8 +63,8 @@
         background-color: orange;
         color: white;
         padding: 9px 5px;
-        margin: 0 10px 10px 10px;
-        width: 250px;
+        margin-bottom: 20px;
+        width: 256px;
         height: 57px;
         cursor: pointer;
         border: 2px solid #fff;
@@ -73,6 +73,10 @@
 
         &.ui-draggable-dragging {
           z-index: 2;
+        }
+
+        &.answer {
+          margin: 0 5px 10px 5px;
         }
 
         &.empty {
