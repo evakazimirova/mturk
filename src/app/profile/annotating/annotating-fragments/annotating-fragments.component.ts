@@ -137,31 +137,33 @@ export class AnnotatingFragmentsComponent {
       }
     } else {
       if (this.annot.FID == 2) {
-        this.common.profileMode = 'taskList';
-
         // чистим кэш
         this.annot.rating = [[]];
         this.annot.fragmentsWip = [];
         this.annot.cf = -1;
         this.annot.emotion = 0;
 
+        if (this.common.user.demo) {
+          this.common.profileMode = 'taskList';
+        } else {
+          this.common.profileMode = 'withdrawal';
+          this.http.get(`annotators/demoFinnished`).subscribe(
+            demo => {
+              // this.loadingTask = -1;
+              this.common.user.demo = demo;
+              this.common.user.money.available = 1;
+              this.common.progressBar[1].done = true;
 
-        this.http.get(`annotators/demoFinnished`).subscribe(
-          demo => {
-            // this.loadingTask = -1;
-            this.common.user.demo = demo;
-            this.common.user.money.available = 1;
-            this.common.progressBar[1].done = true;
-
-            this.common.alert('Congrats! You just finished first task on Emotion Miner! Your account balanced with appropriate sum. You can withdraw your money, when balance exceed 10$. When you are ready - start a new task on a Task Board. To start with serious tasks, you should fulfill form in your Account. Поздравляем! Ты заработал свой первый *?$*.  //стрелка или ссылка куда смотреть Для того, чтобы вывести деньги на карту (ссылка на раздел вывода денег), тебе нужно заработать минимум *??$*. Как это сделать - читай FAQ (ссылка на раздел про вывод денег)', () => {
-              this.common.alert('Заполни анкету в профайле, пройди короткий тест по английскому и приступай к работе!');
-            });
-          },
-          err => {
-            // this.loadingTask = -1;
-            console.error(err);
-          }
-        );
+              this.common.alert('Congrats! You just finished first task on Emotion Miner! Your account balanced with appropriate sum. You can withdraw your money, when balance exceed 10$. When you are ready - start a new task on a Task Board. To start with serious tasks, you should fulfill form in your Account.', () => {
+                this.common.alert('Заполни анкету в профайле, пройди короткий тест по английскому и приступай к работе!');
+              });
+            },
+            err => {
+              // this.loadingTask = -1;
+              console.error(err);
+            }
+          );
+        }
       } else {
         // разрешаем переходить к другому видео или закрывать сайт
         this.annot.allFragmentsRated = true;
