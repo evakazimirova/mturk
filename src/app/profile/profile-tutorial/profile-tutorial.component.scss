@@ -85,13 +85,20 @@
   }
 }
 
-.next {
+.next, .back {
   cursor: pointer;
   color: lighten(#00b3ff, 20);
   position: absolute;
   bottom: 5px;
-  right: 10px;
   font-size: 6rem;
+}
+
+.next {
+  right: 10px;
+}
+
+.back {
+  left: 10px;
 }
 
 .tutorialVideo {
