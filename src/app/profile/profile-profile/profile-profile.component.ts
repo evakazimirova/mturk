@@ -190,6 +190,10 @@ export class ProfileProfileComponent implements OnInit {
 
               // обновляем прогресс-бар
               this.common.user.profile = 1;
+
+              if (this.common.user.englishTest === 'NO') {
+                this.common.alert('Don\'t forget to pass the english test!');
+              }
             },
             error => {
               this.loading = false;
