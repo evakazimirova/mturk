@@ -390,44 +390,54 @@ module.exports = {
       email: user.email
     }).exec((error, annotator) => {
       if (annotator) {
-        // генерируем токен и записываем в базу
-        annotator.emailToken = CryptoService.generateTokenFromJSON(annotator);
-
-        const doAfterCheckToken = () => {
-          // высылаем письмо со ссылкой на страницу смены пароля
-          annotator.hostName = req.headers.host;
-          EmailService.onForgotPassword(annotator);
-
-          // сообщаем об успехе
-          res.send('true');
-        };
-
-        Tokens.findOne({
+        // достаём данные аннотатора
+        AnnotatorProfile.findOne({
           AID: annotator.AID
-        }).exec((error, token) => {
-          if (token) {
-            // токен уже есть — обновляем
-            Tokens.update(
-              {
-                AID: annotator.AID
-              },
-              {
-                token: annotator.emailToken
-              }
-            ).exec((error, updated) => {
-              doAfterCheckToken();
-            });
-          } else {
-            // токена ещё нет — создаём
-            Tokens.create(
-              {
-                AID: annotator.AID,
-                token: annotator.emailToken
-              }
-            ).exec((error, updated) => {
-              doAfterCheckToken();
-            });
-          }
+        }).exec((error, annotatorProfile) => {
+          // разделяем имя и фамилию аннотатора
+          const names = annotatorProfile.name.split(',');
+          annotator.firstName = names[1];
+          annotator.secondName = names[0];
+
+          // генерируем токен и записываем в базу
+          annotator.emailToken = CryptoService.generateTokenFromJSON(annotator);
+
+          const doAfterCheckToken = () => {
+            // высылаем письмо со ссылкой на страницу смены пароля
+            annotator.hostName = req.headers.host;
+            EmailService.onForgotPassword(annotator);
+
+            // сообщаем об успехе
+            res.send('true');
+          };
+
+          Tokens.findOne({
+            AID: annotator.AID
+          }).exec((error, token) => {
+            if (token) {
+              // токен уже есть — обновляем
+              Tokens.update(
+                {
+                  AID: annotator.AID
+                },
+                {
+                  token: annotator.emailToken
+                }
+              ).exec((error, updated) => {
+                doAfterCheckToken();
+              });
+            } else {
+              // токена ещё нет — создаём
+              Tokens.create(
+                {
+                  AID: annotator.AID,
+                  token: annotator.emailToken
+                }
+              ).exec((error, updated) => {
+                doAfterCheckToken();
+              });
+            }
+          });
         });
       } else {
         res.status(400).send('no email');
