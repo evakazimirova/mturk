@@ -59,7 +59,7 @@ export class ProfileProfileComponent implements OnInit {
       'speciality': ['', [
         Validators.required
       ]],
-      'profession': ['', [
+      'occupation': ['', [
         Validators.required
       ]],
       'hobby': ['', [
