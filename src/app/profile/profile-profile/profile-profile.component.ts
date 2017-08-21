@@ -209,8 +209,15 @@ export class ProfileProfileComponent implements OnInit {
     }
   }
 
-  goToTutorial(event, i) {
+  goToTutorial(event, tutorialIndex) {
     event.preventDefault(); // отменяем стандартное действие
-    this.common.tutorial = i;
+    this.common.tutorial = tutorialIndex;
+  }
+
+  goToTest($event, tutorialIndex, testIndex) {
+    event.preventDefault(); // отменяем стандартное действие
+    this.common.tutorial = tutorialIndex;
+    this.common.startTest(testIndex);
+
   }
 }

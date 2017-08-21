@@ -155,7 +155,7 @@
         <td>
           <div class="star" *ngFor="let t of tutorialsTests[j]; let i = index">
             <span class="fa fa-star fa-2x" [ngClass]="{done: t}"></span>
-            <span class="lbl">Test #{{ i + 1 }}</span>
+            <span class="lbl" (click)="goToTest($event, j, i)">Test #{{ i + 1 }}</span>
           </div>
         </td>
       </tr>

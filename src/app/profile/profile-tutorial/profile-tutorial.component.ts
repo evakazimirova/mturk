@@ -54,6 +54,14 @@ export class ProfileTutorialComponent implements OnInit {
         console.error(error);
       }
     );
+
+    this.common.testStarted.subscribe(
+      testIndex => {
+        this.screen = 5;
+        this.test = testIndex;
+      },
+      error => console.error(error)
+    );
   }
 
   updateTutorial() {
