@@ -39,8 +39,7 @@
       <i><span *ngFor="let type of tutorial.emotions[emotion].types2; let j = index">{{ j > 0 ? ' — ' : '' }}{{ type }}</span></i>
     </p>
     <button class="btn btn-link" *ngIf="tutorial.emotions[emotion].more" (click)="more = 1 - more">More</button>
-    <p *ngIf="tutorial.emotions[emotion].more && more === 1">
-      {{ tutorial.emotions[emotion].more }}
+    <p *ngIf="tutorial.emotions[emotion].more && more === 1" [innerHTML]="tutorial.emotions[emotion].more">
     </p>
   </div>
 
