@@ -41,6 +41,11 @@ export class ProfileTutorialComponent implements OnInit {
         .on('shown.bs.modal', (e) => {
           this.updateTutorial();
           this.isInTutorial = true;
+
+          // ставим видео на паузу
+          if (this.common.profileMode === 'annotating') {
+            this.annot.unwatchVideo('pause');
+          }
         })
         .on('hidden.bs.modal', (e) => {
           this.finishTutorial(false);
