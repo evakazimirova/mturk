@@ -64,4 +64,9 @@ export class CommonService {
   confirmModal(answer) {
     this.confirmed.emit(answer);
   }
+
+  testStarted = new EventEmitter();
+  startTest(testIndex) {
+    this.testStarted.emit(testIndex);
+  }
 }

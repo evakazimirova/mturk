@@ -60,13 +60,14 @@
         display: inline-block;
         background-color: orange;
         color: white;
-        padding: 5px;
+        padding: 9px 5px;
         margin: 0 10px 10px 10px;
         width: 250px;
         height: 57px;
         cursor: pointer;
         border: 2px solid #fff;
         // outline: 2px solid #fff;
+        font-size: 2.4rem;
 
         &.ui-draggable-dragging {
           z-index: 2;
@@ -85,13 +86,20 @@
   }
 }
 
-.next {
+.next, .back {
   cursor: pointer;
   color: lighten(#00b3ff, 20);
   position: absolute;
   bottom: 5px;
-  right: 10px;
   font-size: 6rem;
+}
+
+.next {
+  right: 10px;
+}
+
+.back {
+  left: 10px;
 }
 
 .tutorialVideo {

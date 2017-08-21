@@ -26,6 +26,9 @@ export class ProfileTutorialComponent implements OnInit {
   progressPercentage = 0;
   progressTotal = 0;
   manual = true;
+  stateHistory: any = [];
+  isInTutorial = false;
+  justTest = false;
 
   constructor(private http: HttpService,
               private common: CommonService,
@@ -37,10 +40,25 @@ export class ProfileTutorialComponent implements OnInit {
       this.common.tutorialModal
         .on('shown.bs.modal', (e) => {
           this.updateTutorial();
+          this.isInTutorial = true;
         })
         .on('hidden.bs.modal', (e) => {
           this.finishTutorial(false);
         });
+    });
+
+    $(document).keyup((e) => {
+      if (this.isInTutorial) {
+        if (e.keyCode === 37) { // стрелка влево
+          if (this.screen !== 1 && !this.justTest) {
+            this.previousScreen();
+          }
+        } else if (e.keyCode === 39) { // стрелка вправо
+          if (this.screen !== 5) {
+            this.nextScreen();
+          }
+        }
+      }
     });
 
     this.http.get('assets/tutorials.json').subscribe(
@@ -54,16 +72,25 @@ export class ProfileTutorialComponent implements OnInit {
         console.error(error);
       }
     );
+
+    this.common.testStarted.subscribe(
+      testIndex => {
+        this.screen = 5;
+        this.test = testIndex;
+        this.justTest = true;
+      },
+      error => console.error(error)
+    );
   }
 
   updateTutorial() {
     this.tutorial = this.tutorials[this.common.tutorial];
 
     this.labels = [];
-    let tests = [];
-    for (let test of this.tutorial.tests) {
-      let labels = [];
-      for (let v of test) {
+    const tests = [];
+    for (const test of this.tutorial.tests) {
+      const labels = [];
+      for (const v of test) {
         labels.push(v.label);
       }
       this.labels.push(labels);
@@ -72,13 +99,13 @@ export class ProfileTutorialComponent implements OnInit {
     this.tutorial.tests = tests;
 
     this.progressTotal = 3 + this.tutorial.emotions.length;
-    for (let e of this.tutorial.emotions) {
+    for (const e of this.tutorial.emotions) {
       if (e.examples) {
         this.progressTotal += e.examples.length;
       }
     }
 
-    for (let t in this.common.user.tutorials[this.common.tutorial]) {
+    for (const t in this.common.user.tutorials[this.common.tutorial]) {
       if (this.common.user.tutorials[this.common.tutorial][t] === 0) {
         this.test = +t;
         this.testExists = true;
@@ -99,6 +126,10 @@ export class ProfileTutorialComponent implements OnInit {
     this.progressPercentage = 0;
     this.progressTotal = 0;
 
+    this.stateHistory = [];
+    this.isInTutorial = false;
+    this.justTest = false;
+
     // сворачиваем окно
     if (hideModal) {
       this.common.tutorialModal.modal('hide');
@@ -117,6 +148,14 @@ export class ProfileTutorialComponent implements OnInit {
   }
 
   nextScreen() {
+    this.stateHistory.push({
+      screen: this.screen,
+      example: this.example,
+      emotion: this.emotion,
+      progress: this.progress,
+      progressPercentage: this.progressPercentage
+    });
+
     if (this.screen === 3) {
       this.more = 0;
       if (this.emotion < this.tutorial.emotions.length) {
@@ -161,23 +200,42 @@ export class ProfileTutorialComponent implements OnInit {
     this.progressPercentage = +(this.progress / this.progressTotal * 100).toFixed(0);
   }
 
+  previousScreen() {
+    const lastScreen = this.stateHistory.pop();
+
+    this.screen = lastScreen.screen;
+    this.example = lastScreen.example;
+    this.emotion = lastScreen.emotion;
+    this.progress = lastScreen.progress;
+    this.progressPercentage = lastScreen.progressPercentage;
+
+    if (this.screen === 3 && this.example > 0) {
+      $(document).ready(() => {
+        this.tutorialVideo = document.getElementById('tutorialVideo');
+        this.tutorialVideo.load();
+      });
+    } else if (this.screen === 4) {
+      this.more = 0;
+    }
+  }
+
   initDragAndDrop() {
     $(document).ready(() => {
       setTimeout(() => {
-        for (let t in this.tutorial.tests[this.test]) {
+        for (const t in this.tutorial.tests[this.test]) {
           const tutorialVideo: any = document.getElementById('tutorialVideo_' + t);
           tutorialVideo.load();
         }
 
-        const answers = $(".answer");
-        const slots = $(".slot");
+        const answers = $('.answer');
+        const slots = $('.slot');
         const numOfSlots = slots.length;
         let guessed = 0;
         let mistake = 0;
 
         answers.draggable({
-          cursor: "move",
-          revert: "invalid",
+          cursor: 'move',
+          revert: 'invalid',
           cursorAt: {
             top: 28,
             left: 125
