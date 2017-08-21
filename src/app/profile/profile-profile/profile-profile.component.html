@@ -153,9 +153,10 @@
       <tr *ngFor="let tutorial of tutorials; let j = index">
         <td class="tutorial"><a href="#" data-toggle="modal" data-target=".tutorial-modal" (click)="goToTutorial($event, j)">{{ tutorial }}</a></td>
         <td>
-          <div class="star" *ngFor="let t of tutorialsTests[j]; let i = index">
+          <div class="star" *ngFor="let t of tutorialsTests[j]; let i = index"
+            data-toggle="modal" data-target=".tutorial-modal" (click)="goToTest($event, j, i)">
             <span class="fa fa-star fa-2x" [ngClass]="{done: t}"></span>
-            <span class="lbl" (click)="goToTest($event, j, i)">Test #{{ i + 1 }}</span>
+            <span class="lbl">Test #{{ i + 1 }}</span>
           </div>
         </td>
       </tr>

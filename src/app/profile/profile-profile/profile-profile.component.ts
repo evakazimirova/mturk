@@ -14,12 +14,12 @@ export class ProfileProfileComponent implements OnInit {
   countrySelected = false;
   tutorialsTests = this.common.user.tutorials;
   tutorials = [
-    "Basic Emotions: part 1",
-    "Basic Emotions: part 2",
-    "Social Emotions",
-    "Person and Situation",
-    "Social Relation",
-    "Conversation"
+    'Basic Emotions: part 1',
+    'Basic Emotions: part 2',
+    'Social Emotions',
+    'Person and Situation',
+    'Social Relation',
+    'Conversation'
   ];
 
   constructor(public common: CommonService,
@@ -217,7 +217,9 @@ export class ProfileProfileComponent implements OnInit {
   goToTest($event, tutorialIndex, testIndex) {
     event.preventDefault(); // отменяем стандартное действие
     this.common.tutorial = tutorialIndex;
-    this.common.startTest(testIndex);
 
+    setTimeout(() => {
+      this.common.startTest(testIndex);
+    }, 100);
   }
 }
