@@ -26,6 +26,10 @@ export class ProfileHeaderComponent {
             // чтобы плеер не ругался при повторном запуске
             this.annot.allFragmentsRated = true;
             this.profileModeSelected.emit(page);
+
+            if (this.annot.reminder) {
+              clearInterval(this.annot.reminder);
+            }
           }
         }
       );

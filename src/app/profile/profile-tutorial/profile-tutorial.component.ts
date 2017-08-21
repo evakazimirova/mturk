@@ -142,7 +142,7 @@ export class ProfileTutorialComponent implements OnInit {
   }
 
   playVideo(event) {
-    const tutorialVideo = event.target
+    const tutorialVideo = event.target;
 
     if (tutorialVideo.paused) {
       tutorialVideo.play();
@@ -257,7 +257,7 @@ export class ProfileTutorialComponent implements OnInit {
               answer.animate({
                 top: ui.position.top + (slot.offset().top - answer.offset().top),
                 left: ui.position.left + (slot.offset().left - answer.offset().left)
-              })
+              });
 
               guessed++;
               if (guessed === numOfSlots) {
@@ -274,7 +274,8 @@ export class ProfileTutorialComponent implements OnInit {
                   error => console.error(error)
                 );
 
-                this.common.tutorialDone;
+                this.common.tutorialDone = true;
+                clearInterval(this.annot.reminder);
 
                 // поздравляем аннотатора с успехом
                 this.common.alert(`Congrats! You've just passed one more test!`, () => {

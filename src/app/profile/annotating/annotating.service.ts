@@ -19,6 +19,7 @@ export class AnnotatingService {
   controlsAreSet = false;
   isClickingFirstFragment = false;
   demoMode = false;
+  reminder;
 
   demoHints = [
     'Посмотрите на изображение. Ваша задача – выбирать те состояния (чувства, эмоции и т.д.), которые испытывает этот человек. Let’s start!',
