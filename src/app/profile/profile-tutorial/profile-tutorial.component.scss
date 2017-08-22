@@ -1,9 +1,16 @@
 .screen {
   min-height: 700px;
   font-size: 3rem;
+  padding: 0 20px;
+  padding-bottom: 40px;
 
-  img {
-    width: 430px;
+  .img-row {
+    img {
+      width: 275px;
+    }
+  }
+  .img-responsive {
+    margin: 0 auto;
   }
 
   .btn-link {
@@ -28,7 +35,7 @@
 
     .fa-ul {
       font-size: 5rem;
-      padding: 20px 190px;
+      padding: 20px 170px;
     }
   }
 
@@ -61,8 +68,8 @@
         background-color: orange;
         color: white;
         padding: 9px 5px;
-        margin: 0 10px 10px 10px;
-        width: 250px;
+        margin-bottom: 20px;
+        width: 256px;
         height: 57px;
         cursor: pointer;
         border: 2px solid #fff;
@@ -73,9 +80,14 @@
           z-index: 2;
         }
 
+        &.answer {
+          margin: 0 5px 10px 5px;
+        }
+
         &.empty {
           background-color: #fff;
           border: 2px solid orange;
+          color: #000;
 
           &.ui-droppable-hover {
             background-color: lighten(orange, 30);

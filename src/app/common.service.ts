@@ -69,4 +69,9 @@ export class CommonService {
   startTest(testIndex) {
     this.testStarted.emit(testIndex);
   }
+
+  tutorialsUpdated = new EventEmitter();
+  updateTutorials() {
+    this.tutorialsUpdated.emit();
+  }
 }

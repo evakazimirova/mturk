@@ -8,7 +8,10 @@
 </div>
 
 <div class="row alert alert-warning" *ngIf="annot.isPersonShown || (annot.demoMode && annot.demoHint !== -1)">
-  <span *ngIf="!annot.demoMode">What does feel this person? Choose the states from the following.</span>
+  <span *ngIf="!annot.demoMode">
+    Please consider that your task is to mark this person's emotions during the full video playback time.
+    Even if you see two people in a single frame, just continue marking emotions of this person only.
+  </span>
   <span *ngIf="annot.demoMode" [innerHTML]="annot.demoHints[annot.demoHint]"></span>
 </div>
 

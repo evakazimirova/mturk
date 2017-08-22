@@ -40,9 +40,9 @@ export class AnnotatingComponent implements OnInit {
       if (tutorialChosen) {
         const reminder = () => {
           this.common.alert(`Hi! Just to remind you that your tutorial training is not completed yet. Please, do it asap for finishing the actual task.`, () => {
-            setTimeout(reminder, 30 * 60 * 1000);
+            this.annot.reminder = setTimeout(reminder, 30 * 60 * 1000);
           });
-        }
+        };
 
         // this.annot.unwatchVideo('pause');
 
@@ -53,7 +53,7 @@ export class AnnotatingComponent implements OnInit {
           Don’t worry, it only takes a couple of minutes.
           <strong>Please consider that it’s not possible to complete the task without the training passed.</strong>
         `, () => {
-          setTimeout(reminder, 30 * 60 * 1000);
+          this.annot.reminder = setTimeout(reminder, 30 * 60 * 1000);
         });
       }
     }
