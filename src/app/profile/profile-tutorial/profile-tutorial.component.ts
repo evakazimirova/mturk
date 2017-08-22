@@ -256,26 +256,31 @@ export class ProfileTutorialComponent implements OnInit {
             const answer = ui.draggable;
 
             event.target.dataset.answer = ui.draggable.text();
+            ui.draggable[0].dataset.slot = event.target.dataset.label;
 
             isPassedTest = true;
-            isMistaken = false;
-            for (const slot of slots) {
-              // console.log(slot, slot.dataset.label, slot.dataset.answer);
-              if (!slot.dataset.answer) {
+            for (const answer of answers) {
+              if (!answer.dataset.slot) {
                 isPassedTest = false;
               }
-
-              console.log(slot.dataset.label, slot.dataset.answer);
-              if (slot.dataset.label !== slot.dataset.answer) {
-                isMistaken = true;
-              }
             }
+
+            // for (const slot of slots) {
+            //   console.log(slot.dataset.label, slot.dataset.answer);
+            // }
 
             answer.animate({
               top: ui.position.top + (slot.offset().top - answer.offset().top),
               left: ui.position.left + (slot.offset().left - answer.offset().left)
             }, () => {
               if (isPassedTest) {
+                isMistaken = false;
+                for (const slot of slots) {
+                  if (slot.dataset.label !== slot.dataset.answer) {
+                    isMistaken = true;
+                  }
+                }
+
                 if (!isMistaken) {
                   // // возвращаем все плашки на место
                   // answers.stop().css({
@@ -313,8 +318,8 @@ export class ProfileTutorialComponent implements OnInit {
                   if (mistake < 3) {
                     this.common.alert(`Sorry but you are wrong. Please try again.`);
 
-                    for (const slot of slots) {
-                      delete slot.dataset.answer;
+                    for (const answer of answers) {
+                      delete answer.dataset.slot;
                     }
                   } else {
                     this.common.alert(`Sorry but you are wrong again. You haven't passed the test. Here are the correct answer.`, () => {
