@@ -87,6 +87,7 @@
         &.empty {
           background-color: #fff;
           border: 2px solid orange;
+          color: #000;
 
           &.ui-droppable-hover {
             background-color: lighten(orange, 30);

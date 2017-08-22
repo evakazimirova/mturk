@@ -71,7 +71,8 @@
         },
         {
           "video": "10",
-          "label": "Anxiety"
+          "label": "Anxiety",
+          "personOnTheLeft": true
         }
       ],
       [
@@ -81,15 +82,18 @@
         },
         {
           "video": "2677",
-          "label": "Happiness"
+          "label": "Happiness",
+          "personOnTheLeft": true
         },
         {
           "video": "794",
-          "label": "Anxiety"
+          "label": "Anxiety",
+          "personOnTheLeft": true
         },
         {
           "video": "390",
-          "label": "Sadness"
+          "label": "Sadness",
+          "personOnTheLeft": true
         },
         {
           "video": "2711",
@@ -107,7 +111,8 @@
         },
         {
           "video": "3840",
-          "label": "Happiness"
+          "label": "Happiness",
+          "personOnTheLeft": true
         },
         {
           "video": "1436",
@@ -115,15 +120,18 @@
         },
         {
           "video": "623",
-          "label": "Sadness"
+          "label": "Sadness",
+          "personOnTheLeft": true
         },
         {
           "video": "2969",
-          "label": "Happiness"
+          "label": "Happiness",
+          "personOnTheLeft": true
         },
         {
           "video": "3381",
-          "label": "Anxiety"
+          "label": "Anxiety",
+          "personOnTheLeft": true
         }
       ]
     ]
@@ -192,7 +200,8 @@
         },
         {
           "video": "3085_sp",
-          "label": "Surprise"
+          "label": "Surprise",
+          "personOnTheLeft": true
         },
         {
           "video": "11",
@@ -214,7 +223,8 @@
         },
         {
           "video": "5086",
-          "label": "Disgust"
+          "label": "Disgust",
+          "personOnTheLeft": true
         },
         {
           "video": "1642_sp",
@@ -282,7 +292,8 @@
       [
         {
           "video": "1444",
-          "label": "Shame"
+          "label": "Shame",
+          "personOnTheLeft": true
         },
         {
           "video": "275",
@@ -294,13 +305,15 @@
         },
         {
           "video": "5560",
-          "label": "Admiration"
+          "label": "Admiration",
+          "personOnTheLeft": true
         }
       ],
       [
         {
           "video": "5672",
-          "label": "Shame"
+          "label": "Shame",
+          "personOnTheLeft": true
         },
         {
           "video": "5120",
@@ -312,13 +325,15 @@
         },
         {
           "video": "2",
-          "label": "Admiration"
+          "label": "Admiration",
+          "personOnTheLeft": true
         }
       ],
       [
         {
           "video": "1544",
-          "label": "Shame"
+          "label": "Shame",
+          "personOnTheLeft": true
         },
         {
           "video": "498",
@@ -336,11 +351,13 @@
       [
         {
           "video": "7",
-          "label": "Shame"
+          "label": "Shame",
+          "personOnTheLeft": true
         },
         {
           "video": "1615",
-          "label": "Pride"
+          "label": "Pride",
+          "personOnTheLeft": true
         },
         {
           "video": "54",
@@ -405,29 +422,35 @@
       [
         {
           "video": "2073",
-          "label": "Low Pleasure"
+          "label": "Low Pleasure",
+          "personOnTheLeft": true
         },
         {
           "video": "29",
-          "label": "High Pleasure"
+          "label": "High Pleasure",
+          "personOnTheLeft": true
         },
         {
           "video": "121",
-          "label": "Low Self-confidence"
+          "label": "Low Self-confidence",
+          "personOnTheLeft": true
         },
         {
           "video": "530",
-          "label": "High Self-confidence"
+          "label": "High Self-confidence",
+          "personOnTheLeft": true
         }
       ],
       [
         {
           "video": "5617",
-          "label": "Low Pleasure"
+          "label": "Low Pleasure",
+          "personOnTheLeft": true
         },
         {
           "video": "5",
-          "label": "High Pleasure"
+          "label": "High Pleasure",
+          "personOnTheLeft": true
         },
         {
           "video": "1424",
@@ -441,7 +464,8 @@
       [
         {
           "video": "6",
-          "label": "Low Pleasure"
+          "label": "Low Pleasure",
+          "personOnTheLeft": true
         },
         {
           "video": "5317",
@@ -509,7 +533,8 @@
       [
         {
           "video": "3157",
-          "label": "Hostility"
+          "label": "Hostility",
+          "personOnTheLeft": true
         },
         {
           "video": "4149",
@@ -527,11 +552,13 @@
       [
         {
           "video": "3758",
-          "label": "Hostility"
+          "label": "Hostility",
+          "personOnTheLeft": true
         },
         {
           "video": "1937",
-          "label": "Friendliness"
+          "label": "Friendliness",
+          "personOnTheLeft": true
         },
         {
           "video": "123",
@@ -549,7 +576,8 @@
         },
         {
           "video": "865",
-          "label": "Friendliness"
+          "label": "Friendliness",
+          "personOnTheLeft": true
         },
         {
           "video": "1",
@@ -557,7 +585,8 @@
         },
         {
           "video": "3897",
-          "label": "High Self-disclosure"
+          "label": "High Self-disclosure",
+          "personOnTheLeft": true
         }
       ],
       [
@@ -567,7 +596,8 @@
         },
         {
           "video": "3342",
-          "label": "Friendliness"
+          "label": "Friendliness",
+          "personOnTheLeft": true
         },
         {
           "video": "4969",
@@ -633,11 +663,13 @@
       [
         {
           "video": "8",
-          "label": "Disengagement"
+          "label": "Disengagement",
+          "personOnTheLeft": true
         },
         {
           "video": "1613",
-          "label": "Engagement"
+          "label": "Engagement",
+          "personOnTheLeft": true
         },
         {
           "video": "3905",
@@ -645,17 +677,20 @@
         },
         {
           "video": "39",
-          "label": "Mental Effort"
+          "label": "Mental Effort",
+          "personOnTheLeft": true
         }
       ],
       [
         {
           "video": "2357",
-          "label": "Hostility"
+          "label": "Hostility",
+          "personOnTheLeft": true
         },
         {
           "video": "1814",
-          "label": "Friendliness"
+          "label": "Friendliness",
+          "personOnTheLeft": true
         },
         {
           "video": "2646",
@@ -663,13 +698,15 @@
         },
         {
           "video": "2334",
-          "label": "High Self-disclosure"
+          "label": "High Self-disclosure",
+          "personOnTheLeft": true
         }
       ],
       [
         {
           "video": "818",
-          "label": "Hostility"
+          "label": "Hostility",
+          "personOnTheLeft": true
         },
         {
           "video": "3152",
@@ -681,7 +718,8 @@
         },
         {
           "video": "2387",
-          "label": "High Self-disclosure"
+          "label": "High Self-disclosure",
+          "personOnTheLeft": true
         }
       ]
     ]
