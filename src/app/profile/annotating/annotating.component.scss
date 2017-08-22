@@ -35,4 +35,38 @@
   width: 100%;
   left: 15px;
   top: 51px;
+
+  .container {
+    margin-top: 0;
+  }
+}
+
+.demo-hint {
+  position: relative;
+  width: 300px;
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 20px;
+
+  .hint-text {
+    border: 3px solid orange;
+    padding: 20px 10px;
+  }
+
+  .fa {
+    position: absolute;
+    bottom: -80px;
+    font-size: 10rem;
+    color: orange;
+    text-shadow: 0 0 1px black;
+    cursor: pointer;
+
+    &.fa-long-arrow-left {
+      left: 20px;
+    }
+
+    &.fa-long-arrow-right {
+      right: 20px;
+    }
+  }
 }

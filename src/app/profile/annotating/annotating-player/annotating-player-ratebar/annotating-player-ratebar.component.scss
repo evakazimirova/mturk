@@ -54,6 +54,12 @@
     color: gray;
     cursor: pointer;
 
+    &.and {
+      right: 30px;
+      top: 0;
+      font-size: 5rem;
+    }
+
     &:hover {
       color: black;
     }

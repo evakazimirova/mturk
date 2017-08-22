@@ -7,12 +7,11 @@
   </div>
 </div>
 
-<div class="row alert alert-warning" *ngIf="annot.isPersonShown || (annot.demoMode && annot.demoHint !== -1)">
-  <span *ngIf="!annot.demoMode">
-    Please consider that your task is to mark this person's emotions during the full video playback time.
+<div class="row alert alert-warning" *ngIf="annot.isPersonShown">
+  <div class="container">
+    Please consider that your task is to mark this person's emotions during the full video playback time.<br>
     Even if you see two people in a single frame, just continue marking emotions of this person only.
-  </span>
-  <span *ngIf="annot.demoMode" [innerHTML]="annot.demoHints[annot.demoHint]"></span>
+  </div>
 </div>
 
 <!-- Интерфейс разметки -->
@@ -33,5 +32,10 @@
   <!-- Список фрагментов -->
   <div class="col col-xs-2">
     <na-annotating-fragments></na-annotating-fragments>
+    <div class="demo-hint" *ngIf="annot.demoMode">
+      <div class="hint-text" [innerHTML]="annot.demoHints[annot.demoHint]"></div>
+      <div class="fa fa-long-arrow-left"></div>
+      <div class="fa fa-long-arrow-right"></div>
+    </div>
   </div>
 </div>
