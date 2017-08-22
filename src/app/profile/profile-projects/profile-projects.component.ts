@@ -37,42 +37,42 @@ export class ProfileProjectsComponent implements OnInit {
 
     this.common.progressBar = [
       {
-        action: 'Registraition and Confirm e-mail',
+        action: 'Login',
         done: true,
         go: () => {
           // console.log('confirm');
         }
       },
       {
-        action: 'Demo Task and Get your 1$',
+        action: 'Do Demo-Task and Get Your 1$',
         done: this.common.user.demo === 1,
         go: () => {
           this.startDemoTask();
         }
       },
       {
-        action: 'Fill the Profile',
+        action: 'Fill Your Profile',
         done: this.common.user.profile === 1 && this.common.user.englishTest !== 'NO',
         go: () => {
           this.common.profileMode = 'profile';
         }
       },
       {
-        action: 'Short English Test',
+        action: 'Pass English Test',
         done: this.common.user.englishTest !== 'NO',
         go: () => {
           $('.english-test-modal').modal('show');
         }
       },
       {
-        action: 'Learn Skills and Pass the Test in Tutorial',
+        action: 'Take a Tutorial',
         done: this.checkTutorials(),
         go: () => {
           // console.log('tutorials');
         }
       },
       {
-        action: 'Finish Tasks and Get Money!',
+        action: 'Finish Tasks and Get Money',
         done: false,
         go: () => {
           this.common.profileMode = 'withdrawal';
