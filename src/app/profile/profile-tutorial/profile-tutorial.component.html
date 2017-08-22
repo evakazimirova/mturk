@@ -19,8 +19,8 @@
     <p>
       <i><span *ngFor="let e of tutorial.emotions; let i = index">{{ i > 0 ? ' — ' : '' }}{{ e.title }}</span></i>
     </p>
-    <div *ngIf="tutorial.pictures">
-      <img *ngFor="let pic of tutorial.pictures" src="https://storage.cloud.google.com/emo_pic/{{ pic }}.jpg" alt="{{ pic }}">
+    <div class="img-row">
+      <img *ngFor="let pic of tutorial.emotions" src="https://storage.cloud.google.com/emo_pic/{{ pic.img }}.jpg" alt="{{ pic.img }}">
     </div>
   </div>
 
@@ -38,6 +38,9 @@
     <p *ngIf="tutorial.emotions[emotion].types2">
       <i><span *ngFor="let type of tutorial.emotions[emotion].types2; let j = index">{{ j > 0 ? ' — ' : '' }}{{ type }}</span></i>
     </p>
+
+    <img class="img-responsive" src="https://storage.cloud.google.com/emo_pic/{{ tutorial.emotions[emotion].img }}.jpg" alt="{{ tutorial.emotions[emotion].img }}">
+
     <button class="btn btn-link" *ngIf="tutorial.emotions[emotion].more" (click)="more = 1 - more">More</button>
     <p *ngIf="tutorial.emotions[emotion].more && more === 1" [innerHTML]="tutorial.emotions[emotion].more">
     </p>

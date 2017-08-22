@@ -1,15 +1,11 @@
 [
   {
     "skill": "Basic Emotions: part 1",
-    "pictures": [
-      "sadness",
-      "happy",
-      "fear"
-    ],
     "emotions": [
       {
         "title": "Sadness",
         "definition": "a negative emotion associated with disappointment or dissatisfaction.",
+        "img": "sadness",
         "types": [
           "Despair",
           "Melancholy",
@@ -24,6 +20,7 @@
       {
         "title": "Happiness",
         "definition": "one of the core positive emotions, a sense of well-being, joy, or contentment.",
+        "img": "happy",
         "types": [
           "Euphoria",
           "Exaltation",
@@ -39,6 +36,7 @@
       {
         "title": "Anxiety",
         "definition": "a negative emotion, nervousness or worry about something that is happening or might happen in the future.",
+        "img": "fear",
         "types": [
           "Anxiety",
           "Worry",
@@ -133,15 +131,11 @@
 
   {
     "skill": "Basic Emotions: part 2",
-    "pictures": [
-      "disgust2",
-      "surprise",
-      "angry"
-    ],
     "emotions": [
       {
         "title": "Disgust",
         "definition": "a negative emotion emerged when trying to avoid something unpleasant, unacceptable, or abominable, that often poses a danger to health.",
+        "img": "disgust2",
         "types": [
           "Aversion",
           "Repulsion",
@@ -157,6 +151,7 @@
       {
         "title": "Surprise",
         "definition": "an emotion aroused by an unexpected, strange, or unusual situation. Surprise is an adequate response to deviance.",
+        "img": "surprise",
         "types": [
           "Surprise",
           "Amazement",
@@ -172,6 +167,7 @@
       {
         "title": "Anger",
         "definition": "a negative emotion aroused by something unjust with a demand for retribution.",
+        "img": "angry",
         "types": [
           "Anger",
           "Wrath",
@@ -234,16 +230,11 @@
 
   {
     "skill": "Social Emotions",
-    "pictures": [
-      "shame",
-      "proud",
-      "contempt2",
-      "admiration"
-    ],
     "emotions": [
       {
         "title": "Shame",
         "definition": "a feeling that a person is not matching with the self's standards or is losing (sometimes allegedly) his or her social status.",
+        "img": "shame",
         "more": "The so-called self’s standards are heavily influenced by the social ones and often include aspects of morality, knowledge, and aesthetics. There’s such a phenomenon as “vicarious shame”, which is embarrassment experienced on behalf of another person (for example, your friend got drunk and stole a refrigerator – you feel embarrassed when you tell this story). Shame often implies perceiving yourself as a bad person (“I’m a fool”, “I was stupid”, “I’m ugly”), and guilt results from the recognition that your behavior is inappropriate (“I did something bad”, “I screwed up”, etc.).",
         "types": [
           "Shame",
@@ -260,6 +251,7 @@
       {
         "title": "Pride",
         "definition": "a feeling that a person is matching with the self's standards.",
+        "img": "proud",
         "more": "The so-called self’s standards are heavily influenced by the social ones and often include aspects of morality, knowledge, and aesthetics. You can feel pride not only for your achievements, but also for someone else: your son, fellow countryman who got a prize, or your dog that saved a neighbor. Pride can result from deeds (“We made a super project!”, “I made an original thing”) or from self-perception (“I’m tough!”, “That’s how good I am!”, “I’m a cutie”).",
         "examples": [
           "1696",
@@ -269,6 +261,7 @@
       {
         "title": "Contempt",
         "definition": "a feeling that a person or thing is worthless or deserves no respect, also implies considering oneself supreme over a person or social group in any aspect.",
+        "img": "contempt2",
         "more": "Contempt can be expressed not only for someone present, but also for a person mentioned during a talk.",
         "examples": [
           "1989",
@@ -278,6 +271,7 @@
       {
         "title": "Admiration",
         "definition": "a feeling of respect towards a person or social group that often implies astonishment at or appreciation of somebody’s qualities, skills, or achievements.",
+        "img": "admiration",
         "examples": [
           "4154",
           "1684"
@@ -362,12 +356,6 @@
 
   {
     "skill": "Person and Situation",
-    "pictures": [
-      "low_pleasure",
-      "high_pleasure",
-      "low_self-confidence",
-      "self-confidence"
-    ],
     "emotions": [
       {
         "title": "Pleasure",
@@ -376,6 +364,7 @@
       {
         "title": "Low pleasure",
         "definition": "— The person is not comfortable with the situation feeling ill at ease.",
+        "img": "low_pleasure",
         "more": "Low pleasure can be expressed in different ways, such as great anxiety, lack of self-confidence, fear, sadness, shame, boredom, anger, etc.",
         "examples": [
           "3672",
@@ -385,6 +374,7 @@
       {
         "title": "High pleasure",
         "definition": " – The current situation is completely comfortable for the person.",
+        "img": "high_pleasure",
         "more": "At high pleasure, the context can be either emotionally calm or tense (as in an argument). The person can have a high or low level of arousal.",
         "examples": [
           "4145",
@@ -394,6 +384,7 @@
       {
         "title": "Low self-confidence",
         "definition": "a low estimation of one’s strengths, skills, abilities, resources, arguments, and chances to achieve desired goals.",
+        "img": "low_self-confidence",
         "examples": [
           "2285",
           "3486"
@@ -402,6 +393,7 @@
       {
         "title": "High self-confidence",
         "definition": "a high estimation of one’s strengths, skills, abilities, resources, arguments, and chances to achieve desired goals.",
+        "img": "self-confidence",
         "more": "A self-confident person may not always be relaxed – for instance, one can be anxious or exited if the event discussed matters much for him or her. The person may estimate his or her strengths and resources not only against the topic of the conversation, but also when aiming to earn the sympathy of the audience or bring the interlocutor around.",
         "examples": [
           "575",
@@ -469,16 +461,11 @@
 
   {
     "skill": "Social Relation",
-    "pictures": [
-      "hostile",
-      "Friendly",
-      "close",
-      "open"
-    ],
     "emotions": [
       {
         "title": "Hostility",
         "definition": "an antagonistic behavior, rudeness, sabotage, impolite behavior.",
+        "img": "hostile",
         "examples": [
           "5294",
           "4428"
@@ -487,6 +474,7 @@
       {
         "title": "Friendliness",
         "definition": "warmth, affiliation. Tension release, agreeable, cooperative, courteous, helpful.",
+        "img": "Friendly",
         "examples": [
           "749",
           "1656"
@@ -499,6 +487,7 @@
       {
         "title": "Low Self-disclosure",
         "definition": "— The person refuses to answer a question or changes the subject of the discussion, tries to respond generally or evasively, without details.",
+        "img": "close",
         "more": "<u>Closed</u> – the person refuses to answer a question or changes the subject of the discussion.<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– That’s confidential information. I’m not answering this question.<br><u>Relatively closed</u> – the person tries to respond generally or evasively, without details.<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– Well, the final cast hasn’t been decided for this movie yet, but that’s possible. You should better ask John.",
         "examples": [
           "2302",
@@ -508,6 +497,7 @@
       {
         "title": "High Self-disclosure",
         "definition": "— The person answers the question and keeps the conversation going.",
+        "img": "open",
         "more": "<u>Moderately open</u> – the person replies without (informal) details.<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– Yes, probably. I think this movie will be an interesting experience for every member of the cast.<br><u>Fairly open</u> – the person answers the question and keeps the conversation going.<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– Yes, most likely. I think that’ll be very interesting, given that Kevin Spooner and Peter Dogman are among the guest stars.<br><u>Completely open</u> – the person takes an active part in the discussion, goes into detail (including informal information).<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– Yes, there’s a high probability that we will actually star in the same film. I hope that’s true. We went recently to a pub, discussed the movie and remembered the times when we acted Shakespeare in the school theatre club (and so on).",
         "examples": [
           "3009",
@@ -593,16 +583,11 @@
 
   {
     "skill": "Conversation",
-    "pictures": [
-      "disengagement",
-      "engagement",
-      "self-presentation(sultan)",
-      "mental_effort"
-    ],
     "emotions": [
       {
         "title": "Disengagement",
         "definition": "— (No interest) The person is not following the flow of discussion, is paying attention to something else (e.g. own materials, staring at the window, looking to the side, etc.). He or she can’t respond correctly if addressed by other interlocutors and does not exhibit interest in the communication.",
+        "img": "disengagement",
         "examples": [
           "91",
           "477"
@@ -611,6 +596,7 @@
       {
         "title": "Engagement",
         "definition": "one’s degree of participation, involvement, or interest in action.",
+        "img": "engagement",
         "more": "Engagement can be physical, cognitive, or emotional.<br>Levels of engagement:<ol><li>Following – the person is paying attention to the discussion, but does not affect the discussion verbally (i.e. listening, but not making any remarks).</li><li>Responding – the person follows the discussion and is responding when appropriate (answering a question, or when it’s his or her turn to speak), but is not asking back. It is a passive participation, in the sense of influencing the turns and discourse. Back-channeling belongs here too (for example, “Do you agree, John?” – “Sure”, or even simply nodding in response).</li><li>Conversing – active conversation is ongoing, the person is active in turn taking.</li><li>Influencing – same as conversing, but the person is actively creating new directions in discussion. At times he or she may be interrupting others during their turns and/or be providing instructions.</li></ol>",
         "examples": [
           "5467",
@@ -620,6 +606,7 @@
       {
         "title": "Self-presentation",
         "definition": "a distinct behaviour aimed at making a good showing, maintaining self-image and character, or gaining the love of the audience (a specific one or on the whole).",
+        "img": "self-presentation(sultan)",
         "more": "Self-presentation includes:<ul><li>verbal devices (increasing significance of an event; describing one’s positive qualities; describing a situation in a way to present oneself as an example to follow; describing past events in a manner that they are the reason why the speaker is so marvelous now; flattering towards the host or the audience – both directly and indirectly);</li><li>non-verbal devices (exaggerated gestures, melodramatic behaviour, including change in voice tone or intonation when telling a story; sometimes also: parody, humor, histrionics, and reaction that doesn’t go on par with the context).</li></ul>Important! Self-presentation can involve using obscene words or gestures.",
         "types": [
           "Self-presentation",
@@ -634,6 +621,7 @@
       {
         "title": "Mental Effort",
         "definition": "a degree of focus on the conversation or interlocutor, can be defined as a level of attention.",
+        "img": "mental_effort",
         "more": "The level of concentration is also tightly connected with the mental effort, cogitation, word choice, and analyzing the reactions of the interlocutor or the audience.",
         "examples": [
           "2187",
