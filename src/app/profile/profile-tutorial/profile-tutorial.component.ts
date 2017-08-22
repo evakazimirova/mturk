@@ -238,6 +238,8 @@ export class ProfileTutorialComponent implements OnInit {
         const numOfSlots = slots.length;
         let guessed = 0;
         let mistake = 0;
+        let isMistaken = false;
+        let isPassedTest = false;
 
         answers.draggable({
           cursor: 'move',
@@ -253,68 +255,90 @@ export class ProfileTutorialComponent implements OnInit {
             const slot = $(event.target);
             const answer = ui.draggable;
 
-            if (event.target.dataset.label === ui.draggable.text()) {
-              // верно
-              answer.animate({
-                top: ui.position.top + (slot.offset().top - answer.offset().top),
-                left: ui.position.left + (slot.offset().left - answer.offset().left)
-              });
+            event.target.dataset.answer = ui.draggable.text();
 
-              guessed++;
-              if (guessed === numOfSlots) {
-                // возвращаем все плашки на место
-                answers.stop().css({
-                  top: 0,
-                  left: 0
-                });
-
-                // запоминаем результат
-                this.common.user.tutorials[this.common.tutorial][this.test] = mistake + 1;
-                this.http.post({tutorials: this.common.user.tutorials}, 'AnnotatorInfo/saveTutorial').subscribe(
-                  () => {},
-                  error => console.error(error)
-                );
-
-                this.common.tutorialDone = true;
-                // прекращаем напоминать о прохождении туториала
-                clearInterval(this.annot.reminder);
-
-                // поздравляем аннотатора с успехом
-                this.common.alert(`Congrats! You've just passed one more test!`, () => {
-                  this.finishTutorial();
-                });
+            isPassedTest = true;
+            isMistaken = false;
+            for (const slot of slots) {
+              // console.log(slot, slot.dataset.label, slot.dataset.answer);
+              if (!slot.dataset.answer) {
+                isPassedTest = false;
               }
-            } else {
-              // неверно
-              answer.animate({
-                top: 0,
-                left: 0
-              });
 
-              mistake++;
-              if (mistake < 2) {
-                this.common.alert(`Sorry but you are wrong. Please try again.`);
-              } else {
-                this.common.alert(`Sorry but you are wrong again. You haven't passed the test. Here are the correct answer.`, () => {
-                  slots.each((i) => {
-                    $(slots[i])
-                      .removeClass('empty')
-                      .removeClass('slot')
-                      .addClass('answer')
-                      .text($(slots[i]).data().label)
-                      .css({opacity: 0})
-                      .animate({opacity: 1});
-                  });
-                  answers.animate({opacity: 0});
-
-                  const nextScreen = () => {
-                    answers.css({opacity: 1});
-                    this.finishTutorial();
-                  };
-                  setTimeout(nextScreen, 2000);
-                });
+              console.log(slot.dataset.label, slot.dataset.answer);
+              if (slot.dataset.label !== slot.dataset.answer) {
+                isMistaken = true;
               }
             }
+
+            answer.animate({
+              top: ui.position.top + (slot.offset().top - answer.offset().top),
+              left: ui.position.left + (slot.offset().left - answer.offset().left)
+            }, () => {
+              if (isPassedTest) {
+                if (!isMistaken) {
+                  // // возвращаем все плашки на место
+                  // answers.stop().css({
+                  //   top: 0,
+                  //   left: 0
+                  // });
+
+                  // запоминаем результат
+                  this.common.user.tutorials[this.common.tutorial][this.test] = mistake + 1;
+                  this.http.post({tutorials: this.common.user.tutorials}, 'AnnotatorInfo/saveTutorial').subscribe(
+                    () => {
+                      this.common.updateTutorials();
+                    },
+                    error => console.error(error)
+                  );
+
+                  this.common.tutorialDone = true;
+                  // прекращаем напоминать о прохождении туториала
+                  if (this.annot.reminder) {
+                    clearInterval(this.annot.reminder);
+                  }
+
+                  // поздравляем аннотатора с успехом
+                  this.common.alert(`Congrats! You've just passed one more test!`, () => {
+                    this.finishTutorial();
+                  });
+                } else {
+                  // неверно
+                  answers.animate({
+                    top: 0,
+                    left: 0
+                  });
+
+                  mistake++;
+                  if (mistake < 3) {
+                    this.common.alert(`Sorry but you are wrong. Please try again.`);
+
+                    for (const slot of slots) {
+                      delete slot.dataset.answer;
+                    }
+                  } else {
+                    this.common.alert(`Sorry but you are wrong again. You haven't passed the test. Here are the correct answer.`, () => {
+                      slots.each((i) => {
+                        $(slots[i])
+                          .removeClass('empty')
+                          .removeClass('slot')
+                          .addClass('answer')
+                          .text($(slots[i]).data().label)
+                          .css({opacity: 0})
+                          .animate({opacity: 1});
+                      });
+                      answers.animate({opacity: 0});
+
+                      const nextScreen = () => {
+                        answers.css({opacity: 1});
+                        this.finishTutorial();
+                      };
+                      setTimeout(nextScreen, 2000);
+                    });
+                  }
+                }
+              }
+            });
           }
         });
       }, 100);

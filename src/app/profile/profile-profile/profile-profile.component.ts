@@ -173,6 +173,12 @@ export class ProfileProfileComponent implements OnInit {
         error => console.error(error)
       );
     });
+
+    this.common.tutorialsUpdated.subscribe(
+      () => {
+        this.tutorialsTests = this.common.user.tutorials;
+      }
+    );
   }
 
   // обновляем профиль аннотатора
