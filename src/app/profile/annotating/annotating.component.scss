@@ -49,7 +49,7 @@
   margin-top: 20px;
 
   .hint-text {
-    border: 3px solid orange;
+    border: 4px solid orange;
     padding: 20px 10px;
   }
 
@@ -74,4 +74,10 @@
       right: 20px;
     }
   }
+}
+
+.attention {
+  position: absolute;
+  z-index: 10;
+  border: 4px solid orange;
 }
