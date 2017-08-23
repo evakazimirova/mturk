@@ -61,6 +61,11 @@
     text-shadow: 0 0 1px black;
     cursor: pointer;
 
+    &.non-clickable {
+      color: #ffcc6e;
+      cursor: not-allowed;
+    }
+
     &.fa-long-arrow-left {
       left: 20px;
     }

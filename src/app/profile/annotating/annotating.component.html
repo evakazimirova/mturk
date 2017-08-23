@@ -34,8 +34,10 @@
     <na-annotating-fragments></na-annotating-fragments>
     <div class="demo-hint" *ngIf="annot.demoMode">
       <div class="hint-text" [innerHTML]="annot.demoHints[annot.demoHint]"></div>
-      <div class="fa fa-long-arrow-left" (click)="prevHint()"></div>
-      <div class="fa fa-long-arrow-right" (click)="nextHint()"></div>
+      <div class="fa fa-long-arrow-left" (click)="prevHint()"
+        [ngClass]="{'non-clickable': this.annot.demoHint === 0}"></div>
+      <div class="fa fa-long-arrow-right" (click)="nextHint()"
+        [ngClass]="{'non-clickable': this.annot.demoHint === this.annot.demoHints.length - 1}"></div>
     </div>
   </div>
 </div>
