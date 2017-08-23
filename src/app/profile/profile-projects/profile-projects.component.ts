@@ -238,12 +238,11 @@ export class ProfileProjectsComponent implements OnInit {
             'video': 'https://www.youtube.com/watch?v=wglgvziarPc',
             'result': {
               'FID': 1,
-              'csv': 'start,end\r\n47,50\r\n50,56\r\n74,77'
+              'csv': 'start,end\r\n47,50\r\n50,56'
             },
             'answers': [
               [37],
-              [37],
-              []
+              [37]
             ],
             'done': false
           },
@@ -251,10 +250,10 @@ export class ProfileProjectsComponent implements OnInit {
             'FID': 2,
             'boxType': 'AND',
             'emotions': [ 37, 38, 39 ],
-            'video': 'https://www.youtube.com/watch?v=JjhvaDqB2wc',
+            'video': 'https://www.youtube.com/watch?v=yrRHfHGIW_Y',
             'result': {
               'FID': 2,
-              'csv': 'start,end\r\n43,45\r\n62,66'
+              'csv': 'start,end\r\n135,140\r\n171,176'
             },
             'answers': [
               [],
