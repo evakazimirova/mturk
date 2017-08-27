@@ -109,7 +109,7 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
                     this.annot.setFragment(0);
                   } else {
                     // запускаем видео целиком
-                    this.annot.setFragment(-1);
+                    this.annot.setFragment(-1, false);
                   }
                 });
               });
@@ -130,7 +130,7 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
         // задаём длительность видео
         this.annot.videoLength = this.annot.videoContainer.duration;
         // запускаем видео целиком
-        this.annot.setFragment(-1);
+        this.annot.setFragment(-1, falsedon);
       }, false);
     }
   }
