@@ -7,12 +7,11 @@
   </div>
 </div>
 
-<div class="row alert alert-warning" *ngIf="annot.isPersonShown || (annot.demoMode && annot.demoHint !== -1)">
-  <span *ngIf="!annot.demoMode">
-    Please consider that your task is to mark this person's emotions during the full video playback time.
+<div class="row alert alert-warning" *ngIf="annot.isPersonShown && !annot.demoMode">
+  <div class="container">
+    Please consider that your task is to mark this person's emotions during the full video playback time.<br>
     Even if you see two people in a single frame, just continue marking emotions of this person only.
-  </span>
-  <span *ngIf="annot.demoMode" [innerHTML]="annot.demoHints[annot.demoHint]"></span>
+  </div>
 </div>
 
 <!-- Интерфейс разметки -->
@@ -33,5 +32,21 @@
   <!-- Список фрагментов -->
   <div class="col col-xs-2">
     <na-annotating-fragments></na-annotating-fragments>
+    <div class="demo-hint" *ngIf="annot.demoMode">
+      <div class="hint-text" [innerHTML]="annot.demoHints[annot.demoHint].text"></div>
+      <div class="fa fa-long-arrow-left" (click)="prevHint()"
+        [ngClass]="{'non-clickable': this.annot.demoHint === 0}"></div>
+      <div class="fa fa-long-arrow-right" (click)="nextHint()"
+        [ngClass]="{'non-clickable': this.annot.demoHint === this.annot.demoHints.length - 1}"></div>
+    </div>
   </div>
+</div>
+
+<div *ngIf="annot.demoMode">
+  <div class="attention" *ngFor="let hint of annot.demoHints[annot.demoHint].visualHints" [ngStyle]="{
+    top: hint.top + 'px',
+    left: hint.left + 'px',
+    height: hint.height + 'px',
+    width: hint.width + 'px'
+  }"></div>
 </div>

@@ -80,4 +80,16 @@ export class AnnotatingComponent implements OnInit {
 
     return true;
   }
+
+  prevHint() {
+    if (this.annot.demoHint > 0) {
+      this.annot.demoHint--;
+    }
+  }
+
+  nextHint() {
+    if (this.annot.demoHint < this.annot.demoHints.length - 1) {
+      this.annot.demoHint++;
+    }
+  }
 }

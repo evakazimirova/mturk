@@ -1,13 +1,13 @@
 // Шрифты
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700|Noto+Serif:400,400i,700&subset=cyrillic');
+// @import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700|Noto+Serif:400,400i,700&subset=cyrillic');
 
 // Палитра
 $black:   #000;
 $white:   #fff;
 
 // Основные переменные
-$font-primary:   'Noto Sans', sans-serif;
-$font-secondary: 'Noto Serif', serif;
+$font-primary:   'Arial', sans-serif;
+$font-secondary: 'Arial', serif;
 $color-primary:   $black; // Основной текст
 $color-secondary: $black; // Вспомогательный текст (например, заголовки)
 $color-bg:        $white; // Цвет фона

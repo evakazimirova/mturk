@@ -154,9 +154,7 @@ export class AnnotatingFragmentsComponent {
               this.common.user.money.available = 1;
               this.common.progressBar[1].done = true;
 
-              this.common.alert('Congrats! You just finished first task on Emotion Miner! Your account balanced with appropriate sum. You can withdraw your money, when balance exceed 10$. When you are ready - start a new task on a Task Board. To start with serious tasks, you should fulfill form in your Account.', () => {
-                this.common.alert('Заполни анкету в профайле, пройди короткий тест по английскому и приступай к работе!');
-              });
+              this.common.alert('You’ve just finished the Demo Task. Please fill <a>the account form</a> and let’s start!');
             },
             err => {
               // this.loadingTask = -1;

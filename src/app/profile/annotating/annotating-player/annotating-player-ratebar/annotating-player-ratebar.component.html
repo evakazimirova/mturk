@@ -83,7 +83,7 @@
     Also use <kbd>&#x2193;</kbd> to repeat fragment and <kbd>&#x2190;</kbd> <kbd>&#x2192;</kbd> to choose fragment.
   </div>
 
-  <div class="fa fa-question-circle-o emotions-definitions" data-toggle="modal" data-target=".emotions-definitions-modal"></div>
+  <div class="fa fa-question-circle-o emotions-definitions" [ngClass]="{and: boxType === 'AND'}" data-toggle="modal" data-target=".emotions-definitions-modal"></div>
 </div>
 
 <div class="modal fade emotions-definitions-modal" tabindex="-1" role="dialog">

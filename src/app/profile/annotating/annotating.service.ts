@@ -22,17 +22,157 @@ export class AnnotatingService {
   reminder;
 
   demoHints = [
-    'Посмотрите на изображение. Ваша задача – выбирать те состояния (чувства, эмоции и т.д.), которые испытывает этот человек. Let’s start!',
-    'Нажмите кнопку плей (картинка с кнопкой?) чтобы посмотреть видео целиком. Это необходимо сделать перед разметкой для понимания контекста.',
-    'Просмотрите короткий фрагмент из видео. Под видео находятся кнопки с эмоциями. Посмотрите, испытывает ли в этом фрагменте человек какие-то из этих эмоций?',
-    'Нажми кнопку с нужной эмоцией. Ты можешь выбрать несколько эмоций! Если ты не увидел ничего из указанных состояний, нажми None.',
-    'Справа в таблице появилась ваша отметка (стрелка?). Вы можете ее изменить в любой момент, вернувшись к этому фрагменту, до сдачи таска. [кнопка ок?]',
-    'Теперь просмотрите следующий фрагмент и также отметьте эмоцию на нижней шкале',
-    'В данном фрагменте человек не испытывает ничего из перечисленного ниже. В таких случаях нужно ставить <strong>None.</strong>',
-    'В одном задании всегда будет несколько видео (ведь так интересней!). Теперь нужно отметить эмоции этого человека.',
-    'Когда ты видишь в кадре двоих людей, твоя задача отмечать эмоции именно того человека, который был указан в начале этого видео! Здесь это Eddie Redmayne, не перепутай! Кажется, он не испытывает ничего из указанного ниже, согласен? Тогда снова ставь <strong>None</strong>!',
-    'Здесь, как нам кажется, человек испытывает сразу две эмоции: <strong>Surprise</strong> and <strong>Angry</strong>. Согласен? Отметь обе!',
-    'Для того, чтобы сдать задачу и получить оплату, нажми кнопку \'Save & play next video\''
+    {
+      text: 'There will be a set of video clips divided into short fragments that need to be annotated. Your task is to mark the current emotion/emotional states of the guest (not of the show host!) noticed in each fragment.',
+      visualHints: [{
+          top: 106,
+          left: 40,
+          height: 110,
+          width: 98
+        },
+        {
+          top: 106,
+          left: 1016,
+          height: 123,
+          width: 180
+        }
+      ]
+    },
+    {
+      text: 'Please press “Play” button to start watching the video.',
+      visualHints: [
+        {
+          top: 636,
+          left: 221,
+          height: 46,
+          width: 51
+        }
+      ]
+    },
+    {
+      text: 'There will be an emotion keys panel below. Do you see any of these emotions on the video? If yes, please use a mouse click or keyboard shortcuts.',
+      visualHints: [
+        {
+          top: 687,
+          left: 122,
+          height: 62,
+          width: 764
+        },
+        {
+          top: 771,
+          left: 360,
+          height: 35,
+          width: 101
+        }
+      ]
+    },
+    {
+      text: 'The fully annotated fragment is ticked. You may go back to it any time you want.',
+      visualHints: [
+        {
+          top: 140,
+          left: 1016,
+          height: 53,
+          width: 180
+        }
+      ]
+    },
+    {
+      text: 'For proceeding to the next fragment, please press the “Next piece” button or use mouse click or hotkeys.',
+      visualHints: [
+        {
+          top: 177,
+          left: 1016,
+          height: 52,
+          width: 180
+        },
+        {
+          top: 635,
+          left: 490,
+          height: 47,
+          width: 109
+        },
+        {
+          top: 796,
+          left: 397,
+          height: 33,
+          width: 56
+        }
+      ]
+    },
+    {
+      text: 'When all fragments are correctly annotated, please press “Save” button and move on to other clips of the task. It’s possible to save the results only if all fragments are marked!',
+      visualHints: [
+        {
+          top: 233,
+          left: 1016,
+          height: 49,
+          width: 180
+        }
+      ]
+    },
+
+    {
+      text: 'Please press the ‘None’ button if the current emotion is not on the list.',
+      visualHints: [
+        {
+          top: 687,
+          left: 122,
+          height: 62,
+          width: 106
+        }
+      ]
+    },
+    {
+      text: 'To contextualize a fragment, you have free access to Whole video. To come back to the annotation mode, please click it again.',
+      visualHints: [
+        {
+          top: 634,
+          left: 718,
+          height: 49,
+          width: 282
+        }
+      ]
+    },
+    {
+      text: 'Please consider that in all cases only guests (not show hosts!) needs to be annotated. Usually the first fragment of the video clip displays to you the actual guest.',
+      visualHints: [
+        {
+          top: 134,
+          left: 218,
+          height: 469,
+          width: 321
+        }
+      ]
+    },
+
+    {
+      text: 'Please consider that in all cases only guests (not show hosts!) needs to be annotated. Usually the first fragment of the video clip displays to you the actual guest',
+      visualHints: []
+    },
+    {
+      text: 'You may choose several emotion options if you think that the current emotional state of the guest is composite.',
+      visualHints: [
+        {
+          top: 687,
+          left: 429,
+          height: 62,
+          width: 458
+        }
+      ]
+    },
+    {
+      text: 'Finish the annotation process and press “Save” button',
+      visualHints: []
+    },
+    {
+      text: 'Congrats! You’ve just earned your first $1',
+      visualHints: []
+    },
+    {
+      text: 'Money can be withdrawn from your balance only when it’s equal or more than $10. How to do it? Please read <a>FAQ</a>',
+      visualHints: []
+    }
   ];
   demoHint = 0;
 
