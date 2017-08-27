@@ -1,6 +1,7 @@
 <ul class="list-unstyled">
   <li *ngFor="let video of videos; let i = index"
     [ngClass]="{current: i == annot.FID}">
-    video_{{ video.FID }}
+    {{ i + 1 }}
+    <!-- v_{{ video.FID }} -->
   </li>
 </ul>
