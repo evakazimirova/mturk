@@ -51,6 +51,14 @@
           <span *ngIf="common.user.taskTaken === null || i !== common.user.taskTaken - 1">Deadline: {{ i < 2 ? '1' : '2' }} week{{ i < 2 ? '' : 's' }}</span>
         </div>
 
+        <button class="btn btn-lg btn-default give-up"
+          *ngIf="common.user.taskTaken !== null && i === common.user.taskTaken - 1"
+          (click)="giveUp(i)">
+          <span class="fa fa-hand-paper-o fa-flip-horizontal"></span>
+          Give Up
+          <span class="fa fa-hand-paper-o"></span>
+        </button>
+
         <!-- Замочек -->
         <span class="fa fa-lock fa-5x"></span>
       </div>

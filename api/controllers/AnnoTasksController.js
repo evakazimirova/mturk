@@ -359,5 +359,38 @@ module.exports = {
         });
       });
     });
+  },
+
+  giveUp: (req, res, next) => {
+    AnnoTasks.update(
+      {
+        AID: req.session.userId,
+        status: 1
+      },
+      {
+        status: 2
+      }
+    ).exec((err, updated) => {
+      if (err) {
+        sails.log(err);
+      } else {
+        sails.log(updated);
+        AnnotatorInfo.update(
+          {
+            AID: req.session.userId,
+          },
+          {
+            taskTaken: null
+          }
+        ).exec((err, updated) => {
+          if (err) {
+            sails.log(err);
+          } else {
+            sails.log(updated);
+            res.json({});
+          }
+        });
+      }
+    });
   }
 };
