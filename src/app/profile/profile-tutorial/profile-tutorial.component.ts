@@ -27,7 +27,6 @@ export class ProfileTutorialComponent implements OnInit {
   progressTotal = 0;
   manual = true;
   stateHistory: any = [];
-  isInTutorial = false;
   justTest = false;
 
   constructor(private http: HttpService,
@@ -40,7 +39,7 @@ export class ProfileTutorialComponent implements OnInit {
       this.common.tutorialModal
         .on('shown.bs.modal', (e) => {
           this.updateTutorial();
-          this.isInTutorial = true;
+          this.common.isInTutorial = true;
 
           // ставим видео на паузу
           if (this.common.profileMode === 'annotating') {
@@ -53,7 +52,7 @@ export class ProfileTutorialComponent implements OnInit {
     });
 
     $(document).keyup((e) => {
-      if (this.isInTutorial) {
+      if (this.common.isInTutorial) {
         if (e.keyCode === 37) { // стрелка влево
           if (this.screen !== 1 && !this.justTest) {
             this.previousScreen();
@@ -133,7 +132,7 @@ export class ProfileTutorialComponent implements OnInit {
     this.progressTotal = 0;
 
     this.stateHistory = [];
-    this.isInTutorial = false;
+    this.common.isInTutorial = false;
     this.justTest = false;
 
     // сворачиваем окно

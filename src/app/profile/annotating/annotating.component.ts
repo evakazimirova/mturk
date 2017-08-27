@@ -18,6 +18,7 @@ export class AnnotatingComponent implements OnInit {
 
       let tutorialChosen = false;
       this.common.tutorialDone = false;
+
       for (let group in this.common.emotionGroups) {
         if (tutorialChosen) {
           break;
@@ -39,12 +40,12 @@ export class AnnotatingComponent implements OnInit {
 
       if (tutorialChosen) {
         const reminder = () => {
+          this.annot.unwatchVideo('pause');
+
           this.common.alert(`Hi! Just to remind you that your tutorial training is not completed yet. Please, do it asap for finishing the actual task.`, () => {
             this.annot.reminder = setTimeout(reminder, 30 * 60 * 1000);
           });
         };
-
-        // this.annot.unwatchVideo('pause');
 
         this.common.alert(`
           Attention, please!
@@ -68,7 +69,7 @@ export class AnnotatingComponent implements OnInit {
   testPassed() {
     const sum = (array) => {
       let sum = 0;
-      for (var i of array) {
+      for (const i of array) {
         sum += i;
       }
       return sum;

@@ -17,6 +17,20 @@ const updateLastLogin = (AID) => {
   ).exec(() => {});
 };
 
+const domainFromUrl = (url) => {
+  if (url.length > 0) {
+    var result;
+    var match;
+    if (match = url.match(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?\=]+)/im)) {
+      result = match[1];
+      if (match = result.match(/^[^\.]+\.(.+\..+)$/)) {
+        result = match[1];
+      }
+    }
+    return result;
+  }
+}
+
 module.exports = {
   // отвечаем авторизован ли пользователь
   authorized: (req, res, next) => {
@@ -195,9 +209,14 @@ module.exports = {
               // создаём таблицу с личными данными пользвоателя
               AnnotatorProfile.create({
                 AID: annotator.AID,
-                name: `${user.secondName}, ${user.firstName}`,
-              }).exec((error, updated) => {
-              });
+                name: `${user.secondName}, ${user.firstName}`
+              }).exec((error, updated) => {});
+
+              // создаём таблицу с дополнительной информацией
+              AnnotatorInfo.create({
+                AID: annotator.AID,
+                referer: domainFromUrl(req.headers.referer) // откуда перешёл новый пользователь
+              }).exec((error, updated) => {});
 
               // генерируем токен
               const emailToken = CryptoService.generateTokenFromJSON(user);
@@ -258,11 +277,15 @@ module.exports = {
             if (error) {
               sails.log(error);
             } else {
-              // создаём таблицу с дополнительной информацией
-              AnnotatorInfo.create({
-                AID: token.AID.AID,
-                registered: 1
-              }).exec((error, updated) => {});
+              // регистрируем пользователя
+              AnnotatorInfo.update(
+                {
+                  AID: token.AID.AID,
+                },
+                {
+                  registered: 1
+                }
+              ).exec((error, updated) => {});
 
               // авторизируем пользователя
               req.session.userId = token.AID.AID;

@@ -199,7 +199,7 @@ export class AnnotatingService {
     this.percentageUpdated.emit(newPercentage);
   }
 
-  setFragment(number) {
+  setFragment(number, shouldStartPlaying = false) {
     if (this.demoMode) {
       if (this.cf === -1 && this.demoHint === 1 && this.FID == 0) {
         this.demoHint = 2;
@@ -258,7 +258,7 @@ export class AnnotatingService {
         this.isClickingFirstFragment = false;
       }, 100);
     } else {
-      if (!((this.demoMode && (this.demoHint === 1 || this.demoHint === 7)))) {
+      if (shouldStartPlaying && !((this.demoMode && (this.demoHint === 1 || this.demoHint === 7)))) {
         this.fragmentChanged.emit(fragmentPosition);
       }
     }
