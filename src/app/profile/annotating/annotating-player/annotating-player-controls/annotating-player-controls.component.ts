@@ -37,7 +37,7 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
       $(document).keyup((e) => {
         const isBucketEmotionsMode = this.annot.task.FIDs[this.annot.FID].boxType === 'OR' || this.annot.task.FIDs[this.annot.FID].boxType === 'AND';
 
-        if (this.common.profileMode === 'annotating') {
+        if (this.common.profileMode === 'annotating' && !this.common.isInTutorial) {
           if (this.annot.isPersonShown) {
             this.annot.isPersonShown = false;
             if (!this.annot.demoMode) {
