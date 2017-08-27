@@ -27,6 +27,11 @@ export class ProfileHeaderComponent {
             this.annot.allFragmentsRated = true;
             this.profileModeSelected.emit(page);
 
+            // выход из демо-режима
+            if (this.annot.demoMode) {
+              this.annot.demoMode = false;
+            }
+
             // прекращаем напоминать о прохождении туториала
             if (this.annot.reminder) {
               clearInterval(this.annot.reminder);
