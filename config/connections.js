@@ -54,7 +54,9 @@ module.exports.connections = {
   ***************************************************************************/
   mysqlServer: {
     adapter: 'sails-mysql',
-    url: `mysql2://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_SERVER}:3306/${process.env.DB}`
+    url: `mysql2://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_SERVER}:3306/${process.env.DB}`,
+    pool: true,
+    connectionLimit: 4000
     // host: process.env.DB_SERVER,
     // user: process.env.DB_USER,
     // password: process.env.DB_PASS,
