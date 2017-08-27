@@ -72,6 +72,11 @@ module.exports = {
 
     tutorials: {
       type: 'string'
+    },
+
+    referer: {
+      type: 'string',
+      required: true
     }
   }
 };
