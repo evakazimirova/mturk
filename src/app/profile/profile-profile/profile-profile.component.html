@@ -142,13 +142,13 @@
   <div class="col col-md-5 col-md-push-2">
     <!-- Пройти тест и отобразить результат рядом -->
     <div class="form-group">
-      <label for="english">English level</label>
+      <label for="english" class="label-large">English level</label>
       <span class="fa fa-check fa-lg text-success" *ngIf="common.user.englishTest === 'YES'"></span>
       <span class="fa fa-times fa-lg text-danger" *ngIf="common.user.englishTest === 'BAD'"></span>
       <span class="btn btn-primary" data-toggle="modal" data-target=".english-test-modal" *ngIf="common.user.englishTest === 'NO'">Pass the test</span>
     </div>
 
-    <label>Tutorials completion</label>
+    <label class="label-large">Tutorial</label>
     <table class="table">
       <tr *ngFor="let tutorial of tutorials; let j = index">
         <td class="tutorial"><a href="#" data-toggle="modal" data-target=".tutorial-modal" (click)="goToTutorial($event, j)">{{ tutorial }}</a></td>

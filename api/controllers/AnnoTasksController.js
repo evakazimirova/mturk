@@ -270,6 +270,8 @@ module.exports = {
     // запоминаем данные запроса
     let input = req.params.all();
 
+    isTaskEnded = input.done === input.total;
+
     // вынимаем данные задачи
     AnnoTasks.findOne({
       ATID: input.ATID
@@ -285,12 +287,18 @@ module.exports = {
           {
             result: JSON.stringify(input.result),
             done: input.done,
-            status: input.done === input.total ? 3 : 1 // заканчиваем выполнение задачи, если всё сделано
+            status: isTaskEnded ? 3 : 1 // заканчиваем выполнение задачи, если всё сделано
           }
         ).exec((err, updated) => {
-          // формируем новые баланс и рейтинг пользователя
-          const newAmount = annotatorInfo.moneyAvailable + task.price;
-          const newRating = annotatorInfo.rating + 1;
+          if (isTaskEnded) {
+            // формируем новые баланс и рейтинг пользователя
+            const newAmount = annotatorInfo.moneyAvailable + task.price;
+            const newRating = annotatorInfo.rating + 1;
+          } else {
+            // оставляем баланс и рейтинг прежним
+            const newAmount = annotatorInfo.moneyAvailable;
+            const newRating = annotatorInfo.rating;
+          }
 
           // обновляем баланс и рейтинг пользователя
           AnnotatorInfo.update(
@@ -350,6 +358,39 @@ module.exports = {
           });
         });
       });
+    });
+  },
+
+  giveUp: (req, res, next) => {
+    AnnoTasks.update(
+      {
+        AID: req.session.userId,
+        status: 1
+      },
+      {
+        status: 2
+      }
+    ).exec((err, updated) => {
+      if (err) {
+        sails.log(err);
+      } else {
+        sails.log(updated);
+        AnnotatorInfo.update(
+          {
+            AID: req.session.userId,
+          },
+          {
+            taskTaken: null
+          }
+        ).exec((err, updated) => {
+          if (err) {
+            sails.log(err);
+          } else {
+            sails.log(updated);
+            res.json({});
+          }
+        });
+      }
     });
   }
 };

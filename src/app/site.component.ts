@@ -5,13 +5,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'ng-app',
   templateUrl: './site.component.html',
-  styles: [`
-    .fa {
-      margin: 10px 0 20px 0;
-      font-size: 15rem;
-      opacity: 0.8;
-    }
-  `]
+  styleUrls: ['./site.component.scss']
 })
 export class SiteComponent implements OnInit {
   constructor(

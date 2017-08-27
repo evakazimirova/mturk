@@ -153,6 +153,7 @@ export class AnnotatingFragmentsComponent {
               this.common.user.demo = demo;
               this.common.user.money.available = 1;
               this.common.progressBar[1].done = true;
+              this.annot.demoMode = false;
 
               this.common.alert('You’ve just finished the Demo Task. Please fill <a>the account form</a> and let’s start!');
             },

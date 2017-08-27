@@ -15,6 +15,7 @@ export class ProfileProjectsComponent implements OnInit {
   isLoaded = true;
   loadingTask = -1;
   areTutorialsFinished = false;
+  isGivingUp = false;
 
   constructor(public common: CommonService,
               private http: HttpService,
@@ -121,26 +122,28 @@ export class ProfileProjectsComponent implements OnInit {
 
   // решаем, что делать с выбранной задачей
   taskSelected(project, i) {
-    if (this.common.user.profile === 0) {
-      this.common.alert('Before you will continue you should fill all the required information about you in your profile.');
-    } else if (this.common.user.taskTaken !== null && i !== this.common.user.taskTaken - 1) {
-      this.common.alert('Sorry, but you have already taken a task. Please finnish it first and you will be able take one more.');
-    } else if (i >= this.common.user.level) {
-      this.common.alert('Sorry, but you are not ready to do this type of tasks. Please finnish the previous type of task first.');
-    } else if (i !== 0 && !this.checkTutorials()) {
-      this.common.alert('Before taking this task you should pass all the tutorials.');
-    } else {
-      // пока обрабатывается одна задача, другую брать нельзя
-      if (this.loadingTask === -1) {
-        // сообщаем, что обрабатываем эту задачу
-        this.loadingTask = i;
+    if (!this.isGivingUp) {
+      if (this.common.user.profile === 0) {
+        this.common.alert('Before you will continue you should fill all the required information about you in your profile.');
+      } else if (this.common.user.taskTaken !== null && i !== this.common.user.taskTaken - 1) {
+        this.common.alert('Sorry, but you have already taken a task. Please finnish it first and you will be able take one more.');
+      } else if (i >= this.common.user.level) {
+        this.common.alert('Sorry, but you are not ready to do this type of tasks. Please finnish the previous type of task first.');
+      } else if (i !== 0 && !this.checkTutorials()) {
+        this.common.alert('Before taking this task you should pass all the tutorials.');
+      } else {
+        // пока обрабатывается одна задача, другую брать нельзя
+        if (this.loadingTask === -1) {
+          // сообщаем, что обрабатываем эту задачу
+          this.loadingTask = i;
 
-        if (project.annoTask) {
-          // Продолжить выполнение
-          this.startTask(project.annoTask.task);
-        } else {
-          // Дать задачу или запретить
-          this.takeTask(project.PID, i);
+          if (project.annoTask) {
+            // Продолжить выполнение
+            this.startTask(project.annoTask.task);
+          } else {
+            // Дать задачу или запретить
+            this.takeTask(project.PID, i);
+          }
         }
       }
     }
@@ -298,6 +301,43 @@ export class ProfileProjectsComponent implements OnInit {
       );
     } else {
       startTask();
+    }
+  }
+
+  giveUp(i) {
+    if (!this.isGivingUp) {
+      this.isGivingUp = true;
+      this.common.confirm('Do you really want to end the task? You will not get any payment for completed part!').subscribe(
+        confirmed => {
+          if (confirmed) {
+            this.loadingTask = i;
+
+            this.http.get('AnnoTasks/giveUp').subscribe(
+              tasks => {
+                this.isGivingUp = false;
+                this.loadingTask = -1;
+
+                // забываем про взятую задачу
+                for (const p in this.common.projects) {
+                  delete this.common.projects[p].annoTask;
+                }
+
+                // обнуляем зарезервированный баланс пользователя
+                this.common.user.money.reserved = 0;
+
+                this.common.user.taskTaken = null;
+              },
+              err => {
+                this.isGivingUp = false;
+                this.loadingTask = -1;
+                console.error(err);
+              }
+            );
+          } else {
+            this.isGivingUp = false;
+          }
+        }
+      );
     }
   }
 }
