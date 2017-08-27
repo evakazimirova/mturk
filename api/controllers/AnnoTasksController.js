@@ -374,7 +374,6 @@ module.exports = {
       if (err) {
         sails.log(err);
       } else {
-        sails.log(updated);
         AnnotatorInfo.update(
           {
             AID: req.session.userId,
@@ -386,7 +385,6 @@ module.exports = {
           if (err) {
             sails.log(err);
           } else {
-            sails.log(updated);
             res.json({});
           }
         });
