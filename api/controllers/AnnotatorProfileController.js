@@ -11,18 +11,26 @@ module.exports = {
     AnnotatorProfile.findOne({
       AID: req.session.userId
     }).exec((error, annotator) => {
-      AnnotatorInfo.findOne({
-        AID: req.session.userId
-      }).exec((error, annotatorInfo) => {
-        for (const key in annotator) {
-          if (annotator[key] == null) {
-            delete annotator[key];
-          }
-        }
+      if (error) {
+        sails.log(error);
+      } else {
+        AnnotatorInfo.findOne({
+          AID: req.session.userId
+        }).exec((error, annotatorInfo) => {
+          if (error) {
+            sails.log(error);
+          } else {
+            for (const key in annotator) {
+              if (annotator[key] == null) {
+                delete annotator[key];
+              }
+            }
 
-        annotator.englishTest = annotatorInfo.englishTest;
-        res.json(annotator);
-      });
+            annotator.englishTest = annotatorInfo.englishTest;
+            res.json(annotator);
+          }
+        });
+      }
     });
   },
 
@@ -37,17 +45,25 @@ module.exports = {
       },
       req.params.all()
     ).exec((error, annotator) => {
-      // сообщаем, что анкета заполнена
-      AnnotatorInfo.update(
-        {
-          AID: req.session.userId
-        },
-        {
-          profile: 1
-        }
-      ).exec((error, annotator) => {});
+      if (error) {
+        sails.log(error);
+      } else {
+        // сообщаем, что анкета заполнена
+        AnnotatorInfo.update(
+          {
+            AID: req.session.userId
+          },
+          {
+            profile: 1
+          }
+        ).exec((error, annotator) => {
+          if (error) {
+            sails.log(error);
+          }
+        });
 
-      res.json(annotator);
+        res.json(annotator);
+      }
     });
   }
 };
