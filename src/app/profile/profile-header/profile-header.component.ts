@@ -37,7 +37,8 @@ export class ProfileHeaderComponent {
               clearInterval(this.annot.reminder);
             }
           }
-        }
+        },
+        error => console.error(error)
       );
     } else {
       this.profileModeSelected.emit(page);
@@ -56,10 +57,11 @@ export class ProfileHeaderComponent {
               // выходим из системы
               this.common.mode = 'auth';
             },
-            err => console.error(err)
+            error => console.error(error)
           );
         }
-      }
+      },
+      error => console.error(error)
     );
   }
 }

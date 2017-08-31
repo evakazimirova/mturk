@@ -63,7 +63,8 @@ export class AnnotatingComponent implements OnInit {
     this.annot.percentageUpdated.subscribe(
       (p) => {
         this.percentage = p;
-      }
+      },
+      error => console.error(error)
     );
   }
 

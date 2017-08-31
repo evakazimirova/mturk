@@ -35,7 +35,8 @@ export class SiteComponent implements OnInit {
               this.common.alert('Welcome on Emotion miner! Now you can find out how it works! Just start Demo task, and get your first reward, it will take couple of minutes.');
 
               this.http.getRough('/annotators/firstTime').subscribe(
-                ok => this.common.user.firstTime = false
+                ok => this.common.user.firstTime = false,
+                error => console.error(error)
               );
             }
           }

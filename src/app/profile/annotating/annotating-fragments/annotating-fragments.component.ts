@@ -122,9 +122,9 @@ export class AnnotatingFragmentsComponent {
                 this.annot.setVideo();
               }
             },
-            err => {
+            error => {
               this.loading = false;
-              console.error(err);
+              console.error(error);
             }
           );
         } else {
@@ -159,9 +159,9 @@ export class AnnotatingFragmentsComponent {
                 $('.tutorial-modal').modal('show');
               });
             },
-            err => {
+            error => {
               // this.loadingTask = -1;
-              console.error(err);
+              console.error(error);
             }
           );
         }

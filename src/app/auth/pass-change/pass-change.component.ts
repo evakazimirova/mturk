@@ -44,9 +44,9 @@ export class ChangePasswordComponent implements OnInit {
           // this.loading = false;
           window.location.href = '/'; // просто перезагружаем страницу, чтобы не морочиться с кэшкм (но лучше поморочиться)
         },
-        err => {
-          console.error(err);
+        error => {
           this.loading = false;
+          console.error(error);
         }
       );
     }
