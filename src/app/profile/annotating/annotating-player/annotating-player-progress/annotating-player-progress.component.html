@@ -7,7 +7,7 @@
 
   <!-- Полоса воспроизведения -->
   <div class="col col-xs-10">
-    <div class="progress">
+    <div class="progress" (click)="setVideoPosition($event)">
       <div class="progress-bar" role="progressbar" [ngStyle]="{width: percentage + '%'}">
         <span class="sr-only">{{ percentage }}% Complete</span>
       </div>

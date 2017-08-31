@@ -105,4 +105,11 @@ export class AnnotatingPlayerProgressComponent implements OnInit {
   stopWatching() {
     clearInterval(this.watchingVideo);
   }
+
+  setVideoPosition(event) {
+    console.log((event.layerX / $(event.target).outerWidth() * 100).toFixed(0) + '%');
+    const fragmentLength = this.fragmentEnd - this.fragmentStart;
+
+    this.currentTime = this.fragmentStart + fragmentLength;
+  }
 }
