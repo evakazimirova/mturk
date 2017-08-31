@@ -107,9 +107,28 @@ export class AnnotatingPlayerProgressComponent implements OnInit {
   }
 
   setVideoPosition(event) {
-    console.log((event.layerX / $(event.target).outerWidth() * 100).toFixed(0) + '%');
-    const fragmentLength = this.fragmentEnd - this.fragmentStart;
+    // находим длину прогресс бара
+    const target = $(event.target);
+    let width;
+    if (target.hasClass('progress-bar')) {
+      width = target.parent().outerWidth();
+    } else {
+      width = target.outerWidth();
+    }
 
-    this.currentTime = this.fragmentStart + fragmentLength;
+    // вычисляем новое время видео
+    const part = event.layerX / width;
+    const fragmentLength = this.fragmentEnd - +this.fragmentStart;
+    this.currentTime = +this.fragmentStart + fragmentLength * part;
+
+    // обновляем прогресс-бар
+    this.percentage = (part * 100).toFixed(0);
+
+    // перемещаемся по видео
+    if (this.annot.isYouTube) {
+      this.annot.ytPlayer.seekTo(this.currentTime, true);
+    } else {
+      this.annot.videoContainer.currentTime = this.currentTime;
+    }
   }
 }
