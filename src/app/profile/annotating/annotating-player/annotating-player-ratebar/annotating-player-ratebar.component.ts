@@ -14,7 +14,8 @@ export class AnnotatingPlayerRateBarComponent implements OnInit {
 
   ngOnInit() {
     this.annot.videoChanged.subscribe(
-      () => this.boxType = this.annot.task.FIDs[this.annot.FID].boxType
+      () => this.boxType = this.annot.task.FIDs[this.annot.FID].boxType,
+      error => console.error(error)
     );
   }
 }

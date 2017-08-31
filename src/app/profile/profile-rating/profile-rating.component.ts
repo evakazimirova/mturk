@@ -19,9 +19,9 @@ export class ProfileRatingComponent implements OnInit {
         // обновляем список пользователей
         this.users = annotators;
       },
-      err => {
+      error => {
         this.isLoaded = true;
-        console.error(err);
+        console.error(error);
       }
     );
   }

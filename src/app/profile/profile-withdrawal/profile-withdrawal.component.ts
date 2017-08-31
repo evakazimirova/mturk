@@ -53,9 +53,9 @@ export class ProfileWithdrawalComponent {
             // корректируем остаток
             this.common.user.money.available = res.available;
           },
-          err => {
+          error => {
             this.isRequesting = false;
-            console.error(err);
+            console.error(error);
           }
         );
       } else {

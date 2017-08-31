@@ -8,5 +8,5 @@ import { CommonService } from '../common.service';
 export class ProfileComponent {
   profileMode = this.common.profileMode;
 
-  constructor(private common: CommonService) {}
+  constructor(public common: CommonService) {}
 }

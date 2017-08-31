@@ -52,9 +52,9 @@ export class AdminMoneyRequestsComponent implements OnInit {
           }
         ];
       },
-      err => {
+      error => {
         this.isLoaded = true;
-        console.error(err);
+        console.error(error);
       }
     );
   }
@@ -75,9 +75,9 @@ export class AdminMoneyRequestsComponent implements OnInit {
           this.isDefraing = false;
           this.requests[this.requestId].bill.isDefrayed = res.defrayed;
         },
-        err => {
+        error => {
           this.isDefraing = false;
-          console.error(err);
+          console.error(error);
         }
       );
     }

@@ -177,7 +177,8 @@ export class ProfileProfileComponent implements OnInit {
     this.common.tutorialsUpdated.subscribe(
       () => {
         this.tutorialsTests = this.common.user.tutorials;
-      }
+      },
+      error => console.error(error)
     );
   }
 

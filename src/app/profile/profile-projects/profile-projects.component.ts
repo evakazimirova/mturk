@@ -106,15 +106,15 @@ export class ProfileProjectsComponent implements OnInit {
                 }
               }
             },
-            err => {
+            error => {
               this.isLoaded = true;
-              console.error(err);
+              console.error(error);
             }
           );
         },
-        err => {
+        error => {
           this.isLoaded = true;
-          console.error(err);
+          console.error(error);
         }
       );
     }
@@ -183,9 +183,9 @@ export class ProfileProjectsComponent implements OnInit {
           this.startAnnotating.emit();
           this.annot.setVideo();
         },
-        err => {
+        error => {
           this.loadingTask = -1;
-          console.error(err);
+          console.error(error);
         }
       );
     };
@@ -218,9 +218,9 @@ export class ProfileProjectsComponent implements OnInit {
           this.common.alert('no free tasks');
         }
       },
-      err => {
+      error => {
         this.loadingTask = -1;
-        console.error(err);
+        console.error(error);
       }
     );
   }
@@ -327,16 +327,17 @@ export class ProfileProjectsComponent implements OnInit {
 
                 this.common.user.taskTaken = null;
               },
-              err => {
+              error => {
                 this.isGivingUp = false;
                 this.loadingTask = -1;
-                console.error(err);
+                console.error(error);
               }
             );
           } else {
             this.isGivingUp = false;
           }
-        }
+        },
+        error => console.error(error)
       );
     }
   }
