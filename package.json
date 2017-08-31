@@ -79,7 +79,7 @@
     "watch:backend": "nodemon app.js",
     "frontend": "ng serve",
     "backend": "ng build && nodemon app.js",
-    "build": "ng build -prod",
+    "build": "ng build",
     "ng": "ng",
     "test": "ng test",
     "lint": "ng lint",
