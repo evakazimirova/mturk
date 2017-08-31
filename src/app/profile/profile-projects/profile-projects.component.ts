@@ -69,7 +69,7 @@ export class ProfileProjectsComponent implements OnInit {
         action: 'Take a Tutorial',
         done: this.checkTutorials(),
         go: () => {
-          // console.log('tutorials');
+          this.common.profileMode = 'profile';
         }
       },
       {
