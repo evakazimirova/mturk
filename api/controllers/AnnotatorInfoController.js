@@ -8,7 +8,11 @@
 module.exports = {
   all: (req, res, next) => {
     AnnotatorInfo.find().exec((error, aInfo) => {
-      res.json(aInfo);
+      if (error) {
+        sails.log(error);
+      } else {
+        res.json(aInfo);
+      }
     });
   },
 
@@ -24,7 +28,11 @@ module.exports = {
         englishTestMark: req.param('rightTotal')
       }
     ).exec((error, aInfo) => {
-      res.json({englishTest: englishTest});
+      if (error) {
+        sails.log(error);
+      } else {
+        res.json({englishTest: englishTest});
+      }
     });
   },
 
@@ -39,39 +47,47 @@ module.exports = {
     ).exec((error, aInfo) => {
       if (error) {
         sails.log(error);
-      }
-
-      // проверяем, все ли туториалы пройдены
-      let allTutorialsDone = true;
-      for (let group of req.param('tutorials')) {
-        if (!allTutorialsDone) {
-          break;
-        }
-        for (let tutorial of group) {
-          if (tutorial === 0) {
-            allTutorialsDone = false;
+      } else {
+        // проверяем, все ли туториалы пройдены
+        let allTutorialsDone = true;
+        for (let group of req.param('tutorials')) {
+          if (!allTutorialsDone) {
             break;
           }
+          for (let tutorial of group) {
+            if (tutorial === 0) {
+              allTutorialsDone = false;
+              break;
+            }
+          }
         }
-      }
 
-      if (allTutorialsDone) {
-        // отправляем уведомление на почту
-        Annotators.findOne({
-          AID: req.session.userId
-        }).exec((err, user) => {
-          AnnotatorProfile.findOne({
+        if (allTutorialsDone) {
+          // отправляем уведомление на почту
+          Annotators.findOne({
             AID: req.session.userId
-          }).exec((err, profile) => {
-            // вынимаем имя пользователя
-            user.firstName = profile.name.split(',')[1].slice(1);
-            // отправляем письмо
-            EmailService.testsFinished(user);
+          }).exec((error, user) => {
+            if (error) {
+              sails.log(error);
+            } else {
+              AnnotatorProfile.findOne({
+                AID: req.session.userId
+              }).exec((error, profile) => {
+                if (error) {
+                  sails.log(error);
+                } else {
+                  // вынимаем имя пользователя
+                  user.firstName = profile.name.split(',')[1].slice(1);
+                  // отправляем письмо
+                  EmailService.testsFinished(user);
+                }
+              });
+            }
           });
-        });
-      }
+        }
 
-      res.json(aInfo[0]);
+        res.json(aInfo[0]);
+      }
     });
   }
 };

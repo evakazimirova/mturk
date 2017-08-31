@@ -9,7 +9,7 @@ import { HttpService } from '../http.service';
 })
 export class AuthComponent {
   formType = 'login';
-  terms = '';
+
   constructor(public common: CommonService, private http: HttpService) {}
 
   secret() {
@@ -20,10 +20,10 @@ export class AuthComponent {
   }
 
   loadTerms() {
-    if (this.terms.length === 0) {
+    if (this.common.terms.length === 0) {
       this.http.getRough('/content/getTerms').subscribe(
         terms => {
-          this.terms = terms.text();
+          this.common.terms = terms.text();
         },
         error => console.error(error)
       );

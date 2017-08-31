@@ -65,3 +65,11 @@
     }
   }
 }
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .main-panel {
+    .emotions-definitions {
+      right: -146px;
+    }
+  }
+}

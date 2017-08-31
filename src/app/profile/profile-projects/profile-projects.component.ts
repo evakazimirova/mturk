@@ -69,7 +69,7 @@ export class ProfileProjectsComponent implements OnInit {
         action: 'Take a Tutorial',
         done: this.checkTutorials(),
         go: () => {
-          // console.log('tutorials');
+          this.common.profileMode = 'profile';
         }
       },
       {
@@ -337,6 +337,17 @@ export class ProfileProjectsComponent implements OnInit {
             this.isGivingUp = false;
           }
         }
+      );
+    }
+  }
+
+  loadTerms() {
+    if (this.common.terms.length === 0) {
+      this.http.getRough('/content/getTerms').subscribe(
+        terms => {
+          this.common.terms = terms.text();
+        },
+        error => console.error(error)
       );
     }
   }
