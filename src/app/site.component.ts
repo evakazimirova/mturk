@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SiteComponent implements OnInit {
   constructor(
-    private common: CommonService,
+    public common: CommonService,
     private http: HttpService
   ) {}
 
