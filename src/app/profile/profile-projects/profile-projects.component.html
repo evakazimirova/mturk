@@ -1,10 +1,12 @@
 <!-- Прогресс-бар -->
 <div class="p-bar" *ngIf="!(common.progressBar[1].done && common.progressBar[2].done && common.progressBar[4].done)">
-  <div *ngFor="let task of common.progressBar; let i = index">
-    <div [ngClass]="{done: task.done}" class="fa fa-3x fa-fw fa-arrow-right" *ngIf="i > 0"></div>
-    <div [ngClass]="{done: task.done}" class="box" (click)="task.go()">
+  <div *ngFor="let task of common.progressBar; let i = index" [ngClass]="{done: task.done}">
+    <!-- <div [ngClass]="{done: task.done}" class="fa fa-3x fa-fw fa-arrow-right" *ngIf="i > 0"></div> -->
+    <div class="box" (click)="task.go()">
       <span>{{ task.action }}</span>
     </div>
+    <div class="arrow-white" *ngIf="i < common.progressBar.length - 1"></div>
+    <div class="arrow" *ngIf="i < common.progressBar.length - 1"></div>
   </div>
 </div>
 
