@@ -42,7 +42,7 @@
         <!-- Дополнительная информация -->
         <div class="description">
           <span>Tasks Amount: {{ task.tasksAmount }}</span>
-          <span *ngIf="common.user.taskTaken !== null && i === common.user.taskTaken - 1">Completed: {{ project.annoTask.percentage }}%</span>
+          <span *ngIf="common.user.taskTaken !== null && i === common.user.taskTaken - 1">Completed: {{ project.annoTask.percentage.toFixed(0) }}%</span>
           <span *ngIf="common.user.taskTaken !== null && i === common.user.taskTaken - 1">
             Earned: ${{ project.annoTask.earned }}/${{ project.annoTask.price * task.tasksAmount }}
           </span>
@@ -88,9 +88,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">Terms</h4>
         </div>
-        <div class="modal-body">
-          <p>Here you can find general terms and conditions of participation.</p>
-        </div>
+        <div class="modal-body" [innerHTML]="common.terms"></div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>

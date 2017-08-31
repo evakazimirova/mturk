@@ -25,6 +25,8 @@ export class CommonService {
     [27,28,29,30]
   ]
 
+  terms = '';
+
   progressBar = [];
 
   projects = []; // список проектов

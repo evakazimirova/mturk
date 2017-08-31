@@ -1,8 +1,8 @@
 <!-- Завершённость задания -->
 <div class="row">
   <div class="progress">
-    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" [ngStyle]="{'width': percentage + '%'}">
-      {{ percentage }}%
+    <div class="progress-bar progress-bar-success" role="progressbar" [ngStyle]="{'width': percentage + '%'}">
+      {{ percentage.toFixed(0) }}%
     </div>
   </div>
 </div>
@@ -30,7 +30,7 @@
   </div>
 
   <!-- Список фрагментов -->
-  <div class="col col-xs-2">
+  <div class="col col-xs-2 fragments">
     <na-annotating-fragments></na-annotating-fragments>
     <div class="demo-hint" *ngIf="annot.demoMode">
       <div class="hint-text" [innerHTML]="annot.demoHints[annot.demoHint].text"></div>

@@ -16,12 +16,9 @@ export class ProfileEmotionsDefinitionsComponent implements OnInit {
   }
 
   loadEmotionsDefinitions() {
-    console.log(this.emotionsDefinitions.length);
     if (this.emotionsDefinitions.length === 0) {
       this.http.getRough('/content/getEmotionsDefinitions').subscribe(
         emotionsDefinitions => {
-          console.log(emotionsDefinitions);
-
           this.emotionsDefinitions = emotionsDefinitions.text();
         },
         error => console.error(error)

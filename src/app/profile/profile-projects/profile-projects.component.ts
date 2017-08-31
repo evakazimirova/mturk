@@ -340,4 +340,15 @@ export class ProfileProjectsComponent implements OnInit {
       );
     }
   }
+
+  loadTerms() {
+    if (this.common.terms.length === 0) {
+      this.http.getRough('/content/getTerms').subscribe(
+        terms => {
+          this.common.terms = terms.text();
+        },
+        error => console.error(error)
+      );
+    }
+  }
 }
