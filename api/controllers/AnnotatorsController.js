@@ -227,7 +227,7 @@ module.exports = {
               }).exec((err, token) => {
                 // отправляем оповещение на почту новому аннотатору
                 user.hostName = req.headers.host;
-                EmailService.onSignUp(user);
+                EmailService.signUp(user);
 
                 // отправляем почту
                 res.json({email: user.email});
@@ -244,7 +244,7 @@ module.exports = {
                 // не было — отправляем повторное письмо
                 user.hostName = req.headers.host;
                 user.emailToken = token.token;
-                EmailService.onSignUp(user);
+                EmailService.signUp(user);
 
                 res.status(400).send('email exists resend');
               } else {
@@ -286,6 +286,16 @@ module.exports = {
                   registered: 1
                 }
               ).exec((error, updated) => {});
+
+              // отправляем уведомление на почту
+              AnnotatorProfile.findOne({
+                AID: token.AID.AID,
+              }).exec((error, profile) => {
+                // вынимаем имя пользователя
+                user.firstName = profile.name.split(',')[1].slice(1);
+                // отправляем письмо
+                EmailService.registered(user);
+              });
 
               // авторизируем пользователя
               req.session.userId = token.AID.AID;
@@ -428,7 +438,7 @@ module.exports = {
           const doAfterCheckToken = () => {
             // высылаем письмо со ссылкой на страницу смены пароля
             annotator.hostName = req.headers.host;
-            EmailService.onForgotPassword(annotator);
+            EmailService.forgotPassword(annotator);
 
             // сообщаем об успехе
             res.send('true');
@@ -627,7 +637,7 @@ module.exports = {
 
   feedback: (req, res, next) => {
     sails.log(req.params.all());
-    EmailService.onFeedback(req.params.all());
+    EmailService.feedback(req.params.all());
     res.json({});
   }
 };

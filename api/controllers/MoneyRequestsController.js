@@ -57,7 +57,23 @@ module.exports = {
           // отправляем письмо администраторам
           mReq.AID = annotator;
           mReq.hostName = req.headers.host;
-          EmailService.onMoneyRequest(mReq);
+
+          // отправляем уведомления на почту
+          Annotators.findOne({
+            AID: req.session.userId
+          }).exec((err, user) => {
+            AnnotatorProfile.findOne({
+              AID: req.session.userId
+            }).exec((err, profile) => {
+              // вынимаем имя пользователя
+              mReq.AID.name = profile.name;
+              mReq.AID.firstName = profile.name.split(',')[1].slice(1);
+              mReq.AID.email = user.email;
+              // отправляем письма
+              EmailService.moneyRequest(mReq);
+              EmailService.moneyRequestAlert(mReq.AID);
+            });
+          });
 
           // следим за тем, чтобы сумма запроса не превышала доступный баланс
           if (params.money <= annotator.moneyAvailable) {

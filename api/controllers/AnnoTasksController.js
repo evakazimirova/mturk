@@ -385,6 +385,20 @@ module.exports = {
           if (err) {
             sails.log(err);
           } else {
+            // отправляем уведомление на почту
+            Annotators.findOne({
+              AID: req.session.userId
+            }).exec((err, user) => {
+              AnnotatorProfile.findOne({
+                AID: req.session.userId
+              }).exec((err, profile) => {
+                // вынимаем имя пользователя
+                user.firstName = profile.name.split(',')[1].slice(1);
+                // отправляем письмо
+                EmailService.taskRefusal(user);
+              });
+            });
+
             res.json({});
           }
         });
