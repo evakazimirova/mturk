@@ -46,6 +46,7 @@ import { AdminHeaderComponent } from './admin/admin-header/admin-header.componen
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { AdminProjectsComponent } from './admin/admin-projects/admin-projects.component';
 import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-money-requests.component';
+import { ProfileFaqFeedbackComponent } from './profile/profile-faq/profile-faq-feedback/profile-faq-feedback.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { AdminMoneyRequestsComponent } from './admin/admin-money-requests/admin-
     ProfileRulesComponent,
     ProfileAccountComponent,
     ProfileProfileEnglishComponent,
-    ProfileEmotionsDefinitionsComponent
+    ProfileEmotionsDefinitionsComponent,
+    ProfileFaqFeedbackComponent
   ],
   imports: [
     BrowserModule,
