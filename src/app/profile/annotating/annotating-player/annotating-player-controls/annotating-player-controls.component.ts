@@ -139,11 +139,19 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
     this.playVideo();
   }
 
+  playButton() {
+    if (this.annot.cf === -1) {
+      this.playVideo();
+    } else {
+      this.replayVideo();
+    }
+  }
+
   // Видео целиком
   wholeVideo() {
     // Воспроизводим видел целиком, либо первый фрагмент
     if (this.annot.cf === -1) {
-      this.annot.setFragment(0);
+      this.annot.setFragment(this.annot.fragmentBeforeWholeVideo);
     } else {
       this.annot.setFragment(-1);
     }
