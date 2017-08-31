@@ -14,7 +14,7 @@ const updateLastLogin = (AID) => {
     {
       lastlogin: new Date()
     }
-  ).exec(() => {
+  ).exec((error, updated) => {
     if (error) {
       sails.log(error);
     }

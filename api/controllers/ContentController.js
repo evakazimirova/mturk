@@ -2,9 +2,9 @@ const fs = require("fs")
 const marky = require("marky-markdown")
 
 const loadMD = (file, res) => {
-  fs.readFile(__dirname + `/../../assets/${file}.md`, "utf8", (err, data) => {
-    if (err) {
-      sails.log(err);
+  fs.readFile(__dirname + `/../../assets/${file}.md`, "utf8", (error, data) => {
+    if (error) {
+      sails.log(error);
     } else {
       const terms = marky(data, {
         prefixHeadingIds: true,        // prevent DOM id collisions
