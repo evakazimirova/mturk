@@ -77,5 +77,26 @@ module.exports = {
       }
       console.log('Message %s sent: %s', info.messageId, info.response);
     });
+  },
+
+
+  onFeedback: (feedback) => {
+    let mailOptions = {
+      from: '"Emotion Miner" <info@emotionminer.com>',
+      to: 'noggatur@ya.ru',
+      subject: 'Feedback from ' + feedback.email,
+      html: `
+        <p>Dear Mr. Admin,</p>
+        <p>The user with email <strong>${feedback.email}</strong> has sent you the following message:</p>
+        <p>${feedback.message}</p>
+      `
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message %s sent: %s', info.messageId, info.response);
+    });
   }
 }

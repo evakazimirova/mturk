@@ -1,0 +1,24 @@
+<!-- Восстановление пароля -->
+<form [formGroup]="form" (ngSubmit)="sendFeedback($event)">
+  <div class="form-group">
+    <label for="email">Your E-mail</label>
+    <input type="text" class="form-control" id="email"
+      formControlName="email" placeholder="johndoe_42"
+      [ngClass]="{
+        success: form.controls['email'].valid,
+        danger: !form.controls['email'].valid
+      }">
+    <label for="message">Your Message</label>
+    <textarea class="form-control" formControlName="message" id="message" rows="3"
+      [ngClass]="{
+        success: form.controls['message'].valid,
+        danger: !form.controls['message'].valid
+      }"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-success btn-block" [ngClass]="{disabled: loading || !form.valid}">
+    Send feedback
+    <!-- Индикатор загрузки -->
+    <na-loader-inbtn *ngIf="loading"></na-loader-inbtn>
+  </button>
+</form>

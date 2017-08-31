@@ -122,7 +122,10 @@ You can bring a friend and get 10% of their profit as a bonus.
 You can take a Jedi Master task which accounts for $70.
 
 ### Which card is needed for money transfer?
-It should be MasterCard or VISA.
+It should be PayPal account only.
+
+### Who can I create my PayPal account?
+Please visit PayPal website www.paypal.com, choose a “sign up for a personal account” button https://www.paypal.com/ca/webapps/mpp/account-selection, fill in the form with the personal data (name, date of birth, email etc.), confirm your email (it will be sent a confirmation link to click, check your spam or junk folder if you did not receive this Email) and so activate your account.
 
 ### Can money be transferred to my PayPal account or other e-wallets?
 No, money can only be transferred to the following cards: MasterCard, VISA.

@@ -623,6 +623,11 @@ module.exports = {
     // });
 
     res.send('ok');
-  }
+  },
 
+  feedback: (req, res, next) => {
+    sails.log(req.params.all());
+    EmailService.onFeedback(req.params.all());
+    res.json({});
+  }
 };
