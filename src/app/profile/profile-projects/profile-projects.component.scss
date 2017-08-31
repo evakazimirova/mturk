@@ -56,13 +56,20 @@
 }
 
 .p-bar {
-  height: 140px;
-  margin-top: -10px;
-  margin-bottom: 10px;
+  height: 120px;
+  // margin-top: -10px;
+  margin-bottom: 20px;
 
   > div {
     float: left;
     position: relative;
+
+    &:first-child {
+      .box {
+        width: 190px;
+        padding-left: 10px;
+      }
+    }
 
     &.done {
       .box {
@@ -77,15 +84,16 @@
     > div {
       display: inline-block;
       padding: 0 10px;
-      height: 140px;
+      height: 120px;
       vertical-align: bottom;
 
       &.box {
-        width: 140px;
-        line-height: 140px;
+        width: 190px;
+        padding-left: 50px;
+        line-height: 120px;
         color: #fff;
         background-color: #00b3ff;
-        font-size: 2rem;
+        font-size: 2.3rem;
         text-align: center;
         vertical-align: middle;
         cursor: pointer;
@@ -101,17 +109,17 @@
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: 40px 0 40px 20px;
+        border-width: 60px 0 60px 30px;
         border-color: transparent transparent transparent #00b3ff;
         position: absolute;
         top: 0;
-        right: -35px;
+        right: -50px;
         z-index: 2;
       }
 
       &.arrow-white {
         border-color: transparent transparent transparent #fff;
-        right: -36px;
+        right: -51px;
         z-index: 1;
       }
 
@@ -145,9 +153,6 @@
     height: 80px;
 
     > div {
-      float: left;
-
-      
       &:first-child {
         .box {
           width: 140px;
@@ -158,12 +163,21 @@
       > div {
         padding: 0 8px;
         height: 80px;
-        
+
         &.box {
           width: 160px;
           padding-left: 30px;
           line-height: 80px;
           font-size: 1.6rem;
+        }
+
+        &.arrow, &.arrow-white {
+          border-width: 40px 0 40px 20px;
+          right: -35px;
+        }
+
+        &.arrow-white {
+          right: -36px;
         }
 
         &.fa {
