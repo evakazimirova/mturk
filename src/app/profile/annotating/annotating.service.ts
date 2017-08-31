@@ -20,6 +20,7 @@ export class AnnotatingService {
   isClickingFirstFragment = false;
   demoMode = false;
   reminder;
+  fragmentBeforeWholeVideo = 0;
 
   demoHints = [
     {
@@ -199,7 +200,11 @@ export class AnnotatingService {
     this.percentageUpdated.emit(newPercentage);
   }
 
-  setFragment(number, shouldStartPlaying = false) {
+  setFragment(number, shouldStartPlaying = true) {
+    if (number === -1 && this.cf !== -1) {
+      this.fragmentBeforeWholeVideo = this.cf;
+    }
+
     if (this.demoMode) {
       if (this.cf === -1 && this.demoHint === 1 && this.FID == 0) {
         this.demoHint = 2;

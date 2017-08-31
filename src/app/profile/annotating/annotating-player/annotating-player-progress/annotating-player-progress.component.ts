@@ -38,6 +38,16 @@ export class AnnotatingPlayerProgressComponent implements OnInit {
       },
       error => console.error(error)
     );
+
+    this.annot.fragmentChanged.subscribe(
+      () => {
+        // подсчёт прошедшего времени
+        const timeSpent = this.currentTime - this.fragmentStart;
+        const fragmentDuration = this.fragmentEnd - this.fragmentStart;
+        this.percentage = (timeSpent / fragmentDuration * 100).toFixed(0);
+      },
+      error => console.error(error)
+    );
   }
 
   startWatching() {
