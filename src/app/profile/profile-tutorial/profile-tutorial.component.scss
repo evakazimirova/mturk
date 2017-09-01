@@ -1,5 +1,5 @@
 .screen {
-  min-height: 670px;
+  min-height: 680px;
   font-size: 3rem;
   padding: 0 20px;
   padding-bottom: 40px;
@@ -43,6 +43,19 @@
     text-align: center;
     position: relative;
     height: 552px;
+    cursor: pointer;
+
+    &.small-video {
+      height: 171px;
+
+      .play-button {
+        .fa {
+          left: 41%;
+          top: 45px;
+          font-size: 8rem;
+        }
+      }
+    }
 
     video {
       width: 100%;
@@ -131,6 +144,6 @@
   left: 10px;
 }
 
-.tutorialVideo {
-  cursor: pointer;
+.clear-fix {
+  clear: left;
 }

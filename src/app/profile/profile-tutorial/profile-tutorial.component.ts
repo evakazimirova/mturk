@@ -40,7 +40,7 @@ export class ProfileTutorialComponent implements OnInit {
       this.common.tutorialModal = $('.tutorial-modal');
       this.common.tutorialModal
         .on('shown.bs.modal', (e) => {
-          this.updateTutorial();
+          // this.updateTutorial();
           this.common.isInTutorial = true;
 
           // ставим видео на паузу
@@ -84,13 +84,23 @@ export class ProfileTutorialComponent implements OnInit {
         this.screen = 5;
         this.test = testIndex;
         this.justTest = true;
+        this.updateTutorial(testIndex);
         this.initDragAndDrop();
       },
       error => console.error(error)
     );
+
+    this.common.tutorialUpdated.subscribe(
+      () => {
+        this.updateTutorial();
+      },
+      error => console.error(error)
+    );;
   }
 
-  updateTutorial() {
+  updateTutorial(test?) {
+    console.log(test);
+
     this.tutorial = this.tutorials[this.common.tutorial];
 
     this.labels = [];
@@ -112,11 +122,16 @@ export class ProfileTutorialComponent implements OnInit {
       }
     }
 
-    for (const t in this.common.user.tutorials[this.common.tutorial]) {
-      if (this.common.user.tutorials[this.common.tutorial][t] === 0) {
-        this.test = +t;
-        this.testExists = true;
-        break;
+    if (test !== undefined) {
+      this.test = test;
+      this.testExists = true;
+    } else {
+      for (const t in this.common.user.tutorials[this.common.tutorial]) {
+        if (this.common.user.tutorials[this.common.tutorial][t] === 0) {
+          this.test = +t;
+          this.testExists = true;
+          break;
+        }
       }
     }
   }
@@ -137,18 +152,21 @@ export class ProfileTutorialComponent implements OnInit {
     this.common.isInTutorial = false;
     this.justTest = false;
 
+    this.videoPaused = [true, true, true, true, true, true];
+
     // сворачиваем окно
     if (hideModal) {
       this.common.tutorialModal.modal('hide');
     }
   }
 
-  playVideo(event, video) {
+  playVideo(event, video, i = 0) {
     let videoContainer;
+
     if ($(event.target).hasClass('tutorialVideo')) {
       videoContainer = event.target;
     } else {
-      videoContainer = event.path[2].children['tutorialVideo'];
+      videoContainer = event.path[2].children[0];
     }
 
     const $videoContainer = $(videoContainer);
@@ -163,16 +181,16 @@ export class ProfileTutorialComponent implements OnInit {
       $videoContainer.on("loadstart", () => {
         $videoContainer.off("loadstart");
         videoContainer.play();
-        this.videoPaused[0] = false;
+        this.videoPaused[i] = false;
       });
     } else {
       if (videoContainer.paused) {
         videoContainer.play();
-        this.videoPaused[0] = false;
+        this.videoPaused[i] = false;
       } else {
         videoContainer.pause();
         videoContainer.currentTime = 0;
-        this.videoPaused[0] = true;
+        this.videoPaused[i] = true;
       }
     }
   }
@@ -229,6 +247,8 @@ export class ProfileTutorialComponent implements OnInit {
     } else if (this.screen === 4) {
       // инструкция к тесту (появляется только 1 раз)
       this.manual = false;
+
+      // this.updateTutorial();
 
       if (this.testExists) {
         this.screen++;
@@ -334,7 +354,7 @@ export class ProfileTutorialComponent implements OnInit {
                   this.common.user.tutorials[this.common.tutorial][this.test] = mistake + 1;
                   this.http.post({tutorials: this.common.user.tutorials}, 'AnnotatorInfo/saveTutorial').subscribe(
                     () => {
-                      this.common.updateTutorials();
+                      // this.common.updateTutorials();
                     },
                     error => console.error(error)
                   );
