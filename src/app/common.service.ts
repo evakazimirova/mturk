@@ -77,4 +77,9 @@ export class CommonService {
   updateTutorials() {
     this.tutorialsUpdated.emit();
   }
+
+  tutorialUpdated = new EventEmitter();
+  updateTutorial() {
+    this.tutorialUpdated.emit();
+  }
 }

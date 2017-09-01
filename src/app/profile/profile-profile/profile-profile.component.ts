@@ -219,6 +219,7 @@ export class ProfileProfileComponent implements OnInit {
   goToTutorial(event, tutorialIndex) {
     event.preventDefault(); // отменяем стандартное действие
     this.common.tutorial = tutorialIndex;
+    this.common.updateTutorial();
   }
 
   goToTest($event, tutorialIndex, testIndex) {
