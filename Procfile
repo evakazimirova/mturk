@@ -1,1 +1,1 @@
-web: ng build && sails lift
+web: ng build -prod && sails lift
