@@ -48,10 +48,14 @@
 
   <div class="screen" *ngIf="tutorial.emotions[emotion].examples && screen === 3 && example > 0">
     <h4>{{ tutorial.emotions[emotion].title }}: examples</h4>
-    <div class="video" (click)="playVideo($event)">
+    <div class="video" (click)="playVideo($event, tutorial.emotions[emotion].examples[example - 1])">
       <video class="tutorialVideo" id="tutorialVideo" preload="auto">
-        <source src="https://storage.googleapis.com/video_tutorial/({{ tutorial.emotions[emotion].examples[example - 1] }}).mp4" type='video/mp4' controls="controls">
+        <source src="" type='video/mp4' controls="controls">
       </video>
+      <div class="play-button" *ngIf="videoPaused[0]">
+        <div class="cover"></div>
+        <span class="fa fa-play"></span>
+      </div>
     </div>
   </div>
 

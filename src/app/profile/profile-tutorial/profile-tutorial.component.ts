@@ -28,6 +28,8 @@ export class ProfileTutorialComponent implements OnInit {
   manual = true;
   stateHistory: any = [];
   justTest = false;
+  videoPaused = [true, true, true, true, true, true];
+  videoSources = [];
 
   constructor(private http: HttpService,
               private common: CommonService,
@@ -141,18 +143,53 @@ export class ProfileTutorialComponent implements OnInit {
     }
   }
 
-  playVideo(event) {
-    const tutorialVideo = event.target;
-
-    if (tutorialVideo.paused) {
-      tutorialVideo.play();
+  playVideo(event, video) {
+    let videoContainer;
+    if ($(event.target).hasClass('tutorialVideo')) {
+      videoContainer = event.target;
     } else {
-      tutorialVideo.pause();
-      tutorialVideo.currentTime = 0;
+      videoContainer = event.path[2].children['tutorialVideo'];
+    }
+
+    const $videoContainer = $(videoContainer);
+    const videoSource = $videoContainer.find('source');
+
+    this.videoSources.push(videoSource);
+
+    if (videoSource.attr('src') === '') {
+      videoSource.attr('src', `https://storage.googleapis.com/video_tutorial/(${video}).mp4`);
+      videoContainer.load();
+
+      $videoContainer.on("loadstart", () => {
+        $videoContainer.off("loadstart");
+        videoContainer.play();
+        this.videoPaused[0] = false;
+      });
+    } else {
+      if (videoContainer.paused) {
+        videoContainer.play();
+        this.videoPaused[0] = false;
+      } else {
+        videoContainer.pause();
+        videoContainer.currentTime = 0;
+        this.videoPaused[0] = true;
+      }
     }
   }
 
   nextScreen() {
+    this.videoPaused = [true, true, true, true, true, true];
+    if (this.tutorialVideo) {
+      if (!this.tutorialVideo.paused) {
+        this.tutorialVideo.pause();
+      }
+    }
+
+    // for (let videoSource of this.videoSources) {
+    //   videoSource.attr('src', '');
+    // }
+    // this.videoSources = [];
+
     this.stateHistory.push({
       screen: this.screen,
       example: this.example,
@@ -169,6 +206,8 @@ export class ProfileTutorialComponent implements OnInit {
             this.example++;
             $(document).ready(() => {
               this.tutorialVideo = document.getElementById('tutorialVideo');
+              const videoSource = $(this.tutorialVideo).find('source');
+              videoSource.attr('src', '');
               this.tutorialVideo.load();
             });
           } else {
@@ -206,6 +245,8 @@ export class ProfileTutorialComponent implements OnInit {
   }
 
   previousScreen() {
+    this.videoPaused = [true, true, true, true, true, true];
+
     const lastScreen = this.stateHistory.pop();
 
     this.screen = lastScreen.screen;
@@ -217,6 +258,8 @@ export class ProfileTutorialComponent implements OnInit {
     if (this.screen === 3 && this.example > 0) {
       $(document).ready(() => {
         this.tutorialVideo = document.getElementById('tutorialVideo');
+        const videoSource = $(this.tutorialVideo).find('source');
+        videoSource.attr('src', '');
         this.tutorialVideo.load();
       });
     } else if (this.screen === 4) {
