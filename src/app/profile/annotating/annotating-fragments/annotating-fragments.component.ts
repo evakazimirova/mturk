@@ -150,7 +150,7 @@ export class AnnotatingFragmentsComponent {
           this.http.get(`annotators/demoFinnished`).subscribe(
             demo => {
               // this.loadingTask = -1;
-              this.common.user.demo = demo;
+              this.common.user.demo = 1;
               this.common.user.money.available = 1;
               this.common.progressBar[1].done = true;
               this.annot.demoMode = false;

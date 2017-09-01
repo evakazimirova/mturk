@@ -250,14 +250,14 @@ export class AnnotatingService {
       this.videoContainer.currentTime = fragmentPosition;
     }
 
-    if (number === 0 && !(this.demoMode && (this.demoHint === 2 || (this.FID > 0 && this.demoHint === -1)))) {
+    if (number === 0) {
       this.isPersonShown = true;
       this.isClickingFirstFragment = true;
       setTimeout(() => {
         this.isClickingFirstFragment = false;
       }, 100);
     } else {
-      if (shouldStartPlaying && !((this.demoMode && (this.demoHint === 1 || this.demoHint === 7)))) {
+      if (shouldStartPlaying) {
         this.fragmentChanged.emit(fragmentPosition);
       }
     }
@@ -311,7 +311,9 @@ export class AnnotatingService {
     }
 
     this.fragmentRated.emit(value);
+  }
 
+  checkEmo(e) {
     if (this.demoMode) {
       if (this.cf === 0 && this.FID == 0) {
         this.demoHint = 3;
@@ -323,14 +325,6 @@ export class AnnotatingService {
         this.demoHint = 11;
       } else if (this.cf === 3 && this.FID == 2) {
         this.demoHint = 12;
-      }
-    }
-  }
-
-  checkEmo(e) {
-    if (this.demoMode) {
-      if (this.demoHint === 3) {
-        this.demoHint = 4;
       }
     }
 
@@ -359,8 +353,18 @@ export class AnnotatingService {
   }
 
   uncheckEmos(e1, e2?) {
-    if (this.demoMode && this.demoHint === 3) {
-      this.demoHint = 4;
+    if (this.demoMode) {
+      if (this.cf === 0 && this.FID == 0) {
+        this.demoHint = 3;
+      } else if (this.cf === 0 && this.FID == 1) {
+        this.demoHint = 7;
+      } else if (this.cf === 0 && this.FID == 2) {
+        this.demoHint = 9;
+      } else if (this.cf === 1 && this.FID == 2) {
+        this.demoHint = 11;
+      } else if (this.cf === 3 && this.FID == 2) {
+        this.demoHint = 12;
+      }
     }
 
     if (e2) {
