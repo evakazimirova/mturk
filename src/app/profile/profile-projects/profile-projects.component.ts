@@ -305,7 +305,7 @@ export class ProfileProjectsComponent implements OnInit {
   }
 
   giveUp(i) {
-    if (!this.isGivingUp) {
+    if (!this.isGivingUp && this.loadingTask === -1) {
       this.isGivingUp = true;
       const conf = this.common.confirm('Do you confirm your refusal to continue that task? If yes, you’ll get only 50% of task fee for the completed part.').subscribe(
         confirmed => {
