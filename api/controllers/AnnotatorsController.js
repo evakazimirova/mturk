@@ -330,7 +330,12 @@ module.exports = {
                     sails.log(error);
                   } else {
                     // вынимаем имя пользователя
-                    user.firstName = profile.name.split(',')[1].slice(1);
+                    const name = profile.name.split(',');
+                    if (name.length === 1) {
+                      user.firstName = name;
+                    } else if (name.length === 2) {
+                      user.firstName = name[1].slice(1);
+                    }
                     // отправляем письмо
                     EmailService.registered(user);
                   }
