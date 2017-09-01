@@ -83,7 +83,12 @@ module.exports = {
                     } else {
                       // вынимаем имя пользователя
                       mReq.AID.name = profile.name;
-                      mReq.AID.firstName = profile.name.split(',')[1].slice(1);
+                      const name = profile.name.split(',');
+                      if (name.length === 1) {
+                        mReq.AID.firstName = name;
+                      } else if (name.length === 2) {
+                        mReq.AID.firstName = name[1].slice(1);
+                      }
                       mReq.AID.email = user.email;
                       // отправляем письма
                       EmailService.moneyRequest(mReq);
