@@ -377,7 +377,7 @@ export class ProfileTutorialComponent implements OnInit {
                   });
 
                   mistake++;
-                  if (mistake < 3) {
+                  if (mistake < 2) {
                     this.common.alert(`Sorry but you are wrong. Please try again.`);
 
                     for (const answer of answers) {
