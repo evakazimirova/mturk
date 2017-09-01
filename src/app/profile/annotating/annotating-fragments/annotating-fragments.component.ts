@@ -172,8 +172,6 @@ export class AnnotatingFragmentsComponent {
         this.annot.FID++;
         this.annot.setVideo();
         if (this.annot.FID == 1) {
-          this.annot.demoHint = 7;
-        } else if (this.annot.FID == 2) {
           this.annot.demoHint = 6;
         }
       }

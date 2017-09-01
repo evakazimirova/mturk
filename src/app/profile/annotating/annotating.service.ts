@@ -206,17 +206,11 @@ export class AnnotatingService {
     }
 
     if (this.demoMode) {
-      if (this.cf === -1 && this.demoHint === 1 && this.FID == 0) {
-        this.demoHint = 2;
-      } else if (this.demoHint === 4) {
+      if (number === 1 && this.FID == 0) {
         this.demoHint = 5;
-      } else if (this.demoHint === 5) {
-        this.demoHint = 6;
-      } else if (this.FID == 1 && number === 1) {
+      } else if (number === 1 && this.FID == 1) {
         this.demoHint = 8;
-      } else if (this.FID == 2 && number === 2) {
-        this.demoHint = 9;
-      } else if (this.demoHint === 9) {
+      } else if (number === 1 && this.FID == 2) {
         this.demoHint = 10;
       }
     }
@@ -317,6 +311,20 @@ export class AnnotatingService {
     }
 
     this.fragmentRated.emit(value);
+
+    if (this.demoMode) {
+      if (this.cf === 0 && this.FID == 0) {
+        this.demoHint = 3;
+      } else if (this.cf === 0 && this.FID == 1) {
+        this.demoHint = 7;
+      } else if (this.cf === 0 && this.FID == 2) {
+        this.demoHint = 9;
+      } else if (this.cf === 1 && this.FID == 2) {
+        this.demoHint = 11;
+      } else if (this.cf === 3 && this.FID == 2) {
+        this.demoHint = 12;
+      }
+    }
   }
 
   checkEmo(e) {
