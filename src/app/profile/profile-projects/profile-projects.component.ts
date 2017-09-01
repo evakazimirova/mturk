@@ -307,7 +307,7 @@ export class ProfileProjectsComponent implements OnInit {
   giveUp(i) {
     if (!this.isGivingUp) {
       this.isGivingUp = true;
-      this.common.confirm('Do you really want to end the task? You will not get any payment for completed part!').subscribe(
+      const conf = this.common.confirm('Do you confirm your refusal to continue that task? If yes, you’ll get only 50% of task fee for the completed part.').subscribe(
         confirmed => {
           if (confirmed) {
             this.loadingTask = i;
@@ -339,6 +339,12 @@ export class ProfileProjectsComponent implements OnInit {
         },
         error => console.error(error)
       );
+
+      this.common.commonConfirm.on('hidden.bs.modal', () => {
+        this.common.commonConfirm.off('hidden.bs.modal');
+        this.isGivingUp = false;
+        conf.unsubscribe();
+      });
     }
   }
 

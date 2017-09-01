@@ -414,7 +414,7 @@ module.exports = {
       {
         status: 2
       }
-    ).exec((error, updated) => {
+    ).exec((error, refusedTasks) => {
       if (error) {
         sails.log(error);
       } else {
@@ -450,6 +450,12 @@ module.exports = {
                 });
               }
             });
+
+            // if (refusedTasks.length === 1) {
+
+            // } else if (refusedTasks.length > 1) {
+
+            // }
 
             res.json({});
           }

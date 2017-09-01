@@ -53,6 +53,7 @@
         <source src="" type='video/mp4' controls="controls">
       </video>
       <div class="play-button" *ngIf="videoPaused[0]">
+        <img src="https://storage.googleapis.com/video_tutorial/s_({{ tutorial.emotions[emotion].examples[example - 1] }}).mp4.jpg" alt="video" class="img-responsive">
         <div class="cover"></div>
         <span class="fa fa-play"></span>
       </div>
@@ -78,12 +79,13 @@
               <source src="" type='video/mp4' controls="controls">
             </video>
             <div class="play-button" *ngIf="videoPaused[i]">
+              <img src="https://storage.googleapis.com/video_tutorial/s_({{ pair.video }}).mp4.jpg" alt="video" class="img-responsive">
               <div class="cover"></div>
               <span class="fa fa-play"></span>
             </div>
           </div>
           <div class="lbl">
-            <span class="empty slot" [attr.data-label]="pair.label">{{ pair.personOnTheLeft ? "person on the left" : "" }}</span>
+            <span class="empty slot" [attr.data-label]="pair.label">{{ pair.personOnTheLeft ? "person on the left" : "person in the middle" }}</span>
           </div>
         </div>
       </div>

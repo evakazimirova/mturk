@@ -84,11 +84,7 @@ export class AnnotatingPlayerProgressComponent implements OnInit {
         if (currentTime >= this.fragmentEnd) {
           this.annot.unwatchVideo('pause');
 
-          if (this.annot.demoMode) {}
-            // if (this.annot.demoHint === 2) {
-            //   this.annot.demoHint = 3;
-            // }
-
+          if (this.annot.demoMode) {
             if (this.annot.FID == 0 && this.annot.cf === 0) {
               this.annot.demoHint = 2;
             }

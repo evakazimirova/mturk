@@ -97,9 +97,7 @@ export class AnnotatingComponent implements OnInit {
       this.annot.demoHint = 4;
     } else if (this.annot.demoHint === 12) {
       this.annot.demoHint = 13;
-    }
-
-    if (this.annot.demoHint < this.annot.demoHints.length - 1) {
+    } else if (this.annot.demoHint < this.annot.demoHints.length - 1) {
       this.annot.demoHint++;
     }
   }

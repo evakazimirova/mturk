@@ -68,6 +68,11 @@
       right: 0;
       bottom: 0;
 
+      img {
+        position: absolute;
+        width: 100%;
+      }
+
       .cover {
         background-color: black;
         opacity: 0.5;

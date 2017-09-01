@@ -19,16 +19,16 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
         if (this.common.profileMode === 'annotating') {
           if (this.annot.isPersonShown && !this.annot.isClickingFirstFragment) {
             this.annot.isPersonShown = false;
-            if (!this.annot.demoMode) {
+            // if (!this.annot.demoMode) {
               this.annot.fragmentChanged.emit(this.annot.csv[0][0]);
-            } else {
-              if (this.annot.demoHint === 0) {
-                this.annot.demoHint = 1;
-              }  else {
-                this.annot.demoHint = -1;
-              }
-              this.annot.setFragment(-1);
-            }
+            // } else {
+            //   if (this.annot.demoHint === 0) {
+            //     this.annot.demoHint = 1;
+            //   } else {
+            //     this.annot.demoHint = -1;
+            //   }
+            //   this.annot.setFragment(-1);
+            // }
           }
         }
       });
@@ -40,12 +40,12 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
         if (this.common.profileMode === 'annotating' && !this.common.isInTutorial) {
           if (this.annot.isPersonShown) {
             this.annot.isPersonShown = false;
-            if (!this.annot.demoMode) {
+            // if (!this.annot.demoMode) {
               this.annot.fragmentChanged.emit(this.annot.csv[0][0]);
-            } else {
-              this.annot.demoHint = 1;
-              this.annot.setFragment(-1);
-            }
+            // } else {
+            //   this.annot.demoHint = 1;
+            //   this.annot.setFragment(-1);
+            // }
           } else if (e.keyCode >= 49 && e.keyCode <= 53 || e.keyCode === 81 || e.keyCode === 87 || e.keyCode === 69) { // 1, 2, 3, 4, 5, q, w, e
             // не оцениваем видео целиком
             if (this.annot.cf !== -1) {
