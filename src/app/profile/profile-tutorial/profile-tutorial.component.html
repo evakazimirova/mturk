@@ -66,7 +66,7 @@
       <i><span *ngFor="let em of tutorial.emotions; let i = index">{{ i > 0 ? ' — ' : '' }}{{ em.title }}</span></i>
     </p>
     <span class="fa fa-question-circle fa-lg text-info" *ngIf="!manual" (click)="manual = true"></span>
-    <p *ngIf="manual">Now you have a set of video clips and different emotion labels. Please identify an emotion you’ve seen, fill the gaps below with associated emotion labels. There is a second chance to correct yourself if the chosen label is wrong.</p>
+    <p *ngIf="manual">Now you have a set of video clips and different emotion labels. Please identify an emotion in each video, fill the gaps below with the corresponding labels. There is a second chance to correct yourself if the chosen label is wrong.</p>
   </div>
 
   <div class="screen" *ngIf="screen === 5">

@@ -44,7 +44,7 @@
     ]
   },
   {
-    "text": "The fully annotated fragment is ticked. You may go back to it any time you want.",
+    "text": "The annotated fragment is ticked.",
     "visualHints": [
       {
         "top": 140,
@@ -55,7 +55,7 @@
     ]
   },
   {
-    "text": "For proceeding to the next fragment, please press the “Next piece” button or use mouse click or hotkeys.",
+    "text": "For proceeding to the next fragment, please press the “Next” button or use mouse click or hotkeys.",
     "visualHints": [
       {
         "top": 177,
@@ -78,7 +78,7 @@
     ]
   },
   {
-    "text": "When all fragments are correctly annotated, please press “Save” button and move on to other clips of the task. It’s possible to save the results only if all fragments are marked!",
+    "text": "When all fragments are annotated, please press “Save” button and move on to other clips of the task. It’s possible to save the results only if all fragments are ticked.",
     "visualHints": [
       {
         "top": 233,
@@ -124,10 +124,6 @@
   },
 
   {
-    "text": "Please consider that in all cases only guests (not show hosts!) needs to be annotated. Usually the first fragment of the video clip displays to you the actual guest",
-    "visualHints": []
-  },
-  {
     "text": "You may choose several emotion options if you think that the current emotional state of the guest is composite.",
     "visualHints": [
       {
@@ -139,15 +135,15 @@
     ]
   },
   {
-    "text": "Finish the annotation process and press “Save” button",
+    "text": "Finish the annotation process and press “Save” button.",
     "visualHints": []
   },
   {
-    "text": "Congrats! You’ve just earned your first $1",
+    "text": "Congrats! You’ve just earned your first $1!",
     "visualHints": []
   },
   {
-    "text": "Money can be withdrawn from your balance only when it’s equal or more than $10. How to do it? Please read <a>FAQ</a>",
+    "text": "Money can be withdrawn from your balance only when it’s equal or more than $10. How to do it? Please read <a>FAQ</a>.",
     "visualHints": []
   }
 ]

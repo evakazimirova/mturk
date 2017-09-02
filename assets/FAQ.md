@@ -102,7 +102,7 @@ If you’re a beginner, you should watch the tutorial on the offered annotation 
 
 If you have completed at least one test for each scale group (for each completed test you get a star – this can be tracked at your profile at ‘Tests’ section), then, in order to get money for the task you just need to watch the whole video and mark all the fragments.
 
-### I’m ruining the deadline, what should I do?
+### I’m missing the deadline, what should I do?
 You may refuse finishing the task by pressing the ‘give up’ key
 ![‘give up’ key](./assets/screenshot.png)
 and in this case, you get 50% of the payment for fully annotated videos.
@@ -131,12 +131,12 @@ Please visit PayPal website www.paypal.com, choose a “sign up for a personal a
 No, money can only be transferred to the following cards: MasterCard, VISA.
 
 ### Can I get the money transfer into any country?
-Unfortunately, money transfer around the world isn’t possible. Currently, only the residents of the USA, Canada, the EU, the UK, Russian Federation and Belarus can take part in the project.
+Unfortunately, money transfer around the world isn’t possible. Currently, only the residents of the USA, Canada, the EU, the UK, the Russian Federation and Belarus can take part in the project.
 
 ### I can’t get the money transferred onto my card, what should I do?
 Money can be withdrawn from your balance only when it’s equal or more than $10.
 
-Also, money transfer is possible in the following countries: the USA, Canada, the EU, the UK, Russian Federation and Belarus.
+Also, money transfer is possible in the following countries: the USA, Canada, the EU, the UK, the Russian Federation and Belarus.
 
 ### I have annotated all the videos in the task, but my balance hasn’t been updated. What’s the matter?
 Please, take the mini-test for the tutorial applied to this particular task.

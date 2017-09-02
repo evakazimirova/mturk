@@ -245,7 +245,7 @@
         "title": "Shame",
         "definition": "a feeling that a person is not matching with the self's standards or is losing (sometimes allegedly) his or her social status.",
         "img": "shame",
-        "more": "The so-called self’s standards are heavily influenced by the social ones and often include aspects of morality, knowledge, and aesthetics. There’s such a phenomenon as “vicarious shame”, which is embarrassment experienced on behalf of another person (for example, your friend got drunk and stole a refrigerator – you feel embarrassed when you tell this story). Shame often implies perceiving yourself as a bad person (“I’m a fool”, “I was stupid”, “I’m ugly”), and guilt results from the recognition that your behavior is inappropriate (“I did something bad”, “I screwed up”, etc.).",
+        "more": "The so-called self’s standards are heavily influenced by the social ones and often include aspects of morality, knowledge, and aesthetics. There’s such a phenomenon as “vicarious shame”, which is embarrassment experienced on behalf of another person (for example, your friend got drunk and stole a refrigerator – you feel embarrassed when you tell this story). Shame often implies perceiving yourself as a bad person (“I’m a fool”, “I was stupid”, “I’m ugly”), while guilt results from the recognition that your behavior is inappropriate (“I did something bad”, “I screwed up”, etc.).",
         "types": [
           "Shame",
           "Guilt",
@@ -522,7 +522,7 @@
         "title": "High Self-disclosure",
         "definition": "— The person answers the question and keeps the conversation going.",
         "img": "open",
-        "more": "<u>Moderately open</u> – the person replies without (informal) details.<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– Yes, probably. I think this movie will be an interesting experience for every member of the cast.<br><u>Fairly open</u> – the person answers the question and keeps the conversation going.<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– Yes, most likely. I think that’ll be very interesting, given that Kevin Spooner and Peter Dogman are among the guest stars.<br><u>Completely open</u> – the person takes an active part in the discussion, goes into detail (including informal information).<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– Yes, there’s a high probability that we will actually star in the same film. I hope that’s true. We went recently to a pub, discussed the movie and remembered the times when we acted Shakespeare in the school theatre club (and so on).",
+        "more": "<u>Moderately open</u> – the person replies without (informal) details.<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– Yes, probably. I think this movie will be an interesting experience for every member of the cast.<br><u>Fairly open</u> – the person answers the question and keeps the conversation going.<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– Yes, most likely. I think that’ll be very interesting, given that Kevin Spooner and Peter Dogman are among the guest stars.<br><u>Completely open</u> – the person takes an active part in the discussion, goes into detail (including informal information).<br>– I’ve heard you will be co-starring with John Smith. Is that true?<br>– Yes, there’s a high probability that we will actually star in the same film. I hope that’s true. He and I, we’ve been to a pub recently, discussed the movie and talked about the times when we acted Shakespeare in the school theatre club (and so on).",
         "examples": [
           "3009",
           "5203"
@@ -616,7 +616,7 @@
     "emotions": [
       {
         "title": "Disengagement",
-        "definition": "— (No interest) The person is not following the flow of discussion, is paying attention to something else (e.g. own materials, staring at the window, looking to the side, etc.). He or she can’t respond correctly if addressed by other interlocutors and does not exhibit interest in the communication.",
+        "definition": "— (No interest) The person is not following the flow of discussion, is paying attention to something else (e.g. own materials, staring at the window, looking to the side, etc.). He or she can’t respond correctly if addressed by other interlocutors and displays no interest in communication.",
         "img": "disengagement",
         "examples": [
           "91",

@@ -46,7 +46,7 @@ __Low Self-disclosure__ – the person refuses to answer a question or changes t
 __High Self-disclosure__ – the person answers the question and keeps the conversation going.
 
 __Disengagement__ (No interest) – the person is not following the flow of discussion, is paying attention to something else (e.g. own materials, staring at the window, looking to the side, etc.).
-He or she can’t respond correctly if addressed by other interlocutors and does not exhibit interest in the communication.
+He or she can’t respond correctly if addressed by other interlocutors and displays no interest in communication.
 
 __Engagement__ is one’s degree of participation, involvement, or interest in action
 
