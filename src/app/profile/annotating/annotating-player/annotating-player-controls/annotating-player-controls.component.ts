@@ -84,7 +84,9 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
             this.annot.setFragment(this.annot.cf - 1);
           } else if (e.keyCode === 39) { // стрелка вправо
             // Следующий фрагмент
-            this.annot.setFragment(this.annot.cf + 1);
+            if (this.annot.cf < this.annot.csv.length - 1) {
+              this.annot.setFragment(this.annot.cf + 1);
+            }
           } else if (e.keyCode === 40) { // стрелка вниз
             // Повторить фрагмент
             this.replayVideo();
