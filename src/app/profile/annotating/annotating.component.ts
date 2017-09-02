@@ -13,6 +13,7 @@ export class AnnotatingComponent implements OnInit {
               public annot: AnnotatingService) {}
 
   ngOnInit() {
+    this.annot.isReplayButtonVisible = false;
     if (!this.annot.demoMode) {
       this.percentage = this.common.projects[0].annoTask.percentage;
 

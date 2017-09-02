@@ -11,5 +11,7 @@
   </div>
 
   <!-- Блок, блокирующий клики -->
-  <div class="shield"></div>
+  <div class="shield">
+    <span class="fa fa-repeat" *ngIf="annot.isReplayButtonVisible" (click)="replayVideo()"></span>
+  </div>
 </div>

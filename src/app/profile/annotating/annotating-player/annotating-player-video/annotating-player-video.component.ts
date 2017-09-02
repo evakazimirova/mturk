@@ -134,4 +134,8 @@ export class AnnotatingPlayerVideoComponent implements OnInit {
       }, false);
     }
   }
+
+  replayVideo() {
+    this.annot.replayVideo();
+  }
 }

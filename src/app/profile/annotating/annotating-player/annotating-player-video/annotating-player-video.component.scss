@@ -6,4 +6,28 @@
   position: absolute;
   top: 0;
   width: 100%;
+
+  .fa {
+    position: absolute;
+    padding-top: 10%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;;
+    margin: auto;
+    text-align: center;
+    font-size: 32rem;
+    opacity: 0.5;
+    color: #fff;
+    text-shadow: 0 0 10px #000;
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .shield {
+    .fa {
+      padding-top: 6%;
+    }
+  }
 }

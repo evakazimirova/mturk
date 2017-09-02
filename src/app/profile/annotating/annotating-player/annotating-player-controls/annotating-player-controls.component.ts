@@ -116,10 +116,19 @@ export class AnnotatingPlayerControlsComponent implements OnInit {
       },
       error => console.error(error)
     );
+
+    this.annot.videoReplayed.subscribe(
+      () => {
+        // воспроизводим фрагмент
+        this.replayVideo();
+      },
+      error => console.error(error)
+    );
   }
 
   // Воспроизведение
   playVideo() {
+    this.annot.isReplayButtonVisible = false;
     this.annot.watchVideo();
   }
 
