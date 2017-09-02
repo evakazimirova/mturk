@@ -1,0 +1,53 @@
+{
+  "ATID": 0,
+  "done": 0,
+  "FIDs": [
+    {
+      "FID": 1,
+      "boxType": "AND",
+      "emotions": [ 37, 38, 39 ],
+      "video": "https://www.youtube.com/watch?v=wglgvziarPc",
+      "result": {
+        "FID": 1,
+        "csv": "start,end\r\n47,50\r\n50,56"
+      },
+      "answers": [
+        [37],
+        [37]
+      ],
+      "done": false
+    },
+    {
+      "FID": 2,
+      "boxType": "AND",
+      "emotions": [ 37, 38, 39 ],
+      "video": "https://www.youtube.com/watch?v=yrRHfHGIW_Y",
+      "result": {
+        "FID": 2,
+        "csv": "start,end\r\n135,140\r\n171,176"
+      },
+      "answers": [
+        [],
+        []
+      ],
+      "done": false
+    },
+    {
+      "FID": 3,
+      "boxType": "AND",
+      "emotions": [ 37, 38, 39 ],
+      "video": "https://www.youtube.com/watch?v=NyHCIhFsZoA",
+      "result": {
+        "FID": 3,
+        "csv": "start,end\r\n389,390\r\n390,393\r\n393,395\r\n413,416"
+      },
+      "answers": [
+        [38],
+        [38, 39],
+        [39],
+        [39]
+      ],
+      "done": false
+    }
+  ]
+}

@@ -22,20 +22,6 @@ export class ProfileProjectsComponent implements OnInit {
               public annot: AnnotatingService) { }
 
   ngOnInit() {
-    // this.areTutorialsFinished = true;
-    // for (let tutorial of this.common.user.tutorials) {
-    //   if (!this.areTutorialsFinished) {
-    //     break;
-    //   } else {
-    //     for (let t in tutorial) {
-    //       if (this.common.user.tutorials[this.common.tutorial][t] === 0) {
-    //         this.areTutorialsFinished = false;
-    //         break;
-    //       }
-    //     }
-    //   }
-    // }
-
     this.common.progressBar = [
       {
         action: 'Login',
@@ -226,68 +212,27 @@ export class ProfileProjectsComponent implements OnInit {
   }
 
   startDemoTask() {
+    // загружаем данные демо-таска
     const startTask = () => {
-      this.annot.demoMode = true;
-      // загружаем данные демо-таска
-      this.annot.FID = 0;
-      this.annot.task = {
-        'ATID': 0,
-        'done': 0,
-        'FIDs': [
-          {
-            'FID': 1,
-            'boxType': 'AND',
-            'emotions': [ 37, 38, 39 ],
-            'video': 'https://www.youtube.com/watch?v=wglgvziarPc',
-            'result': {
-              'FID': 1,
-              'csv': 'start,end\r\n47,50\r\n50,56'
-            },
-            'answers': [
-              [37],
-              [37]
-            ],
-            'done': false
-          },
-          {
-            'FID': 2,
-            'boxType': 'AND',
-            'emotions': [ 37, 38, 39 ],
-            'video': 'https://www.youtube.com/watch?v=yrRHfHGIW_Y',
-            'result': {
-              'FID': 2,
-              'csv': 'start,end\r\n135,140\r\n171,176'
-            },
-            'answers': [
-              [],
-              []
-            ],
-            'done': false
-          },
-          {
-            'FID': 3,
-            'boxType': 'AND',
-            'emotions': [ 37, 38, 39 ],
-            'video': 'https://www.youtube.com/watch?v=NyHCIhFsZoA',
-            'result': {
-              'FID': 3,
-              'csv': 'start,end\r\n389,390\r\n390,393\r\n393,395\r\n413,416'
-            },
-            'answers': [
-              [38],
-              [38, 39],
-              [39],
-              [39]
-            ],
-            'done': false
-          }
-        ]
-      };
-      this.annot.task.FIDsList = Object.keys(this.annot.task.FIDs);
+      this.http.get('/assets/demoHints.json').subscribe(
+        demoHints => {
+          this.annot.demoHints = demoHints;
+          this.http.get('/assets/demoTask.json').subscribe(
+            demoTask => {
+              this.annot.task = demoTask;
+              this.annot.task.FIDsList = Object.keys(this.annot.task.FIDs);
+              this.annot.demoMode = true;
+              this.annot.FID = 0;
 
-      // запускаем режим аннотирования и включаем видео
-      this.startAnnotating.emit();
-      this.annot.setVideo();
+              // запускаем режим аннотирования и включаем видео
+              this.startAnnotating.emit();
+              this.annot.setVideo();
+            },
+            error => console.error(error)
+          );
+        },
+        error => console.error(error)
+      );
     };
 
     // вынимаем все эмоции
