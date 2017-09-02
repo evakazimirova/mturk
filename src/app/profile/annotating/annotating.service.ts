@@ -472,4 +472,10 @@ export class AnnotatingService {
     // передаём событие другим компонентам
     this.videoTurnedOff.emit(event);
   }
+
+  isReplayButtonVisible = false;
+  videoReplayed = new EventEmitter();
+  replayVideo() {
+    this.videoReplayed.emit();
+  }
 }
