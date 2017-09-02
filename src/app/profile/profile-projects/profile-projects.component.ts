@@ -312,8 +312,8 @@ export class ProfileProjectsComponent implements OnInit {
           if (confirmed) {
             this.loadingTask = i;
 
-            this.http.get('AnnoTasks/giveUp').subscribe(
-              tasks => {
+            this.http.get('AnnoTasks/giveUp?taskTaken=' + this.common.user.taskTaken).subscribe(
+              moneyEarned => {
                 this.isGivingUp = false;
                 this.loadingTask = -1;
 
@@ -322,8 +322,9 @@ export class ProfileProjectsComponent implements OnInit {
                   delete this.common.projects[p].annoTask;
                 }
 
-                // обнуляем зарезервированный баланс пользователя
+                // обновляем баланс пользователя
                 this.common.user.money.reserved = 0;
+                this.common.user.money.available += moneyEarned;
 
                 this.common.user.taskTaken = null;
               },
