@@ -47,7 +47,7 @@ To get a longer task (Extended or Jedi Master), you should accomplish at least o
 
 ## Payments
 
-Unfortunately, money transfer around the world isn’t possible. Currently, only the residents of the USA, Canada, the EU, the UK, Russian Federation and Belarus can take part in the project. Please consider that money can only be transferred to the following cards: MasterCard, VISA.
+Unfortunately, money transfer around the world isn’t possible. Currently, only the residents of the USA, Canada, the EU, the UK, the Russian Federation and Belarus can take part in the project. Please consider that money can only be transferred to the following cards: MasterCard, VISA.
 
 When your money transfer query is accepted, there will be a checking results procedure within one week. __Please notice that we reserve the right to block your money withdrawal if your work fails a quality control test.__
 

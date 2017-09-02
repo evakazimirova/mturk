@@ -32,7 +32,7 @@ export class SiteComponent implements OnInit {
             this.common.user = user;
 
             if (this.common.user.firstTime) {
-              this.common.alert('Welcome on Emotion miner! Now you can find out how it works! Just start Demo task, and get your first reward, it will take couple of minutes.');
+              this.common.alert('Welcome to Emotion miner! Now you can find out how it works! Just start Demo task and get your first reward, it will take a couple of minutes.');
 
               this.http.getRough('/annotators/firstTime').subscribe(
                 ok => this.common.user.firstTime = false,
