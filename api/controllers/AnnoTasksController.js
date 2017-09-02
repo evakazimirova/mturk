@@ -289,7 +289,9 @@ module.exports = {
     // запоминаем данные запроса
     let input = req.params.all();
 
-    isTaskEnded = input.done === input.total;
+    const isTaskEnded = input.done === input.total;
+    let isAllTasksEnded = false;
+    let tasksAmount;
 
     // вынимаем данные задачи
     AnnoTasks.findOne({
@@ -304,101 +306,124 @@ module.exports = {
           if (error) {
             sails.log(error);
           } else {
-            // сохраняем результат в БД
-            AnnoTasks.update(
-              {
-                ATID: input.ATID
-              },
-              {
-                result: JSON.stringify(input.result),
-                done: input.done,
-                status: isTaskEnded ? 3 : 1 // заканчиваем выполнение задачи, если всё сделано
-              }
-            ).exec((error, updated) => {
-              if (error) {
-                sails.log(error);
+            if (isTaskEnded) {
+              if (annotatorInfo.taskTaken === 1) {
+                isAllTasksEnded = true;
+                tasksAmount = 1;
+                updateData();
               } else {
-                let newAmount, newRating;
-                if (isTaskEnded) {
-                  // формируем новые баланс и рейтинг пользователя
-                  newAmount = annotatorInfo.moneyAvailable + task.price;
-                  newRating = annotatorInfo.rating + 1;
-                } else {
-                  // оставляем баланс и рейтинг прежним
-                  newAmount = annotatorInfo.moneyAvailable;
-                  newRating = annotatorInfo.rating;
-                }
-
-                // обновляем баланс и рейтинг пользователя
-                AnnotatorInfo.update(
-                  {
-                    AID: req.session.userId
-                  },
-                  {
-                    moneyAvailable: newAmount,
-                    rating: newRating
+                AnnoTasks.find({
+                  AID: task.AID,
+                  status: 1
+                }).exec((error, allTasks) => {
+                  if (allTasks.length === 1) {
+                    isAllTasksEnded = true;
+                    tasksAmount = annotatorInfo.taskTaken === 2 ? 3 : 10;
                   }
-                ).exec((error, updated) => {
-                  if (error) {
-                    sails.log(error);
-                  } else {
-                    if (input.done === input.total) {
-                      // выясняем, есть ли ещё неоконченные задачи
-                      AnnoTasks.find({
-                        AID: req.session.userId,
-                        status: 1
-                      }).exec((error, tasks) => {
-                        if (error) {
-                          sails.log(error);
-                        } else {
-                          if (tasks.length === 0) {
-                            // повышаем уровень аннотатора, если достиг его
-                            levelUp = annotatorInfo.level === annotatorInfo.taskTaken ? annotatorInfo.level + 1 : annotatorInfo.level
-
-                            // снимаем задачу с пользователя
-                            AnnotatorInfo.update(
-                              {
-                                AID: task.AID
-                              },
-                              {
-                                taskTaken: null,
-                                level: levelUp
-                              }
-                            ).exec((error, updated) => {
-                              if (error) {
-                                sails.log(error);
-                              }
-                            });
-
-                            // отдаём текущий баланс и рейтинг
-                            res.json({
-                              money: newAmount,
-                              rating: newRating,
-                              taskTaken: undefined,
-                              level: levelUp
-                            });
-                          } else {
-                            // отдаём текущий баланс и рейтинг
-                            res.json({
-                              money: newAmount,
-                              rating: newRating,
-                              taskTaken: 2
-                            });
-                          }
-                        }
-                      });
-                    } else {
-                      // отдаём текущий баланс и рейтинг
-                      res.json({
-                        money: newAmount,
-                        rating: newRating,
-                        taskTaken: 2
-                      });
-                    }
-                  }
+                  updateData();
                 });
               }
-            });
+            } else {
+              updateData();
+            }
+
+            function updateData() {
+              // сохраняем результат в БД
+              AnnoTasks.update(
+                {
+                  ATID: input.ATID
+                },
+                {
+                  result: JSON.stringify(input.result),
+                  done: input.done,
+                  status: isTaskEnded ? 3 : 1 // заканчиваем выполнение задачи, если всё сделано
+                }
+              ).exec((error, updated) => {
+                if (error) {
+                  sails.log(error);
+                } else {
+                  let newAmount, newRating;
+                  if (isAllTasksEnded) {
+                    // формируем новые баланс и рейтинг пользователя
+                    newAmount = annotatorInfo.moneyAvailable + task.price * isAllTasksEnded;
+                    newRating = annotatorInfo.rating + isAllTasksEnded;
+                  } else {
+                    // оставляем баланс и рейтинг прежним
+                    newAmount = annotatorInfo.moneyAvailable;
+                    newRating = annotatorInfo.rating;
+                  }
+
+                  // обновляем баланс и рейтинг пользователя
+                  AnnotatorInfo.update(
+                    {
+                      AID: req.session.userId
+                    },
+                    {
+                      moneyAvailable: newAmount,
+                      rating: newRating
+                    }
+                  ).exec((error, updated) => {
+                    if (error) {
+                      sails.log(error);
+                    } else {
+                      if (input.done === input.total) {
+                        // выясняем, есть ли ещё неоконченные задачи
+                        AnnoTasks.find({
+                          AID: req.session.userId,
+                          status: 1
+                        }).exec((error, tasks) => {
+                          if (error) {
+                            sails.log(error);
+                          } else {
+                            if (tasks.length === 0) {
+                              // повышаем уровень аннотатора, если достиг его
+                              levelUp = annotatorInfo.level === annotatorInfo.taskTaken ? annotatorInfo.level + 1 : annotatorInfo.level
+
+                              // снимаем задачу с пользователя
+                              AnnotatorInfo.update(
+                                {
+                                  AID: task.AID
+                                },
+                                {
+                                  taskTaken: null,
+                                  level: levelUp
+                                }
+                              ).exec((error, updated) => {
+                                if (error) {
+                                  sails.log(error);
+                                }
+                              });
+
+                              // отдаём текущий баланс и рейтинг
+                              res.json({
+                                money: newAmount,
+                                rating: newRating,
+                                taskTaken: false,
+                                level: levelUp
+                              });
+                            } else {
+                              // отдаём текущий баланс и рейтинг
+                              res.json({
+                                money: newAmount,
+                                rating: newRating,
+                                taskTaken: true
+                              });
+                            }
+                          }
+                        });
+                      } else {
+                        // отдаём текущий баланс и рейтинг
+                        res.json({
+                          money: newAmount,
+                          rating: newRating,
+                          taskTaken: true
+                        });
+                      }
+                    }
+                  });
+                }
+              });
+            }
           }
         });
       }
@@ -425,7 +450,7 @@ module.exports = {
           {
             taskTaken: null
           }
-        ).exec((error, updated) => {
+        ).exec((error, annotatorInfo) => {
           if (error) {
             sails.log(error);
           } else {
@@ -457,13 +482,40 @@ module.exports = {
               }
             });
 
-            // if (refusedTasks.length === 1) {
+            const taskTaken = +req.param('taskTaken');
+            let moneyEarned = 0;
 
-            // } else if (refusedTasks.length > 1) {
+            if (taskTaken > 1) {
+              if (taskTaken === 2) {
+                totalTasks = 3;
+              } else if (taskTaken === 3) {
+                totalTasks = 10;
+              }
 
-            // }
+              moneyEarned = +((totalTasks - refusedTasks.length) * refusedTasks[0].price / 2).toFixed(0);
+              newAmount = annotatorInfo.moneyAvailable + moneyEarned;
 
-            res.json({});
+              AnnotatorInfo.update(
+                {
+                  AID: req.session.userId
+                },
+                {
+                  moneyAvailable: newAmount
+                }
+              ).exec((error, updated) => {
+                if (error) {
+                  sails.log(error);
+                }
+              });
+
+              res.json({
+                moneyEarned: moneyEarned
+              });
+            } else {
+              res.json({
+                moneyEarned: moneyEarned
+              });
+            }
           }
         });
       }

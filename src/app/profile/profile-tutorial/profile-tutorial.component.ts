@@ -99,8 +99,6 @@ export class ProfileTutorialComponent implements OnInit {
   }
 
   updateTutorial(test?) {
-    console.log(test);
-
     this.tutorial = this.tutorials[this.common.tutorial];
 
     this.labels = [];
